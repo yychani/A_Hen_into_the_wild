@@ -21,9 +21,9 @@ public class Stage03 extends JPanel{
 	//private JLabel label = new JLabel(background);
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
-	private int fullRate;
-	private int cleanRate;
-	private int tiredRate;
+	private int fullRate; //포만
+	private int cleanRate; //청결도 
+	private int tiredRate; //피로도 
 
 	
 	public Stage03(MainFrame mf) {
