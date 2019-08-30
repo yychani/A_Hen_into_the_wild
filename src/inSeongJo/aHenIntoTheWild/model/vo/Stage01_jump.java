@@ -3,7 +3,7 @@ package inSeongJo.aHenIntoTheWild.model.vo;
 import inSeongJo.aHenIntoTheWild.view.Stage01;
 
 public class Stage01_jump extends Thread{
-	boolean jumping=false;
+	boolean jumping = false;
 	public boolean isJumping() {
 		return jumping;
 	}
@@ -13,7 +13,7 @@ public class Stage01_jump extends Thread{
 	}
 
 	Stage01 stage01;
-	int jumpingy[]=new int[]{0, -15, -10, -6, -6, 0, 6, 6, 10, 15}; 
+	int jumpingy[]=new int[]{0, -15, -10, -6, -6, 0, 6, 6, 10, 15, 0}; 
 	int jumpIdx = 0;
 
 	public Stage01_jump(Stage01 stage01, boolean jumping) {
@@ -28,7 +28,7 @@ public class Stage01_jump extends Thread{
 			jumpTimeArrived(jumpIdx, jumpingy[jumpIdx]);
 
 			try {
-				Thread.sleep(30);
+				Thread.sleep(20);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

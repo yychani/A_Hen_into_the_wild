@@ -17,11 +17,12 @@ public class Stage01 extends JPanel implements KeyListener{
 	private Stage01_jump jump;
 	private int width, height;//패널 사이즈 가져오기
 	private int x, y, w, h;//xy : 플레이어의 중심 좌표 / wh : 이미지 절반폭;
+	private int ipX, ipY; // ipXY 잎싹이 왼쪽 모서리 좌표
 	private int dx = 0, dy = 0;//플레이어 이미지의 이동속도, 이동방향
-	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR;
+	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, stage01Footrest;
 	private Image[] ipssagMoving, ipssagStanding, ipssagMovingR, ipssagStandingR;
 	boolean isMoving = false, isRight = false;
-	public boolean isJump = false;
+	public boolean isJump = false, isDrop = false;
 	int cnt = 0;
 
 	public Stage01() {
@@ -31,7 +32,8 @@ public class Stage01 extends JPanel implements KeyListener{
 		stage01Background = toolkit.getImage("images/Stage01_background.png");//배경 이미지
 		leftWall = toolkit.getImage("images/left_wall.png");
 		rightWall = toolkit.getImage("images/right_wall.png");//벽 이미지
-
+		stage01Footrest = toolkit.getImage("images/Stage01_footrest.png"); // 발판 이미지
+		
 		ipssagStanding = new Image[2];
 		ipssagStanding[0] = toolkit.getImage("images/ipssag/ipssag.png");//플레이어 이미지 왼쪽 객체
 		ipssagStanding[1] = toolkit.getImage("images/ipssag/ipssag2.png");
@@ -67,7 +69,8 @@ public class Stage01 extends JPanel implements KeyListener{
 			stage01Background = stage01Background.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 			leftWall = leftWall.getScaledInstance(300, 700, Image.SCALE_SMOOTH);
 			rightWall = rightWall.getScaledInstance(300, 700, Image.SCALE_SMOOTH);
-
+			stage01Footrest = stage01Footrest.getScaledInstance(150, 100, Image.SCALE_SMOOTH);
+			
 			ipssagStanding[0] = ipssagStanding[0].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagStanding[1] = ipssagStanding[1].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagMoving[0] = ipssagMoving[0].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
@@ -84,6 +87,8 @@ public class Stage01 extends JPanel implements KeyListener{
 			y = height - 100;
 			w = 64;
 			h = 64;
+			ipX = x - w;
+			ipY = y - h - 20;
 
 		}			
 
@@ -92,20 +97,21 @@ public class Stage01 extends JPanel implements KeyListener{
 		g.drawImage(stage01Background, 0, 0, this);//배경 그리기
 		g.drawImage(leftWall, 0, 68, this);//왼쪽 벽 그리기
 		g.drawImage(rightWall, width - 300, 68, this);//왼쪽 벽 그리기
-		jump(g);
+		g.drawImage(stage01Footrest, width / 2, 650, this); // 발판 그리기
+		
 		if(isRight) {
 			if(isJump) {
-				g.drawImage(ipssagJumpR, x - w, y - h, this);
+				g.drawImage(ipssagJumpR, x - w, y - h - 15, this);
 			}
 			else if(isMoving) {
 				if((cnt / 5 % 2) == 0){ 
-					g.drawImage(ipssagMovingR[1], x - w, y - h, this);
+					g.drawImage(ipssagMovingR[1], x - w, y - h - 15, this);
 				}else { 
-					g.drawImage(ipssagMovingR[0], x - w, y - h, this); 
+					g.drawImage(ipssagMovingR[0], x - w, y - h - 15, this); 
 				}
 			}else { 
 				if((cnt / 5 % 2) == 0){ 
-					g.drawImage(ipssagStandingR[1], x - w, y - h, this);
+					g.drawImage(ipssagStandingR[1], x - w, y - h - 15, this);
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -113,7 +119,7 @@ public class Stage01 extends JPanel implements KeyListener{
 						e.printStackTrace();
 					}
 				}else { 
-					g.drawImage(ipssagStandingR[0], x - w, y - h, this); 
+					g.drawImage(ipssagStandingR[0], x - w, y - h - 15, this); 
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -126,17 +132,17 @@ public class Stage01 extends JPanel implements KeyListener{
 		}
 		else {
 			if(isJump) {
-				g.drawImage(ipssagJump, x - w, y - h, this);
+				g.drawImage(ipssagJump, x - w, y - h - 15, this);
 			}
 			else if(isMoving) {
 				if((cnt / 5 % 2) == 0){ 
-					g.drawImage(ipssagMoving[1], x - w, y - h, this);
+					g.drawImage(ipssagMoving[1], x - w, y - h - 15, this);
 				}else { 
-					g.drawImage(ipssagMoving[0], x - w, y - h, this); 
+					g.drawImage(ipssagMoving[0], x - w, y - h - 15, this); 
 				}
 			}else { 
 				if((cnt / 5 % 2) == 0){ 
-					g.drawImage(ipssagStanding[1], x - w, y - h, this);
+					g.drawImage(ipssagStanding[1], x - w, y - h - 15, this);
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -144,7 +150,7 @@ public class Stage01 extends JPanel implements KeyListener{
 						e.printStackTrace();
 					}
 				}else { 
-					g.drawImage(ipssagStanding[0], x - w, y - h, this); 
+					g.drawImage(ipssagStanding[0], x - w, y - h - 15, this); 
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -169,25 +175,65 @@ public class Stage01 extends JPanel implements KeyListener{
 		this.cnt = cnt;
 	}
 
+	public int getIpX() {
+		return ipX;
+	}
+
+	public void setIpX(int ipX) {
+		this.ipX = ipX;
+	}
+
+	public int getIpY() {
+		return ipY;
+	}
+
+	public void setIpY(int ipY) {
+		this.ipY = ipY;
+	}
+
 	public void move() { //플레이어 움직이기(좌표 변경)
 		cnt++;
 		x += dx;
 		y += dy;
-
+		int ddy = 0;
+		ddy += 1;
 		//플레이어 좌표가 화면 밖으로 나가지 않도록 // 나중에 벽으로 수정
 		if(x < w + 280) x = w + 280; // 왼쪽 벽 넘지 못하게
 		if(x > width - w - 280) x = width - w - 280; // 오른쪽 벽 넘지 못하게
+		System.out.println(isDrop);
+		System.out.println("x = " + (x - w) + " y = " + (y - h));
+		if((x == -280 && y == 0) ||(x - w) >= 422 && (x - w) <=  602 && (y - h) <= 569) {
+			dy = 0; // 첫번째 발판
+			isDrop = false;
+		}else {
+			isDrop = true;
+			System.out.println(isDrop);
+			
+		}
 	}
 	// move
-	public void jump(Graphics g) {
-
-	}
 	public boolean isJump() {
 		return isJump;
 	}
 
 	public void setJump(boolean isJump) {
 		this.isJump = isJump;
+	}
+
+	public int getDy() {
+		return dy;
+	}
+
+	public void setDy(int dy) {
+		this.dy = dy;
+	}
+
+	public boolean isDrop() {
+		return isDrop;
+	}
+
+	public void setDrop(boolean isDrop) {
+		this.isDrop = isDrop;
 	}
 
 	@Override
