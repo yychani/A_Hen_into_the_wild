@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -14,13 +15,13 @@ import inSeongJo.aHenIntoTheWild.model.vo.Stage01_jump;
 
 
 public class Stage01 extends JPanel implements KeyListener{
-	private Stage01_jump jump;
 	private int width, height;//패널 사이즈 가져오기
 	private int x, y, w, h;//xy : 플레이어의 중심 좌표 / wh : 이미지 절반폭;
 	private int ipX, ipY; // ipXY 잎싹이 왼쪽 모서리 좌표
-	private int dx = 0, dy = 0;//플레이어 이미지의 이동속도, 이동방향
-	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, stage01Footrest;
+	private int dx = 0, dy = 0;//플레이어 이미지의 이동속도, 이동방향z
+	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR;
 	private Image[] ipssagMoving, ipssagStanding, ipssagMovingR, ipssagStandingR;
+	private ArrayList<Image> stage01Footrest;
 	boolean isMoving = false, isRight = false;
 	public boolean isJump = false, isDrop = false;
 	int cnt = 0;
@@ -32,7 +33,10 @@ public class Stage01 extends JPanel implements KeyListener{
 		stage01Background = toolkit.getImage("images/Stage01_background.png");//배경 이미지
 		leftWall = toolkit.getImage("images/left_wall.png");
 		rightWall = toolkit.getImage("images/right_wall.png");//벽 이미지
-		stage01Footrest = toolkit.getImage("images/Stage01_footrest.png"); // 발판 이미지
+		stage01Footrest = new ArrayList<>();
+		for(int i = 0; i < 7; i++) {
+			stage01Footrest.add(toolkit.getImage("images/Stage01_footrest.png")); // 발판 이미지
+		}
 		
 		ipssagStanding = new Image[2];
 		ipssagStanding[0] = toolkit.getImage("images/ipssag/ipssag.png");//플레이어 이미지 왼쪽 객체
@@ -69,7 +73,9 @@ public class Stage01 extends JPanel implements KeyListener{
 			stage01Background = stage01Background.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 			leftWall = leftWall.getScaledInstance(300, 700, Image.SCALE_SMOOTH);
 			rightWall = rightWall.getScaledInstance(300, 700, Image.SCALE_SMOOTH);
-			stage01Footrest = stage01Footrest.getScaledInstance(150, 100, Image.SCALE_SMOOTH);
+			for(int i = 0; i < stage01Footrest.size(); i++) {
+				stage01Footrest.set(i, (stage01Footrest.get(i)).getScaledInstance(150, 100, Image.SCALE_SMOOTH));
+			}
 			
 			ipssagStanding[0] = ipssagStanding[0].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagStanding[1] = ipssagStanding[1].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
@@ -97,7 +103,13 @@ public class Stage01 extends JPanel implements KeyListener{
 		g.drawImage(stage01Background, 0, 0, this);//배경 그리기
 		g.drawImage(leftWall, 0, 68, this);//왼쪽 벽 그리기
 		g.drawImage(rightWall, width - 300, 68, this);//왼쪽 벽 그리기
-		g.drawImage(stage01Footrest, width / 2, 650, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(0), width / 2 - 70, 650, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(1), width / 2 - 150, 570, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(2), width / 2 - 100, 490, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(3), width / 2 - 50, 410, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(4), width / 2 - 80, 330, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(5), width / 2 - 120, 250, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(6), width / 2 - 170, 170, this); // 발판 그리기
 		
 		if(isRight) {
 			if(isJump) {
@@ -202,7 +214,7 @@ public class Stage01 extends JPanel implements KeyListener{
 		if(x > width - w - 280) x = width - w - 280; // 오른쪽 벽 넘지 못하게
 		System.out.println(isDrop);
 		System.out.println("x = " + (x - w) + " y = " + (y - h));
-		if((x == -280 && y == 0) ||(x - w) >= 422 && (x - w) <=  602 && (y - h) <= 569) {
+		if((x == -280 && y == 0) ||(x - w) >= 380 && (x - w) <=  500 && (y - h) <= 569) {
 			dy = 0; // 첫번째 발판
 			isDrop = false;
 		}else {
