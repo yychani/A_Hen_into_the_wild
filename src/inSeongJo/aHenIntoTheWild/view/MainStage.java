@@ -17,13 +17,15 @@ import inSeongJo.aHenIntoTheWild.view.MainPage.MyMouseAdapter;
 
 public class MainStage extends JPanel {
 	private MainFrame mf;
-	private Image background = new ImageIcon("images/YJimages/main_none.jpg").getImage();
+	private JPanel MainStage;
+	private Image background = new ImageIcon("images/YJimages/main_none.png").getImage();
 	// private JLabel label = new JLabel(background);
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
 
 	public MainStage(MainFrame mf) {
-		
+		this.mf = mf;
+		MainStage = this;
 		this.setBounds(0, 0, 1024, 768);
 
 		this.setLayout(null);
@@ -42,8 +44,19 @@ public class MainStage extends JPanel {
 		
 		userButton.addMouseListener(new MyMouseAdapter());
 		
+		//저장 버튼
+		Image saveImage = new ImageIcon("images/YJimages/save.png").getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
+		Image savePressedImage = new ImageIcon("images/YJimages/save_pressed.png").getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
+		JButton saveButton = new JButton(new ImageIcon(saveImage));
+		saveButton.setBorderPainted(false);
+		saveButton.setContentAreaFilled(false);
+		saveButton.setFocusPainted(false);
+		saveButton.setBounds(930, 20, 70, 70);
+		saveButton.setPressedIcon(new ImageIcon(savePressedImage));;
+		add(saveButton);
+		
 		//잎싹이 이미지
-		Image ipssak = new ImageIcon("images/YJimages/chicken.gif").getImage().getScaledInstance(180, 180, 0);
+		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 180, 0);
 		JLabel ipssakImage = new JLabel(new ImageIcon(ipssak));
 		ipssakImage.setBounds(800, 500, 200, 200);
 		add(ipssakImage);
@@ -60,15 +73,36 @@ public class MainStage extends JPanel {
 		stage1Button.setBorderPainted(false);
 		stage1Button.setContentAreaFilled(false);
 		stage1Button.setFocusPainted(false);
-		stage1Button.setBounds(100, 100, 300, 300);
+		stage1Button.setBounds(20, 200, 300, 300);
 		add(stage1Button);
 		
 		
 		//STAGE2 버튼
+		Image stage2Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
+		JButton stage2Button = new JButton(new ImageIcon(stage1Image));
+		stage2Button.setBorderPainted(false);
+		stage2Button.setContentAreaFilled(false);
+		stage2Button.setFocusPainted(false);
+		stage2Button.setBounds(250, 200, 300, 300);
+		add(stage2Button);
 		
 		//STAGE3 버튼
+		Image stage3Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
+		JButton stage3Button = new JButton(new ImageIcon(stage1Image));
+		stage3Button.setBorderPainted(false);
+		stage3Button.setContentAreaFilled(false);
+		stage3Button.setFocusPainted(false);
+		stage3Button.setBounds(470, 200, 300, 300);
+		add(stage3Button);
 		
 		//STAGE4 버튼
+		Image stage4Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
+		JButton stage4Button = new JButton(new ImageIcon(stage1Image));
+		stage4Button.setBorderPainted(false);
+		stage4Button.setContentAreaFilled(false);
+		stage4Button.setFocusPainted(false);
+		stage4Button.setBounds(710, 200, 300, 300);
+		add(stage4Button);
 		
 		
 		

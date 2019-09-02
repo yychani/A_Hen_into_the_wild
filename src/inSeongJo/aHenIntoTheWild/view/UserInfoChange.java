@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 public class UserInfoChange extends JPanel {
 	private MainFrame mf;
-	private Image background = new ImageIcon("images/main_none.jpg").getImage();
+	private Image background = new ImageIcon("images/YJimages/main_none.png").getImage();
 	// private JLabel label = new JLabel(background);
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
