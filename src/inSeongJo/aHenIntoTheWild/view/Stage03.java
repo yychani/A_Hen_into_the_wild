@@ -1,6 +1,7 @@
 package inSeongJo.aHenIntoTheWild.view;
 
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -22,12 +23,15 @@ public class Stage03 extends JPanel{
 	private MainFrame mf;
 	private Image background = new ImageIcon("images/stage03_image/background2.png").getImage();
 //	private JLabel label = new JLabel(background);
+	private Graphics g;
+	private Stage03 s03;
 
 	private int[] rate = new int[4];
 	private int x;
 	private int y;
 	private String str = "";
 	private boolean riceBl, bathBl, playBl, loveBl, bedBl;
+	private boolean goOrStop = true;
 	private Stage03Manager sm = new Stage03Manager();
 	private Image fullImage = new ImageIcon("images/stage03_image/fullImage.png").getImage().getScaledInstance(188, 25, Image.SCALE_SMOOTH);
 	private Image cleanImage = new ImageIcon("images/stage03_image/cleanImage.png").getImage().getScaledInstance(188, 25, Image.SCALE_SMOOTH);
@@ -35,6 +39,7 @@ public class Stage03 extends JPanel{
 	private Image growthImage = new ImageIcon("images/stage03_image/growthRate.png").getImage().getScaledInstance(40, 243, Image.SCALE_SMOOTH);
 	
 	public Stage03(MainFrame mf) {
+		s03 = this;
 		this.setName("Stage3");
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
@@ -118,9 +123,7 @@ public class Stage03 extends JPanel{
 		Thread th = new Thread(gr);
 		th.start();
 		
-		Timer tr = new Timer(this);
-		Thread th2 = new Thread(tr);
-		th2.start();
+
 		
 //		Image dungji = new ImageIcon("images/stage03_image/dungji.png").getImage();
 //		JLabel dungjiLabel = new JLabel(new ImageIcon(dungji));
@@ -236,12 +239,101 @@ public class Stage03 extends JPanel{
 			
 		});
 		
+		Thread th2 = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				int i = 0;
+				JLabel label = new JLabel("Timer : " + i);
+				label.setBounds(940, 0, 100, 50);
+				label.setFont(new Font("바탕",Font.PLAIN, 15));
+
+				s03.add(label);
+				
+				
+				while(goOrStop) {
+					i++;
+					
+					
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					if (i%2 == 0) {
+						label.setText("Timer : " + i/2);
+						System.out.println("실행");
+						//s03.remove(label);
+						//s03.add(label);
+					}
+					rate[0]--;
+					rate[1]--;
+					rate[2]++;
+					g.drawImage(fullImage, 25, 69, (int)(188*(double)rate[0]/100.0), 25, null); // 포만감표시 
+					fullRatePercent.setText(rate[0] + "%");
+					
+					g.drawImage(cleanImage, 25, 140, (int)(188*(double)rate[1]/100.0), 25, null); // 청결도표시 
+					cleanRatePercent.setText(rate[1] + "%");
+					
+					g.drawImage(tiredImage, 25, 211, (int)(188*(double)rate[2]/100.0), 25, null); // 피로도표시 
+					tiredRatePercent.setText(rate[2] + "%");
+				}
+				
+			}
+			
+		});
+		th2.start();
+		
+		Thread th3 = new Thread(new Runnable() {
+			Dialog dieDialog = new Dialog(mf, "GameOver");
+
+			@Override
+			public void run() {
+				JButton endButton = new JButton("게임종료");
+				JLabel endText = new JLabel();
+				dieDialog.setBounds(200, 200, 400, 200);
+				dieDialog.add(endButton);
+				
+				while(goOrStop) {
+					if(rate[0] <= 20) {
+						System.out.println("초록이가 배고파 죽었습니다.");
+						endText.setText("초록이가 배고파 죽었습니다.");
+						dieDialog.add(endText);
+						
+						dieDialog.setVisible(true);
+						goOrStop = false;
+						
+					} else if(rate[1] <= 20) {
+						System.out.println("초록이가 전염병에 감염되어 죽었습니다.");
+						endText.setText("초록이가 전염병에 감염되어 죽었습니다.");
+						dieDialog.add(endText);
+						
+						goOrStop = false;
+						dieDialog.setVisible(true);
+					} else if(rate[2] >=50) {
+						System.out.println("초록이가 과로사로 죽었습니다.");
+						dieDialog.setVisible(true);
+						goOrStop = false;
+					}
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+			}
+			
+		});
+		th3.start();
+		
 		
 	}
 	
 	
 	@Override
 	public void paint(Graphics g) {
+		this.g = g;
 		g.drawImage(background, 0, 0, null); //배경을 그려줌
 		paintComponents(g); //component를 그려줌
 		
@@ -332,10 +424,11 @@ class Greeny implements Runnable{
 		Image green2 = new ImageIcon("images/stage03_image/greenE2.png").getImage();
 		JLabel greenLabel2 = new JLabel(new ImageIcon(green2));
 		greenLabel2.setBounds(412, 270, 200, 279);
+		
+		boolean goOrStop = true;
 
 
-
-		while(true) {
+		while(goOrStop) {
 			//System.out.println("실행");
 			if (gr == false) {
 				jp.remove(greenLabel);
@@ -360,47 +453,47 @@ class Greeny implements Runnable{
 
 }
 
-class Timer implements Runnable{
-	private JPanel jp;
-	private boolean gr = false;
-
-	Timer(){}
-
-	Timer(JPanel jp){
-		this.jp = jp;
-	}
-	
-	@Override
-	public void run() {
-		int i = 0;
-		JLabel label = new JLabel("Timer : " + i);
-		label.setBounds(940, 0, 100, 50);
-		label.setFont(new Font("바탕",Font.PLAIN, 15));
-
-		jp.add(label);
-		
-		
-		while(true) {
-			i++;
-			label.setText("Timer : " + i);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			System.out.println("실행");
-			jp.remove(label);
-			jp.add(label);
-			//jp.repaint();
-			
-			
-		}
-		
-	}
-	
-	
-	
-}
+//class Timer implements Runnable{
+//	private JPanel jp;
+//	private boolean gr = false;
+//
+//	Timer(){}
+//
+//	Timer(JPanel jp){
+//		this.jp = jp;
+//	}
+//	
+//	@Override
+//	public void run() {
+//		int i = 0;
+//		JLabel label = new JLabel("Timer : " + i);
+//		label.setBounds(940, 0, 100, 50);
+//		label.setFont(new Font("바탕",Font.PLAIN, 15));
+//
+//		jp.add(label);
+//		
+//		
+//		while(true) {
+//			i++;
+//			label.setText("Timer : " + i);
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			System.out.println("실행");
+//			jp.remove(label);
+//			jp.add(label);
+//			//jp.repaint();
+//			
+//			
+//		}
+//		
+//	}
+//	
+//	
+//	
+//}
 
 
 
