@@ -125,6 +125,14 @@ public class MainStage extends JPanel {
 		stage3Button.setFocusPainted(false);
 		stage3Button.setBounds(470, 200, 300, 300);
 		add(stage3Button);
+    stage3Button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, MainStage, new Stage03(mf, 0));
+				
+			}
+		});
 		
 		//STAGE4 버튼
 		Image stage4Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
@@ -167,4 +175,5 @@ public class MainStage extends JPanel {
 			System.out.println("클릭되었습니다.");
 		}
 	}
+
 }
