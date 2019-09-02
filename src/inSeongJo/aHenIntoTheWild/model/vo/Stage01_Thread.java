@@ -3,12 +3,12 @@ package inSeongJo.aHenIntoTheWild.model.vo;
 import inSeongJo.aHenIntoTheWild.view.Stage01;
 
 public class Stage01_Thread extends Thread{
-	Stage01 stage01 = new Stage01();
+	Stage01 stage01;
 	Stage01_jump jumpThread;
 	Stage01_Drop dropThread;
 	int cnt;
-	public Stage01_Thread() {
-		// TODO Auto-generated constructor stub
+	public Stage01_Thread(Stage01 stage01) {
+		this.stage01 = stage01;
 	}
 	@Override
 	public void run() {

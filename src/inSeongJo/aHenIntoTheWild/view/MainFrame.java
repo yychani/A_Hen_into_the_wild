@@ -10,9 +10,7 @@ public class MainFrame extends JFrame{
 	public MainFrame() {
 		this.setSize(1024, 768);
 		
-		s1Thread = new Stage01_Thread();
-		stage01 = s1Thread.getStage01();
-		//this.add(new MainPage()); // new Stage01À» ÀÚ½ÅÀÇ ÆĞ³ÎÀ» ³Ö¾î¼­ ½ÇÇè
+		//this.add(new MainPage()); // new Stage01ì„ ìì‹ ì˜ íŒ¨ë„ì„ ë„£ì–´ì„œ ì‹¤í—˜
 
 		new MainPage(this);
 		
