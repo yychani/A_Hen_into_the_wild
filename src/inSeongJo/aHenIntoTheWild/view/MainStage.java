@@ -56,7 +56,7 @@ public class MainStage extends JPanel {
 		add(saveButton);
 		
 		//¿ŸΩœ¿Ã ¿ÃπÃ¡ˆ
-		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 180, 0);
+		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 250, 0);
 		JLabel ipssakImage = new JLabel(new ImageIcon(ipssak));
 		ipssakImage.setBounds(800, 500, 200, 200);
 		add(ipssakImage);

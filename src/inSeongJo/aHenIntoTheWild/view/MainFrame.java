@@ -14,7 +14,7 @@ public class MainFrame extends JFrame{
 		stage01 = s1Thread.getStage01();
 		//this.add(new MainPage()); // new Stage01을 자신의 패널을 넣어서 실험
 
-		new MainPage(this);
+		new UserInfoChange(this);
 		
 		setResizable(false);
 		this.setVisible(true);
