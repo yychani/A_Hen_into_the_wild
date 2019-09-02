@@ -125,6 +125,7 @@ public class MainStage extends JPanel {
 	class MyMouseAdapter extends MouseAdapter{
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			ChangePanel.changePanel(mf, MainStage, new UserInformation());
 			System.out.println("클릭되었습니다.");
 		}
 	}
