@@ -13,7 +13,7 @@ public class Stage01_jump extends Thread{
 	}
 
 	Stage01 stage01;
-	int jumpingy[]=new int[]{0, -15, -10, -6, -6, 0, 6, 6, 10, 15, 0}; 
+	int jumpingy[]=new int[]{0, -15, -10, -10, -5, -5, -5, 0}; 
 	int jumpIdx = 0;
 
 	public Stage01_jump(Stage01 stage01, boolean jumping) {
@@ -32,11 +32,9 @@ public class Stage01_jump extends Thread{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
 			jumpIdx++;
 		}
 		jumpTimeEnded();
-
 	}
 	public void jumpTimeArrived(int jumpIdx, int jumpy) {
 		stage01.addY(jumpy);
