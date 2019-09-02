@@ -111,7 +111,8 @@ public class MainPage extends JPanel {
 				
 				UserManager um = new UserManager();
 				
-				if(um.login(idTextField.getText(), password) != null) {
+				if(um.login(idTextField.getText(), password).getId() != null) {
+					System.out.println(um.login(idTextField.getText(), password));
 					JOptionPane.showMessageDialog(null, "로그인 성공", "로그인",  1);
 					ChangePanel.changePanel(mf, mainPage, new MainStage(mf, um.login(idTextField.getText(), password)));
 				}else {

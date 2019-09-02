@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -17,7 +19,7 @@ import javax.swing.JTextField;
 
 
 public class UserInformation extends JPanel{
-
+	
 	BufferedImage img;
 	JLabel larr[] = new JLabel[5];
 	String info[] = {"이름", "닉네임", "이메일", "랭킹", "Stage"};
@@ -27,9 +29,15 @@ public class UserInformation extends JPanel{
 	
 	private Font f1;
 	
-	public UserInformation() {
+	private MainFrame mf;
+	private JPanel UserInformation;
+	
+	public UserInformation(MainFrame mf) {
+		this.mf = mf;
+		UserInformation = this;
 		setLayout(null);
 		setSize(1024, 768);
+		//setBounds(0, 0, 1024, 768);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		try {
@@ -73,11 +81,19 @@ public class UserInformation extends JPanel{
 		btn2.setFont(f1);
 		add(btn1);
 		add(btn2);
-		btn1.setBounds((width/3)-140, (height-300), 150, 50);
-		btn2.setBounds((width/3)+200, (height-300), 150, 50);
+		btn1.setBounds(100, 100, 150, 50);
+		btn2.setBounds(200, 200, 150, 50);
 		
 		
-		
+		//회원정보 변경으로 이동
+		btn1.addActionListener(new ActionListener() {
+			
+			@Override
+			
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, UserInformation, new UserInfoChange(mf));
+			}
+		});
 		
 		
 		

@@ -44,9 +44,9 @@ public class MainStage extends JPanel {
 		
 		//유저 객체 정보 출력
 		JLabel loginInfo = new JLabel(user.getNickName());
-		loginInfo.setBounds(100, 100, 300, 100);
+		loginInfo.setBounds(100, 15, 300, 100);
 		loginInfo.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
-		loginInfo.setForeground(Color.WHITE);
+		loginInfo.setForeground(Color.DARK_GRAY);
 		add(loginInfo);
 		
 		//유저 버튼
@@ -167,7 +167,6 @@ public class MainStage extends JPanel {
 		this.repaint();
 	}
 	
-	
 	class MyMouseAdapter extends MouseAdapter{
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -175,5 +174,4 @@ public class MainStage extends JPanel {
 			System.out.println("클릭되었습니다.");
 		}
 	}
-
 }
