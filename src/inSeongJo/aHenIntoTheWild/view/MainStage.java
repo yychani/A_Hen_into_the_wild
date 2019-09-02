@@ -42,14 +42,14 @@ public class MainStage extends JPanel {
 		this.setLayout(null);
 //		mf.add(this);
 		
-		//ìœ ì € ê°ì²´ ì •ë³´ ì¶œë ¥
+		//À¯Àú °´Ã¼ Á¤º¸ Ãâ·Â
 		JLabel loginInfo = new JLabel(user.getNickName());
 		loginInfo.setBounds(100, 15, 300, 100);
-		loginInfo.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
+		loginInfo.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
 		loginInfo.setForeground(Color.DARK_GRAY);
 		add(loginInfo);
 		
-		//ìœ ì € ë²„íŠ¼
+		//À¯Àú ¹öÆ°
 		Image userImage = new ImageIcon("images/YJimages/user2.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		Image userPressedImage = new ImageIcon("images/YJimages/user2_pressed.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		JButton userButton = new JButton(new ImageIcon(userImage));
@@ -62,7 +62,7 @@ public class MainStage extends JPanel {
 		
 		userButton.addMouseListener(new MyMouseAdapter());
 		
-		//ì €ì¥ ë²„íŠ¼
+		//ÀúÀå ¹öÆ°
 		Image saveImage = new ImageIcon("images/YJimages/save.png").getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
 		Image savePressedImage = new ImageIcon("images/YJimages/save_pressed.png").getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
 		JButton saveButton = new JButton(new ImageIcon(saveImage));
@@ -75,19 +75,19 @@ public class MainStage extends JPanel {
 		
 		
 		
-		//ìì‹¹ì´ ì´ë¯¸ì§€
+		//ÀÙ½ÏÀÌ ÀÌ¹ÌÁö
 		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 250, 0);
 		JLabel ipssakImage = new JLabel(new ImageIcon(ipssak));
 		ipssakImage.setBounds(800, 500, 200, 200);
 		add(ipssakImage);
 		
-		//ìì‹¹ì´ ë²„ë¸”í…ìŠ¤íŠ¸
+		//ÀÙ½ÏÀÌ ¹öºíÅØ½ºÆ®
 		Image bubble = new ImageIcon("images/YJimages/bubbletext.png").getImage().getScaledInstance(850, 190, 0);
 		JLabel bubbleText = new JLabel(new ImageIcon(bubble));
 		bubbleText.setBounds(30, 500, 900, 200);
 		add(bubbleText);
 		
-		//STAGE1 ë²„íŠ¼
+		//STAGE1 ¹öÆ°
 		Image stage1Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage1Button = new JButton(new ImageIcon(stage1Image));
 		stage1Button.setBorderPainted(false);
@@ -103,7 +103,7 @@ public class MainStage extends JPanel {
 		add(stage1Button);
 		
 		
-		//STAGE2 ë²„íŠ¼
+		//STAGE2 ¹öÆ°
 		Image stage2Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage2Button = new JButton(new ImageIcon(stage1Image));
 		stage2Button.setBorderPainted(false);
@@ -117,7 +117,7 @@ public class MainStage extends JPanel {
 				ChangePanel.changePanel(mf, MainStage, new Stage02(mf));
 			}
 		});
-		//STAGE3 ë²„íŠ¼
+		//STAGE3 ¹öÆ°
 		Image stage3Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage3Button = new JButton(new ImageIcon(stage1Image));
 		stage3Button.setBorderPainted(false);
@@ -125,16 +125,16 @@ public class MainStage extends JPanel {
 		stage3Button.setFocusPainted(false);
 		stage3Button.setBounds(470, 200, 300, 300);
 		add(stage3Button);
-    stage3Button.addActionListener(new ActionListener() {
+		stage3Button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, MainStage, new Stage03(mf, 0));
+				ChangePanel.changePanel(mf, MainStage, new Stage03(mf, 0, user));
 				
 			}
 		});
 		
-		//STAGE4 ë²„íŠ¼
+		//STAGE4 ¹öÆ°
 		Image stage4Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage4Button = new JButton(new ImageIcon(stage1Image));
 		stage4Button.setBorderPainted(false);
@@ -170,8 +170,8 @@ public class MainStage extends JPanel {
 	class MyMouseAdapter extends MouseAdapter{
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			ChangePanel.changePanel(mf, MainStage, new UserInformation());
-			System.out.println("í´ë¦­ë˜ì—ˆìŠµë‹ˆë‹¤.");
+			ChangePanel.changePanel(mf, MainStage, new UserInformation(mf));
+			System.out.println("Å¬¸¯µÇ¾ú½À´Ï´Ù.");
 		}
 	}
 }

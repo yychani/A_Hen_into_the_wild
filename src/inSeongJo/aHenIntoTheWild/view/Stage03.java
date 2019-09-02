@@ -19,13 +19,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import inSeongJo.aHenIntoTheWild.controller.Stage03Manager;
+import inSeongJo.aHenIntoTheWild.model.vo.User;
 
 public class Stage03 extends JPanel{
 	private MainFrame mf;
 	private Image background = new ImageIcon("images/stage03_image/background2.png").getImage();
 	private Graphics g;
 	private Stage03 s03;
-
+	
+	User user;
+	
 	private int time;
 	private int[] rate = new int[4];
 	private int x;
@@ -42,7 +45,10 @@ public class Stage03 extends JPanel{
 	private Image growthImage = new ImageIcon("images/stage03_image/growthRate.png").getImage().getScaledInstance(40, 243, Image.SCALE_SMOOTH);
 	private Image mouse = null;
 
-	public Stage03(MainFrame mf, int level) {
+	public Stage03(MainFrame mf, int level, User user) {
+		
+		this.user = user;
+		
 		growthLevel = level;
 		s03 = this;
 		this.setName("Stage3");
@@ -296,31 +302,31 @@ public class Stage03 extends JPanel{
 						goOrStop = false;
 						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다.");
 						
-						ChangePanel.changePanel(mf, s03, new MainStage(mf));
+						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 						
 					} else if(rate[1] <= 20) {
 						sm.printResult(rate[3], time);
 						goOrStop = false;
 						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다.");
 						
-						ChangePanel.changePanel(mf, s03, new MainStage(mf));
+						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 
 					} else if(rate[2] >=50) {
 						sm.printResult(rate[3], time);
 						goOrStop = false;
 						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다.");
 						
-						ChangePanel.changePanel(mf, s03, new MainStage(mf));
+						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 					} else if(rate[3] >= 90) {
 						goOrStop = false;
 						if (growthLevel <3) {
 							JOptionPane.showMessageDialog(null, "초록이가 " + (growthLevel+1) +"번째 성장했어요!");
-							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel));
+							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel, user));
 						} else {
 							sm.printResult(rate[3], time);
 							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요");
 							
-							ChangePanel.changePanel(mf, s03, new MainStage(mf));
+							ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 						}
 					}
 					
