@@ -15,6 +15,7 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import inSeongJo.aHenIntoTheWild.controller.Stage03Manager;
@@ -22,13 +23,15 @@ import inSeongJo.aHenIntoTheWild.controller.Stage03Manager;
 public class Stage03 extends JPanel{
 	private MainFrame mf;
 	private Image background = new ImageIcon("images/stage03_image/background2.png").getImage();
-//	private JLabel label = new JLabel(background);
 	private Graphics g;
 	private Stage03 s03;
 
+	private int time;
 	private int[] rate = new int[4];
 	private int x;
 	private int y;
+	private int growthLevel;
+	private int[][] iniRate = {{100, 100, 10, 0}, {50, 90, 20, 0}, {60, 60, 30, 0}};
 	private String str = "";
 	private boolean riceBl, bathBl, playBl, loveBl, bedBl;
 	private boolean goOrStop = true;
@@ -37,19 +40,27 @@ public class Stage03 extends JPanel{
 	private Image cleanImage = new ImageIcon("images/stage03_image/cleanImage.png").getImage().getScaledInstance(188, 25, Image.SCALE_SMOOTH);
 	private Image tiredImage = new ImageIcon("images/stage03_image/tiredImage.png").getImage().getScaledInstance(188, 25, Image.SCALE_SMOOTH);
 	private Image growthImage = new ImageIcon("images/stage03_image/growthRate.png").getImage().getScaledInstance(40, 243, Image.SCALE_SMOOTH);
-	
-	public Stage03(MainFrame mf) {
+	private Image mouse = null;
+
+	public Stage03(MainFrame mf, int level) {
+		growthLevel = level;
 		s03 = this;
 		this.setName("Stage3");
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		this.setBackground(new Color(0,0,0,0));
 		mf.add(this);
-		rate[0] = 50;	//임의로 설정한 포만감
-		rate[1] = 80;	//임의로 설정한 청결도
-		rate[2] = 30;	//임의로 설정한 피로도
-		rate[3] = 0;	//성장도
+
+		rate[0] = iniRate[growthLevel][0];	//임의로 설정한 포만감
+		rate[1] = iniRate[growthLevel][1];	//임의로 설정한 청결도
+		rate[2] = iniRate[growthLevel][2];	//임의로 설정한 피로도
+		rate[3] = iniRate[growthLevel][3];	//성장도
 		
+		String levelStr = "현재 레벨 : " + (growthLevel+1) + " Lv";
+		JLabel levelLabel = new JLabel(levelStr);
+		levelLabel.setBounds(5, 5, 200, 20);
+		levelLabel.setFont(new Font("바탕",Font.BOLD, 15));
+		add(levelLabel);
 		
 		Image riceIcon = new ImageIcon("images/stage03_image/riceIcon.png").getImage().getScaledInstance(100, 102, Image.SCALE_SMOOTH);
 		JButton ricebutton = new JButton(new ImageIcon(riceIcon));
@@ -112,19 +123,12 @@ public class Stage03 extends JPanel{
 		bedbutton.setBounds(500, 620, 100, 102);
 		add(bedbutton);
 		
-//		Image green1 = new ImageIcon("images/stage03_image/greenE1.png").getImage();
-//		JLabel greenLabel = new JLabel(new ImageIcon(green1));
-//		greenLabel.setBounds(412, 270, 200, 279);
-//		add(greenLabel);
-	
 		
 		//쓰레드
 		Greeny gr = new Greeny(this);
 		Thread th = new Thread(gr);
 		th.start();
-		
 
-		
 //		Image dungji = new ImageIcon("images/stage03_image/dungji.png").getImage();
 //		JLabel dungjiLabel = new JLabel(new ImageIcon(dungji));
 //		dungjiLabel.setBounds(346, 435, 326, 193);
@@ -167,7 +171,7 @@ public class Stage03 extends JPanel{
 		
 		
 		
-		addMouseMotionListener(new MyEvent()); //위치 확인
+		//addMouseMotionListener(new MyEvent()); //위치 확인
 
 		playbutton.addActionListener(new ActionListener() {
 			
@@ -243,8 +247,8 @@ public class Stage03 extends JPanel{
 
 			@Override
 			public void run() {
-				int i = 0;
-				JLabel label = new JLabel("Timer : " + i);
+				time = 0;
+				JLabel label = new JLabel("Timer : " + time);
 				label.setBounds(940, 0, 100, 50);
 				label.setFont(new Font("바탕",Font.PLAIN, 15));
 
@@ -252,19 +256,16 @@ public class Stage03 extends JPanel{
 				
 				
 				while(goOrStop) {
-					i++;
-					
-					
+					time++;
+
 					try {
 						Thread.sleep(500);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					if (i%2 == 0) {
-						label.setText("Timer : " + i/2);
-						System.out.println("실행");
-						//s03.remove(label);
-						//s03.add(label);
+					if (time%2 == 0) {
+						label.setText("Timer : " + time/2);
+
 					}
 					rate[0]--;
 					rate[1]--;
@@ -285,36 +286,44 @@ public class Stage03 extends JPanel{
 		th2.start();
 		
 		Thread th3 = new Thread(new Runnable() {
-			Dialog dieDialog = new Dialog(mf, "GameOver");
 
 			@Override
 			public void run() {
-				JButton endButton = new JButton("게임종료");
-				JLabel endText = new JLabel();
-				dieDialog.setBounds(200, 200, 400, 200);
-				dieDialog.add(endButton);
 				
 				while(goOrStop) {
 					if(rate[0] <= 20) {
-						System.out.println("초록이가 배고파 죽었습니다.");
-						endText.setText("초록이가 배고파 죽었습니다.");
-						dieDialog.add(endText);
-						
-						dieDialog.setVisible(true);
+						sm.printResult(rate[3], time);
 						goOrStop = false;
+						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다.");
+						
+						ChangePanel.changePanel(mf, s03, new MainStage(mf));
 						
 					} else if(rate[1] <= 20) {
-						System.out.println("초록이가 전염병에 감염되어 죽었습니다.");
-						endText.setText("초록이가 전염병에 감염되어 죽었습니다.");
-						dieDialog.add(endText);
+						sm.printResult(rate[3], time);
+						goOrStop = false;
+						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다.");
 						
-						goOrStop = false;
-						dieDialog.setVisible(true);
+						ChangePanel.changePanel(mf, s03, new MainStage(mf));
+
 					} else if(rate[2] >=50) {
-						System.out.println("초록이가 과로사로 죽었습니다.");
-						dieDialog.setVisible(true);
+						sm.printResult(rate[3], time);
 						goOrStop = false;
+						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다.");
+						
+						ChangePanel.changePanel(mf, s03, new MainStage(mf));
+					} else if(rate[3] >= 90) {
+						goOrStop = false;
+						if (growthLevel <3) {
+							JOptionPane.showMessageDialog(null, "초록이가 " + (growthLevel+1) +"번째 성장했어요!");
+							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel));
+						} else {
+							sm.printResult(rate[3], time);
+							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요");
+							
+							ChangePanel.changePanel(mf, s03, new MainStage(mf));
+						}
 					}
+					
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
@@ -341,52 +350,47 @@ public class Stage03 extends JPanel{
 		g.drawImage(cleanImage, 25, 140, (int)(188*(double)rate[1]/100.0), 25, null); // 청결도표시 
 		g.drawImage(tiredImage, 25, 211, (int)(188*(double)rate[2]/100.0), 25, null); // 피로도표시 
 		g.drawImage(growthImage, 934, 330, 40, (int)(-243*(double)rate[3]/100.0), null); // 성장도표시 
+		
+		
 
 		
 		if (riceBl == true) {
 			this.addMouseMotionListener(new MouseAdapter() {
 				@Override
 				public void mouseMoved(MouseEvent e) {
-					str = "밥먹자 초록아~";
+					//str = "밥먹자 초록아~";
+					mouse = new ImageIcon("images/stage03_image/spoon.png").getImage();
 					x = e.getX();
 					y = e.getY();
-					repaint();
+					//repaint();
 				}
 			});
 		} else if(bathBl == true) {
 			this.addMouseMotionListener(new MouseAdapter() {
 				@Override
 				public void mouseMoved(MouseEvent e) {
-					str = "씻자 초록아~";
+					//str = "씻자 초록아~";
+					mouse = new ImageIcon("images/stage03_image/showerHead.png").getImage();
 					x = e.getX();
 					y = e.getY();
-					repaint();
+					//repaint();
 				}
 			});
 		}else{
-			str = "";
-			repaint();
+			//str = "";
+			mouse = null;
+			//spoon = null;
+			//repaint();
 		}
 		
-		g.drawString(str, x, y);
+		//g.drawString(str, x, y);
+		g.drawImage(mouse, x-20, y-30, 100, 68, null);
 		this.repaint(); //다시 그려준다는 의미?
 		
 		
 		
-//		ScreenImage = createImage(1024,768);
-//		ScreenGraphics = ScreenImage.getGraphics();
-//		screenDraw(ScreenGraphics);
-//		g.drawImage(ScreenImage, 0, 0, null); // 이미지 그리기
-//		
-		
 	}
 	
-//	public void screenDraw(Graphics g) {
-//		g.drawImage(background, 0, 0, null);
-//		paintComponents(g);
-//		this.repaint();
-//	}
-//	
 	
 	class MyEvent extends MouseMotionAdapter{
 		
@@ -433,14 +437,14 @@ class Greeny implements Runnable{
 			if (gr == false) {
 				jp.remove(greenLabel);
 				jp.add(greenLabel2);
-				jp.repaint();
 				gr = true;
 			} else {
 				jp.remove(greenLabel2);
 				jp.add(greenLabel);
-				jp.repaint();
 				gr = false;
 			}
+			
+			
 
 			try {
 				Thread.sleep(400);
@@ -453,47 +457,6 @@ class Greeny implements Runnable{
 
 }
 
-//class Timer implements Runnable{
-//	private JPanel jp;
-//	private boolean gr = false;
-//
-//	Timer(){}
-//
-//	Timer(JPanel jp){
-//		this.jp = jp;
-//	}
-//	
-//	@Override
-//	public void run() {
-//		int i = 0;
-//		JLabel label = new JLabel("Timer : " + i);
-//		label.setBounds(940, 0, 100, 50);
-//		label.setFont(new Font("바탕",Font.PLAIN, 15));
-//
-//		jp.add(label);
-//		
-//		
-//		while(true) {
-//			i++;
-//			label.setText("Timer : " + i);
-//			try {
-//				Thread.sleep(1000);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//			System.out.println("실행");
-//			jp.remove(label);
-//			jp.add(label);
-//			//jp.repaint();
-//			
-//			
-//		}
-//		
-//	}
-//	
-//	
-//	
-//}
 
 
 

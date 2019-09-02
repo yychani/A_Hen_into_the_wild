@@ -2,6 +2,8 @@ package inSeongJo.aHenIntoTheWild.view;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -94,6 +96,15 @@ public class MainStage extends JPanel {
 		stage3Button.setFocusPainted(false);
 		stage3Button.setBounds(470, 200, 300, 300);
 		add(stage3Button);
+		
+		stage3Button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, MainStage, new Stage03(mf, 0));
+				
+			}
+		});
 		
 		//STAGE4 ¹öÆ°
 		Image stage4Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
