@@ -219,32 +219,32 @@ public class Stage01 extends JPanel implements KeyListener{
 		if(x > width - w - 280 && (y - h) > 19) x = width - w - 280; // 오른쪽 벽 넘지 못하게
 		System.out.println(isDrop);
 		System.out.println("x = " + (x - w) + " y = " + (y - h));
-		if((x == -280 && y == 0) ||(x - w) >= 380 && (x - w) <=  500 && (y - h) == 569) {
+		if((x == 0 && y == 0) ||(x - w) >= 390 && (x - w) <=  510 && (y - h) == 575) {
 			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >= 300 && (x - w) <=  420 && (y - h) == 499){
+		}else if ((x - w) >= 300 && (x - w) <=  430 && (y - h) == 495){
 			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >= 450 && (x - w) <=  570 && (y - h) == 419){
+		}else if ((x - w) >= 450 && (x - w) <=  570 && (y - h) == 415){
 			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >= 270 && (x - w) <=  390 && (y - h) == 329){
+		}else if ((x - w) >= 270 && (x - w) <=  390 && (y - h) == 335){
 			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >= 370 && (x - w) <=  490 && (y - h) == 249){
+		}else if ((x - w) >= 370 && (x - w) <=  490 && (y - h) == 255){
 			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >= 250 && (x - w) <=  370 && (y - h) == 169){
+		}else if ((x - w) >= 250 && (x - w) <=  370 && (y - h) == 175){
 			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >= 400 && (x - w) <=  520 && (y - h) == 99){
+		}else if ((x - w) >= 400 && (x - w) <=  520 && (y - h) == 95){
 			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >= 490 && (x - w) <=  610 && (y - h) == 19){
+		}else if ((x - w) >= 490 && (x - w) <=  610 && (y - h) == 15){
 			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >=  650 && (x - w) <= 900 && y - h == - 31){
-			System.out.println("발판위에 서있다.");
+		}else if ((x - w) >=  650 && (x - w) <= 900 && y - h == - 25){
+			System.out.println("클리어");
 			isDrop = false;
 		}
 		else {
