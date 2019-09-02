@@ -1,9 +1,13 @@
 package inSeongJo.aHenIntoTheWild.view;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -13,24 +17,30 @@ import javax.swing.JPanel;
 
 import org.omg.PortableInterceptor.USER_EXCEPTION;
 
+import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
+import inSeongJo.aHenIntoTheWild.model.vo.User;
 import inSeongJo.aHenIntoTheWild.view.MainPage.MyMouseAdapter;
 
 public class MainStage extends JPanel {
 	private MainFrame mf;
 	private JPanel MainStage;
+	User user;
 	private Image background = new ImageIcon("images/YJimages/main_none.png").getImage();
 	// private JLabel label = new JLabel(background);
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
-
-	public MainStage(MainFrame mf) {
+	public MainStage(MainFrame mf, User user) {
 		this.mf = mf;
+		this.user = user;
 		MainStage = this;
 		this.setBounds(0, 0, 1024, 768);
-
 		this.setLayout(null);
-		mf.add(this);
-		
+//		mf.add(this);
+		JLabel loginInfo = new JLabel(user.getNickName());
+		loginInfo.setBounds(100, 100, 300, 100);
+		loginInfo.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		loginInfo.setForeground(Color.WHITE);
+		add(loginInfo);
 		//À¯Àú ¹öÆ°
 		Image userImage = new ImageIcon("images/YJimages/user2.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		Image userPressedImage = new ImageIcon("images/YJimages/user2_pressed.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
@@ -74,6 +84,12 @@ public class MainStage extends JPanel {
 		stage1Button.setContentAreaFilled(false);
 		stage1Button.setFocusPainted(false);
 		stage1Button.setBounds(20, 200, 300, 300);
+		stage1Button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ChangePanel.changePanel(mf, MainStage, new Stage01(mf));
+			}
+		});
 		add(stage1Button);
 		
 		
