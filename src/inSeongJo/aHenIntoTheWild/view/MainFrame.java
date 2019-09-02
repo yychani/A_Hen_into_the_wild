@@ -10,9 +10,9 @@ public class MainFrame extends JFrame{
 	public MainFrame() {
 		this.setSize(1024, 768);
 		
-		//this.add(new MainPage()); // new Stage01À» ÀÚ½ÅÀÇ ÆĞ³ÎÀ» ³Ö¾î¼­ ½ÇÇè
+		//this.add(new MainPage()); // new Stage01ì„ ìì‹ ì˜ íŒ¨ë„ì„ ë„£ì–´ì„œ ì‹¤í—˜
 
-		new UserInfoChange(this);
+		new MainPage(this);
 		
 		setResizable(false);
 		this.setVisible(true);
