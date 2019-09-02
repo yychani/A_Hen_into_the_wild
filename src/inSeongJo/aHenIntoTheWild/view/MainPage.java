@@ -111,9 +111,9 @@ public class MainPage extends JPanel {
 				
 				UserManager um = new UserManager();
 				
-				if(um.login(idTextField.getText(), password)) {
+				if(um.login(idTextField.getText(), password) != null) {
 					JOptionPane.showMessageDialog(null, "로그인 성공", "로그인",  1);
-					ChangePanel.changePanel(mf, mainPage, new MainStage(mf));
+					ChangePanel.changePanel(mf, mainPage, new MainStage(mf, um.login(idTextField.getText(), password)));
 				}else {
 					JOptionPane.showMessageDialog(null, "로그인 실패", "로그인",  1);
 					System.out.println("메인페이지 : 로그인 실패");
@@ -170,4 +170,5 @@ public class MainPage extends JPanel {
 	        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
 	    }
 	}
+	
 }

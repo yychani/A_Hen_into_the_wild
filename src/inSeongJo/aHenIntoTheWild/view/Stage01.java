@@ -15,6 +15,7 @@ import inSeongJo.aHenIntoTheWild.model.vo.Stage01_jump;
 
 
 public class Stage01 extends JPanel implements KeyListener{
+	private Stage01_Thread s1thread;
 	private int width, height;//패널 사이즈 가져오기
 	private int x, y, w, h;//xy : 플레이어의 중심 좌표 / wh : 이미지 절반폭;
 	private int ipX, ipY; // ipXY 잎싹이 왼쪽 모서리 좌표
@@ -24,10 +25,19 @@ public class Stage01 extends JPanel implements KeyListener{
 	private ArrayList<Image> stage01Footrest;
 	boolean isMoving = false, isRight = false;
 	private boolean isJump = false, isDrop = false;
-	
+	private MainFrame mf;
+	private JPanel stage01;
 	int cnt = 0;
 
-	public Stage01() {
+	public Stage01(MainFrame mf) {
+		this.mf = mf;
+		this.setBounds(0, 0, 1024, 768);
+		this.setLayout(null);
+		stage01 = this;
+		mf.add(this);
+		
+		s1thread = new Stage01_Thread(this);
+		s1thread.start();
 		//GUI 관련 프로그램의 편의를 위해 만들어진 도구상자(Toolkit) 객체 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
@@ -91,11 +101,9 @@ public class Stage01 extends JPanel implements KeyListener{
 			ipssagJumpR = ipssagJumpR.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 
 			x = width/2;//플레이어의 좌표 계산
-			y = height - 100;
+			y = 639;
 			w = 64;
 			h = 64;
-			ipX = x - w;
-			ipY = y - h - 20;
 
 		}			
 
@@ -176,6 +184,7 @@ public class Stage01 extends JPanel implements KeyListener{
 						e.printStackTrace();
 					}
 				}
+				
 			}
 		}// 플레이어 그리기
 	}
@@ -243,7 +252,7 @@ public class Stage01 extends JPanel implements KeyListener{
 		}else if ((x - w) >= 490 && (x - w) <=  610 && (y - h) == 15){
 			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >=  650 && (x - w) <= 900 && y - h == - 25){
+		}else if ((x - w) >=  650 && (x - w) <= 900 && y - h == - 35){
 			System.out.println("클리어");
 			isDrop = false;
 		}

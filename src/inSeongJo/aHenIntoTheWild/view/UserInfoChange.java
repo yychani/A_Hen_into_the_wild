@@ -12,12 +12,15 @@ import javax.swing.JTextField;
 
 public class UserInfoChange extends JPanel {
 	private MainFrame mf;
+	private JPanel UserInfoChange;
 	private Image background = new ImageIcon("images/YJimages/main_none.png").getImage();
 	// private JLabel label = new JLabel(background);
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
 
 	public UserInfoChange(MainFrame mf) {
+		this.mf = mf;
+		UserInfoChange = this;
 		this.setBounds(0, 0, 1024, 768);
 
 		this.setLayout(null);

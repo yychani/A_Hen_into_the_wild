@@ -76,21 +76,25 @@ public class UserManager {
 	}
 
 	// 로그인
-	public boolean login(String id, String pw) {
+	public User login(String id, String pw) {
 
 		boolean check = false;
 		// 로그인 성공 : true , 실패 : false 반환
 
 		ulist = ud.readUserList();
 		
+		User loginUser = new User();
+		
 		for(User user : ulist) {
 			if(user.getId().equals(id)) {
 				if(user.getPassword().equals(pw)) {
 					//로그인 성공
 					System.out.println(user);
+					loginUser = user;
 					check = true;
 				}else {
 					//로그인 실패
+					loginUser = null;
 					check = false;
 				}
 				
@@ -130,7 +134,7 @@ public class UserManager {
 		  }*/
 		 
 
-		return check;
+		return loginUser;
 	}
 
 }
