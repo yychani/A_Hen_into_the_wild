@@ -170,4 +170,5 @@ public class MainPage extends JPanel {
 	        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
 	    }
 	}
+	
 }
