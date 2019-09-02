@@ -12,6 +12,7 @@ public class MainFrame extends JFrame{
 		
 		//this.add(new MainPage()); // new Stage01을 자신의 패널을 넣어서 실험
 
+		
 		new MainPage(this);
 		
 		setResizable(false);
