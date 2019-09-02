@@ -36,7 +36,7 @@ public class UserInformation extends JPanel{
 			img = ImageIO.read(new File("src/MJimages/icon3.jpg"));
 						
 		}catch(Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage());        
 		}
 		
 		int width =(int)(d.getWidth());
