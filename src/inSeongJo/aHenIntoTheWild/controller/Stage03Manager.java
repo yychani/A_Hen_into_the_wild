@@ -63,9 +63,9 @@ public class Stage03Manager {
 	public int[] lovingMethod(int[] rate) {
 		
 		System.out.println("초록이가 행복해요!");
-		rate[0] = minusFor(rate[0], 5); //포만감 감소 
+		//rate[0] = minusFor(rate[0], 5); //포만감 감소 
 		//rate[1] = minusFor(rate[1], 5); //청결도 감소
-		rate[3] = plusFor(rate[3], 5); //성장도 증가 
+		rate[3] = plusFor(rate[3], 3); //성장도 증가 
 		
 		return rate;
 	}
@@ -75,9 +75,9 @@ public class Stage03Manager {
 		
 		System.out.println("초록이가 즐거워해요!");
 		//성장도 증가 
-		rate[2] = plusFor(rate[2], 4);
+		rate[2] = plusFor(rate[2], 3);
 		//청결도 감소
-		rate[1] = minusFor(rate[1], 5);
+		rate[1] = minusFor(rate[1], 3);
 	
 		return rate;
 	}
