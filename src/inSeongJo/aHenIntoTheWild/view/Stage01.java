@@ -23,7 +23,8 @@ public class Stage01 extends JPanel implements KeyListener{
 	private Image[] ipssagMoving, ipssagStanding, ipssagMovingR, ipssagStandingR;
 	private ArrayList<Image> stage01Footrest;
 	boolean isMoving = false, isRight = false;
-	public boolean isJump = false, isDrop = false;
+	private boolean isJump = false, isDrop = false;
+	
 	int cnt = 0;
 
 	public Stage01() {
@@ -37,7 +38,7 @@ public class Stage01 extends JPanel implements KeyListener{
 		for(int i = 0; i < 7; i++) {
 			stage01Footrest.add(toolkit.getImage("images/Stage01_footrest.png")); // 발판 이미지
 		}
-		
+
 		ipssagStanding = new Image[2];
 		ipssagStanding[0] = toolkit.getImage("images/ipssag/ipssag.png");//플레이어 이미지 왼쪽 객체
 		ipssagStanding[1] = toolkit.getImage("images/ipssag/ipssag2.png");
@@ -76,7 +77,7 @@ public class Stage01 extends JPanel implements KeyListener{
 			for(int i = 0; i < stage01Footrest.size(); i++) {
 				stage01Footrest.set(i, (stage01Footrest.get(i)).getScaledInstance(150, 100, Image.SCALE_SMOOTH));
 			}
-			
+
 			ipssagStanding[0] = ipssagStanding[0].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagStanding[1] = ipssagStanding[1].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagMoving[0] = ipssagMoving[0].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
@@ -105,12 +106,17 @@ public class Stage01 extends JPanel implements KeyListener{
 		g.drawImage(rightWall, width - 300, 68, this);//왼쪽 벽 그리기
 		g.drawImage(stage01Footrest.get(0), width / 2 - 70, 650, this); // 발판 그리기
 		g.drawImage(stage01Footrest.get(1), width / 2 - 150, 570, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(2), width / 2 - 100, 490, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(3), width / 2 - 50, 410, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(2), width / 2, 490, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(3), width / 2 - 180, 410, this); // 발판 그리기
 		g.drawImage(stage01Footrest.get(4), width / 2 - 80, 330, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(5), width / 2 - 120, 250, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(6), width / 2 - 170, 170, this); // 발판 그리기
-		
+		g.drawImage(stage01Footrest.get(5), width / 2 - 200, 250, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(6), width / 2 - 50, 170, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(6), width / 2 + 40, 90, this); // 발판 그리기
+
+		drawIpssag(g);
+	}//paintComponent                                      
+
+	public void drawIpssag(Graphics g) {
 		if(isRight) {
 			if(isJump) {
 				g.drawImage(ipssagJumpR, x - w, y - h - 15, this);
@@ -170,11 +176,9 @@ public class Stage01 extends JPanel implements KeyListener{
 						e.printStackTrace();
 					}
 				}
-
 			}
 		}// 플레이어 그리기
-	}//paintComponent                                      
-
+	}
 	public void addY(int add) {
 		this.y+=add;
 	}
@@ -208,19 +212,45 @@ public class Stage01 extends JPanel implements KeyListener{
 		x += dx;
 		y += dy;
 		int ddy = 0;
-		ddy += 1;
+		ddy -= 10;
+
 		//플레이어 좌표가 화면 밖으로 나가지 않도록 // 나중에 벽으로 수정
-		if(x < w + 280) x = w + 280; // 왼쪽 벽 넘지 못하게
-		if(x > width - w - 280) x = width - w - 280; // 오른쪽 벽 넘지 못하게
+		if(x < w + 280 && (y - h) > 19) x = w + 280; // 왼쪽 벽 넘지 못하게
+		if(x > width - w - 280 && (y - h) > 19) x = width - w - 280; // 오른쪽 벽 넘지 못하게
 		System.out.println(isDrop);
 		System.out.println("x = " + (x - w) + " y = " + (y - h));
-		if((x == -280 && y == 0) ||(x - w) >= 380 && (x - w) <=  500 && (y - h) <= 569) {
-			dy = 0; // 첫번째 발판
+		if((x == -280 && y == 0) ||(x - w) >= 380 && (x - w) <=  500 && (y - h) == 569) {
+			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else {
-			isDrop = true;
-			System.out.println(isDrop);
-			
+		}else if ((x - w) >= 300 && (x - w) <=  420 && (y - h) == 499){
+			System.out.println("발판위에 서있다.");
+			isDrop = false;
+		}else if ((x - w) >= 450 && (x - w) <=  570 && (y - h) == 419){
+			System.out.println("발판위에 서있다.");
+			isDrop = false;
+		}else if ((x - w) >= 270 && (x - w) <=  390 && (y - h) == 329){
+			System.out.println("발판위에 서있다.");
+			isDrop = false;
+		}else if ((x - w) >= 370 && (x - w) <=  490 && (y - h) == 249){
+			System.out.println("발판위에 서있다.");
+			isDrop = false;
+		}else if ((x - w) >= 250 && (x - w) <=  370 && (y - h) == 169){
+			System.out.println("발판위에 서있다.");
+			isDrop = false;
+		}else if ((x - w) >= 400 && (x - w) <=  520 && (y - h) == 99){
+			System.out.println("발판위에 서있다.");
+			isDrop = false;
+		}else if ((x - w) >= 490 && (x - w) <=  610 && (y - h) == 19){
+			System.out.println("발판위에 서있다.");
+			isDrop = false;
+		}else if ((x - w) >=  650 && (x - w) <= 900 && y - h == - 31){
+			System.out.println("발판위에 서있다.");
+			isDrop = false;
+		}
+		else {
+			System.out.println("낙하중...");
+			y -= ddy;
+			isDrop = false;
 		}
 	}
 	// move

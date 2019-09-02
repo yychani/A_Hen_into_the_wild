@@ -22,17 +22,12 @@ public class Stage01_Thread extends Thread{
 				sleep(50);
 			} catch (InterruptedException e) {}
 
-			jumpThread = new Stage01_jump(stage01, stage01.isJump);
-			dropThread = new Stage01_Drop(stage01, stage01.isDrop);
-			if(stage01.isJump) {
+			jumpThread = new Stage01_jump(stage01, stage01.isJump());
+//			dropThread = new Stage01_Drop(stage01, stage01.isDrop);
+			if(stage01.isJump()) {
 				jumpThread.start();
 			}else {
 				jumpThread.setJumping(false);
-			}
-			if(stage01.isDrop) {
-				dropThread.start();
-			}else {
-				dropThread.setDroping(false);
 			}
 		}
 	}
