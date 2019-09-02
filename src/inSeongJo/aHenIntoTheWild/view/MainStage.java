@@ -2,6 +2,8 @@ package inSeongJo.aHenIntoTheWild.view;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -9,10 +11,12 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import org.omg.PortableInterceptor.USER_EXCEPTION;
 
+import inSeongJo.aHenIntoTheWild.controller.UserManager;
 import inSeongJo.aHenIntoTheWild.view.MainPage.MyMouseAdapter;
 
 public class MainStage extends JPanel {
@@ -85,7 +89,12 @@ public class MainStage extends JPanel {
 		stage2Button.setFocusPainted(false);
 		stage2Button.setBounds(250, 200, 300, 300);
 		add(stage2Button);
-		
+		stage2Button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, MainStage, new Stage02(mf));
+			}
+		});
 		//STAGE3 ¹öÆ°
 		Image stage3Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage3Button = new JButton(new ImageIcon(stage1Image));
