@@ -16,6 +16,7 @@ public class Stage01_Thread extends Thread{
 			System.out.println("쓰레드 실행중");
 			//GamePanel의 플레이어 좌표 변경 
 			stage01.move();				
+			stage01.enemyProcess();
 			stage01.repaint();//Gamestage01의 화면 갱신
 			stage01.setCnt(stage01.getCnt()+1);
 			try { //너무 빨리 돌아서 천천히 돌도록

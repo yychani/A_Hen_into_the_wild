@@ -7,8 +7,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import inSeongJo.aHenIntoTheWild.model.vo.Stage01_Enemy;
 import inSeongJo.aHenIntoTheWild.model.vo.Stage01_Thread;
 import inSeongJo.aHenIntoTheWild.model.vo.Stage01_jump;
 
@@ -16,13 +18,17 @@ import inSeongJo.aHenIntoTheWild.model.vo.Stage01_jump;
 
 public class Stage01 extends JPanel implements KeyListener{
 	private Stage01_Thread s1thread;
+	Stage01_Enemy en;
+	private int enemySpeed = 7;
 	private int width, height;//패널 사이즈 가져오기
 	private int x, y, w, h;//xy : 플레이어의 중심 좌표 / wh : 이미지 절반폭;
 	private int ipX, ipY; // ipXY 잎싹이 왼쪽 모서리 좌표
 	private int dx = 0, dy = 0;//플레이어 이미지의 이동속도, 이동방향z
-	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR;
+	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, EnemyImg, EnemyImgR;
 	private Image[] ipssagMoving, ipssagStanding, ipssagMovingR, ipssagStandingR;
 	private ArrayList<Image> stage01Footrest;
+	ArrayList<Stage01_Enemy> Enemy_List = new ArrayList<>();
+	ArrayList<Stage01_Enemy> Enemy_ListR = new ArrayList<>();
 	boolean isMoving = false, isRight = false;
 	private boolean isJump = false, isDrop = false;
 	private MainFrame mf;
@@ -35,7 +41,7 @@ public class Stage01 extends JPanel implements KeyListener{
 		this.setLayout(null);
 		stage01 = this;
 		mf.add(this);
-		
+
 		s1thread = new Stage01_Thread(this);
 		s1thread.start();
 		//GUI 관련 프로그램의 편의를 위해 만들어진 도구상자(Toolkit) 객체 
@@ -48,6 +54,8 @@ public class Stage01 extends JPanel implements KeyListener{
 		for(int i = 0; i < 7; i++) {
 			stage01Footrest.add(toolkit.getImage("images/Stage01_footrest.png")); // 발판 이미지
 		}
+		EnemyImg = new ImageIcon("images/ipssag/stage01_Enemy.png").getImage();
+		EnemyImgR = new ImageIcon("images/ipssag/stage01_Enemy_reverse.png").getImage();
 
 		ipssagStanding = new Image[2];
 		ipssagStanding[0] = toolkit.getImage("images/ipssag/ipssag.png");//플레이어 이미지 왼쪽 객체
@@ -100,6 +108,8 @@ public class Stage01 extends JPanel implements KeyListener{
 			ipssagJump = ipssagJump.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagJumpR = ipssagJumpR.getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 
+			EnemyImg = EnemyImg.getScaledInstance(290, 107, Image.SCALE_SMOOTH);
+			EnemyImgR = EnemyImgR.getScaledInstance(290, 107, Image.SCALE_SMOOTH);
 			x = width/2;//플레이어의 좌표 계산
 			y = 639;
 			w = 64;
@@ -122,6 +132,7 @@ public class Stage01 extends JPanel implements KeyListener{
 		g.drawImage(stage01Footrest.get(6), width / 2 + 40, 90, this); // 발판 그리기
 
 		drawIpssag(g);
+		drawEnemy(g);
 	}//paintComponent                                      
 
 	public void drawIpssag(Graphics g) {
@@ -184,7 +195,7 @@ public class Stage01 extends JPanel implements KeyListener{
 						e.printStackTrace();
 					}
 				}
-				
+
 			}
 		}// 플레이어 그리기
 	}
@@ -226,31 +237,31 @@ public class Stage01 extends JPanel implements KeyListener{
 		//플레이어 좌표가 화면 밖으로 나가지 않도록 // 나중에 벽으로 수정
 		if(x < w + 280 && (y - h) > 19) x = w + 280; // 왼쪽 벽 넘지 못하게
 		if(x > width - w - 280 && (y - h) > 19) x = width - w - 280; // 오른쪽 벽 넘지 못하게
-		System.out.println(isDrop);
-		System.out.println("x = " + (x - w) + " y = " + (y - h));
+		//		System.out.println(isDrop);
+		//		System.out.println("x = " + (x - w) + " y = " + (y - h));
 		if((x == 0 && y == 0) ||(x - w) >= 390 && (x - w) <=  510 && (y - h) == 575) {
-			System.out.println("발판위에 서있다.");
+			//			System.out.println("발판위에 서있다.");
 			isDrop = false;
 		}else if ((x - w) >= 300 && (x - w) <=  430 && (y - h) == 495){
-			System.out.println("발판위에 서있다.");
+			//			System.out.println("발판위에 서있다.");
 			isDrop = false;
 		}else if ((x - w) >= 450 && (x - w) <=  570 && (y - h) == 415){
-			System.out.println("발판위에 서있다.");
+			//			System.out.println("발판위에 서있다.");
 			isDrop = false;
 		}else if ((x - w) >= 270 && (x - w) <=  390 && (y - h) == 335){
-			System.out.println("발판위에 서있다.");
+			//			System.out.println("발판위에 서있다.");
 			isDrop = false;
 		}else if ((x - w) >= 370 && (x - w) <=  490 && (y - h) == 255){
-			System.out.println("발판위에 서있다.");
+			//			System.out.println("발판위에 서있다.");
 			isDrop = false;
 		}else if ((x - w) >= 250 && (x - w) <=  370 && (y - h) == 175){
-			System.out.println("발판위에 서있다.");
+			//			System.out.println("발판위에 서있다.");
 			isDrop = false;
 		}else if ((x - w) >= 400 && (x - w) <=  520 && (y - h) == 95){
-			System.out.println("발판위에 서있다.");
+			//			System.out.println("발판위에 서있다.");
 			isDrop = false;
 		}else if ((x - w) >= 490 && (x - w) <=  610 && (y - h) == 15){
-			System.out.println("발판위에 서있다.");
+			//			System.out.println("발판위에 서있다.");
 			isDrop = false;
 		}else if ((x - w) >=  650 && (x - w) <= 900 && y - h == - 35){
 			System.out.println("클리어");
@@ -263,6 +274,40 @@ public class Stage01 extends JPanel implements KeyListener{
 		}
 	}
 	// move
+
+	public void enemyProcess() {
+		
+		for (int i = 0 ; i < Enemy_List.size() ; ++i ){ 
+			en = Enemy_List.get(i); 
+			if(i % 2 == 0) {
+			en.move(); 
+			}else {
+				en.move2();
+			}
+			if(en.getX() < -200){ 
+				Enemy_List.remove(i); 
+			}else if(en.getX() > 1500) {
+				Enemy_List.remove(i); 
+			}
+		}
+		if(cnt % 201 == 0) {
+			en = new Stage01_Enemy(1024 + 100, ((int)(Math.random()*600) + 100), (enemySpeed + (int)(Math.random()*10)));
+			Enemy_List.add(en); 
+			en = new Stage01_Enemy(-100, ((int)(Math.random()*600) + 100), (enemySpeed + (int)(Math.random()*10)));
+			Enemy_List.add(en);
+		}
+	}
+	public void drawEnemy(Graphics g){ 
+		for (int i = 0 ; i < Enemy_List.size() ; ++i ){
+			en = Enemy_List.get(i);
+//			System.out.println("x = " + en.getX() + " y = " + en.getY());
+			if(i % 2 == 0) {
+			g.drawImage(EnemyImgR, en.getX(), en.getY(), this);
+			}else {
+				g.drawImage(EnemyImg, en.getX(), en.getY(), this);
+			}
+		}
+	}
 	public boolean isJump() {
 		return isJump;
 	}
