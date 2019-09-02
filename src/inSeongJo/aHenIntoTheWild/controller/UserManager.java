@@ -101,37 +101,6 @@ public class UserManager {
 			}
 				
 		}
-
-/*		for (User user : ulist) {
-			if (user.getId().equals(id)) {
-				if (user.getPassword().equals(pw)) {
-					System.out.println("로그인 완료");
-					check = true;
-					JOptionPane.showMessageDialog(null, "로그인 완료", "로그인", 1);
-					break;
-				}
-
-			} else {
-				System.out.println("존재하지 않는 아이디와 비밀번호");
-				check = false;
-				JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 다시 한번 확인해주세요.", "로그인", 1);
-				break;
-			}
-
-		}*/
-
-		
-		  /*for(User user : ulist) { 
-			  if(user.getId().equals(id) && user.getPassword().equals(pw)) { 
-				  System.out.println("로그인 완료"); check = true;
-				  JOptionPane.showMessageDialog(null, "로그인 완료", "로그인", 1); break; 
-		  }else {
-		  System.out.println("존재하지 않는 아이디와 비밀번호"); 
-		  check = false;
-		  JOptionPane.showMessageDialog(null, "아이디와 비밀번호를 다시 한번 확인해주세요.", "로그인", 1);
-		  break; }
-		  
-		  }*/
 		 
 
 		return loginUser;

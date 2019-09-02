@@ -1,5 +1,7 @@
 package inSeongJo.aHenIntoTheWild.view;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -27,23 +29,38 @@ public class UserInfoChange extends JPanel {
 
 		mf.add(this);
 
-		// 회원정보변경 텍스트 이미지 라벨
-		Image infoChange = new ImageIcon("images/회원정보변경.png").getImage().getScaledInstance(190, 60, 0);
-		JLabel infoChangeIcon = new JLabel(new ImageIcon(infoChange));
-		infoChangeIcon.setBounds(400, 100, 200, 200);
-		add(infoChangeIcon);
-
-		// 닉네임 변경 입력란
-		JTextField nickNameText = new JTextField();
-		nickNameText.setBounds(350, 400, 300, 30);
-		nickNameText.setBorder(BorderFactory.createEmptyBorder());
+		// 회원정보변경 텍스트 
+		JLabel changeInfoText = new JLabel("회원정보변경");
+		changeInfoText.setBounds(450, 150, 300, 100);
+		changeInfoText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 35));
+		changeInfoText.setForeground(Color.WHITE);
+		add(changeInfoText);
+		
+		//닉네임 텍스트
+		JLabel nickNameText = new JLabel("닉네임");
+		nickNameText.setBounds(300, 100, 300, 100);
+		nickNameText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		nickNameText.setForeground(Color.WHITE);
 		add(nickNameText);
 		
-		// 이메일 변경 입력란
-		JTextField emailText = new JTextField();
-		emailText.setBounds(350, 450, 300, 30);
-		emailText.setBorder(BorderFactory.createEmptyBorder());
+		// 닉네임 변경 입력란
+		JTextField nickNameTextField = new JTextField();
+		nickNameTextField.setBounds(350, 400, 300, 30);
+		nickNameTextField.setBorder(BorderFactory.createEmptyBorder());
+		add(nickNameTextField);
+		
+		//이메일 텍스트
+		JLabel emailText = new JLabel("닉네임");
+		emailText.setBounds(300, 120, 300, 100);
+		emailText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		emailText.setForeground(Color.WHITE);
 		add(emailText);
+		
+		// 이메일 변경 입력란
+		JTextField emailTextField = new JTextField();
+		emailTextField.setBounds(350, 450, 300, 30);
+		emailTextField.setBorder(BorderFactory.createEmptyBorder());
+		add(emailTextField);
 		
 		// 비밀번호 변경 입력란
 		JPasswordField passwordText = new JPasswordField();
