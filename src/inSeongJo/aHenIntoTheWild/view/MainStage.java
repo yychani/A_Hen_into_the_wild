@@ -134,7 +134,14 @@ public class MainStage extends JPanel {
 		stage4Button.setFocusPainted(false);
 		stage4Button.setBounds(710, 200, 300, 300);
 		add(stage4Button);
-		
+    
+		stage4Button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				ChangePanel.changePanel(mf, MainStage, new Stage04(mf));
+			}
+		});
 		
 		
 	}
@@ -160,6 +167,4 @@ public class MainStage extends JPanel {
 			System.out.println("클릭되었습니다.");
 		}
 	}
-	
-
 }
