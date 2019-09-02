@@ -12,9 +12,9 @@ public class MainFrame extends JFrame{
 		
 		s1Thread = new Stage01_Thread();
 		stage01 = s1Thread.getStage01();
-		this.add(stage01); // new Stage01을 자신의 패널을 넣어서 실험
+		//this.add(new MainPage()); // new Stage01을 자신의 패널을 넣어서 실험
 
-		s1Thread.start();
+		new MainPage(this);
 		
 		setResizable(false);
 		this.setVisible(true);
