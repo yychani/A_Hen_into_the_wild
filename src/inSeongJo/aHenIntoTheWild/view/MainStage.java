@@ -36,11 +36,14 @@ public class MainStage extends JPanel {
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 //		mf.add(this);
+		
+		//유저 객체 정보 출력
 		JLabel loginInfo = new JLabel(user.getNickName());
 		loginInfo.setBounds(100, 100, 300, 100);
 		loginInfo.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
 		loginInfo.setForeground(Color.WHITE);
 		add(loginInfo);
+		
 		//유저 버튼
 		Image userImage = new ImageIcon("images/YJimages/user2.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		Image userPressedImage = new ImageIcon("images/YJimages/user2_pressed.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
@@ -64,6 +67,8 @@ public class MainStage extends JPanel {
 		saveButton.setBounds(930, 20, 70, 70);
 		saveButton.setPressedIcon(new ImageIcon(savePressedImage));;
 		add(saveButton);
+		
+		
 		
 		//잎싹이 이미지
 		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 180, 0);
