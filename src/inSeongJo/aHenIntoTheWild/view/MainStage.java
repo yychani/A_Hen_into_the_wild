@@ -97,7 +97,7 @@ public class MainStage extends JPanel {
 		stage1Button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ChangePanel.changePanel(mf, MainStage, new Stage01(mf));
+				ChangePanel.changePanel(mf, MainStage, new Stage01_infoPage(mf));
 			}
 		});
 		add(stage1Button);
