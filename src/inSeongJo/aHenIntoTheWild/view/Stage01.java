@@ -416,7 +416,6 @@ public class Stage01 extends JPanel implements KeyListener{
 		if(Math.abs((x1 + ipssag.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < ( enemy.getWidth(null) / 2 + ipssag.getWidth(null) / 2 - 40) 
 				&& Math.abs( ( y1 + ipssag.getHeight(null) / 2 )  - ( y2 + enemy.getHeight(null) / 2 ))  < ( enemy.getHeight(null)/2 + ipssag.getHeight(null)/2 - 40) ){
 			// 이미지 넓이, 높이값 바로 받음
-			
 			check = true;
 		}else {
 			check = false;
