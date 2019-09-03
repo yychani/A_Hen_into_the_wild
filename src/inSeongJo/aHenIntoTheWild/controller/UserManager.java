@@ -49,7 +49,7 @@ public class UserManager {
 		// System.out.println(ulist.size());
 
 		boolean check = false;
-		
+
 		if (ulist != null) {
 			for (User user : ulist) {
 				if (user.getId().equals(id)) {
@@ -59,7 +59,7 @@ public class UserManager {
 				}
 
 			}
-		}else {
+		} else {
 			System.out.println("널값");
 		}
 
@@ -81,26 +81,56 @@ public class UserManager {
 		// 로그인 성공 : true , 실패 : false 반환
 
 		ulist = ud.readUserList();
-		
+
 		User loginUser = new User();
-		
-		for(User user : ulist) {
-			if(user.getId().equals(id)) {
-				if(user.getPassword().equals(pw)) {
-					//로그인 성공
+
+		for (User user : ulist) {
+			if (user.getId().equals(id)) {
+				if (user.getPassword().equals(pw)) {
+					// 로그인 성공
 					System.out.println(user);
 					loginUser = user;
-				}else {
-					//로그인 실패
-					loginUser = null;
+				} else {
+					// 로그인 실패
+					loginUser.setId(null);;
 				}
-				
+
 			}
-				
+
 		}
-		 
 
 		return loginUser;
+	}
+
+	// 회원 정보 변경 메소드
+	public User UserInfoChagne(String nickName, String email, String password, User user) {
+
+		ulist = ud.readUserList();
+
+		int userIndex = 0;
+		System.out.println(nickName + ", " + email + ", " + password);
+
+		for (int i = 0; i < ulist.size(); i++) {
+			if (ulist.get(i).getId().equals(user.getId())) {
+				System.out.println(ulist.get(i));
+				userIndex = i;
+			} else {
+				System.out.println("입력하신 회원의 정보가 없습니다.");
+			}
+
+		}
+
+		ulist.get(userIndex).setNickName(nickName);
+		ulist.get(userIndex).setEmail(email);
+		ulist.get(userIndex).setPassword(password);
+
+		for (int i = 0; i < ulist.size(); i++) {
+			System.out.println(ulist.get(i));
+		}
+
+		ud.writeUserList(ulist);
+
+		return ulist.get(userIndex);
 	}
 
 }

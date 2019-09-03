@@ -2,6 +2,7 @@ package inSeongJo.aHenIntoTheWild.view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -13,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.RoundRectangle2D;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,6 +27,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import inSeongJo.aHenIntoTheWild.controller.UserManager;
+import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
+import inSeongJo.aHenIntoTheWild.model.vo.User;
 
 
 public class MainPage extends JPanel {
@@ -45,6 +49,11 @@ public class MainPage extends JPanel {
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		mf.add(this);
+		
+		
+		UserDao ud = new UserDao();
+		ArrayList<User> list = ud.readUserList();
+		System.out.println(list);
 
 		// 아이디 : user이미지
 		Image user = new ImageIcon("images/YJimages/user.png").getImage().getScaledInstance(50, 50, 0);
@@ -79,9 +88,10 @@ public class MainPage extends JPanel {
 		loginButton.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
 		loginButton.setBackground(Color.LIGHT_GRAY);
 		loginButton.setBorderPainted(false);
+		loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(loginButton);
 		
-
+		
 		// 회원 가입 버튼
 		JButton joinButton = new JButton("회원가입");
 		joinButton.setBounds(670, 445, 120, 40);
@@ -90,6 +100,7 @@ public class MainPage extends JPanel {
 		joinButton.setBackground(Color.LIGHT_GRAY);
 		//joinButton.setBorderPainted(false);
 		joinButton.setBorder(new RoundedBorder(20));
+		joinButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		//joinButton.setBorder(new RoundedBorder(10));
 		add(joinButton);
 		
