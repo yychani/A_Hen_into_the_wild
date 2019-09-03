@@ -143,7 +143,6 @@ public class MainStage extends JPanel {
 		stage4Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
 				ChangePanel.changePanel(mf, MainStage, new Stage04(mf));
 			}
 		});
