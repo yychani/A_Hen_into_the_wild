@@ -28,8 +28,8 @@ public class Stage04 extends JPanel implements KeyListener{
 	private Graphics ScreenGraphics;
 	final int FLY_U = 10;
 	int cnt = 0;
-	private int ddx = 960;
-	private int ddy = (int)(Math.random() *640) - 70;
+	private int ddx;
+	private int ddy;
 	private boolean plz = true;
 
 	private Stage04Enemy stageEnemy;
@@ -151,10 +151,16 @@ public class Stage04 extends JPanel implements KeyListener{
 
 
 		//		while(true) {
-
+		ddx = 960;
+		ddy = (int)(Math.random() *640) - 70;
 		int random = new Random().nextInt(10);
+		int random2 = new Random().nextInt(10);
+		Enemy_List.add(new Stage04Enemy().enemyC);
+		Enemy_List.add(new Stage04Enemy().enemyC);
 		Enemy_List.get(random).setBounds(ddx, ddy,200,200);
 		add(Enemy_List.get(random));
+		Enemy_List.get(random2).setBounds(ddx, ddy,200,200);
+		add(Enemy_List.get(random2));
 
 		while(ddx >= -90) {
 
@@ -164,6 +170,7 @@ public class Stage04 extends JPanel implements KeyListener{
 				//					
 				//				}else {
 				Enemy_List.get(random).setLocation(ddx -= 1, ddy);
+				Enemy_List.get(random2).setLocation(ddx -= 1, ddy);
 				//					System.out.println("언제쯤 움직이지?");
 				//					System.out.println(ddx -= 1);
 				//					System.out.println(ddy);
@@ -175,6 +182,7 @@ public class Stage04 extends JPanel implements KeyListener{
 			}
 		}
 		remove(Enemy_List.get(random));
+		remove(Enemy_List.get(random2));
 		if(random == 10) {
 			plz = false;
 		}

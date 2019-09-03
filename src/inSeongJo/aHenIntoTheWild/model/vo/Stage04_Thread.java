@@ -22,6 +22,8 @@ public class Stage04_Thread extends Thread{
 	@Override
 	public void run() {
 		while(true) {
+			cnt++;
+//			stage4.setCnt(cnt);
 			//			System.out.println("쓰레드 실행중");
 			stage4.move();
 			System.out.println("움직임");
