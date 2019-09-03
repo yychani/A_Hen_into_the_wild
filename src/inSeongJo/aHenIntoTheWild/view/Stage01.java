@@ -1,5 +1,6 @@
 package inSeongJo.aHenIntoTheWild.view;
 
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -8,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import inSeongJo.aHenIntoTheWild.model.vo.Stage01_Enemy;
@@ -21,12 +23,13 @@ public class Stage01 extends JPanel implements KeyListener{
 	Stage01_Enemy en;
 	private int enemySpeed = 7;
 	private int width, height;//패널 사이즈 가져오기
+	private int life = 5;
 	private int x, y, w, h;//xy : 플레이어의 중심 좌표 / wh : 이미지 절반폭;
 	private int ipX, ipY; // ipXY 잎싹이 왼쪽 모서리 좌표
 	private int dx = 0, dy = 0;//플레이어 이미지의 이동속도, 이동방향z
-	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, EnemyImg, EnemyImgR;
+	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, EnemyImg, EnemyImgR, emptyLife;
 	private Image[] ipssagMoving, ipssagStanding, ipssagMovingR, ipssagStandingR;
-	private ArrayList<Image> stage01Footrest;
+	private ArrayList<Image> stage01Footrest, lifeArray;
 	ArrayList<Stage01_Enemy> Enemy_List = new ArrayList<>();
 	ArrayList<Stage01_Enemy> Enemy_ListR = new ArrayList<>();
 	boolean isMoving = false, isRight = false;
@@ -34,6 +37,8 @@ public class Stage01 extends JPanel implements KeyListener{
 	private MainFrame mf;
 	private JPanel stage01;
 	int cnt = 0;
+	//GUI 관련 프로그램의 편의를 위해 만들어진 도구상자(Toolkit) 객체 
+	Toolkit toolkit = Toolkit.getDefaultToolkit();
 
 	public Stage01(MainFrame mf) {
 		this.mf = mf;
@@ -44,8 +49,7 @@ public class Stage01 extends JPanel implements KeyListener{
 
 		s1thread = new Stage01_Thread(this);
 		s1thread.start();
-		//GUI 관련 프로그램의 편의를 위해 만들어진 도구상자(Toolkit) 객체 
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		
 
 		stage01Background = toolkit.getImage("images/Stage01_background.png");//배경 이미지
 		leftWall = toolkit.getImage("images/left_wall.png");
@@ -54,6 +58,12 @@ public class Stage01 extends JPanel implements KeyListener{
 		for(int i = 0; i < 7; i++) {
 			stage01Footrest.add(toolkit.getImage("images/Stage01_footrest.png")); // 발판 이미지
 		}
+		lifeArray = new ArrayList<>();
+		for(int i = 0; i < 5; i++) {
+			lifeArray.add(toolkit.getImage("images/ipssag/life.png"));
+		}
+		
+		emptyLife = toolkit.getImage("images/ipssag/empty_life.png");
 		EnemyImg = new ImageIcon("images/ipssag/stage01_Enemy.png").getImage();
 		EnemyImgR = new ImageIcon("images/ipssag/stage01_Enemy_reverse.png").getImage();
 
@@ -75,6 +85,11 @@ public class Stage01 extends JPanel implements KeyListener{
 
 		ipssagJump = toolkit.getImage("images/ipssag/ipssag_Jump.png");
 		ipssagJumpR = toolkit.getImage("images/ipssag/ipssag_Jump_reverse.png");
+		
+		JLabel lifetext = new JLabel("Life : ");
+		lifetext.setBounds(10, 10, 100, 50);
+		lifetext.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 30));
+		add(lifetext);
 		this.setFocusable(true);
 		this.addKeyListener(this);
 
@@ -96,6 +111,11 @@ public class Stage01 extends JPanel implements KeyListener{
 				stage01Footrest.set(i, (stage01Footrest.get(i)).getScaledInstance(150, 100, Image.SCALE_SMOOTH));
 			}
 
+			for(int i = 0; i < lifeArray.size(); i++) {
+				lifeArray.set(i, (lifeArray.get(i)).getScaledInstance(60, 60, Image.SCALE_SMOOTH));
+			}
+			
+			emptyLife = emptyLife.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			ipssagStanding[0] = ipssagStanding[0].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagStanding[1] = ipssagStanding[1].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagMoving[0] = ipssagMoving[0].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
@@ -130,11 +150,57 @@ public class Stage01 extends JPanel implements KeyListener{
 		g.drawImage(stage01Footrest.get(5), width / 2 - 200, 250, this); // 발판 그리기
 		g.drawImage(stage01Footrest.get(6), width / 2 - 50, 170, this); // 발판 그리기
 		g.drawImage(stage01Footrest.get(6), width / 2 + 40, 90, this); // 발판 그리기
-
+		drawLife(g);
 		drawIpssag(g);
 		drawEnemy(g);
+		
 	}//paintComponent                                      
 
+	public void drawLife(Graphics g) {
+		if(life == 5) {
+			for(int i = 0; i < lifeArray.size(); i++) {
+				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+			}
+		}else if(life == 4) {
+			lifeArray.set(4, emptyLife);
+			for(int i = 0; i < lifeArray.size(); i++) {
+				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+			}
+		}
+		else if(life == 3) {
+			lifeArray.set(4, emptyLife);
+			lifeArray.set(3, emptyLife);
+			for(int i = 0; i < lifeArray.size(); i++) {
+				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+			}
+		}
+		else if(life == 2) {
+			lifeArray.set(4, emptyLife);
+			lifeArray.set(3, emptyLife);
+			lifeArray.set(2, emptyLife);
+			for(int i = 0; i < lifeArray.size(); i++) {
+				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+			}
+		}
+		else if(life == 1) {
+			lifeArray.set(4, emptyLife);
+			lifeArray.set(3, emptyLife);
+			lifeArray.set(2, emptyLife);
+			lifeArray.set(1, emptyLife);
+			for(int i = 0; i < lifeArray.size(); i++) {
+				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+			}
+		}else {
+			lifeArray.set(4, emptyLife);
+			lifeArray.set(3, emptyLife);
+			lifeArray.set(2, emptyLife);
+			lifeArray.set(1, emptyLife);
+			lifeArray.set(0, emptyLife);
+			for(int i = 0; i < lifeArray.size(); i++) {
+				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+			}
+		}
+	}
 	public void drawIpssag(Graphics g) {
 		if(isRight) {
 			if(isJump) {
@@ -284,12 +350,19 @@ public class Stage01 extends JPanel implements KeyListener{
 			}else {
 				en.move2();
 			}
-			if(en.getX() < -200){ 
+			if(en.getX() < -200 && i % 2 == 0){ 
 				Enemy_List.remove(i); 
-			}else if(en.getX() > 1500) {
+			}else if(en.getX() > 1500 && i % 2 != 0) {
 				Enemy_List.remove(i); 
 			}
+			if(collision(x - w, y - h - 15, en.getX(), en.getY(), ipssagStanding[0], EnemyImg))
+			{
+				life--;
+				System.out.println(life);
+				Enemy_List.remove(i);
+			}
 		}
+		
 		if(cnt % 201 == 0) {
 			en = new Stage01_Enemy(1024 + 100, ((int)(Math.random()*600) + 100), (enemySpeed + (int)(Math.random()*10)));
 			Enemy_List.add(en); 
@@ -307,6 +380,19 @@ public class Stage01 extends JPanel implements KeyListener{
 				g.drawImage(EnemyImg, en.getX(), en.getY(), this);
 			}
 		}
+	}
+	
+	public boolean collision(int x1, int y1, int x2, int y2, Image ipssag, Image enemy) {
+		boolean check = false;
+		if(Math.abs((x1 + ipssag.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < ( enemy.getWidth(null) / 2 + ipssag.getWidth(null) / 2 - 40) 
+				&& Math.abs( ( y1 + ipssag.getHeight(null) / 2 )  - ( y2 + enemy.getHeight(null) / 2 ))  < ( enemy.getHeight(null)/2 + ipssag.getHeight(null)/2 - 40) ){
+			// 이미지 넓이, 높이값 바로 받음
+			
+			check = true;
+		}else {
+			check = false;
+		}
+		return check;
 	}
 	public boolean isJump() {
 		return isJump;
