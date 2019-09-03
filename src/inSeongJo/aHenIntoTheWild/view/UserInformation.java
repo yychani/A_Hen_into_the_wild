@@ -7,13 +7,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,106 +19,111 @@ import inSeongJo.aHenIntoTheWild.model.vo.User;
 
 
 
+
 public class UserInformation extends JPanel{
 
 	Image img;
-	JLabel larr[] = new JLabel[5];
-	String info[] = {"아이디", "닉네임", "이메일", "랭킹", "Stage"};
-	JTextField tarr[] = new JTextField[5];
-	JButton btn1 = new JButton("회원 정보 수정");
-	JButton btn2 = new JButton("로그아웃");
+	JLabel id = new JLabel("아이디");
+	JLabel nik = new JLabel("닉네임");
+	JLabel email = new JLabel("이메일");
+	JLabel rank = new JLabel("랭킹");
+	JLabel stage = new JLabel("Stage");
 	User user;
 	User presentUser;
-	private ArrayList<User> allUser;
+	
+	JTextField tarr[] = new JTextField[5];
+	
+	JButton btn1 = new JButton("회원정보 수정");
+	JButton btn2 = new JButton("로그아웃");
+	
 	private Font f1;
-
-	private MainFrame mf;
-	private JPanel UserInformation;
-
+	private JPanel UserInformation;  //화면 전환을 위해 changePanel메소드에서 사용할 필드	
+	private ArrayList<User> allUser;
+	
+	
 	public UserInformation(MainFrame mf, User user) {
-		this.mf = mf;
 		this.user = user;
 		UserInformation = this;
-		setLayout(null);
+		setLayout(null); //JFrame에 얹을 컴포넌트의 배치방법을 지정하는 메소드
 		setSize(1024, 768);
+		
 		Toolkit tk = Toolkit.getDefaultToolkit();
-		//setBounds(0, 0, 1024, 768);
+		
 		Dimension d = tk.getScreenSize();
-		UserDao userdao = new UserDao();
+		UserDao userdao = new UserDao();//userdao에 있는 파일 읽어들이는 메소드 불러오기 위함
 		allUser = userdao.readUserList();
-
-		for(User u : allUser) {
+		
+		//User 타입의 변수 u에 allUser라는 ArrayList를 대입하며 출력
+		//입력한 id와 데이터에 저장된 아이디를 비교해 같으면 출력
+		for(User u: allUser) {
 			if(u.getId().equals(user.getId())) {
 				if(u.getPassword().equals(user.getPassword())) {
 					presentUser = u;
-				}else {
 				}
-
 			}
 		}
-
+		
 		try {
 			img = tk.getImage("images/YJimages/Main_none.png").getScaledInstance(1024, 768, Image.SCALE_SMOOTH);
 			
 		}catch(Exception e) {
-			System.out.println(e.getMessage());        
+			e.getMessage();
 		}
-
-		int width =(int)(d.getWidth());
-		int height = (int)(d.getHeight());
-
+		
 		f1 = new Font("나눔스퀘어_ac Bold", Font.PLAIN, 20);
-
-		for(int i=0; i<larr.length; i++) {
-			larr[i] = new JLabel(info[i]);
-			larr[i].setFont(f1);
-			add(larr[i]);
-			switch(i) {
-			case 0: larr[i].setBounds((width/3)-250, (height/3), 150, 50); break;
-			case 1: larr[i].setBounds((width/3)-250, (height/3) - 100, 150, 50); break;
-			case 2: larr[i].setBounds((width/3)-250, (height/3) - 200, 150, 50); break;
-			case 3: larr[i].setBounds((width/3)+130, (height/3), 150, 50); break;
-			case 4: larr[i].setBounds((width/3)+130, (height/3) - 100, 150, 50); break;
-			}
-		}
-
-		for(int i=0; i<tarr.length;i++) {
+		
+		add(id);
+		add(nik);
+		add(email);
+		add(rank);
+		add(stage);
+		
+		id.setBounds(150, 150, 50, 50);
+		nik.setBounds(150, 250, 50, 50);
+		email.setBounds(150, 350, 50, 50);
+		rank.setBounds(550, 150, 50, 50);
+		stage.setBounds(550, 250, 50, 50);
+		
+		//TextField를 panel에 붙이고 위치를 지정하는 동시에 TextField에 회원 정보 표시
+		for(int i=0; i<tarr.length; i++) {
 			tarr[i] = new JTextField();
 			add(tarr[i]);
 			switch(i) {
-			case 0: 
-				tarr[i].setBounds((width/3)-140, (height/3), 250, 50);
-				tarr[i].setText(presentUser.getId());
-				tarr[i].setEditable(false);
+			case 0:
+				tarr[i].setBounds(200, 150, 250, 50);
+				tarr[i].setText(presentUser.getId()); //회원정보 중 id표시
+				tarr[i].setEditable(false);  //값 변경하지 못하게 하는 메소드
 				break;
+				
 			case 1: 
-				tarr[i].setBounds((width/3)-140, (height/3)-100, 250, 50);
-				tarr[i].setText(presentUser.getNickName());
+				tarr[i].setBounds(200, 250, 250, 50);
+				tarr[i].setText(presentUser.getNickName());  //회원정보 중 닉네임 표시
 				tarr[i].setEditable(false);
 				break;
+				
 			case 2: 
-				tarr[i].setBounds((width/3)-140, (height/3)-200, 250, 50);
-				tarr[i].setText(presentUser.getEmail());
+				tarr[i].setBounds(200, 350, 250, 50);
+				tarr[i].setText(presentUser.getEmail());  //회원 정보 중 이메일 표시
 				tarr[i].setEditable(false);
 				break;
+				
 			case 3: 
-				tarr[i].setBounds((width/3)+200, (height/3), 250, 50);
-				tarr[i].setText(presentUser.getTotalScore()+"");
+				tarr[i].setBounds(600, 150, 250, 50);
+				tarr[i].setText(presentUser.getTotalScore()+"");//회원정보 중 전체 점수 표시 (단, totalscore가 int형이므로 문자열로 변환)
 				tarr[i].setEditable(false);
-				break;
+				
 			case 4: 
-				tarr[i].setBounds((width/3)+200, (height/3)-100, 250, 50);
+				tarr[i].setBounds(600, 250, 250, 50);
 				if(presentUser.getStage4Score() == 0) {
-					if(presentUser.getStage3Score() == 0) {
-						if(presentUser.getStage2Score() == 0) {
-							if(presentUser.getStage1Score() == 0) {
+					if(presentUser.getStage3Score() ==0) {
+						if(presentUser.getStage2Score() ==0) {
+							if(presentUser.getStage1Score() ==0) {
 								tarr[i].setText("클리어한 스테이지가 없습니다.");
 								tarr[i].setEditable(false);
 								break;
 							}
 							tarr[i].setText("1");
 							tarr[i].setEditable(false);
-							break;
 						}
 						tarr[i].setText("2");
 						tarr[i].setEditable(false);
@@ -136,33 +137,29 @@ public class UserInformation extends JPanel{
 					tarr[i].setEditable(false);
 					break;
 				}
-				
 			}
 		}
-
+		
 		btn1.setFont(f1);
 		btn2.setFont(f1);
 		add(btn1);
 		add(btn2);
-		btn1.setBounds(300, 500, 150, 50);
-		btn2.setBounds(500, 500, 150, 50);
-
-
+		btn1.setBounds(250, 600, 150, 50);
+		btn2.setBounds(700, 600, 150, 50);
+		
 		//회원정보 변경으로 이동
-		btn1.addActionListener(new ActionListener() {
+				btn1.addActionListener(new ActionListener() {
 
-			@Override
+					@Override
 
-			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, UserInformation, new UserInfoChange(mf, user));
-			}
-		});
+					public void actionPerformed(ActionEvent e) {
+						ChangePanel.changePanel(mf, UserInformation, new UserInfoChange(mf, user));
+					}
+				});
 
-
-
+		
 	}
-
-
+	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -170,5 +167,8 @@ public class UserInformation extends JPanel{
 		paintComponents(g);
 		this.repaint();
 	}
-
+	
+	
+	
+	
 }
