@@ -7,12 +7,13 @@ public class Stage01_Thread extends Thread{
 	Stage01_jump jumpThread;
 	Stage01_Drop dropThread;
 	int cnt;
+	private boolean isOver = true;
 	public Stage01_Thread(Stage01 stage01) {
 		this.stage01 = stage01;
 	}
 	@Override
 	public void run() {
-		while(true) {
+		while(isOver) {
 			System.out.println("쓰레드 실행중");
 			//GamePanel의 플레이어 좌표 변경 
 			stage01.move();				
@@ -34,6 +35,12 @@ public class Stage01_Thread extends Thread{
 	}
 
 
+	public boolean isOver() {
+		return isOver;
+	}
+	public void setOver(boolean isOver) {
+		this.isOver = isOver;
+	}
 	public Stage01 getStage01() {
 		return stage01;
 	}

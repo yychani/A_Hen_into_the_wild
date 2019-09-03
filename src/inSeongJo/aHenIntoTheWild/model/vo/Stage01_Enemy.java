@@ -13,11 +13,11 @@ public class Stage01_Enemy {
 	}
 	public void move(){ 
 		x -= speed;
-		System.out.println("speed1 = " + speed);
+//		System.out.println("speed1 = " + speed);
 	}
 	public void move2() {
 		x += speed;
-		System.out.println("speed2 = " + speed);
+//		System.out.println("speed2 = " + speed);
 	}
 	public int getX() {
 		return x;
