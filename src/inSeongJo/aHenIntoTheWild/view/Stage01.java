@@ -27,20 +27,22 @@ public class Stage01 extends JPanel implements KeyListener{
 	private int x, y, w, h;//xy : 플레이어의 중심 좌표 / wh : 이미지 절반폭;
 	private int ipX, ipY; // ipXY 잎싹이 왼쪽 모서리 좌표
 	private int dx = 0, dy = 0;//플레이어 이미지의 이동속도, 이동방향z
-	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, EnemyImg, EnemyImgR, emptyLife;
+	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, EnemyImg, EnemyImgR, emptyLife, gameOverImg, gameClearImg;
 	private Image[] ipssagMoving, ipssagStanding, ipssagMovingR, ipssagStandingR;
 	private ArrayList<Image> stage01Footrest, lifeArray;
 	ArrayList<Stage01_Enemy> Enemy_List = new ArrayList<>();
 	ArrayList<Stage01_Enemy> Enemy_ListR = new ArrayList<>();
 	boolean isMoving = false, isRight = false;
-	private boolean isJump = false, isDrop = false;
+	private boolean isJump = false, isDrop = false, gameOver = false, isClear = false;
 	private MainFrame mf;
 	private JPanel stage01;
 	int cnt = 0;
+	private int score = 0;
 	//GUI 관련 프로그램의 편의를 위해 만들어진 도구상자(Toolkit) 객체 
 	Toolkit toolkit = Toolkit.getDefaultToolkit();
 
 	public Stage01(MainFrame mf) {
+		gameOver = false;
 		this.mf = mf;
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
@@ -48,6 +50,7 @@ public class Stage01 extends JPanel implements KeyListener{
 		mf.add(this);
 
 		s1thread = new Stage01_Thread(this);
+		s1thread.setDaemon(true);
 		s1thread.start();
 		
 
@@ -64,6 +67,9 @@ public class Stage01 extends JPanel implements KeyListener{
 		}
 		
 		emptyLife = toolkit.getImage("images/ipssag/empty_life.png");
+		gameOverImg = toolkit.getImage("images/gameOver.png");
+		gameClearImg = toolkit.getImage("images/clear.png");
+		
 		EnemyImg = new ImageIcon("images/ipssag/stage01_Enemy.png").getImage();
 		EnemyImgR = new ImageIcon("images/ipssag/stage01_Enemy_reverse.png").getImage();
 
@@ -116,6 +122,9 @@ public class Stage01 extends JPanel implements KeyListener{
 			}
 			
 			emptyLife = emptyLife.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+			gameOverImg = gameOverImg.getScaledInstance(830, 200, Image.SCALE_SMOOTH);
+			gameClearImg = gameClearImg.getScaledInstance(830, 250, Image.SCALE_SMOOTH);
+			
 			ipssagStanding[0] = ipssagStanding[0].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagStanding[1] = ipssagStanding[1].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
 			ipssagMoving[0] = ipssagMoving[0].getScaledInstance(128, 128, Image.SCALE_SMOOTH);
@@ -154,24 +163,26 @@ public class Stage01 extends JPanel implements KeyListener{
 		drawIpssag(g);
 		drawEnemy(g);
 		
+		gameStatusCheck(g);
+		
 	}//paintComponent                                      
 
 	public void drawLife(Graphics g) {
 		if(life == 5) {
 			for(int i = 0; i < lifeArray.size(); i++) {
-				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
 		}else if(life == 4) {
 			lifeArray.set(4, emptyLife);
 			for(int i = 0; i < lifeArray.size(); i++) {
-				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
 		}
 		else if(life == 3) {
 			lifeArray.set(4, emptyLife);
 			lifeArray.set(3, emptyLife);
 			for(int i = 0; i < lifeArray.size(); i++) {
-				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
 		}
 		else if(life == 2) {
@@ -179,7 +190,7 @@ public class Stage01 extends JPanel implements KeyListener{
 			lifeArray.set(3, emptyLife);
 			lifeArray.set(2, emptyLife);
 			for(int i = 0; i < lifeArray.size(); i++) {
-				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
 		}
 		else if(life == 1) {
@@ -188,17 +199,31 @@ public class Stage01 extends JPanel implements KeyListener{
 			lifeArray.set(2, emptyLife);
 			lifeArray.set(1, emptyLife);
 			for(int i = 0; i < lifeArray.size(); i++) {
-				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
-		}else {
+		}else if(life <= 0){
 			lifeArray.set(4, emptyLife);
 			lifeArray.set(3, emptyLife);
 			lifeArray.set(2, emptyLife);
 			lifeArray.set(1, emptyLife);
 			lifeArray.set(0, emptyLife);
 			for(int i = 0; i < lifeArray.size(); i++) {
-				g.drawImage(lifeArray.get(i), 110 + (i * 100), 10, this);
+				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
+			gameOver = true;
+		}
+	}
+	
+	public void gameStatusCheck(Graphics g) {
+		if(gameOver) {
+			g.drawImage(gameOverImg, 100, 100, this);
+			s1thread.setOver(false);
+		}else if (isClear) {
+			score = life * 20;
+			System.out.println(score);
+			g.drawImage(gameClearImg, 100, 100, this);
+			s1thread.setOver(false);
+			
 		}
 	}
 	public void drawIpssag(Graphics g) {
@@ -329,14 +354,18 @@ public class Stage01 extends JPanel implements KeyListener{
 		}else if ((x - w) >= 490 && (x - w) <=  610 && (y - h) == 15){
 			//			System.out.println("발판위에 서있다.");
 			isDrop = false;
-		}else if ((x - w) >=  650 && (x - w) <= 900 && y - h == - 35){
+		}else if ((x - w) >=  650 && (x - w) <= 1000 && y - h == - 35){
 			System.out.println("클리어");
 			isDrop = false;
+			isClear = true;
 		}
 		else {
 			System.out.println("낙하중...");
 			y -= ddy;
-			isDrop = false;
+			isDrop = true;
+		}
+		if(y - h - 15 > 700) {
+			gameOver = true;
 		}
 	}
 	// move
@@ -444,7 +473,10 @@ public class Stage01 extends JPanel implements KeyListener{
 			break;	
 		case KeyEvent.VK_SPACE :
 			System.out.println("점프");
-			isJump = true;
+			if(isDrop == false) {
+				isJump = true;
+			}
+			
 			break;
 		}
 
