@@ -15,9 +15,7 @@ import inSeongJo.aHenIntoTheWild.model.vo.Ranking;
 
 public class RankingDao {
 	
-	public RankingDao(){
-		
-	}
+	public RankingDao(){}
 	
 	public ArrayList<Ranking> readRankingList(int stage){
 		String file = null;
@@ -27,10 +25,10 @@ public class RankingDao {
 		case 3 : file = "stage3Rank.dat"; break;
 		case 4 : file = "stage4Rank.dat"; break;
 		}
-		ArrayList<Ranking> list = null;
+		ArrayList<Ranking> list = new ArrayList<>();
 		
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))){
-			list = (ArrayList<Ranking>)ois.readObject();
+			list = (ArrayList<Ranking>) ois.readObject();
 			
 		} catch (FileNotFoundException e){
 			System.out.println("파일이 없습니다.");

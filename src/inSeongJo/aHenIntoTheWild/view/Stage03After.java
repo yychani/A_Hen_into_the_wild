@@ -27,7 +27,7 @@ public class Stage03After extends JPanel{
 	private RankingDao rd = new RankingDao();
 	private Stage03After s03a;
 
-	
+
 	public Stage03After(MainFrame mf, User user, int score) {
 		this.mf = mf;
 		s03a = this;
@@ -36,29 +36,29 @@ public class Stage03After extends JPanel{
 		this.setLayout(null);
 		this.setBackground(new Color(0,0,0,0));
 		//mf.add(this);
-		
+
 		String levelStr = "당신의 스코어 : " + score;
 		JLabel levelLabel = new JLabel(levelStr);
 		levelLabel.setBounds(10, 10, 200, 20);
 		levelLabel.setFont(new Font("바탕",Font.BOLD, 15));
 		add(levelLabel);
-		
+
 		JButton endButton = new JButton("게임 종료");
 		endButton.setBounds(800, 600, 100, 50);
 		add(endButton);
-		
+
 		endButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ChangePanel.changePanel(mf, s03a, new MainStage(mf, user));
-				
+
 			}
 		});
-		
+
 		sm.rankingMethod(user, score);
 		ArrayList<Ranking> list = rd.readRankingList(3);
-		
+
 		if(list.get(0).getName().equals(null)) {
 			System.out.println("기존 랭킹이 없습니다.");
 			list = new ArrayList<Ranking>();
@@ -76,15 +76,15 @@ public class Stage03After extends JPanel{
 			rankLa[i] = new JLabel(rankStr[i]);
 			rankLa[i].setBounds(100, 50*(i+1), 200, 100);
 			add(rankLa[i]);
-			
-			}
 
-//		try {
-//			Thread.sleep(1000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//		ChangePanel.changePanel(mf, this, new MainStage(mf, user));
+		}
+
+		//		try {
+		//			Thread.sleep(1000);
+		//		} catch (InterruptedException e) {
+		//			e.printStackTrace();
+		//		}
+		//		ChangePanel.changePanel(mf, this, new MainStage(mf, user));
 	}
 
 }

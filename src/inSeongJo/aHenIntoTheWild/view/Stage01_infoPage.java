@@ -13,12 +13,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import inSeongJo.aHenIntoTheWild.model.vo.User;
+
 public class Stage01_infoPage extends JPanel{
 	private MainFrame mf;
 	private JPanel stage01Infopage;
 	private Image infoBackGround;
-	public Stage01_infoPage(MainFrame mf) {
+	private User user;
+	public Stage01_infoPage(MainFrame mf, User user) {
 		this.mf = mf;
+		this.user = user;
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		stage01Infopage = this;
@@ -48,7 +52,7 @@ public class Stage01_infoPage extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, stage01Infopage, new Stage01(mf));
+				ChangePanel.changePanel(mf, stage01Infopage, new Stage01(mf, user));
 				
 			}
 		});
