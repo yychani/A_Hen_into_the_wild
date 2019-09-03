@@ -154,7 +154,7 @@ public class UserInformation extends JPanel{
 			@Override
 
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, UserInformation, new UserInfoChange(mf));
+				ChangePanel.changePanel(mf, UserInformation, new UserInfoChange(mf, user));
 			}
 		});
 
