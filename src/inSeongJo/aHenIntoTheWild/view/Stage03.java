@@ -75,6 +75,7 @@ public class Stage03 extends JPanel{
 		ricebutton.setBorderPainted(false);
 		ricebutton.setContentAreaFilled(false);
 		ricebutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		ricebutton.setToolTipText("포만감 +5, 피로도+5, 성장도+2");
 		add(ricebutton);
 		
 		ricebutton.addActionListener(new ActionListener() {
@@ -95,6 +96,7 @@ public class Stage03 extends JPanel{
 		bathbutton.setBorderPainted(false);
 		bathbutton.setContentAreaFilled(false);
 		bathbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		bathbutton.setToolTipText("청결도 +5, 피로도+5");
 		add(bathbutton);
 		
 		bathbutton.addActionListener(new ActionListener() {
@@ -113,6 +115,7 @@ public class Stage03 extends JPanel{
 		playbutton.setBorderPainted(false);
 		playbutton.setContentAreaFilled(false);
 		playbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		playbutton.setToolTipText("청결도-5, 성장도+5");
 		add(playbutton);
 		
 		
@@ -123,6 +126,7 @@ public class Stage03 extends JPanel{
 		lovebutton.setContentAreaFilled(false);
 		lovebutton.setBounds(380, 620, 100, 102);
 		lovebutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		lovebutton.setToolTipText("성장도+5");
 		add(lovebutton);
 		
 		
@@ -133,6 +137,7 @@ public class Stage03 extends JPanel{
 		bedbutton.setContentAreaFilled(false);
 		bedbutton.setBounds(500, 620, 100, 102);
 		bedbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		bedbutton.setToolTipText("피로도0, 포만감-10");
 		add(bedbutton);
 		
 		
@@ -211,6 +216,7 @@ public class Stage03 extends JPanel{
 				System.out.println("애정주기 버튼 눌림");
 				LoadingClass lc = new LoadingClass(lovebutton, s03);
 				Thread th4 = new Thread(lc);
+				th4.setDaemon(true);
 				th4.start();
 				
 				rate = sm.lovingMethod(rate);
@@ -230,6 +236,7 @@ public class Stage03 extends JPanel{
 				System.out.println("잠자기 버튼 눌림");
 				LoadingClass lc2 = new LoadingClass(bedbutton, s03);
 				Thread th5 = new Thread(lc2);
+				th5.setDaemon(true);
 				th5.start();
 				
 				rate = sm.sleepingMethod(rate);
@@ -321,7 +328,7 @@ public class Stage03 extends JPanel{
 						sm.scoreChange(score, user);
 						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n 최종 스코어 : " +score);
 						
-						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
 						
 					} else if(rate[1] <= 20) {
 						goOrStop = false;
@@ -329,7 +336,7 @@ public class Stage03 extends JPanel{
 						sm.scoreChange(score, user);
 						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다. \n최종 스코어 : " + score);
 						
-						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
 
 					} else if(rate[2] >=50) {
 						sm.printResult(rate[3], time);
@@ -352,7 +359,7 @@ public class Stage03 extends JPanel{
 							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n최종 스코어 : " +score);
 							growthLevel = 0;
 							
-							ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+							ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
 						}
 					}
 					
@@ -510,7 +517,7 @@ class LoadingClass implements Runnable{
 		jb.setEnabled(false);
 		
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
