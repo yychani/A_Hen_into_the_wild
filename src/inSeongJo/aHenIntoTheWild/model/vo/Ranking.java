@@ -1,6 +1,9 @@
 package inSeongJo.aHenIntoTheWild.model.vo;
 
-public class Ranking {
+import java.io.Serializable;
+
+public class Ranking implements Serializable{
+	
 	private String name;
 	private int score;
 	

@@ -1,6 +1,7 @@
 package inSeongJo.aHenIntoTheWild.controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import inSeongJo.aHenIntoTheWild.model.dao.RankingDao;
 import inSeongJo.aHenIntoTheWild.model.vo.Ranking;
@@ -69,7 +70,7 @@ public class Stage03Manager {
 	public int[] lovingMethod(int[] rate) {
 		
 		System.out.println("초록이가 행복해요!");
-		rate[3] = plusFor(rate[3], 3); //성장도 증가 
+		rate[3] = plusFor(rate[3], 5); //성장도 증가 
 		
 		return rate;
 	}
@@ -79,7 +80,7 @@ public class Stage03Manager {
 		
 		System.out.println("초록이가 즐거워해요!");
 		//성장도 증가 
-		rate[3] = plusFor(rate[3], 4);
+		rate[3] = plusFor(rate[3], 5);
 		//청결도 감소
 		rate[1] = minusFor(rate[1], 5);
 	
@@ -118,20 +119,47 @@ public class Stage03Manager {
 	public void rankingMethod(User user, int score) {
 		RankingDao rd = new RankingDao();
 		ArrayList<Ranking> list = rd.readRankingList(3);
+		Ranking r = new Ranking();
+		Ranking rInit = new Ranking("빈랭킹", 0);
 		
-		
-		for(int i=0; i<5; i++) {
-			if (score > list.get(i).getScore()) {
-				for(int j=5; j>i; j++) {
-					list.get(j).setName(list.get(j-1).getName());
-					list.get(j).setScore(list.get(j-1).getScore());
-				}
-				list.get(i).setName(user.getNickName());
-				list.get(i).setScore(score);
-			} else {
-				continue;
+		if(list == null) {
+			list = new ArrayList<Ranking>();
+			r.setName(user.getNickName());
+			r.setScore(score);
+			list.add(r);
+			for (int i=1; i<5; i++) {
+				list.add(rInit);
 			}
 		}
+		else {
+			r.setName(user.getNickName());
+			r.setScore(score);
+			list.add(r);
+			list.sort(new Comparator() {
+
+		         @Override
+		         public int compare(Object o1, Object o2) {
+		            Ranking cob1 = (Ranking) o1;
+		            Ranking cob2 = (Ranking) o2;
+
+		            int result = 0;
+
+		            if (cob1.getScore() == cob2.getScore()) {
+		               result = 0;
+		            }
+		            if (cob1.getScore() < cob2.getScore()) {
+		               result = 1;
+		            }
+		            if (cob1.getScore() > cob2.getScore()) {
+		               result = -1;
+		            }
+		            return result;
+		         }
+		      });
+		}
+		for(int i=0; i<5; i++) {
+			System.out.println((i+1) + "등 : " + list.get(i).getName() + ", " + list.get(i).getScore());
+			}
 		
 		int result = rd.writeRankingList(list, 3);
 		System.out.println("result : " + result);
