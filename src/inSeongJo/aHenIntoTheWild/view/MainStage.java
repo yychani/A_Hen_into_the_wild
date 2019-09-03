@@ -82,10 +82,19 @@ public class MainStage extends JPanel {
 		add(ipssakImage);
 		
 		//잎싹이 버블텍스트
-		Image bubble = new ImageIcon("images/YJimages/bubbletext.png").getImage().getScaledInstance(850, 190, 0);
+		Image bubble = new ImageIcon("images/YJimages/bubbletext2.png").getImage().getScaledInstance(850, 190, 0);
 		JLabel bubbleText = new JLabel(new ImageIcon(bubble));
 		bubbleText.setBounds(30, 500, 900, 200);
 		add(bubbleText);
+		
+		//잎싹이 대사 텍스트
+		JLabel ipssakText = new JLabel("안녕? 난 잎싹이라고 해.\n" + 
+				"양계장은 너무 갑갑하지 않아? 난 이곳을 나가고 싶어.\n" + 
+				"우리 같이 마당으로 나가볼까?");
+		ipssakText.setBounds(300, 500, 500, 100);
+		ipssakText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		ipssakText.setForeground(Color.WHITE);
+		add(ipssakText);
 		
 		//STAGE1 버튼
 		Image stage1Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
@@ -104,8 +113,8 @@ public class MainStage extends JPanel {
 		
 		
 		//STAGE2 버튼
-		Image stage2Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
-		JButton stage2Button = new JButton(new ImageIcon(stage1Image));
+		Image stage2Image = new ImageIcon("images/YJimages/STAGE2.png").getImage().getScaledInstance(200, 200, 0);
+		JButton stage2Button = new JButton(new ImageIcon(stage2Image));
 		stage2Button.setBorderPainted(false);
 		stage2Button.setContentAreaFilled(false);
 		stage2Button.setFocusPainted(false);
@@ -118,8 +127,8 @@ public class MainStage extends JPanel {
 			}
 		});
 		//STAGE3 버튼
-		Image stage3Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
-		JButton stage3Button = new JButton(new ImageIcon(stage1Image));
+		Image stage3Image = new ImageIcon("images/YJimages/STAGE3.png").getImage().getScaledInstance(200, 200, 0);
+		JButton stage3Button = new JButton(new ImageIcon(stage3Image));
 		stage3Button.setBorderPainted(false);
 		stage3Button.setContentAreaFilled(false);
 		stage3Button.setFocusPainted(false);
@@ -135,8 +144,8 @@ public class MainStage extends JPanel {
 		});
 		
 		//STAGE4 버튼
-		Image stage4Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
-		JButton stage4Button = new JButton(new ImageIcon(stage1Image));
+		Image stage4Image = new ImageIcon("images/YJimages/STAGE4.png").getImage().getScaledInstance(200, 200, 0);
+		JButton stage4Button = new JButton(new ImageIcon(stage4Image));
 		stage4Button.setBorderPainted(false);
 		stage4Button.setContentAreaFilled(false);
 		stage4Button.setFocusPainted(false);
