@@ -114,6 +114,7 @@ public class MainStage extends JPanel {
 				ChangePanel.changePanel(mf, MainStage, new Stage02(mf));
 			}
 		});
+		
 		//STAGE3 ¹öÆ°
 		Image stage3Image = new ImageIcon("images/YJimages/STAGE3.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage3Button = new JButton(new ImageIcon(stage3Image));
