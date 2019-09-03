@@ -8,23 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.omg.PortableInterceptor.USER_EXCEPTION;
-
-
-import inSeongJo.aHenIntoTheWild.controller.UserManager;
-import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
-import inSeongJo.aHenIntoTheWild.view.MainPage.MyMouseAdapter;
 
 public class MainStage extends JPanel {
 	private MainFrame mf;
@@ -72,8 +62,6 @@ public class MainStage extends JPanel {
 		saveButton.setBounds(930, 20, 70, 70);
 		saveButton.setPressedIcon(new ImageIcon(savePressedImage));;
 		add(saveButton);
-		
-		
 		
 		//¿ŸΩœ¿Ã ¿ÃπÃ¡ˆ
 		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 250, 0);
@@ -159,8 +147,6 @@ public class MainStage extends JPanel {
 				ChangePanel.changePanel(mf, MainStage, new Stage04(mf));
 			}
 		});
-		
-		
 	}
 
 	public void paint(Graphics g) {
