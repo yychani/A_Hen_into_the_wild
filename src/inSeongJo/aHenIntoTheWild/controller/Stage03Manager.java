@@ -1,5 +1,11 @@
 package inSeongJo.aHenIntoTheWild.controller;
 
+import java.util.ArrayList;
+
+import inSeongJo.aHenIntoTheWild.model.dao.RankingDao;
+import inSeongJo.aHenIntoTheWild.model.vo.Ranking;
+import inSeongJo.aHenIntoTheWild.model.vo.User;
+
 public class Stage03Manager {
 	
 	//증가하는 메소드 
@@ -75,7 +81,7 @@ public class Stage03Manager {
 		//성장도 증가 
 		rate[3] = plusFor(rate[3], 4);
 		//청결도 감소
-		rate[1] = minusFor(rate[1], 2);
+		rate[1] = minusFor(rate[1], 5);
 	
 		return rate;
 	}
@@ -95,6 +101,40 @@ public class Stage03Manager {
 		
 		System.out.println("초록이의 성장도 : " + growth);
 		System.out.println("살아남은 시간 : " + time + "초");
+	}
+	
+	public void scoreChange(int score, User user) {
+		if(score > user.getStage3Score()) {
+			user.setStage3Score(score);
+		}
+		
+		//return user;
+	}
+	
+	public int scoreCalc(int level, int growthTime, int time) {
+		return (level*1000 + growthTime*10 + time);
+	}
+	
+	public void rankingMethod(User user, int score) {
+		RankingDao rd = new RankingDao();
+		ArrayList<Ranking> list = rd.readRankingList(3);
+		
+		
+		for(int i=0; i<5; i++) {
+			if (score > list.get(i).getScore()) {
+				for(int j=5; j>i; j++) {
+					list.get(j).setName(list.get(j-1).getName());
+					list.get(j).setScore(list.get(j-1).getScore());
+				}
+				list.get(i).setName(user.getNickName());
+				list.get(i).setScore(score);
+			} else {
+				continue;
+			}
+		}
+		
+		int result = rd.writeRankingList(list, 3);
+		System.out.println("result : " + result);
 	}
 
 }

@@ -1,6 +1,7 @@
 package inSeongJo.aHenIntoTheWild.view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -34,7 +35,7 @@ public class Stage03 extends JPanel{
 	private int x;
 	private int y;
 	private int growthLevel;
-	private int[][] iniRate = {{100, 100, 10, 0}, {50, 90, 20, 0}, {60, 60, 30, 0}};
+	private int[][] iniRate = {{100, 100, 0, 0}, {50, 90, 20, 0}, {60, 60, 30, 0}};
 	private String str = "";
 	private boolean riceBl, bathBl, playBl, loveBl, bedBl;
 	private boolean goOrStop = true;
@@ -73,6 +74,7 @@ public class Stage03 extends JPanel{
 		ricebutton.setBounds(20, 620, 100, 102);
 		ricebutton.setBorderPainted(false);
 		ricebutton.setContentAreaFilled(false);
+		ricebutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(ricebutton);
 		
 		ricebutton.addActionListener(new ActionListener() {
@@ -92,6 +94,7 @@ public class Stage03 extends JPanel{
 		bathbutton.setBounds(140, 620, 100, 102);
 		bathbutton.setBorderPainted(false);
 		bathbutton.setContentAreaFilled(false);
+		bathbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(bathbutton);
 		
 		bathbutton.addActionListener(new ActionListener() {
@@ -109,6 +112,7 @@ public class Stage03 extends JPanel{
 		playbutton.setBounds(260, 620, 100, 102);
 		playbutton.setBorderPainted(false);
 		playbutton.setContentAreaFilled(false);
+		playbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(playbutton);
 		
 		
@@ -118,6 +122,7 @@ public class Stage03 extends JPanel{
 		lovebutton.setBorderPainted(false);
 		lovebutton.setContentAreaFilled(false);
 		lovebutton.setBounds(380, 620, 100, 102);
+		lovebutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(lovebutton);
 		
 		
@@ -127,12 +132,14 @@ public class Stage03 extends JPanel{
 		bedbutton.setBorderPainted(false);
 		bedbutton.setContentAreaFilled(false);
 		bedbutton.setBounds(500, 620, 100, 102);
+		bedbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(bedbutton);
 		
 		
-		//쓰레드
+		//초록이가 움직이는 쓰레드
 		Greeny gr = new Greeny(this);
 		Thread th = new Thread(gr);
+		th.setDaemon(true);
 		th.start();
 
 //		Image dungji = new ImageIcon("images/stage03_image/dungji.png").getImage();
@@ -202,11 +209,16 @@ public class Stage03 extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				loveBl = true;
 				System.out.println("애정주기 버튼 눌림");
+				LoadingClass lc = new LoadingClass(lovebutton, s03);
+				Thread th4 = new Thread(lc);
+				th4.start();
+				
 				rate = sm.lovingMethod(rate);
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
 				loveBl = false;
+
 			}
 		});
 		
@@ -216,6 +228,10 @@ public class Stage03 extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				bedBl = true;
 				System.out.println("잠자기 버튼 눌림");
+				LoadingClass lc2 = new LoadingClass(bedbutton, s03);
+				Thread th5 = new Thread(lc2);
+				th5.start();
+				
 				rate = sm.sleepingMethod(rate);
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
@@ -231,7 +247,7 @@ public class Stage03 extends JPanel{
 			public void mouseClicked(MouseEvent e) { //아이콘이 활성화 되고, 초록이를 향해 눌러야 함!
 				if(riceBl == true) { // 
 					rate = sm.eatingMethod(rate, e.getX(), e.getY());
-					System.out.println("어딘가 눌러씀");	
+					//System.out.println("어딘가 눌러씀");	
 					fullRatePercent.setText(rate[0] + "%");
 					cleanRatePercent.setText(rate[1] + "%");
 					tiredRatePercent.setText(rate[2] + "%");
@@ -239,7 +255,7 @@ public class Stage03 extends JPanel{
 				}
 				if(bathBl == true) { 
 					rate = sm.cleaningMethod(rate, e.getX(), e.getY());
-					System.out.println("어딘가 눌러씀");	
+					//System.out.println("어딘가 눌러씀");	
 					fullRatePercent.setText(rate[0] + "%");
 					cleanRatePercent.setText(rate[1] + "%");
 					tiredRatePercent.setText(rate[2] + "%");
@@ -289,6 +305,7 @@ public class Stage03 extends JPanel{
 			}
 			
 		});
+		th2.setDaemon(true);
 		th2.start();
 		
 		Thread th3 = new Thread(new Runnable() {
@@ -298,25 +315,31 @@ public class Stage03 extends JPanel{
 				
 				while(goOrStop) {
 					if(rate[0] <= 20) {
-						sm.printResult(rate[3], time);
 						goOrStop = false;
-						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다.");
+						
+						int score = sm.scoreCalc(growthLevel, rate[3], time); //레벨, 성장도, 시간
+						sm.scoreChange(score, user);
+						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n 최종 스코어 : " +score);
 						
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 						
 					} else if(rate[1] <= 20) {
-						sm.printResult(rate[3], time);
 						goOrStop = false;
-						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다.");
+						int score = sm.scoreCalc(growthLevel, rate[3], time); //레벨, 성장도, 시간
+						sm.scoreChange(score, user);
+						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다. \n최종 스코어 : " + score);
 						
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 
 					} else if(rate[2] >=50) {
 						sm.printResult(rate[3], time);
 						goOrStop = false;
-						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다.");
-						
-						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+						int score = sm.scoreCalc(growthLevel, rate[3], time); //레벨, 성장도, 시간
+						sm.scoreChange(score, user);
+						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다. \n최종 스코어 : " + score);
+
+						//ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
 					} else if(rate[3] >= 90) {
 						goOrStop = false;
 						if (growthLevel <3) {
@@ -324,7 +347,10 @@ public class Stage03 extends JPanel{
 							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel, user));
 						} else {
 							sm.printResult(rate[3], time);
-							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요");
+							int score = sm.scoreCalc(growthLevel, rate[3], time); //레벨, 성장도, 시간
+							sm.scoreChange(score, user);
+							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n최종 스코어 : " +score);
+							growthLevel = 0;
 							
 							ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 						}
@@ -340,6 +366,7 @@ public class Stage03 extends JPanel{
 			}
 			
 		});
+		th3.setDaemon(true);
 		th3.start();
 		
 		
@@ -464,7 +491,35 @@ class Greeny implements Runnable{
 }
 
 
+class LoadingClass implements Runnable{
+	JButton jb;
+	JPanel jp;
+	boolean goOrStop = true;
+	LoadingClass(){	}
+	
+	LoadingClass(JButton jb, JPanel jp){
+		this.jb = jb;
+		this.jp = jp;
+	}
+	
+	@Override
+	public void run() {
+		
+		//System.out.println("Th4가 실행됨");
+		jb.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		jb.setEnabled(false);
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		jb.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		jb.setEnabled(true);
 
+	}
+	
+}
 
 
 
