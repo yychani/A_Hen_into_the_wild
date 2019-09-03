@@ -1,5 +1,7 @@
 package inSeongJo.aHenIntoTheWild.model.vo;
 
+import javax.swing.JOptionPane;
+
 import inSeongJo.aHenIntoTheWild.view.Stage01;
 
 public class Stage01_Thread extends Thread{
@@ -25,12 +27,21 @@ public class Stage01_Thread extends Thread{
 			} catch (InterruptedException e) {}
 
 			jumpThread = new Stage01_jump(stage01, stage01.isJump());
-//			dropThread = new Stage01_Drop(stage01, stage01.isDrop);
+			//			dropThread = new Stage01_Drop(stage01, stage01.isDrop);
 			if(stage01.isJump()) {
 				jumpThread.start();
 			}else {
 				jumpThread.setJumping(false);
 			}
+		}
+		String[] strarr = stage01.checkRanking();
+		String str = "";
+		for(int i = 0; i < strarr.length; i++) {
+			str += (strarr[i] + "\n");
+		}
+		System.out.println(str);
+		if(!stage01.isGameOver()) {
+			JOptionPane.showMessageDialog(null, str, "Stage 1 ·©Å·", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
 
