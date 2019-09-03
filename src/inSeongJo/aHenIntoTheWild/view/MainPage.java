@@ -73,7 +73,6 @@ public class MainPage extends JPanel {
 		
 
 		
-		
 		// 로그인 버튼
 		JButton loginButton = new JButton("로그인");
 		loginButton.setBounds(670, 375, 120, 40);
