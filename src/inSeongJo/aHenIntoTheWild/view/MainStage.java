@@ -1,3 +1,5 @@
+package inSeongJo.aHenIntoTheWild.view;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -30,14 +32,14 @@ public class MainStage extends JPanel {
 		this.setLayout(null);
 //		mf.add(this);
 		
-		//ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+		//À¯Àú °´Ã¼ Á¤º¸ Ãâ·Â
 		JLabel loginInfo = new JLabel(user.getNickName());
 		loginInfo.setBounds(100, 15, 300, 100);
-		loginInfo.setFont(new Font("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Bold", Font.PLAIN, 20));
+		loginInfo.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
 		loginInfo.setForeground(Color.DARK_GRAY);
 		add(loginInfo);
 		
-		//ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
+		//À¯Àú ¹öÆ°
 		Image userImage = new ImageIcon("images/YJimages/user2.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		Image userPressedImage = new ImageIcon("images/YJimages/user2_pressed.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		JButton userButton = new JButton(new ImageIcon(userImage));
@@ -50,7 +52,7 @@ public class MainStage extends JPanel {
 		
 		userButton.addMouseListener(new MyMouseAdapter());
 		
-		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°
+		//ÀúÀå ¹öÆ°
 		Image saveImage = new ImageIcon("images/YJimages/save.png").getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
 		Image savePressedImage = new ImageIcon("images/YJimages/save_pressed.png").getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
 		JButton saveButton = new JButton(new ImageIcon(saveImage));
@@ -61,28 +63,28 @@ public class MainStage extends JPanel {
 		saveButton.setPressedIcon(new ImageIcon(savePressedImage));;
 		add(saveButton);
 		
-		//ï¿½Ù½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+		//ÀÙ½ÏÀÌ ÀÌ¹ÌÁö
 		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 250, 0);
 		JLabel ipssakImage = new JLabel(new ImageIcon(ipssak));
 		ipssakImage.setBounds(800, 500, 200, 200);
 		add(ipssakImage);
 		
-		//ï¿½Ù½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø½ï¿½Æ®
+		//ÀÙ½ÏÀÌ ¹öºíÅØ½ºÆ®
 		Image bubble = new ImageIcon("images/YJimages/bubbletext2.png").getImage().getScaledInstance(850, 190, 0);
 		JLabel bubbleText = new JLabel(new ImageIcon(bubble));
 		bubbleText.setBounds(30, 500, 900, 200);
 		add(bubbleText);
 		
-		//ï¿½Ù½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ®
-		JLabel ipssakText = new JLabel("ï¿½È³ï¿½? ï¿½ï¿½ ï¿½Ù½ï¿½ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½.\n" + 
-				"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½? ï¿½ï¿½ ï¿½Ì°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Í¾ï¿½.\n" + 
-				"ï¿½ì¸® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½?");
+		//ÀÙ½ÏÀÌ ´ë»ç ÅØ½ºÆ®
+		JLabel ipssakText = new JLabel("¾È³ç? ³­ ÀÙ½ÏÀÌ¶ó°í ÇØ.\n" + 
+				"¾ç°èÀåÀº ³Ê¹« °©°©ÇÏÁö ¾Ê¾Æ? ³­ ÀÌ°÷À» ³ª°¡°í ½Í¾î.\n" + 
+				"¿ì¸® °°ÀÌ ¸¶´çÀ¸·Î ³ª°¡º¼±î?");
 		ipssakText.setBounds(300, 500, 500, 100);
-		ipssakText.setFont(new Font("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ExtraBold", Font.PLAIN, 20));
+		ipssakText.setFont(new Font("³ª´®½ºÄù¾î ExtraBold", Font.PLAIN, 20));
 		ipssakText.setForeground(Color.WHITE);
 		add(ipssakText);
 		
-		//STAGE1 ï¿½ï¿½Æ°
+		//STAGE1 ¹öÆ°
 		Image stage1Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage1Button = new JButton(new ImageIcon(stage1Image));
 		stage1Button.setBorderPainted(false);
@@ -98,7 +100,7 @@ public class MainStage extends JPanel {
 		add(stage1Button);
 		
 		
-		//STAGE2 ï¿½ï¿½Æ°
+		//STAGE2 ¹öÆ°
 		Image stage2Image = new ImageIcon("images/YJimages/STAGE2.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage2Button = new JButton(new ImageIcon(stage2Image));
 		stage2Button.setBorderPainted(false);
@@ -113,7 +115,7 @@ public class MainStage extends JPanel {
 			}
 		});
 		
-		//STAGE3 ï¿½ï¿½Æ°
+		//STAGE3 ¹öÆ°
 		Image stage3Image = new ImageIcon("images/YJimages/STAGE3.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage3Button = new JButton(new ImageIcon(stage3Image));
 		stage3Button.setBorderPainted(false);
@@ -130,7 +132,7 @@ public class MainStage extends JPanel {
 			}
 		});
 		
-		//STAGE4 ï¿½ï¿½Æ°
+		//STAGE4 ¹öÆ°
 		Image stage4Image = new ImageIcon("images/YJimages/STAGE4.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage4Button = new JButton(new ImageIcon(stage4Image));
 		stage4Button.setBorderPainted(false);
@@ -164,8 +166,7 @@ public class MainStage extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			ChangePanel.changePanel(mf, MainStage, new UserInformation(mf, user));
-			System.out.println("Å¬ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ï´ï¿½.");
+			System.out.println("Å¬¸¯µÇ¾ú½À´Ï´Ù.");
 		}
 	}
 }
-

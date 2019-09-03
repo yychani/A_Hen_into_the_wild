@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import inSeongJo.aHenIntoTheWild.model.vo.User;
+
 public class UserInfoChange extends JPanel {
 	private MainFrame mf;
 	private JPanel UserInfoChange;
@@ -22,9 +24,11 @@ public class UserInfoChange extends JPanel {
 	// private JLabel label = new JLabel(background);
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
+	User user;
 
-	public UserInfoChange(MainFrame mf) {
+	public UserInfoChange(MainFrame mf, User user) {
 		this.mf = mf;
+		this.user = user;
 		UserInfoChange = this;
 		this.setBounds(0, 0, 1024, 768);
 
@@ -121,7 +125,7 @@ public class UserInfoChange extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, UserInfoChange, new UserInformation(mf));
+				ChangePanel.changePanel(mf, UserInfoChange, new UserInformation(mf, user));
 			}
 		});
 		
