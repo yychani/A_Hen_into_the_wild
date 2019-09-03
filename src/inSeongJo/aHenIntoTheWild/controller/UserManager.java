@@ -78,7 +78,6 @@ public class UserManager {
 	// 로그인
 	public User login(String id, String pw) {
 
-		boolean check = false;
 		// 로그인 성공 : true , 실패 : false 반환
 
 		ulist = ud.readUserList();
@@ -91,11 +90,9 @@ public class UserManager {
 					//로그인 성공
 					System.out.println(user);
 					loginUser = user;
-					check = true;
 				}else {
 					//로그인 실패
 					loginUser = null;
-					check = false;
 				}
 				
 			}
