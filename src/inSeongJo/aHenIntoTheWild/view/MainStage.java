@@ -1,6 +1,7 @@
 package inSeongJo.aHenIntoTheWild.view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -33,9 +34,9 @@ public class MainStage extends JPanel {
 //		mf.add(this);
 		
 		//À¯Àú °´Ã¼ Á¤º¸ Ãâ·Â
-		JLabel loginInfo = new JLabel(user.getNickName());
-		loginInfo.setBounds(100, 15, 300, 100);
-		loginInfo.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		JLabel loginInfo = new JLabel("È¯¿µÇÕ´Ï´Ù. "  + user.getNickName() + "´Ô");
+		loginInfo.setBounds(100, 8, 300, 100);
+		loginInfo.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 17));
 		loginInfo.setForeground(Color.DARK_GRAY);
 		add(loginInfo);
 		
@@ -47,6 +48,7 @@ public class MainStage extends JPanel {
 		userButton.setContentAreaFilled(false);
 		userButton.setFocusPainted(false);
 		userButton.setBounds(20, 20, 70, 70);
+		userButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		userButton.setPressedIcon(new ImageIcon(userPressedImage));;
 		add(userButton);
 		
@@ -60,6 +62,7 @@ public class MainStage extends JPanel {
 		saveButton.setContentAreaFilled(false);
 		saveButton.setFocusPainted(false);
 		saveButton.setBounds(930, 20, 70, 70);
+		saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		saveButton.setPressedIcon(new ImageIcon(savePressedImage));;
 		add(saveButton);
 		
@@ -91,6 +94,7 @@ public class MainStage extends JPanel {
 		stage1Button.setContentAreaFilled(false);
 		stage1Button.setFocusPainted(false);
 		stage1Button.setBounds(20, 200, 300, 300);
+		stage1Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		stage1Button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -107,6 +111,7 @@ public class MainStage extends JPanel {
 		stage2Button.setContentAreaFilled(false);
 		stage2Button.setFocusPainted(false);
 		stage2Button.setBounds(250, 200, 300, 300);
+		stage2Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(stage2Button);
 		stage2Button.addActionListener(new ActionListener() {
 			@Override
@@ -122,6 +127,7 @@ public class MainStage extends JPanel {
 		stage3Button.setContentAreaFilled(false);
 		stage3Button.setFocusPainted(false);
 		stage3Button.setBounds(470, 200, 300, 300);
+		stage3Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(stage3Button);
 		stage3Button.addActionListener(new ActionListener() {
 			
@@ -139,6 +145,7 @@ public class MainStage extends JPanel {
 		stage4Button.setContentAreaFilled(false);
 		stage4Button.setFocusPainted(false);
 		stage4Button.setBounds(710, 200, 300, 300);
+		stage4Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(stage4Button);
     
 		stage4Button.addActionListener(new ActionListener() {
