@@ -7,7 +7,6 @@ import inSeongJo.aHenIntoTheWild.view.Stage01;
 public class Stage01_Thread extends Thread{
 	Stage01 stage01;
 	Stage01_jump jumpThread;
-	Stage01_Drop dropThread;
 	int cnt;
 	private boolean isOver = true;
 	public Stage01_Thread(Stage01 stage01) {
