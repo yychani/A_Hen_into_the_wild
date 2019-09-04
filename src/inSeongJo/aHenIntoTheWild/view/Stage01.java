@@ -305,7 +305,7 @@ public class Stage01 extends JPanel implements KeyListener{
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("마우스 눌렀다 땜, 재시작");
-				ChangePanel.changePanel(mf, stage01page, new MainPage(mf));
+				ChangePanel.changePanel(mf, stage01page, new MainStage(mf, user));
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
