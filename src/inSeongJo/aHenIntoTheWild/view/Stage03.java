@@ -35,7 +35,7 @@ public class Stage03 extends JPanel{
 	private int x;
 	private int y;
 	private int growthLevel;
-	private int[][] iniRate = {{100, 100, 0, 0}, {50, 90, 20, 0}, {60, 60, 30, 0}};
+	private int[][] iniRate = {{100, 100, 0, 0}, {50, 90, 20, 0}, {60, 60, 30, 0}}; //초기세팅값 : 포만감, 청결도, 피로도, 성장도
 	private String str = "";
 	private boolean riceBl, bathBl, playBl, loveBl, bedBl;
 	private boolean goOrStop = true;
@@ -338,7 +338,7 @@ public class Stage03 extends JPanel{
 						
 						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
 
-					} else if(rate[2] >=50) {
+					} else if(rate[2] >=80) {
 						sm.printResult(rate[3], time);
 						goOrStop = false;
 						int score = sm.scoreCalc(growthLevel, rate[3], time); //레벨, 성장도, 시간
@@ -385,64 +385,89 @@ public class Stage03 extends JPanel{
 		this.g = g;
 		g.drawImage(background, 0, 0, null); //배경을 그려줌
 		paintComponents(g); //component를 그려줌
-		
+//		Image green;
+//		int gx, gy, width, height;
+//		
+//		if(growthLevel == 0) {
+//			gx = 412; gy =270; width = 200; height =279;
+//			green = new ImageIcon("images/stage03_image/greenE.gif").getImage();
+//
+//		} else if(growthLevel == 1) {
+//			gx = 312; gy = 180; width = 400; height = 421;
+//			green = new ImageIcon("images/stage03_image/greenELv2.gif").getImage();
+//		} else {
+//			gx = 412; gy =270; width = 200; height =279;
+//			green = new ImageIcon("images/stage03_image/greenE.gif").getImage();
+//		}
+//		
+//		g.drawImage(green, gx, gy, width, height, null); // 초록이 이미지 삽입 
+//		
 		g.drawImage(fullImage, 25, 69, (int)(188*(double)rate[0]/100.0), 25, null); // 포만감표시 
 		g.drawImage(cleanImage, 25, 140, (int)(188*(double)rate[1]/100.0), 25, null); // 청결도표시 
 		g.drawImage(tiredImage, 25, 211, (int)(188*(double)rate[2]/100.0), 25, null); // 피로도표시 
 		g.drawImage(growthImage, 934, 330, 40, (int)(-243*(double)rate[3]/100.0), null); // 성장도표시 
 		
 		
-
-		
 		if (riceBl == true) {
 			this.addMouseMotionListener(new MouseAdapter() {
 				@Override
-				public void mouseMoved(MouseEvent e) {
-					//str = "밥먹자 초록아~";
+				public void mouseMoved(MouseEvent e) { //숫가락이 마우스에 올려짐 
 					mouse = new ImageIcon("images/stage03_image/spoon.png").getImage();
 					x = e.getX();
 					y = e.getY();
-					//repaint();
 				}
 			});
 		} else if(bathBl == true) {
 			this.addMouseMotionListener(new MouseAdapter() {
 				@Override
-				public void mouseMoved(MouseEvent e) {
-					//str = "씻자 초록아~";
+				public void mouseMoved(MouseEvent e) { //샤워기가 마우스에 올려짐 
 					mouse = new ImageIcon("images/stage03_image/showerHead.png").getImage();
 					x = e.getX();
 					y = e.getY();
-					//repaint();
 				}
 			});
-		}else{
-			//str = "";
+		}else{ //default : 마우스에 아무것도 올려지지 않은 상태
 			mouse = null;
-			//spoon = null;
-			//repaint();
 		}
 		
-		//g.drawString(str, x, y);
 		g.drawImage(mouse, x-20, y-30, 100, 68, null);
 		this.repaint(); //다시 그려준다는 의미?
 		
 		
 		
 	}
+	public int getGrowthLevel() {
+		return growthLevel;
+	}
+
+
+	public boolean isGoOrStop() {
+		return goOrStop;
+	}
+
+
+	public void setGoOrStop(boolean goOrStop) {
+		this.goOrStop = goOrStop;
+	}
+
+
+	public void setGrowthLevel(int growthLevel) {
+		this.growthLevel = growthLevel;
+	}
 	
+
 	
-	class MyEvent extends MouseMotionAdapter{
-		
-		public void display(String s, MouseEvent e) {
-			System.out.println(s + ": ( " + e.getX() + ", " + e.getY() + " )");
-		}
-		
-		@Override
-		public void mouseMoved(java.awt.event.MouseEvent e) {
-			display("mouse Moved", e);
-		}
-		
+}
+
+class MyEvent extends MouseMotionAdapter{
+	
+	public void display(String s, MouseEvent e) {
+		System.out.println(s + ": ( " + e.getX() + ", " + e.getY() + " )");
+	}
+	
+	@Override
+	public void mouseMoved(java.awt.event.MouseEvent e) {
+		display("mouse Moved", e);
 	}
 	
 }
@@ -451,36 +476,54 @@ public class Stage03 extends JPanel{
 class Greeny implements Runnable{
 	private JPanel jp;
 	private boolean gr = false;
+	private Stage03 s03;
+	
 
 	Greeny(){}
 
-	Greeny(JPanel jp){
-		this.jp = jp;
+	Greeny(Stage03 s03){
+		this.s03 = s03;
 	}
 
 	@Override
 	public void run() {
-		Image green1 = new ImageIcon("images/stage03_image/greenE1.png").getImage();
-		JLabel greenLabel = new JLabel(new ImageIcon(green1));
-		greenLabel.setBounds(412, 270, 200, 279);
-		jp.add(greenLabel);
-
-		Image green2 = new ImageIcon("images/stage03_image/greenE2.png").getImage();
-		JLabel greenLabel2 = new JLabel(new ImageIcon(green2));
-		greenLabel2.setBounds(412, 270, 200, 279);
-		
 		boolean goOrStop = true;
+		int growthLevel = s03.getGrowthLevel();
+		int gx, gy, width, height;
+		Image green1;
+		Image green2;
+		
+		if(growthLevel == 0) {
+			gx = 412; gy =270; width = 200; height =279;
+			green1 = new ImageIcon("images/stage03_image/greenE1.png").getImage();
+			green2 = new ImageIcon("images/stage03_image/greenE2.png").getImage();
 
+		} else if(growthLevel == 1) {
+			gx = 312; gy = 180; width = 400; height = 421;
+			green1 = new ImageIcon("images/stage03_image/greenELv2a.png").getImage();
+			green2 = new ImageIcon("images/stage03_image/greenELv2b.png").getImage();
+		} else {
+			gx = 412; gy =270; width = 200; height =279;
+			green1 = new ImageIcon("images/stage03_image/greenE1.png").getImage();
+			green2 = new ImageIcon("images/stage03_image/greenE2.png").getImage();
+		}
+		
+		JLabel greenLabel = new JLabel(new ImageIcon(green1));
+		greenLabel.setBounds(gx, gy, width, height);
+		s03.add(greenLabel);
+
+		JLabel greenLabel2 = new JLabel(new ImageIcon(green2));
+		greenLabel2.setBounds(gx, gy, width, height);
+		
 
 		while(goOrStop) {
-			//System.out.println("실행");
 			if (gr == false) {
-				jp.remove(greenLabel);
-				jp.add(greenLabel2);
+				s03.remove(greenLabel);
+				s03.add(greenLabel2);
 				gr = true;
 			} else {
-				jp.remove(greenLabel2);
-				jp.add(greenLabel);
+				s03.remove(greenLabel2);
+				s03.add(greenLabel);
 				gr = false;
 			}
 			
@@ -491,9 +534,13 @@ class Greeny implements Runnable{
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			
+			goOrStop = s03.isGoOrStop();
 		}
 
 	}
+	
+	
 
 }
 
@@ -511,6 +558,7 @@ class LoadingClass implements Runnable{
 	
 	@Override
 	public void run() {
+		
 		
 		//System.out.println("Th4가 실행됨");
 		jb.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

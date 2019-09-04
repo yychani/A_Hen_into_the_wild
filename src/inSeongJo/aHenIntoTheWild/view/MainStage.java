@@ -133,7 +133,7 @@ public class MainStage extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, MainStage, new Stage03(mf, 0, user));
+				ChangePanel.changePanel(mf, MainStage, new Stage03InfoPage(mf, user));
 				
 			}
 		});
