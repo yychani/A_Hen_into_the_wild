@@ -50,8 +50,8 @@ public class Stage03Manager {
 	public int[] cleaningMethod(int[] rate, int x, int y) {
 		if((x > 460 && x < 570) && (y > 300 && y < 400)) {
 			//피로도 감소
-			rate[1] = plusFor(rate[1], 5);
-			rate[2] = plusFor(rate[2], 5);
+			//rate[1] = plusFor(rate[1], 5);
+			//rate[2] = plusFor(rate[2], 5);
 			
 			if(rate[1] >= 95) { //피로도 증가, 성장도 감소
 				System.out.print("이미 깨끗해요~ ");
