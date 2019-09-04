@@ -31,20 +31,19 @@ import inSeongJo.aHenIntoTheWild.model.vo.Stage01_Thread;
 import inSeongJo.aHenIntoTheWild.model.vo.Stage01_jump;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
-
-
-public class Stage01 extends JPanel implements KeyListener{
+public class Stage01 extends JPanel implements KeyListener {
 	private Stage01_Thread s1thread;
 	private User user;
 	Stage01 stage01page = this;
 	Stage01_Enemy en;
 	private int enemySpeed = 7;
-	private int width, height;//ÆĞ³Î »çÀÌÁî °¡Á®¿À±â
+	private int width, height;// íŒ¨ë„ ì‚¬ì´ì¦ˆ ê°€ì ¸ì˜¤ê¸°
 	private int life = 5;
-	private int x, y, w, h;//xy : ÇÃ·¹ÀÌ¾îÀÇ Áß½É ÁÂÇ¥ / wh : ÀÌ¹ÌÁö Àı¹İÆø;
-	private int ipX, ipY; // ipXY ÀÙ½ÏÀÌ ¿ŞÂÊ ¸ğ¼­¸® ÁÂÇ¥
-	private int dx = 0, dy = 0;//ÇÃ·¹ÀÌ¾î ÀÌ¹ÌÁöÀÇ ÀÌµ¿¼Óµµ, ÀÌµ¿¹æÇâz
-	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, EnemyImg, EnemyImgR, emptyLife, gameOverImg, gameClearImg, scoreImg;
+	private int x, y, w, h;// xy : í”Œë ˆì´ì–´ì˜ ì¤‘ì‹¬ ì¢Œí‘œ / wh : ì´ë¯¸ì§€ ì ˆë°˜í­;
+	private int ipX, ipY; // ipXY ìì‹¹ì´ ì™¼ìª½ ëª¨ì„œë¦¬ ì¢Œí‘œ
+	private int dx = 0, dy = 0;// í”Œë ˆì´ì–´ ì´ë¯¸ì§€ì˜ ì´ë™ì†ë„, ì´ë™ë°©í–¥z
+	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, EnemyImg, EnemyImgR, emptyLife,
+			gameOverImg, gameClearImg, scoreImg;
 	private Image[] ipssagMoving, ipssagStanding, ipssagMovingR, ipssagStandingR;
 	private ArrayList<Image> stage01Footrest, lifeArray;
 	ArrayList<Stage01_Enemy> Enemy_List = new ArrayList<>();
@@ -56,7 +55,7 @@ public class Stage01 extends JPanel implements KeyListener{
 	int cnt = 0;
 	private int time = 20;
 	private int score = 0;
-	//GUI °ü·Ã ÇÁ·Î±×·¥ÀÇ ÆíÀÇ¸¦ À§ÇØ ¸¸µé¾îÁø µµ±¸»óÀÚ(Toolkit) °´Ã¼ 
+	// GUI ê´€ë ¨ í”„ë¡œê·¸ë¨ì˜ í¸ì˜ë¥¼ ìœ„í•´ ë§Œë“¤ì–´ì§„ ë„êµ¬ìƒì(Toolkit) ê°ì²´
 	Toolkit toolkit = Toolkit.getDefaultToolkit();
 
 	public Stage01(MainFrame mf, User user) {
@@ -72,16 +71,15 @@ public class Stage01 extends JPanel implements KeyListener{
 		s1thread.setDaemon(true);
 		s1thread.start();
 
-
-		stage01Background = toolkit.getImage("images/Stage01_background.png");//¹è°æ ÀÌ¹ÌÁö
+		stage01Background = toolkit.getImage("images/Stage01_background.png");// ë°°ê²½ ì´ë¯¸ì§€
 		leftWall = toolkit.getImage("images/left_wall.png");
-		rightWall = toolkit.getImage("images/right_wall.png");//º® ÀÌ¹ÌÁö
+		rightWall = toolkit.getImage("images/right_wall.png");// ë²½ ì´ë¯¸ì§€
 		stage01Footrest = new ArrayList<>();
-		for(int i = 0; i < 7; i++) {
-			stage01Footrest.add(toolkit.getImage("images/Stage01_footrest.png")); // ¹ßÆÇ ÀÌ¹ÌÁö
+		for (int i = 0; i < 7; i++) {
+			stage01Footrest.add(toolkit.getImage("images/Stage01_footrest.png")); // ë°œíŒ ì´ë¯¸ì§€
 		}
 		lifeArray = new ArrayList<>();
-		for(int i = 0; i < 5; i++) {
+		for (int i = 0; i < 5; i++) {
 			lifeArray.add(toolkit.getImage("images/ipssag/life.png"));
 		}
 
@@ -94,7 +92,7 @@ public class Stage01 extends JPanel implements KeyListener{
 		EnemyImgR = new ImageIcon("images/ipssag/stage01_Enemy_reverse.png").getImage();
 
 		ipssagStanding = new Image[2];
-		ipssagStanding[0] = toolkit.getImage("images/ipssag/ipssag.png");//ÇÃ·¹ÀÌ¾î ÀÌ¹ÌÁö ¿ŞÂÊ °´Ã¼
+		ipssagStanding[0] = toolkit.getImage("images/ipssag/ipssag.png");// í”Œë ˆì´ì–´ ì´ë¯¸ì§€ ì™¼ìª½ ê°ì²´
 		ipssagStanding[1] = toolkit.getImage("images/ipssag/ipssag2.png");
 
 		ipssagMoving = new Image[2];
@@ -102,7 +100,7 @@ public class Stage01 extends JPanel implements KeyListener{
 		ipssagMoving[1] = toolkit.getImage("images/ipssag/ipssag_Moving.png");
 
 		ipssagStandingR = new Image[2];
-		ipssagStandingR[0] = toolkit.getImage("images/ipssag/ipssag_reverse.png");//ÇÃ·¹ÀÌ¾î ÀÌ¹ÌÁö ¿À¸¥ÂÊ °´Ã¼
+		ipssagStandingR[0] = toolkit.getImage("images/ipssag/ipssag_reverse.png");// í”Œë ˆì´ì–´ ì´ë¯¸ì§€ ì˜¤ë¥¸ìª½ ê°ì²´
 		ipssagStandingR[1] = toolkit.getImage("images/ipssag/ipssag2_reverse.png");
 
 		ipssagMovingR = new Image[2];
@@ -114,12 +112,12 @@ public class Stage01 extends JPanel implements KeyListener{
 
 		JLabel lifeText = new JLabel("Life : ");
 		lifeText.setBounds(10, 10, 100, 50);
-		lifeText.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 30));
+		lifeText.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 30));
 		add(lifeText);
 
 		JLabel countText = new JLabel("Count : ");
 		countText.setBounds(880, 2, 100, 70);
-		countText.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 20));
+		countText.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 20));
 		add(countText);
 
 		Thread timer = new Thread(new Runnable() {
@@ -127,11 +125,11 @@ public class Stage01 extends JPanel implements KeyListener{
 			public void run() {
 				JLabel Mytimer = new JLabel();
 				Mytimer.setBounds(960, 0, 70, 70);
-				Mytimer.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 40));
+				Mytimer.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 40));
 				Mytimer.setForeground(Color.BLACK);
 				stage01page.add(Mytimer);
-				while(true) {
-					if(time == -1 || gameOver == true || isClear == true) {
+				while (true) {
+					if (time == -1 || gameOver == true || isClear == true) {
 						gameOver = true;
 						break;
 					}
@@ -144,7 +142,7 @@ public class Stage01 extends JPanel implements KeyListener{
 						e.printStackTrace();
 					}
 				}
-				
+
 			}
 		});
 		timer.setDaemon(true);
@@ -154,24 +152,24 @@ public class Stage01 extends JPanel implements KeyListener{
 		this.addKeyListener(this);
 
 	}
-	// »ı¼ºÀÚ
+	// ìƒì„±ì
 
 	@Override
 	protected void paintComponent(Graphics g) {
-		//È­¸é¿¡ º¸¿©Áú ÀÛ¾÷ ÄÚµù
-		if( width == 0 || height == 0) { //Ã³À½ È£Ãâ½Ã¿£ ´À·Á¼­ ¾Èº¸ÀÌ´Ù ÀÌÈÄ º¸ÀÓ
+		// í™”ë©´ì— ë³´ì—¬ì§ˆ ì‘ì—… ì½”ë”©
+		if (width == 0 || height == 0) { // ì²˜ìŒ í˜¸ì¶œì‹œì—” ëŠë ¤ì„œ ì•ˆë³´ì´ë‹¤ ì´í›„ ë³´ì„
 			width = getWidth();
 			height = getHeight();
 
-			//¸®»çÀÌÂ¡
+			// ë¦¬ì‚¬ì´ì§•
 			stage01Background = stage01Background.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 			leftWall = leftWall.getScaledInstance(300, 700, Image.SCALE_SMOOTH);
 			rightWall = rightWall.getScaledInstance(300, 700, Image.SCALE_SMOOTH);
-			for(int i = 0; i < stage01Footrest.size(); i++) {
+			for (int i = 0; i < stage01Footrest.size(); i++) {
 				stage01Footrest.set(i, (stage01Footrest.get(i)).getScaledInstance(150, 100, Image.SCALE_SMOOTH));
 			}
 
-			for(int i = 0; i < lifeArray.size(); i++) {
+			for (int i = 0; i < lifeArray.size(); i++) {
 				lifeArray.set(i, (lifeArray.get(i)).getScaledInstance(60, 60, Image.SCALE_SMOOTH));
 			}
 
@@ -194,75 +192,72 @@ public class Stage01 extends JPanel implements KeyListener{
 
 			EnemyImg = EnemyImg.getScaledInstance(290, 107, Image.SCALE_SMOOTH);
 			EnemyImgR = EnemyImgR.getScaledInstance(290, 107, Image.SCALE_SMOOTH);
-			x = width/2;//ÇÃ·¹ÀÌ¾îÀÇ ÁÂÇ¥ °è»ê
+			x = width / 2;// í”Œë ˆì´ì–´ì˜ ì¢Œí‘œ ê³„ì‚°
 			y = 639;
 			w = 64;
 			h = 64;
 
-		}			
+		}
 
-		//ÀÌ°÷¿¡ È­°¡°´Ã¼°¡ ÀÖÀ¸¹Ç·Î ±×¸² ±×¸®´Â ÀÛ¾÷Àº ¹«Á¶°Ç ¿©±â¼­			
+		// ì´ê³³ì— í™”ê°€ê°ì²´ê°€ ìˆìœ¼ë¯€ë¡œ ê·¸ë¦¼ ê·¸ë¦¬ëŠ” ì‘ì—…ì€ ë¬´ì¡°ê±´ ì—¬ê¸°ì„œ
 
-		g.drawImage(stage01Background, 0, 0, this);//¹è°æ ±×¸®±â
-		g.drawImage(leftWall, 0, 68, this);//¿ŞÂÊ º® ±×¸®±â
-		g.drawImage(rightWall, width - 300, 68, this);//¿ŞÂÊ º® ±×¸®±â
-		g.drawImage(stage01Footrest.get(0), width / 2 - 70, 650, this); // ¹ßÆÇ ±×¸®±â
-		g.drawImage(stage01Footrest.get(1), width / 2 - 150, 570, this); // ¹ßÆÇ ±×¸®±â
-		g.drawImage(stage01Footrest.get(2), width / 2, 490, this); // ¹ßÆÇ ±×¸®±â
-		g.drawImage(stage01Footrest.get(3), width / 2 - 180, 410, this); // ¹ßÆÇ ±×¸®±â
-		g.drawImage(stage01Footrest.get(4), width / 2 - 80, 330, this); // ¹ßÆÇ ±×¸®±â
-		g.drawImage(stage01Footrest.get(5), width / 2 - 200, 250, this); // ¹ßÆÇ ±×¸®±â
-		g.drawImage(stage01Footrest.get(6), width / 2 - 50, 170, this); // ¹ßÆÇ ±×¸®±â
-		g.drawImage(stage01Footrest.get(6), width / 2 + 40, 90, this); // ¹ßÆÇ ±×¸®±â
+		g.drawImage(stage01Background, 0, 0, this);// ë°°ê²½ ê·¸ë¦¬ê¸°
+		g.drawImage(leftWall, 0, 68, this);// ì™¼ìª½ ë²½ ê·¸ë¦¬ê¸°
+		g.drawImage(rightWall, width - 300, 68, this);// ì™¼ìª½ ë²½ ê·¸ë¦¬ê¸°
+		g.drawImage(stage01Footrest.get(0), width / 2 - 70, 650, this); // ë°œíŒ ê·¸ë¦¬ê¸°
+		g.drawImage(stage01Footrest.get(1), width / 2 - 150, 570, this); // ë°œíŒ ê·¸ë¦¬ê¸°
+		g.drawImage(stage01Footrest.get(2), width / 2, 490, this); // ë°œíŒ ê·¸ë¦¬ê¸°
+		g.drawImage(stage01Footrest.get(3), width / 2 - 180, 410, this); // ë°œíŒ ê·¸ë¦¬ê¸°
+		g.drawImage(stage01Footrest.get(4), width / 2 - 80, 330, this); // ë°œíŒ ê·¸ë¦¬ê¸°
+		g.drawImage(stage01Footrest.get(5), width / 2 - 200, 250, this); // ë°œíŒ ê·¸ë¦¬ê¸°
+		g.drawImage(stage01Footrest.get(6), width / 2 - 50, 170, this); // ë°œíŒ ê·¸ë¦¬ê¸°
+		g.drawImage(stage01Footrest.get(6), width / 2 + 40, 90, this); // ë°œíŒ ê·¸ë¦¬ê¸°
 		drawLife(g);
 		drawIpssag(g);
 		drawEnemy(g);
 
 		gameStatusCheck(g);
 
-	}//paintComponent                                      
+	}// paintComponent
 
 	public void drawLife(Graphics g) {
-		if(life == 5) {
-			for(int i = 0; i < lifeArray.size(); i++) {
+		if (life == 5) {
+			for (int i = 0; i < lifeArray.size(); i++) {
 				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
-		}else if(life == 4) {
+		} else if (life == 4) {
 			lifeArray.set(4, emptyLife);
-			for(int i = 0; i < lifeArray.size(); i++) {
+			for (int i = 0; i < lifeArray.size(); i++) {
 				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
-		}
-		else if(life == 3) {
+		} else if (life == 3) {
 			lifeArray.set(4, emptyLife);
 			lifeArray.set(3, emptyLife);
-			for(int i = 0; i < lifeArray.size(); i++) {
+			for (int i = 0; i < lifeArray.size(); i++) {
 				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
-		}
-		else if(life == 2) {
+		} else if (life == 2) {
 			lifeArray.set(4, emptyLife);
 			lifeArray.set(3, emptyLife);
 			lifeArray.set(2, emptyLife);
-			for(int i = 0; i < lifeArray.size(); i++) {
+			for (int i = 0; i < lifeArray.size(); i++) {
 				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
-		}
-		else if(life == 1) {
+		} else if (life == 1) {
 			lifeArray.set(4, emptyLife);
 			lifeArray.set(3, emptyLife);
 			lifeArray.set(2, emptyLife);
 			lifeArray.set(1, emptyLife);
-			for(int i = 0; i < lifeArray.size(); i++) {
+			for (int i = 0; i < lifeArray.size(); i++) {
 				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
-		}else if(life <= 0){
+		} else if (life <= 0) {
 			lifeArray.set(4, emptyLife);
 			lifeArray.set(3, emptyLife);
 			lifeArray.set(2, emptyLife);
 			lifeArray.set(1, emptyLife);
 			lifeArray.set(0, emptyLife);
-			for(int i = 0; i < lifeArray.size(); i++) {
+			for (int i = 0; i < lifeArray.size(); i++) {
 				g.drawImage(lifeArray.get(i), 110 + (i * 70), 10, this);
 			}
 			gameOver = true;
@@ -271,90 +266,93 @@ public class Stage01 extends JPanel implements KeyListener{
 
 	public void gameStatusCheck(Graphics g) {
 		Image retry = new ImageIcon("images/buttons/Retry_button_Normal.png").getImage().getScaledInstance(200, 140, 0);
-		Image retryPressed = new ImageIcon("images/buttons/Retry_button_Pressed.png").getImage().getScaledInstance(200, 140, 0);
+		Image retryPressed = new ImageIcon("images/buttons/Retry_button_Pressed.png").getImage().getScaledInstance(200,
+				140, 0);
 		JButton retryButton = new JButton(new ImageIcon(retry));
 		JButton retryPButton = new JButton(new ImageIcon(retryPressed));
 		retryButton.setBorderPainted(false);
 		retryButton.setContentAreaFilled(false);
 		retryButton.setFocusPainted(false);
 		retryButton.setBounds(200, 500, 300, 300);
-		
+
 		retryButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		retryButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("¸¶¿ì½º ´­·¶´Ù ¶«, Àç½ÃÀÛ");
+				System.out.println("ë§ˆìš°ìŠ¤ ëˆŒë €ë‹¤ ë•œ, ì¬ì‹œì‘");
 				ChangePanel.changePanel(mf, stage01page, new Stage01(mf, user));
 			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
-				System.out.println("¸¶¿ì½º ´­·ÁÁö°í ÀÖÀ½");
+				System.out.println("ë§ˆìš°ìŠ¤ ëˆŒë ¤ì§€ê³  ìˆìŒ");
 				retryButton.setIcon(new ImageIcon(retryPressed));
 			}
 		});
 		Image home = new ImageIcon("images/buttons/Home_button_Normal.png").getImage().getScaledInstance(200, 140, 0);
-		Image homePressed = new ImageIcon("images/buttons/Home_button_Pressed.png").getImage().getScaledInstance(200, 140, 0);
+		Image homePressed = new ImageIcon("images/buttons/Home_button_Pressed.png").getImage().getScaledInstance(200,
+				140, 0);
 		JButton homeButton = new JButton(new ImageIcon(home));
 		homeButton.setBorderPainted(false);
 		homeButton.setContentAreaFilled(false);
 		homeButton.setFocusPainted(false);
 		homeButton.setBounds(500, 500, 300, 300);
-		
+
 		homeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		homeButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("¸¶¿ì½º ´­·¶´Ù ¶«, Àç½ÃÀÛ");
+				System.out.println("ë§ˆìš°ìŠ¤ ëˆŒë €ë‹¤ ë•œ, ì¬ì‹œì‘");
 				ChangePanel.changePanel(mf, stage01page, new MainStage(mf, user));
 			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
-				System.out.println("¸¶¿ì½º ´­·ÁÁö°í ÀÖÀ½");
+				System.out.println("ë§ˆìš°ìŠ¤ ëˆŒë ¤ì§€ê³  ìˆìŒ");
 				homeButton.setIcon(new ImageIcon(homePressed));
 			}
 		});
-		
-		//		System.out.println(time);
-		if(gameOver && isClear == false) {
+
+		// System.out.println(time);
+		if (gameOver && isClear == false) {
 			g.drawImage(gameOverImg, 80, 80, this);
-			
+
 			add(retryButton);
 			add(homeButton);
-			
+
 			s1thread.setOver(false);
-		}else if (isClear) {
+		} else if (isClear) {
 			g.drawImage(gameClearImg, 100, 40, this);
-			
+
 			score = (life * 100) + (time * 115);
 			g.drawImage(scoreImg, 320, 280, this);
 			JLabel scoreText = new JLabel(score + "");
 			scoreText.setBounds(520, 280, 200, 70);
-			scoreText.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 70));
+			scoreText.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 70));
 			scoreText.setForeground(Color.WHITE);
 			add(scoreText);
 			System.out.println(score);
-			
+
 			add(retryButton);
 			add(homeButton);
-			
+
 			s1thread.setOver(false);
 
 		}
 	}
 
 	public void drawIpssag(Graphics g) {
-		if(isRight) {
-			if(isJump) {
+		if (isRight) {
+			if (isJump) {
 				g.drawImage(ipssagJumpR, x - w, y - h - 15, this);
-			}
-			else if(isMoving) {
-				if((cnt / 5 % 2) == 0){ 
+			} else if (isMoving) {
+				if ((cnt / 5 % 2) == 0) {
 					g.drawImage(ipssagMovingR[1], x - w, y - h - 15, this);
-				}else { 
-					g.drawImage(ipssagMovingR[0], x - w, y - h - 15, this); 
+				} else {
+					g.drawImage(ipssagMovingR[0], x - w, y - h - 15, this);
 				}
-			}else { 
-				if((cnt / 5 % 2) == 0){ 
+			} else {
+				if ((cnt / 5 % 2) == 0) {
 					g.drawImage(ipssagStandingR[1], x - w, y - h - 15, this);
 					try {
 						Thread.sleep(125);
@@ -362,8 +360,8 @@ public class Stage01 extends JPanel implements KeyListener{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}else { 
-					g.drawImage(ipssagStandingR[0], x - w, y - h - 15, this); 
+				} else {
+					g.drawImage(ipssagStandingR[0], x - w, y - h - 15, this);
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -373,19 +371,17 @@ public class Stage01 extends JPanel implements KeyListener{
 				}
 
 			}
-		}
-		else {
-			if(isJump) {
+		} else {
+			if (isJump) {
 				g.drawImage(ipssagJump, x - w, y - h - 15, this);
-			}
-			else if(isMoving) {
-				if((cnt / 5 % 2) == 0){ 
+			} else if (isMoving) {
+				if ((cnt / 5 % 2) == 0) {
 					g.drawImage(ipssagMoving[1], x - w, y - h - 15, this);
-				}else { 
-					g.drawImage(ipssagMoving[0], x - w, y - h - 15, this); 
+				} else {
+					g.drawImage(ipssagMoving[0], x - w, y - h - 15, this);
 				}
-			}else { 
-				if((cnt / 5 % 2) == 0){ 
+			} else {
+				if ((cnt / 5 % 2) == 0) {
 					g.drawImage(ipssagStanding[1], x - w, y - h - 15, this);
 					try {
 						Thread.sleep(125);
@@ -393,8 +389,8 @@ public class Stage01 extends JPanel implements KeyListener{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}else { 
-					g.drawImage(ipssagStanding[0], x - w, y - h - 15, this); 
+				} else {
+					g.drawImage(ipssagStanding[0], x - w, y - h - 15, this);
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -404,10 +400,11 @@ public class Stage01 extends JPanel implements KeyListener{
 				}
 
 			}
-		}// ÇÃ·¹ÀÌ¾î ±×¸®±â
+		} // í”Œë ˆì´ì–´ ê·¸ë¦¬ê¸°
 	}
+
 	public void addY(int add) {
-		this.y+=add;
+		this.y += add;
 	}
 
 	public int getCnt() {
@@ -442,53 +439,53 @@ public class Stage01 extends JPanel implements KeyListener{
 		this.gameOver = gameOver;
 	}
 
-	public void move() { //ÇÃ·¹ÀÌ¾î ¿òÁ÷ÀÌ±â(ÁÂÇ¥ º¯°æ)
+	public void move() { // í”Œë ˆì´ì–´ ì›€ì§ì´ê¸°(ì¢Œí‘œ ë³€ê²½)
 		cnt++;
 		x += dx;
 		y += dy;
 		int ddy = -10;
 
-
-		//ÇÃ·¹ÀÌ¾î ÁÂÇ¥°¡ È­¸é ¹ÛÀ¸·Î ³ª°¡Áö ¾Êµµ·Ï // ³ªÁß¿¡ º®À¸·Î ¼öÁ¤
-		if(x < w + 280 && (y - h) > 19) x = w + 280; // ¿ŞÂÊ º® ³ÑÁö ¸øÇÏ°Ô
-		if(x > width - w - 280 && (y - h) > 19) x = width - w - 280; // ¿À¸¥ÂÊ º® ³ÑÁö ¸øÇÏ°Ô
-		//		System.out.println(isDrop);
+		// í”Œë ˆì´ì–´ ì¢Œí‘œê°€ í™”ë©´ ë°–ìœ¼ë¡œ ë‚˜ê°€ì§€ ì•Šë„ë¡ // ë‚˜ì¤‘ì— ë²½ìœ¼ë¡œ ìˆ˜ì •
+		if (x < w + 280 && (y - h) > 19)
+			x = w + 280; // ì™¼ìª½ ë²½ ë„˜ì§€ ëª»í•˜ê²Œ
+		if (x > width - w - 280 && (y - h) > 19)
+			x = width - w - 280; // ì˜¤ë¥¸ìª½ ë²½ ë„˜ì§€ ëª»í•˜ê²Œ
+		// System.out.println(isDrop);
 		System.out.println("x = " + (x - w) + " y = " + (y - h));
-		if((x == 0 && y == 0) ||(x - w) >= 390 && (x - w) <=  510 && (y - h) <= 575 && (y - h) >= 570) {
-			//			System.out.println("¹ßÆÇÀ§¿¡ ¼­ÀÖ´Ù.");
+		if ((x == 0 && y == 0) || (x - w) >= 390 && (x - w) <= 510 && (y - h) <= 575 && (y - h) >= 570) {
+			// System.out.println("ë°œíŒìœ„ì— ì„œìˆë‹¤.");
 			isDrop = false;
-		}else if ((x - w) >= 300 && (x - w) <=  430 && (y - h) <= 495 && (y - h) >= 490){
-			//			System.out.println("¹ßÆÇÀ§¿¡ ¼­ÀÖ´Ù.");
+		} else if ((x - w) >= 300 && (x - w) <= 430 && (y - h) <= 495 && (y - h) >= 490) {
+			// System.out.println("ë°œíŒìœ„ì— ì„œìˆë‹¤.");
 			isDrop = false;
-		}else if ((x - w) >= 450 && (x - w) <=  570 && (y - h) <= 415 && (y - h) >= 410){
-			//			System.out.println("¹ßÆÇÀ§¿¡ ¼­ÀÖ´Ù.");
+		} else if ((x - w) >= 450 && (x - w) <= 570 && (y - h) <= 415 && (y - h) >= 410) {
+			// System.out.println("ë°œíŒìœ„ì— ì„œìˆë‹¤.");
 			isDrop = false;
-		}else if ((x - w) >= 270 && (x - w) <=  390 && (y - h) <= 335 && (y - h) >= 330){
-			//			System.out.println("¹ßÆÇÀ§¿¡ ¼­ÀÖ´Ù.");
+		} else if ((x - w) >= 270 && (x - w) <= 390 && (y - h) <= 335 && (y - h) >= 330) {
+			// System.out.println("ë°œíŒìœ„ì— ì„œìˆë‹¤.");
 			isDrop = false;
-		}else if ((x - w) >= 370 && (x - w) <=  490 && (y - h) <= 255 && (y - h) >= 250){
-			//			System.out.println("¹ßÆÇÀ§¿¡ ¼­ÀÖ´Ù.");
+		} else if ((x - w) >= 370 && (x - w) <= 490 && (y - h) <= 255 && (y - h) >= 250) {
+			// System.out.println("ë°œíŒìœ„ì— ì„œìˆë‹¤.");
 			isDrop = false;
-		}else if ((x - w) >= 250 && (x - w) <=  370 && (y - h) <= 175 && (y - h) >= 170){
-			//			System.out.println("¹ßÆÇÀ§¿¡ ¼­ÀÖ´Ù.");
+		} else if ((x - w) >= 250 && (x - w) <= 370 && (y - h) <= 175 && (y - h) >= 170) {
+			// System.out.println("ë°œíŒìœ„ì— ì„œìˆë‹¤.");
 			isDrop = false;
-		}else if ((x - w) >= 400 && (x - w) <=  520 && (y - h) <= 95 && (y - h) >= 90){
-			//			System.out.println("¹ßÆÇÀ§¿¡ ¼­ÀÖ´Ù.");
+		} else if ((x - w) >= 400 && (x - w) <= 520 && (y - h) <= 95 && (y - h) >= 90) {
+			// System.out.println("ë°œíŒìœ„ì— ì„œìˆë‹¤.");
 			isDrop = false;
-		}else if ((x - w) >= 490 && (x - w) <=  610 && (y - h) <= 15 && (y - h) >= 10){
-			//			System.out.println("¹ßÆÇÀ§¿¡ ¼­ÀÖ´Ù.");
+		} else if ((x - w) >= 490 && (x - w) <= 610 && (y - h) <= 15 && (y - h) >= 10) {
+			// System.out.println("ë°œíŒìœ„ì— ì„œìˆë‹¤.");
 			isDrop = false;
-		}else if ((x - w) >=  650 && (x - w) <= 1000 && y - h <= - 35 && (y - h) >= -40){
-			System.out.println("Å¬¸®¾î");
+		} else if ((x - w) >= 650 && (x - w) <= 1000 && y - h <= -35 && (y - h) >= -40) {
+			System.out.println("í´ë¦¬ì–´");
 			isDrop = false;
 			isClear = true;
-		}
-		else {
-			System.out.println("³«ÇÏÁß...");
+		} else {
+			System.out.println("ë‚™í•˜ì¤‘...");
 			y -= ddy;
 			isDrop = true;
 		}
-		if(y - h - 15 > 700) {
+		if (y - h - 15 > 700) {
 			gameOver = true;
 		}
 	}
@@ -496,40 +493,42 @@ public class Stage01 extends JPanel implements KeyListener{
 
 	public void enemyProcess() {
 
-		for (int i = 0 ; i < Enemy_List.size() ; ++i ){ 
-			en = Enemy_List.get(i); 
-			if(i % 2 == 0) {
-				en.move(); 
-			}else {
+		for (int i = 0; i < Enemy_List.size(); ++i) {
+			en = Enemy_List.get(i);
+			if (i % 2 == 0) {
+				en.move();
+			} else {
 				en.move2();
 			}
-			if(en.getX() < -200 && i % 2 == 0){ 
-				Enemy_List.remove(i); 
-			}else if(en.getX() > 1500 && i % 2 != 0) {
-				Enemy_List.remove(i); 
+			if (en.getX() < -200 && i % 2 == 0) {
+				Enemy_List.remove(i);
+			} else if (en.getX() > 1500 && i % 2 != 0) {
+				Enemy_List.remove(i);
 			}
-			if(collision(x - w, y - h - 15, en.getX(), en.getY(), ipssagStanding[0], EnemyImg))
-			{
+			if (collision(x - w, y - h - 15, en.getX(), en.getY(), ipssagStanding[0], EnemyImg)) {
 				life--;
-				//				System.out.println(life);
+				// System.out.println(life);
 				Enemy_List.remove(i);
 			}
 		}
 
-		if(cnt % 201 == 0 || cnt == 1) {
-			en = new Stage01_Enemy(1024 + 100, ((int)(Math.random()*600) + 100), (enemySpeed + (int)(Math.random()*10)));
-			Enemy_List.add(en); 
-			en = new Stage01_Enemy(-100, ((int)(Math.random()*600) + 100), (enemySpeed + (int)(Math.random()*10)));
+		if (cnt % 201 == 0 || cnt == 1) {
+			en = new Stage01_Enemy(1024 + 100, ((int) (Math.random() * 600) + 100),
+					(enemySpeed + (int) (Math.random() * 10)));
+			Enemy_List.add(en);
+			en = new Stage01_Enemy(-100, ((int) (Math.random() * 600) + 100),
+					(enemySpeed + (int) (Math.random() * 10)));
 			Enemy_List.add(en);
 		}
 	}
-	public void drawEnemy(Graphics g){ 
-		for (int i = 0 ; i < Enemy_List.size() ; ++i ){
+
+	public void drawEnemy(Graphics g) {
+		for (int i = 0; i < Enemy_List.size(); ++i) {
 			en = Enemy_List.get(i);
-			//			System.out.println("x = " + en.getX() + " y = " + en.getY());
-			if(i % 2 == 0) {
+			// System.out.println("x = " + en.getX() + " y = " + en.getY());
+			if (i % 2 == 0) {
 				g.drawImage(EnemyImgR, en.getX(), en.getY(), this);
-			}else {
+			} else {
 				g.drawImage(EnemyImg, en.getX(), en.getY(), this);
 			}
 		}
@@ -537,38 +536,42 @@ public class Stage01 extends JPanel implements KeyListener{
 
 	public boolean collision(int x1, int y1, int x2, int y2, Image ipssag, Image enemy) {
 		boolean check = false;
-		if(Math.abs((x1 + ipssag.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < ( enemy.getWidth(null) / 2 + ipssag.getWidth(null) / 2 - 40) 
-				&& Math.abs( ( y1 + ipssag.getHeight(null) / 2 )  - ( y2 + enemy.getHeight(null) / 2 ))  < ( enemy.getHeight(null)/2 + ipssag.getHeight(null)/2 - 40) ){
-			// ÀÌ¹ÌÁö ³ĞÀÌ, ³ôÀÌ°ª ¹Ù·Î ¹ŞÀ½
+		if (Math.abs((x1 + ipssag.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < (enemy.getWidth(null) / 2
+				+ ipssag.getWidth(null) / 2 - 40)
+				&& Math.abs((y1 + ipssag.getHeight(null) / 2)
+						- (y2 + enemy.getHeight(null) / 2)) < (enemy.getHeight(null) / 2 + ipssag.getHeight(null) / 2
+								- 40)) {
+			// ì´ë¯¸ì§€ ë„“ì´, ë†’ì´ê°’ ë°”ë¡œ ë°›ìŒ
 			check = true;
-		}else {
+		} else {
 			check = false;
 		}
 		return check;
 	}
+
 	public String[] checkRanking() {
 		UserManager userManager = new UserManager();
 		RankingDao rankingDao = new RankingDao();
 
-		//		ArrayList<String> rankStr = new ArrayList<>();
+		// ArrayList<String> rankStr = new ArrayList<>();
 		userManager.rankingMethod(user, score, 1);
 		ArrayList<Ranking> list = rankingDao.readRankingList(1);
 
 		int size = 0;
-		if(list.size() < 5) {
+		if (list.size() < 5) {
 			size = list.size();
-		}else {
+		} else {
 			size = 5;
 		}
 		String[] rankStr = new String[size];
-		if(list.size() == 0) {
-			System.out.println("±âÁ¸ ·©Å·ÀÌ ¾ø½À´Ï´Ù.");
+		if (list.size() == 0) {
+			System.out.println("ê¸°ì¡´ ë­í‚¹ì´ ì—†ìŠµë‹ˆë‹¤.");
 			list = new ArrayList<Ranking>();
 		} else {
-			for(int i = 0; i < size; i++) {
-				if(!(list.get(i).getName().equals(null))) {
-					//					System.out.println(list.get(i));
-					//					rankStr.add(list.get(i).getName());
+			for (int i = 0; i < size; i++) {
+				if (!(list.get(i).getName().equals(null))) {
+					// System.out.println(list.get(i));
+					// rankStr.add(list.get(i).getName());
 					rankStr[i] = list.get(i).getName();
 					System.out.println(rankStr[i]);
 				}
@@ -576,24 +579,24 @@ public class Stage01 extends JPanel implements KeyListener{
 		}
 
 		JLabel[] rankLa = new JLabel[5];
-		for(int i = 0; i < rankStr.length; i++) {
-			//			for(int j = 0; j < i; j++) {
-			//				if(!(list.get(i).getScore() == list.get(j).getScore())) {
-			rankStr[i] = new String((i + 1) + "µî : " + list.get(i).getName() + "    " + list.get(i).getScore());
-			//				}
+		for (int i = 0; i < rankStr.length; i++) {
+			// for(int j = 0; j < i; j++) {
+			// if(!(list.get(i).getScore() == list.get(j).getScore())) {
+			rankStr[i] = new String((i + 1) + "ë“± : " + list.get(i).getName() + "    " + list.get(i).getScore());
+			// }
 			rankLa[i] = new JLabel();
 			rankLa[i].setText(rankStr[i]);
-			rankLa[i].setBounds(440, 320 + 30*(i+1), 200, 100);
-			rankLa[i].setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 20));
+			rankLa[i].setBounds(440, 320 + 30 * (i + 1), 200, 100);
+			rankLa[i].setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 20));
 			rankLa[i].setForeground(Color.BLACK);
 			System.out.println(rankStr[i]);
 		}
 
-
-		//		}
+		// }
 		return rankStr;
 
 	}
+
 	public boolean isJump() {
 		return isJump;
 	}
@@ -625,26 +628,26 @@ public class Stage01 extends JPanel implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//´­·¯Áø Å°°¡ ¹«¾ùÀÎÁö ¾Ë¾Æ³»±â 
+		// ëˆŒëŸ¬ì§„ í‚¤ê°€ ë¬´ì—‡ì¸ì§€ ì•Œì•„ë‚´ê¸°
 		int keyCode = e.getKeyCode();
 
-		switch( keyCode ) {
-		//¹æÇâÅ° ÁÂ¿ì ±¸ºĞ
+		switch (keyCode) {
+		// ë°©í–¥í‚¤ ì¢Œìš° êµ¬ë¶„
 		case KeyEvent.VK_LEFT:
-			System.out.println("¿ŞÂÊ");
-			this.dx = -8; 
+			System.out.println("ì™¼ìª½");
+			this.dx = -8;
 			isMoving = true;
 			isRight = false;
 			break;
 		case KeyEvent.VK_RIGHT:
-			System.out.println("¿À¸¥ÂÊ");
+			System.out.println("ì˜¤ë¥¸ìª½");
 			this.dx = 8;
 			isMoving = true;
 			isRight = true;
-			break;	
-		case KeyEvent.VK_SPACE :
-			System.out.println("Á¡ÇÁ");
-			if(isDrop == false) {
+			break;
+		case KeyEvent.VK_SPACE:
+			System.out.println("ì í”„");
+			if (isDrop == false) {
 				isJump = true;
 			}
 
@@ -652,13 +655,14 @@ public class Stage01 extends JPanel implements KeyListener{
 		}
 
 	}
+
 	@Override
 	public void keyReleased(KeyEvent e) {
-		//´­·¯Áø Å°°¡ ¹«¾ùÀÎÁö ¾Ë¾Æ³»±â 
+		// ëˆŒëŸ¬ì§„ í‚¤ê°€ ë¬´ì—‡ì¸ì§€ ì•Œì•„ë‚´ê¸°
 		int keyCode = e.getKeyCode();
 
-		switch( keyCode ) {
-		//¹æÇâÅ° ÁÂ¿ì ±¸ºĞ
+		switch (keyCode) {
+		// ë°©í–¥í‚¤ ì¢Œìš° êµ¬ë¶„
 		case KeyEvent.VK_LEFT:
 			this.dx = 0;
 			isMoving = false;
@@ -666,9 +670,8 @@ public class Stage01 extends JPanel implements KeyListener{
 		case KeyEvent.VK_RIGHT:
 			this.dx = 0;
 			isMoving = false;
-			break;		
+			break;
 		}
 	}
 
 }
-

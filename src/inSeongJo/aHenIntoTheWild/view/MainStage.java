@@ -25,77 +25,84 @@ public class MainStage extends JPanel {
 	// private JLabel label = new JLabel(background);
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
+
 	public MainStage(MainFrame mf, User user) {
 		this.mf = mf;
 		this.user = user;
 		MainStage = this;
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
-//		mf.add(this);
-		
-		//À¯Àú °´Ã¼ Á¤º¸ Ãâ·Â
-		JLabel loginInfo = new JLabel("È¯¿µÇÕ´Ï´Ù. "  + user.getNickName() + "´Ô");
+		// mf.add(this);
+
+		// ìœ ì € ê°ì²´ ì •ë³´ ì¶œë ¥
+		JLabel loginInfo = new JLabel("í™˜ì˜í•©ë‹ˆë‹¤. " + user.getNickName() + "ë‹˜");
 		loginInfo.setBounds(100, 8, 300, 100);
-		loginInfo.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 17));
+		loginInfo.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 17));
 		loginInfo.setForeground(Color.DARK_GRAY);
 		add(loginInfo);
-		
-		//À¯Àú ¹öÆ°
-		Image userImage = new ImageIcon("images/YJimages/user2.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-		Image userPressedImage = new ImageIcon("images/YJimages/user2_pressed.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+
+		// ìœ ì € ë²„íŠ¼
+		Image userImage = new ImageIcon("images/YJimages/user2.png").getImage().getScaledInstance(70, 70,
+				Image.SCALE_SMOOTH);
+		Image userPressedImage = new ImageIcon("images/YJimages/user2_pressed.png").getImage().getScaledInstance(70, 70,
+				Image.SCALE_SMOOTH);
 		JButton userButton = new JButton(new ImageIcon(userImage));
 		userButton.setBorderPainted(false);
 		userButton.setContentAreaFilled(false);
 		userButton.setFocusPainted(false);
 		userButton.setBounds(20, 20, 70, 70);
 		userButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		userButton.setPressedIcon(new ImageIcon(userPressedImage));;
+		userButton.setPressedIcon(new ImageIcon(userPressedImage));
+		;
 		add(userButton);
-		
+
 		userButton.addMouseListener(new MyMouseAdapter());
-		
-		//ÀúÀå ¹öÆ°
-		Image saveImage = new ImageIcon("images/YJimages/save.png").getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
-		Image savePressedImage = new ImageIcon("images/YJimages/save_pressed.png").getImage().getScaledInstance(55, 55, Image.SCALE_SMOOTH);
+
+		// ì €ì¥ ë²„íŠ¼
+		Image saveImage = new ImageIcon("images/YJimages/save.png").getImage().getScaledInstance(55, 55,
+				Image.SCALE_SMOOTH);
+		Image savePressedImage = new ImageIcon("images/YJimages/save_pressed.png").getImage().getScaledInstance(55, 55,
+				Image.SCALE_SMOOTH);
 		JButton saveButton = new JButton(new ImageIcon(saveImage));
 		saveButton.setBorderPainted(false);
 		saveButton.setContentAreaFilled(false);
 		saveButton.setFocusPainted(false);
 		saveButton.setBounds(930, 20, 70, 70);
 		saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		saveButton.setPressedIcon(new ImageIcon(savePressedImage));;
+		saveButton.setPressedIcon(new ImageIcon(savePressedImage));
+		;
 		add(saveButton);
-		
-		//ÀÙ½ÏÀÌ ÀÌ¹ÌÁö
+
+		// ìì‹¹ì´ ì´ë¯¸ì§€
 		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 250, 0);
 		JLabel ipssakImage = new JLabel(new ImageIcon(ipssak));
 		ipssakImage.setBounds(800, 500, 200, 200);
 		add(ipssakImage);
-		
-		//ÀÙ½ÏÀÌ ´ë»ç ÅØ½ºÆ®
-		JLabel ipssakText = new JLabel("¾È³ç? ³­ ÀÙ½ÏÀÌ¶ó°í ÇØ.");
+
+		// ìì‹¹ì´ ëŒ€ì‚¬ í…ìŠ¤íŠ¸
+		JLabel ipssakText = new JLabel("ì•ˆë…•? ë‚œ ìì‹¹ì´ë¼ê³  í•´.");
 		ipssakText.setBounds(350, 510, 500, 100);
-		ipssakText.setFont(new Font("³ª´®½ºÄù¾î ExtraBold", Font.PLAIN, 20));
+		ipssakText.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ ExtraBold", Font.PLAIN, 20));
 		ipssakText.setForeground(Color.DARK_GRAY);
 		add(ipssakText);
-		JLabel ipssakText2 = new JLabel("¾ç°èÀåÀº ³Ê¹« °©°©ÇÏÁö ¾Ê¾Æ? ³­ ÀÌ°÷À» ³ª°¡°í ½Í¾î.");
+		JLabel ipssakText2 = new JLabel("ì–‘ê³„ì¥ì€ ë„ˆë¬´ ê°‘ê°‘í•˜ì§€ ì•Šì•„? ë‚œ ì´ê³³ì„ ë‚˜ê°€ê³  ì‹¶ì–´.");
 		ipssakText2.setBounds(270, 545, 500, 100);
-		ipssakText2.setFont(new Font("³ª´®½ºÄù¾î ExtraBold", Font.PLAIN, 20));
+		ipssakText2.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ ExtraBold", Font.PLAIN, 20));
 		ipssakText2.setForeground(Color.DARK_GRAY);
 		add(ipssakText2);
-		JLabel ipssakText3= new JLabel("¿ì¸® °°ÀÌ ¸¶´çÀ¸·Î ³ª°¡º¼±î?");
+		JLabel ipssakText3 = new JLabel("ìš°ë¦¬ ê°™ì´ ë§ˆë‹¹ìœ¼ë¡œ ë‚˜ê°€ë³¼ê¹Œ?");
 		ipssakText3.setBounds(330, 580, 500, 100);
-		ipssakText3.setFont(new Font("³ª´®½ºÄù¾î ExtraBold", Font.PLAIN, 20));
+		ipssakText3.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ ExtraBold", Font.PLAIN, 20));
 		ipssakText3.setForeground(Color.DARK_GRAY);
 		add(ipssakText3);
-		
-		//ÀÙ½ÏÀÌ ¹öºíÅØ½ºÆ®
+
+		// ìì‹¹ì´ ë²„ë¸”í…ìŠ¤íŠ¸
 		Image bubble = new ImageIcon("images/YJimages/bubble.png").getImage().getScaledInstance(850, 230, 0);
 		JLabel bubbleText = new JLabel(new ImageIcon(bubble));
 		bubbleText.setBounds(30, 500, 900, 200);
 		add(bubbleText);
-		
-		//STAGE1 ¹öÆ°
+
+		// STAGE1 ë²„íŠ¼
 		Image stage1Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage1Button = new JButton(new ImageIcon(stage1Image));
 		stage1Button.setBorderPainted(false);
@@ -110,9 +117,8 @@ public class MainStage extends JPanel {
 			}
 		});
 		add(stage1Button);
-		
-		
-		//STAGE2 ¹öÆ°
+
+		// STAGE2 ë²„íŠ¼
 		Image stage2Image = new ImageIcon("images/YJimages/STAGE2.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage2Button = new JButton(new ImageIcon(stage2Image));
 		stage2Button.setBorderPainted(false);
@@ -127,8 +133,8 @@ public class MainStage extends JPanel {
 				ChangePanel.changePanel(mf, MainStage, new Stage02(mf));
 			}
 		});
-		
-		//STAGE3 ¹öÆ°
+
+		// STAGE3 ë²„íŠ¼
 		Image stage3Image = new ImageIcon("images/YJimages/STAGE3.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage3Button = new JButton(new ImageIcon(stage3Image));
 		stage3Button.setBorderPainted(false);
@@ -138,15 +144,15 @@ public class MainStage extends JPanel {
 		stage3Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(stage3Button);
 		stage3Button.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ChangePanel.changePanel(mf, MainStage, new Stage03InfoPage(mf, user));
-				
+
 			}
 		});
-		
-		//STAGE4 ¹öÆ°
+
+		// STAGE4 ë²„íŠ¼
 		Image stage4Image = new ImageIcon("images/YJimages/STAGE4.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage4Button = new JButton(new ImageIcon(stage4Image));
 		stage4Button.setBorderPainted(false);
@@ -155,7 +161,7 @@ public class MainStage extends JPanel {
 		stage4Button.setBounds(710, 200, 300, 300);
 		stage4Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(stage4Button);
-    
+
 		stage4Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -176,12 +182,12 @@ public class MainStage extends JPanel {
 		paintComponents(g);
 		this.repaint();
 	}
-	
-	class MyMouseAdapter extends MouseAdapter{
+
+	class MyMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			ChangePanel.changePanel(mf, MainStage, new UserInformation(mf, user));
-			System.out.println("Å¬¸¯µÇ¾ú½À´Ï´Ù.");
+			System.out.println("í´ë¦­ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		}
 	}
 }

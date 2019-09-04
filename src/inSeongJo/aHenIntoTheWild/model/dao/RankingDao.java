@@ -31,9 +31,9 @@ public class RankingDao {
 			list = (ArrayList<Ranking>) ois.readObject();
 			
 		} catch (FileNotFoundException e){
-			System.out.println("ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.");
+			System.out.println("íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤.");
 		} catch (EOFException e) {
-			System.out.println("ÆÄÀÏÀÇ ³¡ÀÔ´Ï´Ù.");
+			System.out.println("íŒŒì¼ì˜ ëì…ë‹ˆë‹¤.");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} catch (ClassNotFoundException e) {

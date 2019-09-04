@@ -30,18 +30,17 @@ import inSeongJo.aHenIntoTheWild.controller.UserManager;
 import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
-
 public class MainPage extends JPanel {
 	private MainFrame mf;
 	private JPanel mainPage;
-	private Image background = new ImageIcon("images/YJimages/Main_title.png").getImage().getScaledInstance(1024, 768, 0);
+	private Image background = new ImageIcon("images/YJimages/Main_title.png").getImage().getScaledInstance(1024, 768,
+			0);
 	// private JLabel label = new JLabel(background);
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
-	
-	
+
 	JTextField idTextField;
-	JPasswordField passwordTextField; 
+	JPasswordField passwordTextField;
 
 	public MainPage(MainFrame mf) {
 		this.mf = mf;
@@ -49,95 +48,90 @@ public class MainPage extends JPanel {
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		mf.add(this);
-		
-		
+
 		UserDao ud = new UserDao();
 		ArrayList<User> list = ud.readUserList();
 		System.out.println(list);
 
-		// ¾ÆÀÌµğ : userÀÌ¹ÌÁö
+		// ì•„ì´ë”” : userì´ë¯¸ì§€
 		Image user = new ImageIcon("images/YJimages/user.png").getImage().getScaledInstance(50, 50, 0);
 		JLabel userIcon = new JLabel(new ImageIcon(user));
 		userIcon.setBounds(210, 295, 200, 200);
 		add(userIcon);
 
-		// ¾ÆÀÌµğ ÀÔ·Â¶õ
+		// ì•„ì´ë”” ì…ë ¥ë€
 		idTextField = new JTextField();
 		idTextField.setBounds(350, 380, 300, 30);
 		idTextField.setBorder(BorderFactory.createEmptyBorder());
-		//idText.setOpaque(false);
+		// idText.setOpaque(false);
 		add(idTextField);
 
-		// ºñ¹Î¹øÈ£ : lockÀÌ¹ÌÁö
+		// ë¹„ë¯¼ë²ˆí˜¸ : lockì´ë¯¸ì§€
 		Image lock = new ImageIcon("images/YJimages/lock.png").getImage().getScaledInstance(50, 50, 0);
 		JLabel lockIcon = new JLabel(new ImageIcon(lock));
 		lockIcon.setBounds(210, 360, 200, 200);
 		add(lockIcon);
 
-		// ºñ¹Ğ¹øÈ£ ÀÔ·Â¶õ
+		// ë¹„ë°€ë²ˆí˜¸ ì…ë ¥ë€
 		passwordTextField = new JPasswordField();
 		passwordTextField.setBounds(350, 450, 300, 30);
 		passwordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(passwordTextField);
-		
 
-		
-		// ·Î±×ÀÎ ¹öÆ°
-		JButton loginButton = new JButton("·Î±×ÀÎ");
+		// ë¡œê·¸ì¸ ë²„íŠ¼
+		JButton loginButton = new JButton("ë¡œê·¸ì¸");
 		loginButton.setBounds(670, 375, 120, 40);
-		loginButton.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		loginButton.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
 		loginButton.setBackground(Color.LIGHT_GRAY);
 		loginButton.setBorderPainted(false);
 		loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(loginButton);
-		
-		
-		// È¸¿ø °¡ÀÔ ¹öÆ°
-		JButton joinButton = new JButton("È¸¿ø°¡ÀÔ");
+
+		// íšŒì› ê°€ì… ë²„íŠ¼
+		JButton joinButton = new JButton("íšŒì›ê°€ì…");
 		joinButton.setBounds(670, 445, 120, 40);
-		joinButton.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		joinButton.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
 		joinButton.setContentAreaFilled(false);
 		joinButton.setBackground(Color.LIGHT_GRAY);
-		//joinButton.setBorderPainted(false);
+		// joinButton.setBorderPainted(false);
 		joinButton.setBorder(new RoundedBorder(20));
 		joinButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		//joinButton.setBorder(new RoundedBorder(10));
+		// joinButton.setBorder(new RoundedBorder(10));
 		add(joinButton);
-		
+
 		joinButton.addMouseListener(new MyMouseAdapter());
-		
-		// ·Î±×ÀÎ ¹öÆ° -> ¸ŞÀÎ ½ºÅ×ÀÌÁö·Î ÀÌµ¿
+
+		// ë¡œê·¸ì¸ ë²„íŠ¼ -> ë©”ì¸ ìŠ¤í…Œì´ì§€ë¡œ ì´ë™
 		loginButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				// ºñ¹Ğ¹øÈ£ string È­
+
+				// ë¹„ë°€ë²ˆí˜¸ string í™”
 				String password = "";
 				char[] pass = passwordTextField.getPassword();
 				for (int i = 0; i < pass.length; i++) {
 					password += pass[i];
 				}
-				
+
 				UserManager um = new UserManager();
-				
-				if(um.login(idTextField.getText(), password).getId() != null) {
+
+				if (um.login(idTextField.getText(), password).getId() != null) {
 					System.out.println(um.login(idTextField.getText(), password));
-					JOptionPane.showMessageDialog(null, "·Î±×ÀÎ ¼º°ø", "·Î±×ÀÎ",  1);
+					JOptionPane.showMessageDialog(null, "ë¡œê·¸ì¸ ì„±ê³µ", "ë¡œê·¸ì¸", 1);
 					ChangePanel.changePanel(mf, mainPage, new MainStage(mf, um.login(idTextField.getText(), password)));
-				}else {
-					JOptionPane.showMessageDialog(null, "·Î±×ÀÎ ½ÇÆĞ", "·Î±×ÀÎ",  1);
-					System.out.println("¸ŞÀÎÆäÀÌÁö : ·Î±×ÀÎ ½ÇÆĞ");
+				} else {
+					JOptionPane.showMessageDialog(null, "ë¡œê·¸ì¸ ì‹¤íŒ¨", "ë¡œê·¸ì¸", 1);
+					System.out.println("ë©”ì¸í˜ì´ì§€ : ë¡œê·¸ì¸ ì‹¤íŒ¨");
 				}
-				
+
 			}
 		});
 
 	}
-	
-	
-	// È¸¿ø°¡ÀÔ ÆäÀÌÁö·Î ÀÌµ¿
-	class MyMouseAdapter extends MouseAdapter{
+
+	// íšŒì›ê°€ì… í˜ì´ì§€ë¡œ ì´ë™
+	class MyMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			ChangePanel.changePanel(mf, mainPage, new UserAgreements(mf));
@@ -156,30 +150,27 @@ public class MainPage extends JPanel {
 		paintComponents(g);
 		this.repaint();
 	}
-	//¹öÆ° border round
+
+	// ë²„íŠ¼ border round
 	class RoundedBorder implements Border {
 
-	    private int radius;
+		private int radius;
 
+		RoundedBorder(int radius) {
+			this.radius = radius;
+		}
 
-	    RoundedBorder(int radius) {
-	        this.radius = radius;
-	    }
+		public Insets getBorderInsets(Component c) {
+			return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+		}
 
+		public boolean isBorderOpaque() {
+			return true;
+		}
 
-	    public Insets getBorderInsets(Component c) {
-	        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
-	    }
-
-
-	    public boolean isBorderOpaque() {
-	        return true;
-	    }
-
-
-	    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-	        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
-	    }
+		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+			g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+		}
 	}
-	
+
 }

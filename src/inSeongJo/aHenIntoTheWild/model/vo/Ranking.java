@@ -2,13 +2,14 @@ package inSeongJo.aHenIntoTheWild.model.vo;
 
 import java.io.Serializable;
 
-public class Ranking implements Serializable{
-	
+public class Ranking implements Serializable {
+
 	private String name;
 	private int score;
-	
-	public Ranking() {}
-	
+
+	public Ranking() {
+	}
+
 	public Ranking(String name, int score) {
 		this.name = name;
 		this.score = score;
@@ -34,8 +35,5 @@ public class Ranking implements Serializable{
 	public String toString() {
 		return "Ranking [name=" + name + ", score=" + score + "]";
 	}
-	
-	
-	
 
 }

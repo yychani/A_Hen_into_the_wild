@@ -3,12 +3,12 @@ package inSeongJo.aHenIntoTheWild.view;
 public class Stage04_Point {
 	private int x;
 	private int y;
-	
+
 	public Stage04_Point(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	public void move() {
 		y += 5;
 	}
@@ -29,5 +29,4 @@ public class Stage04_Point {
 		this.y = y;
 	}
 
-	
 }

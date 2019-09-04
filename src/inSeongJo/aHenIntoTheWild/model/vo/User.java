@@ -2,8 +2,8 @@ package inSeongJo.aHenIntoTheWild.model.vo;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
-	
+public class User implements Serializable {
+
 	private String id;
 	private String password;
 	private String email;
@@ -13,7 +13,7 @@ public class User implements Serializable{
 	private int stage2Score;
 	private int stage3Score;
 	private int stage4Score;
-	
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", password=" + password + ", email=" + email + ", nickName=" + nickName
@@ -21,8 +21,9 @@ public class User implements Serializable{
 				+ ", stage3Score=" + stage3Score + ", stage4Score=" + stage4Score + "]";
 	}
 
-	public User() {}
-	
+	public User() {
+	}
+
 	public User(String id, String password, String email, String nickName, int totalScore, int stage1Score,
 			int stage2Score, int stage3Score, int stage4Score) {
 		super();
@@ -36,7 +37,7 @@ public class User implements Serializable{
 		this.stage3Score = stage3Score;
 		this.stage4Score = stage4Score;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -108,6 +109,5 @@ public class User implements Serializable{
 	public void setStage4Score(int stage4Score) {
 		this.stage4Score = stage4Score;
 	}
-
 
 }

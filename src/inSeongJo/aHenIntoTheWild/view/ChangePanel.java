@@ -4,9 +4,9 @@ import javax.swing.JPanel;
 
 public class ChangePanel {
 	public static void changePanel(MainFrame mf, JPanel op, JPanel np) {
-		mf.remove(op);	//¿ÃµåÆĞ³Î Áö¿ì±â
-		mf.add(np); 	
-		mf.repaint(); //»õ·Î°íÄ§
+		mf.remove(op); // ì˜¬ë“œíŒ¨ë„ ì§€ìš°ê¸°
+		mf.add(np);
+		mf.repaint(); // ìƒˆë¡œê³ ì¹¨
 	}
 
 }
