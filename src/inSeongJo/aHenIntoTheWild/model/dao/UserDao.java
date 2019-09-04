@@ -1,6 +1,7 @@
 package inSeongJo.aHenIntoTheWild.model.dao;
 
 import java.io.EOFException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,7 +28,7 @@ public class UserDao {
 			list = (ArrayList<User>)ois.readObject();
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			new File("userList.dat");
 		} catch (EOFException e) {
 			
 		}
