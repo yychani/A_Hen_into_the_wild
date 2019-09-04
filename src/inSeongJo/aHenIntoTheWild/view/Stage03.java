@@ -38,7 +38,7 @@ public class Stage03 extends JPanel {
 	private int y;
 	private int growthLevel;
 	private int[][] iniRate = { { 100, 100, 0, 0 }, { 50, 90, 20, 0 }, { 60, 60, 30, 0 } }; // 초기세팅값 : 포만감, 청결도, 피로도,
-																							// 성장도
+
 	private String str = "";
 	private boolean riceBl, bathBl, playBl, loveBl, bedBl;
 	private boolean goOrStop = true;
@@ -52,6 +52,10 @@ public class Stage03 extends JPanel {
 	private Image growthImage = new ImageIcon("images/stage03_image/growthRate.png").getImage().getScaledInstance(40,
 			243, Image.SCALE_SMOOTH);
 	private Image mouse = null;
+	private Image gameOverImg = new ImageIcon("images/gameOver.png").getImage().getScaledInstance(850, 
+			190, Image.SCALE_SMOOTH);
+	private Image gameClearImg = new ImageIcon("images/clear.png").getImage().getScaledInstance(830, 
+			250, Image.SCALE_SMOOTH);
 
 	public Stage03(MainFrame mf, int level, User user) {
 
@@ -69,14 +73,112 @@ public class Stage03 extends JPanel {
 		rate[1] = iniRate[growthLevel][1]; // 임의로 설정한 청결도
 		rate[2] = iniRate[growthLevel][2]; // 임의로 설정한 피로도
 		rate[3] = iniRate[growthLevel][3]; // 성장도
-
+		
+		//현재 레벨표시
 		String levelStr = "현재 레벨 : " + (growthLevel + 1) + " Lv";
 		JLabel levelLabel = new JLabel(levelStr);
 		levelLabel.setBounds(5, 5, 200, 20);
 		levelLabel.setFont(new Font("바탕", Font.BOLD, 15));
 		add(levelLabel);
+		
+		//메인스테이지로 돌아가는 버튼
+		Image goHome = new ImageIcon("images/YJimages/home.png").getImage().getScaledInstance(60, 60,
+				Image.SCALE_SMOOTH);
+		Image goHomePressed = new ImageIcon("images/YJimages/home_pressed.png").getImage().
+				getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+		JButton homebtn = new JButton(new ImageIcon(goHome));
+		homebtn.setBounds(920, 650, 60, 60);
+		homebtn.setBorderPainted(false);
+		homebtn.setContentAreaFilled(false);
+		homebtn.setFocusPainted(false);
+		homebtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		homebtn.setPressedIcon(new ImageIcon(goHomePressed));
+		homebtn.setToolTipText("저장되지 않고 메인으로 돌아갑니다.");
+		add(homebtn);
+		
+		homebtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+			}
+		});
+		
+		//게임오버되는 상황 체크하는 쓰레드
+		Thread th3 = new Thread(new Runnable() {
+			@Override
+			public void run() {
+
+				while (goOrStop) {
+					if (rate[0] <= 20) {
+						goOrStop = false;
+//						JLabel gameOverLabel = new JLabel(new ImageIcon(gameOverImg));
+//						gameOverLabel.setBounds(50, 50, 850, 190);
+//						s03.add(gameOverLabel);
+						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
+						sm.scoreChange(score, user);
+						String str = sm.rankingMethod(user, score);
+						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n 최종 스코어 : " + score + "\n" + str);
+						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+
+					} else if (rate[1] <= 20) {
+						goOrStop = false;
+//						JLabel gameOverLabel = new JLabel(new ImageIcon(gameOverImg));
+//						gameOverLabel.setBounds(50, 50, 850, 190);
+//						s03.add(gameOverLabel);
+						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
+						sm.scoreChange(score, user);
+						String str = sm.rankingMethod(user, score);
+						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다. \n최종 스코어 : " + score + "\n" + str);
+						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+
+					} else if (rate[2] >= 80) {
+						sm.printResult(rate[3], time);
+						goOrStop = false;
+//						JLabel gameOverLabel = new JLabel(new ImageIcon(gameOverImg));
+//						gameOverLabel.setBounds(50, 50, 850, 190);
+//						s03.add(gameOverLabel);
+						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
+						sm.scoreChange(score, user);
+						String str = sm.rankingMethod(user, score);
+						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다. \n최종 스코어 : " + score + "\n" + str);
+						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+					} else if (rate[3] >= 90) {
+						goOrStop = false;
+						if (growthLevel < 2) {
+							gameOverImg = null;
+							
+							JOptionPane.showMessageDialog(null, "초록이가 " + (growthLevel + 1) + "번째 성장했어요!");
+							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel, user));							
+						} else {
+							gameOverImg = gameClearImg;
+							sm.printResult(rate[3], time);
+							int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
+							sm.scoreChange(score, user);
+							String str = sm.rankingMethod(user, score);
+							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n최종 스코어 : " + score);
+							growthLevel = 0;
+							ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+						}
+					}
+
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+
+			}
+
+		});
+		th3.setDaemon(true);
+		th3.start();
+
 
 		Image riceIcon = new ImageIcon("images/stage03_image/riceIcon.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
+		Image riceIconPressed = new ImageIcon("images/stage03_image/riceIcon_pressed.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
 		JButton ricebutton = new JButton(new ImageIcon(riceIcon));
 		ricebutton.setBounds(20, 620, 100, 102);
@@ -84,6 +186,7 @@ public class Stage03 extends JPanel {
 		ricebutton.setContentAreaFilled(false);
 		ricebutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		ricebutton.setToolTipText("포만감 +5, 피로도+5, 성장도+2");
+		ricebutton.setPressedIcon(new ImageIcon(riceIconPressed));
 		add(ricebutton);
 
 		ricebutton.addActionListener(new ActionListener() {
@@ -98,10 +201,13 @@ public class Stage03 extends JPanel {
 
 		Image bathIcon = new ImageIcon("images/stage03_image/bathIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
+		Image bathIconPressed = new ImageIcon("images/stage03_image/bathIcon_pressed.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
 		JButton bathbutton = new JButton(new ImageIcon(bathIcon));
 		bathbutton.setBounds(140, 620, 100, 102);
 		bathbutton.setBorderPainted(false);
 		bathbutton.setContentAreaFilled(false);
+		bathbutton.setPressedIcon(new ImageIcon(bathIconPressed));
 		bathbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bathbutton.setToolTipText("청결도 +5, 피로도+5");
 		add(bathbutton);
@@ -118,30 +224,39 @@ public class Stage03 extends JPanel {
 
 		Image playIcon = new ImageIcon("images/stage03_image/playIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
+		Image playIconPressed = new ImageIcon("images/stage03_image/playIcon_pressed.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
 		JButton playbutton = new JButton(new ImageIcon(playIcon));
 		playbutton.setBounds(260, 620, 100, 102);
 		playbutton.setBorderPainted(false);
 		playbutton.setContentAreaFilled(false);
+		playbutton.setPressedIcon(new ImageIcon(playIconPressed));
 		playbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		playbutton.setToolTipText("청결도-5, 성장도+5");
 		add(playbutton);
 
 		Image loveIcon = new ImageIcon("images/stage03_image/loveIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
+		Image loveIconPressed = new ImageIcon("images/stage03_image/loveIcon_pressed.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
 		JButton lovebutton = new JButton(new ImageIcon(loveIcon));
 		lovebutton.setBorderPainted(false);
 		lovebutton.setContentAreaFilled(false);
 		lovebutton.setBounds(380, 620, 100, 102);
+		lovebutton.setPressedIcon(new ImageIcon(loveIconPressed));
 		lovebutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lovebutton.setToolTipText("성장도+5");
 		add(lovebutton);
 
 		Image bedIcon = new ImageIcon("images/stage03_image/bedIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
+		Image bedIconPressed = new ImageIcon("images/stage03_image/bedIcon_pressed.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
 		JButton bedbutton = new JButton(new ImageIcon(bedIcon));
 		bedbutton.setBorderPainted(false);
 		bedbutton.setContentAreaFilled(false);
 		bedbutton.setBounds(500, 620, 100, 102);
+		bedbutton.setPressedIcon(new ImageIcon(bedIconPressed));
 		bedbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bedbutton.setToolTipText("피로도0, 포만감-10");
 		add(bedbutton);
@@ -191,7 +306,7 @@ public class Stage03 extends JPanel {
 		tiredRatePercent.setForeground(Color.RED);
 		add(tiredRatePercent);
 
-		// addMouseMotionListener(new MyEvent()); //위치 확인
+		addMouseMotionListener(new MyEvent()); //위치 확인
 
 		playbutton.addActionListener(new ActionListener() {
 
@@ -315,67 +430,6 @@ public class Stage03 extends JPanel {
 		th2.setDaemon(true);
 		th2.start();
 
-		Thread th3 = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-
-				while (goOrStop) {
-					if (rate[0] <= 20) {
-						goOrStop = false;
-
-						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
-						sm.scoreChange(score, user);
-						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n 최종 스코어 : " + score);
-
-						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
-
-					} else if (rate[1] <= 20) {
-						goOrStop = false;
-						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
-						sm.scoreChange(score, user);
-						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다. \n최종 스코어 : " + score);
-
-						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
-
-					} else if (rate[2] >= 80) {
-						sm.printResult(rate[3], time);
-						goOrStop = false;
-						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
-						sm.scoreChange(score, user);
-						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다. \n최종 스코어 : " + score);
-
-						// ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
-						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
-					} else if (rate[3] >= 90) {
-						goOrStop = false;
-						if (growthLevel < 3) {
-							JOptionPane.showMessageDialog(null, "초록이가 " + (growthLevel + 1) + "번째 성장했어요!");
-							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel, user));
-						} else {
-							sm.printResult(rate[3], time);
-							int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
-							sm.scoreChange(score, user);
-							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n최종 스코어 : " + score);
-							growthLevel = 0;
-
-							ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
-						}
-					}
-
-					try {
-						Thread.sleep(100);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-
-			}
-
-		});
-		th3.setDaemon(true);
-		th3.start();
-
 	}
 
 	@Override
@@ -383,28 +437,16 @@ public class Stage03 extends JPanel {
 		this.g = g;
 		g.drawImage(background, 0, 0, null); // 배경을 그려줌
 		paintComponents(g); // component를 그려줌
-		// Image green;
-		// int gx, gy, width, height;
-		//
-		// if(growthLevel == 0) {
-		// gx = 412; gy =270; width = 200; height =279;
-		// green = new ImageIcon("images/stage03_image/greenE.gif").getImage();
-		//
-		// } else if(growthLevel == 1) {
-		// gx = 312; gy = 180; width = 400; height = 421;
-		// green = new ImageIcon("images/stage03_image/greenELv2.gif").getImage();
-		// } else {
-		// gx = 412; gy =270; width = 200; height =279;
-		// green = new ImageIcon("images/stage03_image/greenE.gif").getImage();
-		// }
-		//
-		// g.drawImage(green, gx, gy, width, height, null); // 초록이 이미지 삽입
-		//
+		
 		g.drawImage(fullImage, 25, 69, (int) (188 * (double) rate[0] / 100.0), 25, null); // 포만감표시
 		g.drawImage(cleanImage, 25, 140, (int) (188 * (double) rate[1] / 100.0), 25, null); // 청결도표시
 		g.drawImage(tiredImage, 25, 211, (int) (188 * (double) rate[2] / 100.0), 25, null); // 피로도표시
 		g.drawImage(growthImage, 934, 330, 40, (int) (-243 * (double) rate[3] / 100.0), null); // 성장도표시
 
+		if (goOrStop == false) {
+			g.drawImage(gameOverImg, 80, 80, 850, 190, null);
+		}
+		
 		if (riceBl == true) {
 			this.addMouseMotionListener(new MouseAdapter() {
 				@Override
@@ -426,7 +468,7 @@ public class Stage03 extends JPanel {
 		} else { // default : 마우스에 아무것도 올려지지 않은 상태
 			mouse = null;
 		}
-
+		
 		g.drawImage(mouse, x - 20, y - 30, 100, 68, null);
 		this.repaint(); // 다시 그려준다는 의미?
 

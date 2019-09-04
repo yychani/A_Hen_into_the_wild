@@ -36,7 +36,7 @@ public class Stage03Manager {
 	
 	//각 버튼마다 기능하는 메소드들 정의
 	public int[] eatingMethod(int[] rate, int x, int y) {
-		if((x > 460 && x < 570) && (y > 300 && y < 400)) {
+		if((x > 450 && x < 580) && (y > 350 && y < 420)) {
 			//포만감 증가
 			rate[0] = plusFor(rate[0], 5);
 			//피로도 증가
@@ -48,7 +48,7 @@ public class Stage03Manager {
 	}
 	
 	public int[] cleaningMethod(int[] rate, int x, int y) {
-		if((x > 460 && x < 570) && (y > 300 && y < 400)) {
+		if((x > 450 && x < 580) && (y > 280 && y < 370)) {
 			//피로도 감소
 			//rate[1] = plusFor(rate[1], 5);
 			//rate[2] = plusFor(rate[2], 5);
@@ -116,13 +116,14 @@ public class Stage03Manager {
 		return (level*1000 + growthTime*10 + time);
 	}
 	
-	public void rankingMethod(User user, int score) {
+	public String rankingMethod(User user, int score) {
 		RankingDao rd = new RankingDao();
 		ArrayList<Ranking> list = rd.readRankingList(3);
 		Ranking r = new Ranking();
 		Ranking rInit = new Ranking("빈랭킹", 0);
+		String str = "";
 		
-		if(list == null) {
+		if(list.size() == 0) {
 			list = new ArrayList<Ranking>();
 			r.setName(user.getNickName());
 			r.setScore(score);
@@ -158,11 +159,14 @@ public class Stage03Manager {
 		      });
 		}
 		for(int i=0; i<5; i++) {
-			System.out.println((i+1) + "등 : " + list.get(i).getName() + ", " + list.get(i).getScore());
+			//System.out.println((i+1) + "등 : " + list.get(i).getName() + ", " + list.get(i).getScore());
+			str += (i+1) + "등 : " + list.get(i).getName() + ", " + list.get(i).getScore() + "\n";
 			}
-		
+		System.out.println(str);
 		int result = rd.writeRankingList(list, 3);
 		System.out.println("result : " + result);
+		
+		return str;
 	}
 
 }

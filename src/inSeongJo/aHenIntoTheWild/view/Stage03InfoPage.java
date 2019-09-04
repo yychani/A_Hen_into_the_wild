@@ -30,17 +30,12 @@ public class Stage03InfoPage extends JPanel {
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-		infoBackGround = toolkit.getImage("images/stage03_image/GrowthGreenInfo.jpg").getScaledInstance(1024, 740,
+		infoBackGround = toolkit.getImage("images/stage03_image/GrowthGreenInfo.jpg").getScaledInstance(1024, 768,
 				Image.SCALE_SMOOTH);// 배경 이미지
-		JLabel stage01Info = new JLabel();
-		stage01Info.setBounds(100, 100, 800, 500);
-		stage01Info.setHorizontalAlignment(JLabel.CENTER);
-
+		
 		JButton stage3Button = new JButton("시작하기");
-		// stage3Button.setBorderPainted(false);
-		// stage3Button.setContentAreaFilled(false);
-		// stage3Button.setFocusPainted(false);
-		stage3Button.setBounds(310, 500, 100, 80);
+		stage3Button.setContentAreaFilled(false);
+		stage3Button.setBounds(470, 660, 100, 30);
 		add(stage3Button);
 		stage3Button.addActionListener(new ActionListener() {
 
@@ -50,7 +45,7 @@ public class Stage03InfoPage extends JPanel {
 
 			}
 		});
-		add(stage01Info);
+		//add(stage01Info);
 	}
 
 	@Override
