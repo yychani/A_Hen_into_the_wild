@@ -2,345 +2,319 @@ package inSeongJo.aHenIntoTheWild.view;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import inSeongJo.aHenIntoTheWild.model.vo.Stage04_Thread;
-
-//import com.kh.project.main.Main;
-
-public class Stage04 extends JPanel implements KeyListener{
-	private Stage04_Thread stage04Thread;
+// 프레임 생성을 위한 JFrame 상속
+//키보드 이벤트 처리를 위한 KeyListener를 상속
+//스레드를 돌리기 위한 Runnable 상속
+public class Stage04 extends JPanel implements KeyListener, Runnable { 
+	Stage04Enemy se;
+	Stage04_Point sp;
+	
 	private MainFrame mf;
-	private JPanel Stage04;
-	private int width, height; 
+//	private JPanel stage04;
+	// 캐릭터의 좌표 변수
 	private int x = 100;
-	private int y = 100;  // 주인공의 좌표
-	private Image ScreenImage;
-	private Graphics ScreenGraphics;
-	final int FLY_U = 10;
-	int cnt = 0;
-	private int ddx;
-	private int ddy;
-	private boolean plz = true;
+	private int y = 100; 
+	private int w;
+	private int h;
+	private int life = 5;
+	
+	int cnt;
+	int cnt2;
 
-	private Stage04Enemy stageEnemy;
-	ArrayList<JLabel> Enemy_List;
-	Toolkit tk = Toolkit.getDefaultToolkit();
-	// 배경이미지
-	Image BG = new ImageIcon("images/Images/sky2.jpg").getImage();  
-	// 초록이 이미지
-	Image iconChorok = new ImageIcon("images/Images/chorok.gif").getImage().getScaledInstance(150, 150, 0);
-	JLabel chorok = new JLabel(new ImageIcon(iconChorok));
+	//키보드 입력 처리를 위한 변수
+	boolean KeyUp = false; 
+	boolean KeyDown = false;
+	boolean KeyLeft = false;
+	boolean KeyRight = false;
+	private Image chorok = new ImageIcon("images/Images/chorok.gif").getImage().getScaledInstance(150, 150, 0); 
+	private Image enemy  = new ImageIcon("images/Images/bird.gif").getImage().getScaledInstance(150, 150, 0);
+	private Image star = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(50, 50, 0);
+	
 
-	public Stage04(MainFrame mf) {
+	// 스레드 생성
+	Thread th; 
+	Image BG = new ImageIcon("images/Images/sky3.png").getImage();
+	
+	ArrayList<Stage04Enemy> Enemy_List = new ArrayList<>();
+	ArrayList<Stage04_Point> Point_List = new ArrayList<>();
+
+	
+	public Stage04(MainFrame mf){
 		this.mf = mf;
-
-		//		Stage04 = this;
-
-		setBounds(0, 0, 1024, 768);
-		this.setName("Stage04");
-		stageEnemy = new Stage04Enemy();
-		//		this.add(stageEnemy);
-		Enemy_List = new ArrayList<>();
+		this.setBounds(0, 0, 1600, 768);
+		this.setLayout(null);
+//		stage04 = this;
 		mf.add(this);
-		for(int i = 0; i < 10; i++) {
-			Enemy_List.add(i, stageEnemy.enemyC);
-		}
 
-		System.out.println("size : " + Enemy_List.size());
+		start();
 
-		//		Toolkit tk = Toolkit.getDefaultToolkit();
-		setLayout(null);
+		this.setName("stage4");
+		
 
-		chorok.setBounds(x,y,200,200);
-		add(chorok);
-
-
-		//이게 stage4Enemy를 불러와서 띄워주는 역할
-		//		add(stageEnemy.enemyC);
-
-		//		enemyC.setBounds(100,200,1000,550);
-		//		add(enemyC);
-
-
-
-		stage04Thread = new Stage04_Thread(this);
-		stage04Thread.start();
-		setFocusable(true);
-		this.addKeyListener(new KeyAdapter()
-		{ 
-			public void keyPressed(KeyEvent e){
-				switch(e.getKeyCode()){
-				case KeyEvent.VK_UP:System.out.println("이동했어요 위");
-
-				if(chorok.getY() <= -100) {
-					chorok.setLocation(chorok.getX(), chorok.getY() - 0);break;
-				}else {
-					chorok.setLocation(chorok.getX(), chorok.getY() - 10);
-					System.out.println("X : " + chorok.getX() + ", " + "Y : " + chorok.getY());
-					break;
-				} case KeyEvent.VK_DOWN:
-					System.out.println("이동했어요 아래");
-					if(chorok.getY() >= 570) {
-						chorok.setLocation(chorok.getX(), chorok.getY() + 0); break;
-					}else {
-						chorok.setLocation(chorok.getX(), chorok.getY() + 10);
-						System.out.println("X : " + chorok.getX() + ", " + "Y : " + chorok.getY());
-						break;
-					}
-				case KeyEvent.VK_LEFT:
-					System.out.println("이동했어요 왼");
-					if(chorok.getX() <= -60) {
-						chorok.setLocation(chorok.getX()-0, chorok.getY()); break;
-					}else {
-						chorok.setLocation(chorok.getX()-10, chorok.getY());
-						System.out.println("X : " + chorok.getX() + ", " + "Y : " + chorok.getY());
-						break;
-					}
-				case KeyEvent.VK_RIGHT:
-					if(chorok.getX() >= 850) {
-						chorok.setLocation(chorok.getX() + 0, chorok.getY());break;
-					}else {
-						chorok.setLocation(chorok.getX()+10, chorok.getY());
-						//						System.out.println("X : " + chorok.getX() + ", " + "Y : " + chorok.getY());
-						break;
-					}
-				}
-			}
-		});
+		setVisible(true);
+		this.setFocusable(true);
+		this.addKeyListener(this);
 
 	}
+
+
+
+	public void start() {
+		addKeyListener(this); //키보드 이벤트 실행
+		th = new Thread(this);  // 스레드 생성
+		th.start();  // 스레드 실행
+	}
+
+
 	@Override
-	public void paintComponent(Graphics g) {
-		ScreenImage = createImage(1024, 768);
-		ScreenGraphics = ScreenImage.getGraphics();
-		screenDraw(ScreenGraphics);
+	public void run() {
+		try{ // 예외옵션 설정으로 에러 방지
+			
+			while(true){ // while 문으로 무한 루프 시키기
+				KeyProcess(); // 키보드 입력처리를 하여 x,y 갱신
+				System.out.println("KeyProcess");
 
+				EnemyProcess();
+				System.out.println("KeyProcess");
+				pointProcess();
+				System.out.println("poinProcess");
 
-		//첫번째 매개변수는 아까 받아둔 이미지 객체, 두번째, 세번째는 x,y좌표값, 
-		//마지막 매개변수는 ImageObserver라는 인터페이스
+				repaint(); // 갱신된 x,y값으로 이미지 새로 그리기
+				
+				Thread.sleep(20); // 20 milli sec 로 스레드 돌리기 
+				
+				cnt++;
+				cnt2++;
+			}
+		}catch (Exception e){}
 
-		g.drawImage(ScreenImage, 0, 0, null);
 	}
 
-	public void screenDraw(Graphics g) {
-		g.drawImage(BG, 0, 0, null);
-		//label을 올린다는 뜻.
+	@Override
+	protected void paintComponent(Graphics g){
+
+
+		g.drawImage(BG,0,0,this);
+		g.drawImage(chorok, x, y, this);
+//		g.drawImage(star, 500,500, this);
+
+		drawEnemy(g);
+		drawPoint(g);
 
 		this.repaint();
 	}
 
-	public void move() {
-		chorok.setLocation(chorok.getX(), chorok.getY());
-		//		System.out.println("x = " + stageEnemy.getDdx() + "  y = " + stageEnemy.getDdy());
-		repaint();
-	}
 
-	public void EnemyProcess() {
+	private void EnemyProcess() {
+		//       System.out.println("계십니까~");
 
-		//		System.out.println("제발");
+		for(int i = 0; i < Enemy_List.size(); ++i) {
+			se = (Enemy_List.get(i));
+			//			System.out.println("하...");
+			if(se.getX() <= - 60) {
+				Enemy_List.remove(i);
 
-
-		//		while(true) {
-		ddx = 960;
-		ddy = (int)(Math.random() *640) - 70;
-		int random = new Random().nextInt(10);
-		int random2 = new Random().nextInt(10);
-		Enemy_List.add(new Stage04Enemy().enemyC);
-		Enemy_List.add(new Stage04Enemy().enemyC);
-		Enemy_List.get(random).setBounds(ddx, ddy,200,200);
-		add(Enemy_List.get(random));
-		Enemy_List.get(random2).setBounds(ddx, ddy,200,200);
-		add(Enemy_List.get(random2));
-
-		while(ddx >= -90) {
-
-			try {
-				Thread.sleep(5);
-				//				if(ddx <= -90) {
-				//					
-				//				}else {
-				Enemy_List.get(random).setLocation(ddx -= 1, ddy);
-				Enemy_List.get(random2).setLocation(ddx -= 1, ddy);
-				//					System.out.println("언제쯤 움직이지?");
-				//					System.out.println(ddx -= 1);
-				//					System.out.println(ddy);
-				//				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("여기는?");
+			} else {
+				se.move();
+			}
+			if(collision (x - w, y - h - 15, se.getX(), se.getY(), chorok, enemy)) {
+/*//				life--;
+				System.out.println("life : " + life);*/
+				Enemy_List.remove(i);
 
 			}
 		}
-		remove(Enemy_List.get(random));
-		remove(Enemy_List.get(random2));
-		if(random == 10) {
-			plz = false;
+		
+		//cnt가 200이 될때마다 적생성
+		if(cnt % 50 == 0) {
+
+			se = new Stage04Enemy(855 + 100, ((int) (Math.random() * 300) + 50));
+			Enemy_List.add(se);
+			se = new Stage04Enemy(855 + 100, ((int) (Math.random() * 100) + 350));
+			Enemy_List.add(se);
+
 		}
-		//		}
+	}
+	
+	//  -10 <= x <= 880    -75 <= y <= 590
+	public void pointProcess() {
+		for(int i = 0; i < Point_List.size(); ++i) {
+			sp = (Point_List.get(i));
+			
+			if(sp.getX() <= - 60) {
+				Point_List.remove(i);
 
-
-		//		System.out.println("안움직이니?");
-
-
-
-		/*		try {
-			Thread.sleep(1000);
-			for(int i = 10; i <= 100; i += 10) {
-				if(x <= -90) {
-					enemyC.remove(i);
-					break;
-				}else {
-					enemyC.setLocation(x- (int) (i*9.6), y);
-
-				}
+			} else {
+				sp.move();
 			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
+/*			if(collision (x - w, y - h - 15, sp.getX(), sp.getY(), chorok, star)) {
+				life--;
+				System.out.println("life : " + life);
+				Enemy_List.remove(i);
+			}*/
+		
 		}
-		System.out.println("쫌 움직여라");*/
+		if(cnt2 % 150 == 0) {
 
-		//	}	public void EnemyProcess() {
+			sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
+			Point_List.add(sp);
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+/*			sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
+			Point_List.add(sp);*/
+		}
+		
+		if(cnt2 % 250 == 0) {
 
-		////		System.out.println("제발");
-		//
-		//		for(int i = 0; i <= 100; i+=10) {
-		//			try {
-		//				Thread.sleep(1000);
-		//				if(ddx <= -90) {
-		//					enemyC.remove(i);
-		//				}else {
-		//					
-		//					
-		////					System.out.println(ddx- (int)(i*9.6));
-		////					System.out.println(ddy);
-		//					enemyC.setLocation(ddx- (int)(i*9.6),100);
-		////					System.out.println("언제쯤 움직이지?");
-		//				}
-		//			} catch (InterruptedException e) {
-		//				// TODO Auto-generated catch block
-		//				e.printStackTrace();
-		//				
-		//			}
-		//		}
-		//		System.out.println("안움직이니?");
+			sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
+			Point_List.add(sp);
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+/*			sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
+			Point_List.add(sp);*/
+		}
+		
+		
+	}
+
+	public void drawEnemy(Graphics g) {
+		//		System.out.println("여기가문제네");
+		for(int i = 0; i < Enemy_List.size(); ++i) {
+			//타입형이 맞지 않아서 형변환해주어야 한다.
+			se = Enemy_List.get(i);
+			g.drawImage(enemy, se.getX(), se.getY(), this);
+		}
+	}
+	
+	public void drawPoint(Graphics g) {
+		for(int i = 0; i < Point_List.size(); ++i) {
+			sp = Point_List.get(i);
+			g.drawImage(star, sp.getX(), sp.getY(), this);
+		}
+	}
+
+	//초록이와 적의 거리보다 두 개의 반너비의 합이 더 크다면 그것은 이미 두 개가 닿았다는 뜻
+	// chorok & nemy 의 거리 < 두개 반너비의 합
+	public boolean collision(int x1, int y1, int x2, int y2, Image chorok, Image enemy) {
+		boolean check = false;
+		if(Math.abs((x1 + chorok.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < ( enemy.getWidth(null) / 2 + chorok.getWidth(null) / 2 - 80) 
+				&& Math.abs( ( y1 + chorok.getHeight(null) / 2 )  - ( y2 + enemy.getHeight(null) / 2 ))  < ( enemy.getHeight(null)/2 + chorok.getHeight(null)/2 - 40) ){
+			// 이미지 넓이, 높이값 바로 받음
+			check = true;
+		}else {
+			check = false;
+		}
+		return check;
+	}
+	
 
 
 
-		/*		try {
-			Thread.sleep(1000);
-			for(int i = 10; i <= 100; i += 10) {
-				if(x <= -90) {
-					enemyC.remove(i);
-					break;
-				}else {
-					enemyC.setLocation(x- (int) (i*9.6), y);
+	public void keyPressed(KeyEvent e){
 
-				}
+
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_UP :
+			System.out.println("x : " + x + " y : " + y);
+			KeyUp = true;
+			break;
+		case KeyEvent.VK_DOWN :
+			//         System.out.println("아래");
+			System.out.println("x : " + x + " y : " + y);
+			KeyDown = true;
+			break;
+		case KeyEvent.VK_LEFT :
+			//         System.out.println("왼쪽");
+			System.out.println("x : " + x + " y : " + y);
+			KeyLeft = true;
+			break;
+		case KeyEvent.VK_RIGHT :
+			//         System.out.println("오른쪽");
+			System.out.println("x : " + x + " y : " + y);
+			KeyRight = true;
+			break;
+		}
+
+
+	}
+	public void keyReleased(KeyEvent e){
+		// 키보드가 눌러졌다가 때어졌을때 이벤트 처리하는 곳
+
+
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_UP :
+			KeyUp = false;
+			break;
+		case KeyEvent.VK_DOWN :
+			KeyDown = false;
+			break;
+		case KeyEvent.VK_LEFT :
+			KeyLeft = false;
+			break;
+		case KeyEvent.VK_RIGHT :
+			KeyRight = false;
+			break;
+		}
+	}
+
+	public void keyTyped(KeyEvent e){}
+	// 키보드가 타이핑 될때 이벤트 처리하는 곳
+
+	
+	//  -10 <= x <= 880    -75 <= y <= 590
+	public void KeyProcess(){
+		//실제로 캐릭터 움직임 실현을 위해
+		//위에서 받아들인 키값을 바탕으로
+		//키 입력시마다 5만큼의 이동을 시킨다.
+
+		//      System.out.println("제발");
+		if(KeyUp == true) {
+			if(y <= -75) {
+				y -= 0;
+			}else {
+				y -= 5;
 			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
-		System.out.println("쫌 움직여라");*/
-
-	}
-
-	//	@Override
-	//	public void keyPressed(KeyEvent e) {
-	//		switch(e.getKeyCode()) {
-	//		case KeyEvent.VK_UP: 
-	//			System.out.println("위");
-	//			if(chorok.getY() <= -100) {
-	//				chorok.setLocation(chorok.getX(), chorok.getY() - 0);break;
-	//			}else {
-	//				chorok.setLocation(chorok.getX(), chorok.getY() - 10);
-	//				System.out.println("X : " + chorok.getX() + ", " + "Y : " + chorok.getY());
-	//				break;
-	//			}
-	//
-	//
-	//		case KeyEvent.VK_DOWN : 
-	//			if(chorok.getY() >= 570) {
-	//				chorok.setLocation(chorok.getX(), chorok.getY() + 0); break;
-	//			}else {
-	//				chorok.setLocation(chorok.getX(), chorok.getY() + 10);
-	//				System.out.println("X : " + chorok.getX() + ", " + "Y : " + chorok.getY());
-	//				break;
-	//			}
-	//
-	//		case KeyEvent.VK_LEFT:
-	//			if(chorok.getX() <= -60) {
-	//				chorok.setLocation(chorok.getX()-0, chorok.getY()); break;
-	//			}else {
-	//				chorok.setLocation(chorok.getX()-10, chorok.getY());
-	//				System.out.println("X : " + chorok.getX() + ", " + "Y : " + chorok.getY());
-	//				break;
-	//			}
-	//
-	//		case KeyEvent.VK_RIGHT:
-	//			if(chorok.getX() >= 850) {
-	//				chorok.setLocation(chorok.getX() + 0, chorok.getY());break;
-	//			}else {
-	//				chorok.setLocation(chorok.getX()+10, chorok.getY());
-	//				//						System.out.println("X : " + chorok.getX() + ", " + "Y : " + chorok.getY());
-	//				break;
-	//			}
-	//		}
-	//
-	//	}
-
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-
-	/*	public void start() {
-
-		addKeyListener(this);
-
-		while(true) {
-
-			KeyProcess();
-			repaint();
+		}else if(KeyDown == true) {
+			if(y >= 590) {
+				y += 0;
+			}else {
+				y += 5;
+			}
+		}else if(KeyLeft == true) {
+			if(x <= -10) {
+				x -= 0;
+			}else {
+				x -= 5;
+			}
+		}else if(KeyRight == true) {
+			if(x >= 880) {
+				x += 0;
+			}else {
+				x += 5;
+			}
 		}
 
-		th = new Thread(this);
-		th.start();
-	}*/
+		//      move();
+
+	}
+
+
+
+
 
 
 
 }
-
-
-
-

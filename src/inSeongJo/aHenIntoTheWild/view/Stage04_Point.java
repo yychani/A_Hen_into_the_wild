@@ -1,24 +1,17 @@
 package inSeongJo.aHenIntoTheWild.view;
 
-import java.awt.Image;
-import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-public class Stage04Enemy {
+public class Stage04_Point {
 	private int x;
 	private int y;
 	
-	public Stage04Enemy(int x, int y) {
+	public Stage04_Point(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
-	public void move() {
-		x -= 10;
-	}
 	
+	public void move() {
+		y += 5;
+	}
 
 	public int getX() {
 		return x;
@@ -37,8 +30,4 @@ public class Stage04Enemy {
 	}
 
 	
-
-
 }
-
-
