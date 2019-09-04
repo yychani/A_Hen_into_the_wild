@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -100,6 +102,7 @@ public class UserInfoChange extends JPanel {
 		passwordCheckText.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 12));
 		passwordCheckText.setForeground(Color.WHITE);
 		add(passwordCheckText);
+		
 
 		// JTextField
 		// 닉네임 변경 입력란
@@ -127,43 +130,43 @@ public class UserInfoChange extends JPanel {
 		repasswordTextField.setBounds(370, 490, 300, 30);
 		repasswordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(repasswordTextField);
-
-		// 비밀번호 확인 알람 쓰레드
-		Thread th2 = new Thread(new Runnable() {
-
+		
+		//비밀번호 재확인 알림 변경 이벤트
+		repasswordTextField.addKeyListener(new KeyListener() {
+			
 			@Override
-			public void run() {
-				while (true) {
-					pass1 = "";
-					pass2 = "";
-					for (int i = 0; i < passwordTextField.getPassword().length; i++) {
-						pass1 += passwordTextField.getPassword()[i];
-					}
-					for (int i = 0; i < repasswordTextField.getPassword().length; i++) {
-						pass2 += repasswordTextField.getPassword()[i];
-					}
+			public void keyTyped(KeyEvent arg0) {
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				String password = "";
+				char[] pass = passwordTextField.getPassword();
 
-					if (pass1.equals(pass2)) {
-						passwordCheckText.setText("비밀번호가 일치합니다.");
-						passwordCheckText.setForeground(Color.BLUE);
-						System.out.println("비밀번호가 일치합니다.");
-
-					} else {
-						passwordCheckText.setText("비밀번호가 일치하지 않습니다.");
-						passwordCheckText.setForeground(Color.RED);
-						System.out.println("비밀번호가 일치하지 않습니다.");
-					}
-
-					try {
-						Thread.sleep(200);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+				for (int i = 0; i < pass.length; i++) {
+					password += pass[i];
 				}
 
+				String repassword = "";
+				char[] repass = repasswordTextField.getPassword();
+				for (int i = 0; i < repass.length; i++) {
+					repassword += repass[i];
+				}
+				
+				if(password.equals(repassword)) {
+					passwordCheckText.setText("비밀번호가 일치합니다.");
+					passwordCheckText.setForeground(Color.BLUE);
+				}else {
+					passwordCheckText.setText("비밀번호가 일치하지 않습니다.");
+					passwordCheckText.setForeground(Color.RED);
+				}
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent arg0) {
 			}
 		});
-		th2.start();
+		
 
 		// 수정 완료 버튼
 		JButton modiCompleteButton = new JButton("수정 완료");
@@ -211,7 +214,6 @@ public class UserInfoChange extends JPanel {
 
 				presentUser = um.UserInfoChagne(nickNameTextField.getText(), emailTextField.getText(), password, user);
 
-				th2.stop();
 				// 로그인 정보 페이지로 이동
 				ChangePanel.changePanel(mf, UserInfoChange, new UserInformation(mf, presentUser));
 			}
