@@ -21,44 +21,40 @@ import javax.swing.JTextField;
 import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
-
-
-
 public class UserInformation extends JPanel{
 
 	Image img;
-	JLabel id = new JLabel("ì•„ì´ë””");
-	JLabel nik = new JLabel("ë‹‰ë„¤ì„");
-	JLabel email = new JLabel("ì´ë©”ì¼");
-	JLabel rank = new JLabel("ë­í‚¹");
+	JLabel id = new JLabel("¾ÆÀÌµğ");
+	JLabel nik = new JLabel("´Ğ³×ÀÓ");
+	JLabel email = new JLabel("ÀÌ¸ŞÀÏ");
+	JLabel rank = new JLabel("·©Å·");
 	JLabel stage = new JLabel("Stage");
 	User user;
 	User presentUser;
 	
 	JTextField tarr[] = new JTextField[5];
 	
-	JButton btn1 = new JButton("íšŒì›ì •ë³´ ìˆ˜ì •");
-	JButton btn2 = new JButton("ë¡œê·¸ì•„ì›ƒ");
+	JButton btn1 = new JButton("È¸¿øÁ¤º¸ ¼öÁ¤");
+	JButton btn2 = new JButton("·Î±×¾Æ¿ô");
 	
 	private Font f1;
-	private JPanel UserInformation;  //í™”ë©´ ì „í™˜ì„ ìœ„í•´ changePanelë©”ì†Œë“œì—ì„œ ì‚¬ìš©í•  í•„ë“œ	
+	private JPanel UserInformation;  //È­¸é ÀüÈ¯À» À§ÇØ changePanel¸Ş¼Òµå¿¡¼­ »ç¿ëÇÒ ÇÊµå.
 	private ArrayList<User> allUser;
-	
 	
 	public UserInformation(MainFrame mf, User user) {
 		this.user = user;
 		UserInformation = this;
-		setLayout(null); //JFrameì— ì–¹ì„ ì»´í¬ë„ŒíŠ¸ì˜ ë°°ì¹˜ë°©ë²•ì„ ì§€ì •í•˜ëŠ” ë©”ì†Œë“œ
+		setLayout(null); //JFrame¿¡ ¾ñÀ» ÄÄÆ÷³ÍÆ®ÀÇ ¹èÄ¡¹æ¹ıÀ» ÁöÁ¤ÇÏ´Â ¸Ş¼Òµå
 		setSize(1024, 768);
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		
 		Dimension d = tk.getScreenSize();
-		UserDao userdao = new UserDao();//userdaoì— ìˆëŠ” íŒŒì¼ ì½ì–´ë“¤ì´ëŠ” ë©”ì†Œë“œ ë¶ˆëŸ¬ì˜¤ê¸° ìœ„í•¨
+		UserDao userdao = new UserDao();//userdao¿¡ ÀÖ´Â ÆÄÀÏ ÀĞ¾îµéÀÌ´Â ¸Ş¼Òµå ºÒ·¯¿À±â À§ÇÔ
 		allUser = userdao.readUserList();
 		
-		//User íƒ€ì…ì˜ ë³€ìˆ˜ uì— allUserë¼ëŠ” ArrayListë¥¼ ëŒ€ì…í•˜ë©° ì¶œë ¥
-		//ì…ë ¥í•œ idì™€ ë°ì´í„°ì— ì €ì¥ëœ ì•„ì´ë””ë¥¼ ë¹„êµí•´ ê°™ìœ¼ë©´ ì¶œë ¥
+		//User Å¸ÀÔÀÇ º¯¼ö u¿¡ allUser¶ó´Â ArrayList¸¦ ´ëÀÔÇÏ¸ç Ãâ·Â
+		//ÀÔ·ÂÇÑ id¿Í µ¥ÀÌÅÍ¿¡ ÀúÀåµÈ ¾ÆÀÌµğ¸¦ ºñ±³ÇØ °°À¸¸é Ãâ·Â
 		for(User u: allUser) {
 			if(u.getId().equals(user.getId())) {
 				if(u.getPassword().equals(user.getPassword())) {
@@ -74,7 +70,7 @@ public class UserInformation extends JPanel{
 			e.getMessage();
 		}
 		
-		f1 = new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´_ac Bold", Font.PLAIN, 20);
+		f1 = new Font("³ª´®½ºÄù¾î_ac Bold", Font.PLAIN, 20);
 		
 		add(id);
 		add(nik);
@@ -88,32 +84,32 @@ public class UserInformation extends JPanel{
 		rank.setBounds(550, 150, 50, 50);
 		stage.setBounds(550, 250, 50, 50);
 		
-		//TextFieldë¥¼ panelì— ë¶™ì´ê³  ìœ„ì¹˜ë¥¼ ì§€ì •í•˜ëŠ” ë™ì‹œì— TextFieldì— íšŒì› ì •ë³´ í‘œì‹œ
+		//TextField¸¦ panel¿¡ ºÙÀÌ°í À§Ä¡¸¦ ÁöÁ¤ÇÏ´Â µ¿½Ã¿¡ TextField¿¡ È¸¿ø Á¤º¸ Ç¥½Ã
 		for(int i=0; i<tarr.length; i++) {
 			tarr[i] = new JTextField();
 			add(tarr[i]);
 			switch(i) {
 			case 0:
 				tarr[i].setBounds(200, 150, 250, 50);
-				tarr[i].setText(presentUser.getId()); //íšŒì›ì •ë³´ ì¤‘ idí‘œì‹œ
-				tarr[i].setEditable(false);  //ê°’ ë³€ê²½í•˜ì§€ ëª»í•˜ê²Œ í•˜ëŠ” ë©”ì†Œë“œ
+				tarr[i].setText(presentUser.getId()); //È¸¿øÁ¤º¸ Áß idÇ¥½Ã
+				tarr[i].setEditable(false);  //°ª º¯°æÇÏÁö ¸øÇÏ°Ô ÇÏ´Â ¸Ş¼Òµå
 				break;
 				
 			case 1: 
 				tarr[i].setBounds(200, 250, 250, 50);
-				tarr[i].setText(presentUser.getNickName());  //íšŒì›ì •ë³´ ì¤‘ ë‹‰ë„¤ì„ í‘œì‹œ
+				tarr[i].setText(presentUser.getNickName());  //È¸¿øÁ¤º¸ Áß ´Ğ³×ÀÓ Ç¥½Ã
 				tarr[i].setEditable(false);
 				break;
 				
 			case 2: 
 				tarr[i].setBounds(200, 350, 250, 50);
-				tarr[i].setText(presentUser.getEmail());  //íšŒì› ì •ë³´ ì¤‘ ì´ë©”ì¼ í‘œì‹œ
+				tarr[i].setText(presentUser.getEmail());  //È¸¿ø Á¤º¸ Áß ÀÌ¸ŞÀÏ Ç¥½Ã
 				tarr[i].setEditable(false);
 				break;
 				
 			case 3: 
 				tarr[i].setBounds(600, 150, 250, 50);
-				tarr[i].setText(presentUser.getTotalScore()+"");//íšŒì›ì •ë³´ ì¤‘ ì „ì²´ ì ìˆ˜ í‘œì‹œ (ë‹¨, totalscoreê°€ intí˜•ì´ë¯€ë¡œ ë¬¸ìì—´ë¡œ ë³€í™˜)
+				tarr[i].setText(presentUser.getTotalScore()+"");//È¸¿øÁ¤º¸ Áß ÀüÃ¼ Á¡¼ö Ç¥½Ã (´Ü, totalscore°¡ intÇüÀÌ¹Ç·Î ¹®ÀÚ¿­·Î º¯È¯)
 				tarr[i].setEditable(false);
 				
 			case 4: 
@@ -122,7 +118,7 @@ public class UserInformation extends JPanel{
 					if(presentUser.getStage3Score() ==0) {
 						if(presentUser.getStage2Score() ==0) {
 							if(presentUser.getStage1Score() ==0) {
-								tarr[i].setText("í´ë¦¬ì–´í•œ ìŠ¤í…Œì´ì§€ê°€ ì—†ìŠµë‹ˆë‹¤.");
+								tarr[i].setText("Å¬¸®¾îÇÑ ½ºÅ×ÀÌÁö°¡ ¾ø½À´Ï´Ù.");
 								tarr[i].setEditable(false);
 								break;
 							}
@@ -153,7 +149,7 @@ public class UserInformation extends JPanel{
 		btn2.setBounds(500, 500, 150, 50);
 		
 		
-		//í™ˆë²„íŠ¼
+		//È¨¹öÆ°
 		Image homeImage = new ImageIcon("images/YJimages/home.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		Image homePressedImage = new ImageIcon("images/YJimages/home_pressed.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 		JButton homeButton = new JButton(new ImageIcon(homeImage));
@@ -165,7 +161,7 @@ public class UserInformation extends JPanel{
 		homeButton.setPressedIcon(new ImageIcon(homePressedImage));;
 		add(homeButton);
 		
-		//ë©”ì¸ ìŠ¤í…Œì´ì§€ë¡œ ì´ë™
+		//¸ŞÀÎ ½ºÅ×ÀÌÁö·Î ÀÌµ¿
 		homeButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -174,7 +170,7 @@ public class UserInformation extends JPanel{
 				
 			}
 		});
-		//íšŒì›ì •ë³´ ë³€ê²½ìœ¼ë¡œ ì´ë™
+		//È¸¿øÁ¤º¸ º¯°æÀ¸·Î ÀÌµ¿
 				btn1.addActionListener(new ActionListener() {
 
 					@Override
@@ -183,7 +179,6 @@ public class UserInformation extends JPanel{
 						ChangePanel.changePanel(mf, UserInformation, new UserInfoChange(mf, user));
 					}
 				});
-
 		
 	}
 	
@@ -194,8 +189,5 @@ public class UserInformation extends JPanel{
 		paintComponents(g);
 		this.repaint();
 	}
-	
-	
-	
 	
 }
