@@ -8,54 +8,52 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-// ÇÁ·¹ÀÓ »ı¼ºÀ» À§ÇÑ JFrame »ó¼Ó
-//Å°º¸µå ÀÌº¥Æ® Ã³¸®¸¦ À§ÇÑ KeyListener¸¦ »ó¼Ó
-//½º·¹µå¸¦ µ¹¸®±â À§ÇÑ Runnable »ó¼Ó
-public class Stage04 extends JPanel implements KeyListener, Runnable { 
+
+// í”„ë ˆì„ ìƒì„±ì„ ìœ„í•œ JFrame ìƒì†
+//í‚¤ë³´ë“œ ì´ë²¤íŠ¸ ì²˜ë¦¬ë¥¼ ìœ„í•œ KeyListenerë¥¼ ìƒì†
+//ìŠ¤ë ˆë“œë¥¼ ëŒë¦¬ê¸° ìœ„í•œ Runnable ìƒì†
+public class Stage04 extends JPanel implements KeyListener, Runnable {
 	Stage04Enemy se;
 	Stage04_Point sp;
-	
+
 	private MainFrame mf;
-//	private JPanel stage04;
-	// Ä³¸¯ÅÍÀÇ ÁÂÇ¥ º¯¼ö
+	// private JPanel stage04;
+	// ìºë¦­í„°ì˜ ì¢Œí‘œ ë³€ìˆ˜
 	private int x = 100;
-	private int y = 100; 
+	private int y = 100;
 	private int w;
 	private int h;
 	private int life = 5;
-	
+
 	int cnt;
 	int cnt2;
 
-	//Å°º¸µå ÀÔ·Â Ã³¸®¸¦ À§ÇÑ º¯¼ö
-	boolean KeyUp = false; 
+	// í‚¤ë³´ë“œ ì…ë ¥ ì²˜ë¦¬ë¥¼ ìœ„í•œ ë³€ìˆ˜
+	boolean KeyUp = false;
 	boolean KeyDown = false;
 	boolean KeyLeft = false;
 	boolean KeyRight = false;
-	private Image chorok = new ImageIcon("images/Images/chorok.gif").getImage().getScaledInstance(150, 150, 0); 
-	private Image enemy  = new ImageIcon("images/Images/bird.gif").getImage().getScaledInstance(150, 150, 0);
+	private Image chorok = new ImageIcon("images/Images/chorok.gif").getImage().getScaledInstance(150, 150, 0);
+	private Image enemy = new ImageIcon("images/Images/bird.gif").getImage().getScaledInstance(150, 150, 0);
 	private Image star = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(50, 50, 0);
-	
 
-	// ½º·¹µå »ı¼º
-	Thread th; 
+	// ìŠ¤ë ˆë“œ ìƒì„±
+	Thread th;
 	Image BG = new ImageIcon("images/Images/sky3.png").getImage();
-	
+
 	ArrayList<Stage04Enemy> Enemy_List = new ArrayList<>();
 	ArrayList<Stage04_Point> Point_List = new ArrayList<>();
 
-	
-	public Stage04(MainFrame mf){
+	public Stage04(MainFrame mf) {
 		this.mf = mf;
 		this.setBounds(0, 0, 1600, 768);
 		this.setLayout(null);
-//		stage04 = this;
+		// stage04 = this;
 		mf.add(this);
 
 		start();
 
 		this.setName("stage4");
-		
 
 		setVisible(true);
 		this.setFocusable(true);
@@ -63,21 +61,18 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 	}
 
-
-
 	public void start() {
-		addKeyListener(this); //Å°º¸µå ÀÌº¥Æ® ½ÇÇà
-		th = new Thread(this);  // ½º·¹µå »ı¼º
-		th.start();  // ½º·¹µå ½ÇÇà
+		addKeyListener(this); // í‚¤ë³´ë“œ ì´ë²¤íŠ¸ ì‹¤í–‰
+		th = new Thread(this); // ìŠ¤ë ˆë“œ ìƒì„±
+		th.start(); // ìŠ¤ë ˆë“œ ì‹¤í–‰
 	}
-
 
 	@Override
 	public void run() {
-		try{ // ¿¹¿Ü¿É¼Ç ¼³Á¤À¸·Î ¿¡·¯ ¹æÁö
-			
-			while(true){ // while ¹®À¸·Î ¹«ÇÑ ·çÇÁ ½ÃÅ°±â
-				KeyProcess(); // Å°º¸µå ÀÔ·ÂÃ³¸®¸¦ ÇÏ¿© x,y °»½Å
+		try { // ì˜ˆì™¸ì˜µì…˜ ì„¤ì •ìœ¼ë¡œ ì—ëŸ¬ ë°©ì§€
+
+			while (true) { // while ë¬¸ìœ¼ë¡œ ë¬´í•œ ë£¨í”„ ì‹œí‚¤ê¸°
+				KeyProcess(); // í‚¤ë³´ë“œ ì…ë ¥ì²˜ë¦¬ë¥¼ í•˜ì—¬ x,y ê°±ì‹ 
 				System.out.println("KeyProcess");
 
 				EnemyProcess();
@@ -85,24 +80,24 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				pointProcess();
 				System.out.println("poinProcess");
 
-				repaint(); // °»½ÅµÈ x,y°ªÀ¸·Î ÀÌ¹ÌÁö »õ·Î ±×¸®±â
-				
-				Thread.sleep(20); // 20 milli sec ·Î ½º·¹µå µ¹¸®±â 
-				
+				repaint(); // ê°±ì‹ ëœ x,yê°’ìœ¼ë¡œ ì´ë¯¸ì§€ ìƒˆë¡œ ê·¸ë¦¬ê¸°
+
+				Thread.sleep(20); // 20 milli sec ë¡œ ìŠ¤ë ˆë“œ ëŒë¦¬ê¸°
+
 				cnt++;
 				cnt2++;
 			}
-		}catch (Exception e){}
+		} catch (Exception e) {
+		}
 
 	}
 
 	@Override
-	protected void paintComponent(Graphics g){
+	protected void paintComponent(Graphics g) {
 
-
-		g.drawImage(BG,0,0,this);
+		g.drawImage(BG, 0, 0, this);
 		g.drawImage(chorok, x, y, this);
-//		g.drawImage(star, 500,500, this);
+		// g.drawImage(star, 500,500, this);
 
 		drawEnemy(g);
 		drawPoint(g);
@@ -110,30 +105,30 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		this.repaint();
 	}
 
-
 	private void EnemyProcess() {
-		//       System.out.println("°è½Ê´Ï±î~");
+		// System.out.println("ê³„ì‹­ë‹ˆê¹Œ~");
 
-		for(int i = 0; i < Enemy_List.size(); ++i) {
+		for (int i = 0; i < Enemy_List.size(); ++i) {
 			se = (Enemy_List.get(i));
-			//			System.out.println("ÇÏ...");
-			if(se.getX() <= - 60) {
+			// System.out.println("í•˜...");
+			if (se.getX() <= -60) {
 				Enemy_List.remove(i);
 
-				System.out.println("¿©±â´Â?");
+				System.out.println("ì—¬ê¸°ëŠ”?");
 			} else {
 				se.move();
 			}
-			if(collision (x - w, y - h - 15, se.getX(), se.getY(), chorok, enemy)) {
-/*//				life--;
-				System.out.println("life : " + life);*/
+			if (collision(x - w, y - h - 15, se.getX(), se.getY(), chorok, enemy)) {
+				/*
+				 * // life--; System.out.println("life : " + life);
+				 */
 				Enemy_List.remove(i);
 
 			}
 		}
-		
-		//cnt°¡ 200ÀÌ µÉ¶§¸¶´Ù Àû»ı¼º
-		if(cnt % 50 == 0) {
+
+		// cntê°€ 200ì´ ë ë•Œë§ˆë‹¤ ì ìƒì„±
+		if (cnt % 50 == 0) {
 
 			se = new Stage04Enemy(855 + 100, ((int) (Math.random() * 300) + 50));
 			Enemy_List.add(se);
@@ -142,179 +137,173 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		}
 	}
-	
-	//  -10 <= x <= 880    -75 <= y <= 590
+
+	// -10 <= x <= 880 -75 <= y <= 590
 	public void pointProcess() {
-		for(int i = 0; i < Point_List.size(); ++i) {
+		for (int i = 0; i < Point_List.size(); ++i) {
 			sp = (Point_List.get(i));
-			
-			if(sp.getX() <= - 60) {
+
+			if (sp.getX() <= -60) {
 				Point_List.remove(i);
 
 			} else {
 				sp.move();
 			}
-/*			if(collision (x - w, y - h - 15, sp.getX(), sp.getY(), chorok, star)) {
-				life--;
-				System.out.println("life : " + life);
-				Enemy_List.remove(i);
-			}*/
-		
-		}
-		if(cnt2 % 150 == 0) {
+			/*
+			 * if(collision (x - w, y - h - 15, sp.getX(), sp.getY(), chorok, star)) {
+			 * life--; System.out.println("life : " + life); Enemy_List.remove(i); }
+			 */
 
-			sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
-			Point_List.add(sp);
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-/*			sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
-			Point_List.add(sp);*/
 		}
-		
-		if(cnt2 % 250 == 0) {
+		if (cnt2 % 150 == 0) {
 
-			sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
+			sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
 			Point_List.add(sp);
-//			try {
-//				Thread.sleep(500);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-/*			sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
-			Point_List.add(sp);*/
+			// try {
+			// Thread.sleep(500);
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
+			/*
+			 * sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
+			 * Point_List.add(sp);
+			 */
 		}
-		
-		
+
+		if (cnt2 % 250 == 0) {
+
+			sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
+			Point_List.add(sp);
+			// try {
+			// Thread.sleep(500);
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
+			/*
+			 * sp = new Stage04_Point((int) (Math.random() * 890) -10, -80);
+			 * Point_List.add(sp);
+			 */
+		}
+
 	}
 
 	public void drawEnemy(Graphics g) {
-		//		System.out.println("¿©±â°¡¹®Á¦³×");
-		for(int i = 0; i < Enemy_List.size(); ++i) {
-			//Å¸ÀÔÇüÀÌ ¸ÂÁö ¾Ê¾Æ¼­ Çüº¯È¯ÇØÁÖ¾î¾ß ÇÑ´Ù.
+		// System.out.println("ì—¬ê¸°ê°€ë¬¸ì œë„¤");
+		for (int i = 0; i < Enemy_List.size(); ++i) {
+			// íƒ€ì…í˜•ì´ ë§ì§€ ì•Šì•„ì„œ í˜•ë³€í™˜í•´ì£¼ì–´ì•¼ í•œë‹¤.
 			se = Enemy_List.get(i);
 			g.drawImage(enemy, se.getX(), se.getY(), this);
 		}
 	}
-	
+
 	public void drawPoint(Graphics g) {
-		for(int i = 0; i < Point_List.size(); ++i) {
+		for (int i = 0; i < Point_List.size(); ++i) {
 			sp = Point_List.get(i);
 			g.drawImage(star, sp.getX(), sp.getY(), this);
 		}
 	}
 
-	//ÃÊ·ÏÀÌ¿Í ÀûÀÇ °Å¸®º¸´Ù µÎ °³ÀÇ ¹İ³ÊºñÀÇ ÇÕÀÌ ´õ Å©´Ù¸é ±×°ÍÀº ÀÌ¹Ì µÎ °³°¡ ´ê¾Ò´Ù´Â ¶æ
-	// chorok & nemy ÀÇ °Å¸® < µÎ°³ ¹İ³ÊºñÀÇ ÇÕ
+	// ì´ˆë¡ì´ì™€ ì ì˜ ê±°ë¦¬ë³´ë‹¤ ë‘ ê°œì˜ ë°˜ë„ˆë¹„ì˜ í•©ì´ ë” í¬ë‹¤ë©´ ê·¸ê²ƒì€ ì´ë¯¸ ë‘ ê°œê°€ ë‹¿ì•˜ë‹¤ëŠ” ëœ»
+	// chorok & nemy ì˜ ê±°ë¦¬ < ë‘ê°œ ë°˜ë„ˆë¹„ì˜ í•©
 	public boolean collision(int x1, int y1, int x2, int y2, Image chorok, Image enemy) {
 		boolean check = false;
-		if(Math.abs((x1 + chorok.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < ( enemy.getWidth(null) / 2 + chorok.getWidth(null) / 2 - 80) 
-				&& Math.abs( ( y1 + chorok.getHeight(null) / 2 )  - ( y2 + enemy.getHeight(null) / 2 ))  < ( enemy.getHeight(null)/2 + chorok.getHeight(null)/2 - 40) ){
-			// ÀÌ¹ÌÁö ³ĞÀÌ, ³ôÀÌ°ª ¹Ù·Î ¹ŞÀ½
+		if (Math.abs((x1 + chorok.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < (enemy.getWidth(null) / 2
+				+ chorok.getWidth(null) / 2 - 80)
+				&& Math.abs((y1 + chorok.getHeight(null) / 2)
+						- (y2 + enemy.getHeight(null) / 2)) < (enemy.getHeight(null) / 2 + chorok.getHeight(null) / 2
+								- 40)) {
+			// ì´ë¯¸ì§€ ë„“ì´, ë†’ì´ê°’ ë°”ë¡œ ë°›ìŒ
 			check = true;
-		}else {
+		} else {
 			check = false;
 		}
 		return check;
 	}
-	
 
+	public void keyPressed(KeyEvent e) {
 
-
-	public void keyPressed(KeyEvent e){
-
-
-		switch(e.getKeyCode()){
-		case KeyEvent.VK_UP :
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
 			System.out.println("x : " + x + " y : " + y);
 			KeyUp = true;
 			break;
-		case KeyEvent.VK_DOWN :
-			//         System.out.println("¾Æ·¡");
+		case KeyEvent.VK_DOWN:
+			// System.out.println("ì•„ë˜");
 			System.out.println("x : " + x + " y : " + y);
 			KeyDown = true;
 			break;
-		case KeyEvent.VK_LEFT :
-			//         System.out.println("¿ŞÂÊ");
+		case KeyEvent.VK_LEFT:
+			// System.out.println("ì™¼ìª½");
 			System.out.println("x : " + x + " y : " + y);
 			KeyLeft = true;
 			break;
-		case KeyEvent.VK_RIGHT :
-			//         System.out.println("¿À¸¥ÂÊ");
+		case KeyEvent.VK_RIGHT:
+			// System.out.println("ì˜¤ë¥¸ìª½");
 			System.out.println("x : " + x + " y : " + y);
 			KeyRight = true;
 			break;
 		}
 
-
 	}
-	public void keyReleased(KeyEvent e){
-		// Å°º¸µå°¡ ´­·¯Á³´Ù°¡ ¶§¾îÁ³À»¶§ ÀÌº¥Æ® Ã³¸®ÇÏ´Â °÷
 
+	public void keyReleased(KeyEvent e) {
+		// í‚¤ë³´ë“œê°€ ëˆŒëŸ¬ì¡Œë‹¤ê°€ ë•Œì–´ì¡Œì„ë•Œ ì´ë²¤íŠ¸ ì²˜ë¦¬í•˜ëŠ” ê³³
 
-		switch(e.getKeyCode()){
-		case KeyEvent.VK_UP :
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
 			KeyUp = false;
 			break;
-		case KeyEvent.VK_DOWN :
+		case KeyEvent.VK_DOWN:
 			KeyDown = false;
 			break;
-		case KeyEvent.VK_LEFT :
+		case KeyEvent.VK_LEFT:
 			KeyLeft = false;
 			break;
-		case KeyEvent.VK_RIGHT :
+		case KeyEvent.VK_RIGHT:
 			KeyRight = false;
 			break;
 		}
 	}
 
-	public void keyTyped(KeyEvent e){}
-	// Å°º¸µå°¡ Å¸ÀÌÇÎ µÉ¶§ ÀÌº¥Æ® Ã³¸®ÇÏ´Â °÷
+	public void keyTyped(KeyEvent e) {
+	}
+	// í‚¤ë³´ë“œê°€ íƒ€ì´í•‘ ë ë•Œ ì´ë²¤íŠ¸ ì²˜ë¦¬í•˜ëŠ” ê³³
 
-	
-	//  -10 <= x <= 880    -75 <= y <= 590
-	public void KeyProcess(){
-		//½ÇÁ¦·Î Ä³¸¯ÅÍ ¿òÁ÷ÀÓ ½ÇÇöÀ» À§ÇØ
-		//À§¿¡¼­ ¹Ş¾ÆµéÀÎ Å°°ªÀ» ¹ÙÅÁÀ¸·Î
-		//Å° ÀÔ·Â½Ã¸¶´Ù 5¸¸Å­ÀÇ ÀÌµ¿À» ½ÃÅ²´Ù.
+	// -10 <= x <= 880 -75 <= y <= 590
+	public void KeyProcess() {
+		// ì‹¤ì œë¡œ ìºë¦­í„° ì›€ì§ì„ ì‹¤í˜„ì„ ìœ„í•´
+		// ìœ„ì—ì„œ ë°›ì•„ë“¤ì¸ í‚¤ê°’ì„ ë°”íƒ•ìœ¼ë¡œ
+		// í‚¤ ì…ë ¥ì‹œë§ˆë‹¤ 5ë§Œí¼ì˜ ì´ë™ì„ ì‹œí‚¨ë‹¤.
 
-		//      System.out.println("Á¦¹ß");
-		if(KeyUp == true) {
-			if(y <= -75) {
+		// System.out.println("ì œë°œ");
+		if (KeyUp == true) {
+			if (y <= -75) {
 				y -= 0;
-			}else {
+			} else {
 				y -= 5;
 			}
-		}else if(KeyDown == true) {
-			if(y >= 590) {
+		} else if (KeyDown == true) {
+			if (y >= 590) {
 				y += 0;
-			}else {
+			} else {
 				y += 5;
 			}
-		}else if(KeyLeft == true) {
-			if(x <= -10) {
+		} else if (KeyLeft == true) {
+			if (x <= -10) {
 				x -= 0;
-			}else {
+			} else {
 				x -= 5;
 			}
-		}else if(KeyRight == true) {
-			if(x >= 880) {
+		} else if (KeyRight == true) {
+			if (x >= 880) {
 				x += 0;
-			}else {
+			} else {
 				x += 5;
 			}
 		}
 
-		//      move();
+		// move();
 
 	}
-
-
-
-
-
-
 
 }

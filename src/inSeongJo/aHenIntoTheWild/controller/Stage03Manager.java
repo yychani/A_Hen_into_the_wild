@@ -9,7 +9,7 @@ import inSeongJo.aHenIntoTheWild.model.vo.User;
 
 public class Stage03Manager {
 	
-	//Áõ°¡ÇÏ´Â ¸Ş¼Òµå 
+	//ì¦ê°€í•˜ëŠ” ë©”ì†Œë“œ 
 	public int plusFor (int rate, int num) {
 		for (int i=0; i<num; i++) {
 			if(rate >= 100) {
@@ -21,7 +21,7 @@ public class Stage03Manager {
 		return rate;
 	}
 	
-	//°¨¼ÒÇÏ´Â ¸Ş¼Òµå 
+	//ê°ì†Œí•˜ëŠ” ë©”ì†Œë“œ 
 	public int minusFor (int rate, int num) {
 		for (int i=num; i>0; i--) {
 			if(rate <= 0) {
@@ -34,14 +34,14 @@ public class Stage03Manager {
 	}
 
 	
-	//°¢ ¹öÆ°¸¶´Ù ±â´ÉÇÏ´Â ¸Ş¼Òµåµé Á¤ÀÇ
+	//ê° ë²„íŠ¼ë§ˆë‹¤ ê¸°ëŠ¥í•˜ëŠ” ë©”ì†Œë“œë“¤ ì •ì˜
 	public int[] eatingMethod(int[] rate, int x, int y) {
 		if((x > 460 && x < 570) && (y > 300 && y < 400)) {
-			//Æ÷¸¸°¨ Áõ°¡
+			//í¬ë§Œê° ì¦ê°€
 			rate[0] = plusFor(rate[0], 5);
-			//ÇÇ·Îµµ Áõ°¡
+			//í”¼ë¡œë„ ì¦ê°€
 			rate[2] = plusFor(rate[2], 5);
-			//¼ºÀåµµ Áõ°¡
+			//ì„±ì¥ë„ ì¦ê°€
 			rate[3] = plusFor(rate[3], 2);
 		}
 		return rate;
@@ -49,16 +49,16 @@ public class Stage03Manager {
 	
 	public int[] cleaningMethod(int[] rate, int x, int y) {
 		if((x > 460 && x < 570) && (y > 300 && y < 400)) {
-			//ÇÇ·Îµµ °¨¼Ò
+			//í”¼ë¡œë„ ê°ì†Œ
 			//rate[1] = plusFor(rate[1], 5);
 			//rate[2] = plusFor(rate[2], 5);
 			
-			if(rate[1] >= 95) { //ÇÇ·Îµµ Áõ°¡, ¼ºÀåµµ °¨¼Ò
-				System.out.print("ÀÌ¹Ì ±ú²ıÇØ¿ä~ ");
+			if(rate[1] >= 95) { //í”¼ë¡œë„ ì¦ê°€, ì„±ì¥ë„ ê°ì†Œ
+				System.out.print("ì´ë¯¸ ê¹¨ë—í•´ìš”~ ");
 				rate[2] = plusFor(rate[2], 10);
 				rate[3] = minusFor(rate[3], 2);
 				
-			} else { //Ã»°áµµ Áõ°¡, ÇÇ·Îµµ Áõ°¡
+			} else { //ì²­ê²°ë„ ì¦ê°€, í”¼ë¡œë„ ì¦ê°€
 				rate[1] = plusFor(rate[1], 5);
 				rate[2] = plusFor(rate[2], 5);
 			}
@@ -69,19 +69,19 @@ public class Stage03Manager {
 	
 	public int[] lovingMethod(int[] rate) {
 		
-		System.out.println("ÃÊ·ÏÀÌ°¡ Çàº¹ÇØ¿ä!");
-		rate[3] = plusFor(rate[3], 5); //¼ºÀåµµ Áõ°¡ 
+		System.out.println("ì´ˆë¡ì´ê°€ í–‰ë³µí•´ìš”!");
+		rate[3] = plusFor(rate[3], 5); //ì„±ì¥ë„ ì¦ê°€ 
 		
 		return rate;
 	}
 	
 	public int[] playingMethod(int[] rate) {
-		//¹Ì´Ï°ÔÀÓ¿¡ ¼º°øÇßÀ» ½Ã¿¡ ½ÇÇàÇÏµµ·Ï ÇÔ
+		//ë¯¸ë‹ˆê²Œì„ì— ì„±ê³µí–ˆì„ ì‹œì— ì‹¤í–‰í•˜ë„ë¡ í•¨
 		
-		System.out.println("ÃÊ·ÏÀÌ°¡ Áñ°Å¿öÇØ¿ä!");
-		//¼ºÀåµµ Áõ°¡ 
+		System.out.println("ì´ˆë¡ì´ê°€ ì¦ê±°ì›Œí•´ìš”!");
+		//ì„±ì¥ë„ ì¦ê°€ 
 		rate[3] = plusFor(rate[3], 5);
-		//Ã»°áµµ °¨¼Ò
+		//ì²­ê²°ë„ ê°ì†Œ
 		rate[1] = minusFor(rate[1], 5);
 	
 		return rate;
@@ -89,9 +89,9 @@ public class Stage03Manager {
 	
 	public int[] sleepingMethod(int[] rate) {
 		
-		//ÇÇ·Îµµ ÃÊ±âÈ­ 
+		//í”¼ë¡œë„ ì´ˆê¸°í™” 
 		rate[2] = 0;
-		//Æ÷¸¸°¨ °¨¼Ò
+		//í¬ë§Œê° ê°ì†Œ
 		rate[0] = minusFor(rate[0], 10);
 
 		
@@ -100,8 +100,8 @@ public class Stage03Manager {
 	
 	public void printResult(int growth, int time) {
 		
-		System.out.println("ÃÊ·ÏÀÌÀÇ ¼ºÀåµµ : " + growth);
-		System.out.println("»ì¾Æ³²Àº ½Ã°£ : " + time + "ÃÊ");
+		System.out.println("ì´ˆë¡ì´ì˜ ì„±ì¥ë„ : " + growth);
+		System.out.println("ì‚´ì•„ë‚¨ì€ ì‹œê°„ : " + time + "ì´ˆ");
 	}
 	
 	public void scoreChange(int score, User user) {
@@ -120,7 +120,7 @@ public class Stage03Manager {
 		RankingDao rd = new RankingDao();
 		ArrayList<Ranking> list = rd.readRankingList(3);
 		Ranking r = new Ranking();
-		Ranking rInit = new Ranking("ºó·©Å·", 0);
+		Ranking rInit = new Ranking("ë¹ˆë­í‚¹", 0);
 		
 		if(list == null) {
 			list = new ArrayList<Ranking>();
@@ -158,7 +158,7 @@ public class Stage03Manager {
 		      });
 		}
 		for(int i=0; i<5; i++) {
-			System.out.println((i+1) + "µî : " + list.get(i).getName() + ", " + list.get(i).getScore());
+			System.out.println((i+1) + "ë“± : " + list.get(i).getName() + ", " + list.get(i).getScore());
 			}
 		
 		int result = rd.writeRankingList(list, 3);

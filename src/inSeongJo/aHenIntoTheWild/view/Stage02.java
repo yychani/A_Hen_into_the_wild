@@ -1,7 +1,5 @@
 package inSeongJo.aHenIntoTheWild.view;
 
- 
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -15,11 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
- 
-
 public class Stage02 extends JPanel {
-
-	
 
 	boolean keyUp = false;
 	boolean keyDown = false;
@@ -42,8 +36,6 @@ public class Stage02 extends JPanel {
 
 	int y2 = 300;
 
-	
-
 	private int nX;
 
 	private int nY;
@@ -52,121 +44,113 @@ public class Stage02 extends JPanel {
 
 	private int nW;
 
-	Image Missile_img; //¹Ì»çÀÏ ÀÌ¹ÌÁö º¯¼ö
+	Image Missile_img; // ë¯¸ì‚¬ì¼ ì´ë¯¸ì§€ ë³€ìˆ˜
 
 	ArrayList Missile_List = new ArrayList();
 
-	
+	Missile ms; // ë¯¸ì‚¬ì¼ í´ë˜ìŠ¤ ì ‘ê·¼ í‚¤
 
-	Missile ms; // ¹Ì»çÀÏ Å¬·¡½º Á¢±Ù Å°
+	// Missile_img = tk.getImage("images/MSImages/wind.png");
 
-//	Missile_img = tk.getImage("images/MSImages/wind.png");
+	// ë¯¸ì‚¬ì¼ ì´ë¯¸ì§€ë¥¼ ë¶ˆëŸ¬ì˜¨ë‹¤.
 
-	//¹Ì»çÀÏ ÀÌ¹ÌÁö¸¦ ºÒ·¯¿Â´Ù.
-
-	Image iconNagne = new ImageIcon("images/MSImages/nagne.png").getImage().getScaledInstance(200, 200, 0);//³ª±×³× ÀÌ¹ÌÁö
+	Image iconNagne = new ImageIcon("images/MSImages/nagne.png").getImage().getScaledInstance(200, 200, 0);// ë‚˜ê·¸ë„¤ ì´ë¯¸ì§€
 	JLabel nagne = new JLabel(new ImageIcon(iconNagne));
 	private JLabel hpbar2;
-	private Image IntroBG = new ImageIcon("images/MSImages/stage2_background.jpeg").getImage(); //º£°æ ÀÌ¹ÌÁö
+	private Image IntroBG = new ImageIcon("images/MSImages/stage2_background.jpeg").getImage(); // ë² ê²½ ì´ë¯¸ì§€
 	private JLabel hpbar = new JLabel(new ImageIcon("images/MSImages/hpbar.png"));
 	private JLabel wind;
-
- 
 
 	public Stage02(MainFrame mf) {
 
 		setName("stage2");
 		setBounds(0, 0, 1024, 768);
 
-		int x, y; // ÄÉ¸¯ÅÍÀÇ ÇöÀç ÁÂÇ¥¸¦ ¹ŞÀ» º¯¼ö
-		int cnt; //¹«ÇÑ ·çÇÁ¸¦ Ä«¿îÅÍ ÇÏ±â À§ÇÑ º¯¼ö
-
-		
+		int x, y; // ì¼€ë¦­í„°ì˜ í˜„ì¬ ì¢Œí‘œë¥¼ ë°›ì„ ë³€ìˆ˜
+		int cnt; // ë¬´í•œ ë£¨í”„ë¥¼ ì¹´ìš´í„° í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 
 		mf.add(this);
 		setFocusable(true);
-		setBackground(new Color (0, 0, 0, 0));
+		setBackground(new Color(0, 0, 0, 0));
 		setLayout(null);
 
-		//¾Ö²Ù ¾²·¹µå
-		ThreadAggu ag = new ThreadAggu(this,nagne,wind);
+		// ì• ê¾¸ ì“°ë ˆë“œ
+		ThreadAggu ag = new ThreadAggu(this, nagne, wind);
 		Thread th = new Thread(ag);
 		th.start();
 
-		//½Ã°è ¾²·¹µå
+		// ì‹œê³„ ì“°ë ˆë“œ
 		Thread th2 = new Thread(t);
 		th2.start();
 
-		
-
-		//¹Ì»çÀÏ ½º·¹µå
-		Missile ms = new Missile(this,nagne);
+		// ë¯¸ì‚¬ì¼ ìŠ¤ë ˆë“œ
+		Missile ms = new Missile(this, nagne);
 		Thread th3 = new Thread(ms);
-//		th3.start();
+		// th3.start();
 
-		//³ª±×³×
-		nagne.setBounds(100,450,300,300);
+		// ë‚˜ê·¸ë„¤
+		nagne.setBounds(100, 450, 300, 300);
 		add(nagne);
 
-		//³ª±×³×hp
-		hpbar.setBounds(100,50,300,300);
+		// ë‚˜ê·¸ë„¤hp
+		hpbar.setBounds(100, 50, 300, 300);
 		add(hpbar);
 
-		//³ª±×³× Å°º¸µå
-		this.addKeyListener(new KeyAdapter()
-		  { 
-		   public void keyPressed(KeyEvent e){
-		    switch(e.getKeyCode()){
-		     case KeyEvent.VK_UP:System.out.println("ÀÌµ¿Çß¾î¿ä À§");
-		     ReduceHp(hpbar);
-		     ReduceHpEnemy(hpbar2);
-		     nagne.setLocation(nagne.getX(), nagne.getY()-30);
-		     nY = nagne.getY();
-		     System.out.println(nY);
-		      break;
+		// ë‚˜ê·¸ë„¤ í‚¤ë³´ë“œ
+		this.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_UP:
+					System.out.println("ì´ë™í–ˆì–´ìš” ìœ„");
+					ReduceHp(hpbar);
+					ReduceHpEnemy(hpbar2);
+					nagne.setLocation(nagne.getX(), nagne.getY() - 30);
+					nY = nagne.getY();
+					System.out.println(nY);
+					break;
 
-		     case KeyEvent.VK_DOWN:
-		    	 System.out.println("ÀÌµ¿Çß¾î¿ä ¾Æ·¡");
-		    	 nagne.setLocation(nagne.getX(), nagne.getY()+30);
-		    	 nY = nagne.getY();
-		    	 System.out.println(nY);
-		      break;
+				case KeyEvent.VK_DOWN:
+					System.out.println("ì´ë™í–ˆì–´ìš” ì•„ë˜");
+					nagne.setLocation(nagne.getX(), nagne.getY() + 30);
+					nY = nagne.getY();
+					System.out.println(nY);
+					break;
 
-		     case KeyEvent.VK_LEFT:
-		    	 System.out.println("ÀÌµ¿Çß¾î¿ä ¿Ş");
-		    	 nagne.setLocation(nagne.getX()-30, nagne.getY());
-		    	 nX = nagne.getX();
-		    	 System.out.println(nX);
-		      break;
+				case KeyEvent.VK_LEFT:
+					System.out.println("ì´ë™í–ˆì–´ìš” ì™¼");
+					nagne.setLocation(nagne.getX() - 30, nagne.getY());
+					nX = nagne.getX();
+					System.out.println(nX);
+					break;
 
-		     case KeyEvent.VK_RIGHT:
-		    	 System.out.println("ÀÌµ¿Çß¾î¿ä ¿À");
-		    	 nagne.setLocation(nagne.getX()+30, nagne.getY());
-		    	 nX = nagne.getX();
-		    	 System.out.println(nX);
-		      break;
+				case KeyEvent.VK_RIGHT:
+					System.out.println("ì´ë™í–ˆì–´ìš” ì˜¤");
+					nagne.setLocation(nagne.getX() + 30, nagne.getY());
+					nX = nagne.getX();
+					System.out.println(nX);
+					break;
 
-		     case KeyEvent.VK_SPACE :
-		    	 System.out.println("½ºÆä½º´­");// ½ºÆäÀÌ½ºÅ° ÀÔ·Â Ã³¸® Ãß°¡
-		    	 th3.start();
-		    	th3.interrupt();
-		    	 break;
-		   }
-		  }
-		  });
+				case KeyEvent.VK_SPACE:
+					System.out.println("ìŠ¤í˜ìŠ¤ëˆŒ");// ìŠ¤í˜ì´ìŠ¤í‚¤ ì…ë ¥ ì²˜ë¦¬ ì¶”ê°€
+					th3.start();
+					th3.interrupt();
+					break;
+				}
+			}
+		});
 	}
 
-	class Timer  implements Runnable {
+	class Timer implements Runnable {
 		private int time = 99;
 
 		@Override
 		public void run() {
 			JLabel Mytimer = new JLabel("" + time);
 			Mytimer.setBounds(430, 150, 100, 100);
-			Mytimer.setFont(new Font("¹ÙÅÁ",Font.PLAIN,70));
+			Mytimer.setFont(new Font("ë°”íƒ•", Font.PLAIN, 70));
 			Mytimer.setForeground(Color.ORANGE);
 			add(Mytimer);
-			while(true) {
+			while (true) {
 				time--;
 				Mytimer.setText("" + time);
 				try {
@@ -178,48 +162,48 @@ public class Stage02 extends JPanel {
 		}
 	}
 
-	public void MissileProcess(){ // ¹Ì»çÀÏ Ã³¸® ¸Ş¼Òµå
-		if ( KeySpace ){ // ½ºÆäÀÌ½º¹Ù Å° »óÅÂ°¡ true ¸é
-//		ms = new Missile(x, y); // ÁÂÇ¥ Ã¼Å©ÇÏ¿© ³Ñ±â±â
-		Missile_List.add(ms);    // ÇØ´ç ¹Ì»çÀÏ Ãß°¡
+	public void MissileProcess() { // ë¯¸ì‚¬ì¼ ì²˜ë¦¬ ë©”ì†Œë“œ
+		if (KeySpace) { // ìŠ¤í˜ì´ìŠ¤ë°” í‚¤ ìƒíƒœê°€ true ë©´
+			// ms = new Missile(x, y); // ì¢Œí‘œ ì²´í¬í•˜ì—¬ ë„˜ê¸°ê¸°
+			Missile_List.add(ms); // í•´ë‹¹ ë¯¸ì‚¬ì¼ ì¶”ê°€
 		}
 	}
 
-//	public void Draw_Missile(){ // ¹Ì»çÀÏ ±×¸®´Â ¸Ş¼Òµå
-//		for (int i = 0 ; i < Missile_List.size()  ; ++i){
-//		//¹Ì»çÀÏ Á¸Àç À¯¹«¸¦ È®ÀÎÇÑ´Ù.
-//
-//		ms = (Missile) (Missile_List.get(i)); 
-//		// ¹Ì»çÀÏ À§Ä¡°ªÀ» È®ÀÎ
-//
-//		buffg.drawImage(Missile_img, ms.pos.x + 150, ms.pos.y + 30, this); 
-//		// ÇöÀç ÁÂÇ¥¿¡ ¹Ì»çÀÏ ±×¸®±â.
-//		// ÀÌ¹ÌÁö Å©±â¸¦ °¨¾ÈÇÑ ¹Ì»çÀÏ ¹ß»ç ÁÂÇ¥´Â ¼öÁ¤µÊ.
-//
-//		ms.move();
-//		// ±×·ÁÁø ¹Ì»çÀÏÀ» Á¤ÇØÁø ¼ıÀÚ¸¸Å­ ÀÌµ¿½ÃÅ°±â
-//
-//		if ( ms.pos.x > f_width ){ // ¹Ì»çÀÏÀÌ È­¸é ¹ÛÀ¸·Î ³ª°¡¸é
-//		Missile_List.remove(i); // ¹Ì»çÀÏ Áö¿ì±â
-//		}
-//		}
-//		}
+	// public void Draw_Missile(){ // ë¯¸ì‚¬ì¼ ê·¸ë¦¬ëŠ” ë©”ì†Œë“œ
+	// for (int i = 0 ; i < Missile_List.size() ; ++i){
+	// //ë¯¸ì‚¬ì¼ ì¡´ì¬ ìœ ë¬´ë¥¼ í™•ì¸í•œë‹¤.
+	//
+	// ms = (Missile) (Missile_List.get(i));
+	// // ë¯¸ì‚¬ì¼ ìœ„ì¹˜ê°’ì„ í™•ì¸
+	//
+	// buffg.drawImage(Missile_img, ms.pos.x + 150, ms.pos.y + 30, this);
+	// // í˜„ì¬ ì¢Œí‘œì— ë¯¸ì‚¬ì¼ ê·¸ë¦¬ê¸°.
+	// // ì´ë¯¸ì§€ í¬ê¸°ë¥¼ ê°ì•ˆí•œ ë¯¸ì‚¬ì¼ ë°œì‚¬ ì¢Œí‘œëŠ” ìˆ˜ì •ë¨.
+	//
+	// ms.move();
+	// // ê·¸ë ¤ì§„ ë¯¸ì‚¬ì¼ì„ ì •í•´ì§„ ìˆ«ìë§Œí¼ ì´ë™ì‹œí‚¤ê¸°
+	//
+	// if ( ms.pos.x > f_width ){ // ë¯¸ì‚¬ì¼ì´ í™”ë©´ ë°–ìœ¼ë¡œ ë‚˜ê°€ë©´
+	// Missile_List.remove(i); // ë¯¸ì‚¬ì¼ ì§€ìš°ê¸°
+	// }
+	// }
+	// }
 
 	public void ReduceHp(JLabel j) {
 
-		x-= 50;
+		x -= 50;
 
-		y+=50;
+		y += 50;
 
-		j.setBounds(y,50,x,300);
+		j.setBounds(y, 50, x, 300);
 
 	}
 
 	public void ReduceHpEnemy(JLabel j) {
 
-		y2-=50;
+		y2 -= 50;
 
-		j.setBounds(550,50,y2,300);
+		j.setBounds(550, 50, y2, 300);
 
 	}
 
@@ -228,11 +212,9 @@ public class Stage02 extends JPanel {
 		ScreenImage = createImage(1024, 768);
 		ScreenGraphics = ScreenImage.getGraphics();
 		screenDraw(ScreenGraphics);
-//		Draw_Missile(); // ±×·ÁÁø ¹Ì»çÀÏ °¡Á®¿Í ½ÇÇà
+		// Draw_Missile(); // ê·¸ë ¤ì§„ ë¯¸ì‚¬ì¼ ê°€ì ¸ì™€ ì‹¤í–‰
 		g.drawImage(ScreenImage, 0, 0, null);
 	}
-
-	
 
 	public void screenDraw(Graphics g) {
 		g.drawImage(IntroBG, 0, 0, null);
@@ -241,13 +223,13 @@ public class Stage02 extends JPanel {
 	}
 
 	public void moveBack(JLabel jl) {
-		jl.setBounds(500,450,300,300);
+		jl.setBounds(500, 450, 300, 300);
 	}
 
-	public boolean Crash(int x, int y, int h, int w, int x2 , int y2, int h2 , int w2) {
+	public boolean Crash(int x, int y, int h, int w, int x2, int y2, int h2, int w2) {
 		boolean isTrue = true;
 
-		if(x+w >= x2) {
+		if (x + w >= x2) {
 			isTrue = false;
 		}
 		return isTrue;
@@ -264,58 +246,60 @@ class ThreadAggu implements Runnable {
 	private JLabel jl2;
 	private int agguHp = 100;
 
-	Image iconAggu = new ImageIcon("images/MSImages/aggu_reverse.png").getImage().getScaledInstance(250, 250, 0);//¾Ö²Ù´« ÀÌ¹ÌÁö
+	Image iconAggu = new ImageIcon("images/MSImages/aggu_reverse.png").getImage().getScaledInstance(250, 250, 0);// ì• ê¾¸ëˆˆ
+																													// ì´ë¯¸ì§€
 	JLabel aggu = new JLabel(new ImageIcon(iconAggu));
 	private JLabel hpbar2 = new JLabel(new ImageIcon("images/MSImages/hpbar.png"));
 	Image iconWind = new ImageIcon("images/MSImages/wind4.png").getImage().getScaledInstance(100, 100, 0);
 	JLabel wind = new JLabel(new ImageIcon(iconWind));
 
-	public ThreadAggu () { } 
+	public ThreadAggu() {
+	}
 
-	public ThreadAggu (JPanel jp,JLabel jl,JLabel jl2) { 
+	public ThreadAggu(JPanel jp, JLabel jl, JLabel jl2) {
 		this.jp = jp;
 		this.jl = jl;
 		this.jl2 = jl2;
 	}
 
 	public void moveBack(JLabel jl) {
-		jl.setBounds(500,450,300,300);
+		jl.setBounds(500, 450, 300, 300);
 	}
 
-	public boolean Crash(int x, int y, int h, int w, int x2 , int y2, int h2 , int w2) {
+	public boolean Crash(int x, int y, int h, int w, int x2, int y2, int h2, int w2) {
 		boolean isTrue = false;
-		if(x + w >= x2) {
+		if (x + w >= x2) {
 			isTrue = true;
 		}
 		return isTrue;
 	}
 
 	public void ReduceHpEnemy(JLabel j) {
-		y2-=30;
-		j.setBounds(550,50,y2,300);
+		y2 -= 30;
+		j.setBounds(550, 50, y2, 300);
 	}
 
 	public void run() {
-//		wind.setBounds(500, 500, 100, 100);
-//		jp.add(wind);
-		aggu.setBounds(500,450,300,300);//¾Ö²Ù ¼¼ÆÃ
+		// wind.setBounds(500, 500, 100, 100);
+		// jp.add(wind);
+		aggu.setBounds(500, 450, 300, 300);// ì• ê¾¸ ì„¸íŒ…
 		jp.add(aggu);
-		hpbar2.setBounds(550,50,300,300); //¾Ö²ÙÇÇ ¼¼ÆÃ 
+		hpbar2.setBounds(550, 50, 300, 300); // ì• ê¾¸í”¼ ì„¸íŒ…
 		jp.add(hpbar2);
-		System.out.println("ÀÌ°Ô Áö³ª°£´Ù°í?");
-		for(int i = 0; i < 1000; i++) {
-			aggu.setBounds(500-i,450,300,300);// ¾Ö²ÙÀÌµ¿ 
-			//¾Ö²Ù Ãæµ¹ ½Ã
-			System.out.println("³ª±×³× À§Ä¡ : " + jl.getX());
-			if(Crash(jl.getX(),jl.getY(),100,100,aggu.getX(),aggu.getY(),aggu.getHeight(),aggu.getWidth())) {
+		System.out.println("ì´ê²Œ ì§€ë‚˜ê°„ë‹¤ê³ ?");
+		for (int i = 0; i < 1000; i++) {
+			aggu.setBounds(500 - i, 450, 300, 300);// ì• ê¾¸ì´ë™
+			// ì• ê¾¸ ì¶©ëŒ ì‹œ
+			System.out.println("ë‚˜ê·¸ë„¤ ìœ„ì¹˜ : " + jl.getX());
+			if (Crash(jl.getX(), jl.getY(), 100, 100, aggu.getX(), aggu.getY(), aggu.getHeight(), aggu.getWidth())) {
 				System.out.println("i :" + i);
-				agguHp-= 10;
-				i=0;
-				ReduceHpEnemy(hpbar2);//Ã¼·Â¹Ù °¨¼Ò 
-				if(agguHp == 0 ) {
+				agguHp -= 10;
+				i = 0;
+				ReduceHpEnemy(hpbar2);// ì²´ë ¥ë°” ê°ì†Œ
+				if (agguHp == 0) {
 					jp.remove(aggu);
 				}
-				moveBack(aggu);// Ãæµ¹ ½Ã À§Ä¡ ÃÊ±âÈ­
+				moveBack(aggu);// ì¶©ëŒ ì‹œ ìœ„ì¹˜ ì´ˆê¸°í™”
 			}
 			try {
 				Thread.sleep(10);
@@ -326,35 +310,36 @@ class ThreadAggu implements Runnable {
 	}
 }
 
-class Missile implements Runnable{ // ¹Ì»çÀÏ À§Ä¡ ÆÄ¾Ç ¹× ÀÌµ¿À» À§ÇÑ Å¬·¡½º Ãß°¡ 
+class Missile implements Runnable { // ë¯¸ì‚¬ì¼ ìœ„ì¹˜ íŒŒì•… ë° ì´ë™ì„ ìœ„í•œ í´ë˜ìŠ¤ ì¶”ê°€
 
 	Image iconWind = new ImageIcon("images/MSImages/wind4.png").getImage().getScaledInstance(100, 100, 0);
 	JLabel wind = new JLabel(new ImageIcon(iconWind));
 	private JPanel jp;
 	private JLabel jl;
-	Point pos; //¹Ì»çÀÏ ÁÂÇ¥ º¯¼ö
-	Missile(JPanel jp, JLabel jl){ //¹Ì»çÀÏ ÁÂÇ¥¸¦ ÀÔ·Â ¹Ş´Â ¸Ş¼Òµå
+	Point pos; // ë¯¸ì‚¬ì¼ ì¢Œí‘œ ë³€ìˆ˜
+
+	Missile(JPanel jp, JLabel jl) { // ë¯¸ì‚¬ì¼ ì¢Œí‘œë¥¼ ì…ë ¥ ë°›ëŠ” ë©”ì†Œë“œ
 		this.jp = jp;
-		this.jl = jl; //¹Ì»çÀÏ ÁÂÇ¥¸¦ Ã¼Å©
+		this.jl = jl; // ë¯¸ì‚¬ì¼ ì¢Œí‘œë¥¼ ì²´í¬
 	}
 
-	public void move(){ //¹Ì»çÀÏ ÀÌµ¿À» À§ÇÑ ¸Ş¼Òµå
-		pos.x += 10; //x ÁÂÇ¥¿¡ 10¸¸Å­ ¹Ì»çÀÏ ÀÌµ¿
+	public void move() { // ë¯¸ì‚¬ì¼ ì´ë™ì„ ìœ„í•œ ë©”ì†Œë“œ
+		pos.x += 10; // x ì¢Œí‘œì— 10ë§Œí¼ ë¯¸ì‚¬ì¼ ì´ë™
 	}
 
 	@Override
 	public void run() {
-		System.out.println("ÀÌ°Å ½ÇÇà µÇ³ª¿ä?");
+		System.out.println("ì´ê±° ì‹¤í–‰ ë˜ë‚˜ìš”?");
 		System.out.println("x : " + jl.getX());
 		System.out.println("y : " + jl.getY());
 		System.out.println("w : " + jl.getWidth());
 		System.out.println("h : " + jl.getHeight());
 		wind.setBounds(jl.getX(), jl.getY(), jl.getWidth(), jl.getHeight());
 		jp.add(wind);
-		for(int i = 0; i < 1000; i++) {
+		for (int i = 0; i < 1000; i++) {
 
-			wind.setBounds(300+i, jl.getY(), jl.getWidth(), jl.getHeight());
-			if(i == 200) {
+			wind.setBounds(300 + i, jl.getY(), jl.getWidth(), jl.getHeight());
+			if (i == 200) {
 				jp.remove(wind);
 			}
 			try {

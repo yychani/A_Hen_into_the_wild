@@ -13,33 +13,33 @@ import javax.swing.JPanel;
 public class ResultPrinter {
 
 	public void successPage(String msg) {
-		switch(msg) {
-		case "insertUser" :
+		switch (msg) {
+		case "insertUser":
 			JFrame pu = new JFrame();
 			pu.setSize(500, 500);
-			Dialog complete = new Dialog(pu,"°¡ÀÔ ¿Ï·á");
+			Dialog complete = new Dialog(pu, "ê°€ì… ì™„ë£Œ");
 			pu.setBounds(150, 250, 150, 150);
-			pu.add(new JLabel("°¡ÀÔ¿Ï·áÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù."));
-			
-			JButton button1 = new JButton("È®ÀÎ");
+			pu.add(new JLabel("ê°€ì…ì™„ë£Œì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤."));
+
+			JButton button1 = new JButton("í™•ì¸");
 			pu.add(button1);
-			
+
 			button1.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					pu.dispose();
-					
+
 				}
 			});
-			
-			System.out.println("È¸¿ø°¡ÀÔ ÆË¾÷Ã¢");
+
+			System.out.println("íšŒì›ê°€ì… íŒì—…ì°½");
 		}
 	}
 
 	public void errorPage(String string) {
-		//switch(msg) {
-		//case "insertUser"
-		//}
+		// switch(msg) {
+		// case "insertUser"
+		// }
 	}
 }

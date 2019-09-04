@@ -4,56 +4,61 @@ import javax.swing.JOptionPane;
 
 import inSeongJo.aHenIntoTheWild.view.Stage01;
 
-public class Stage01_Thread extends Thread{
+public class Stage01_Thread extends Thread {
 	Stage01 stage01;
 	Stage01_jump jumpThread;
 	int cnt;
 	private boolean isOver = true;
+
 	public Stage01_Thread(Stage01 stage01) {
 		this.stage01 = stage01;
 	}
+
 	@Override
 	public void run() {
-		while(isOver) {
-			System.out.println("¾²·¹µå ½ÇÇàÁß");
-			//GamePanelÀÇ ÇÃ·¹ÀÌ¾î ÁÂÇ¥ º¯°æ 
-			stage01.move();				
+		while (isOver) {
+			System.out.println("ì“°ë ˆë“œ ì‹¤í–‰ì¤‘");
+			// GamePanelì˜ í”Œë ˆì´ì–´ ì¢Œí‘œ ë³€ê²½
+			stage01.move();
 			stage01.enemyProcess();
-			stage01.repaint();//Gamestage01ÀÇ È­¸é °»½Å
-			stage01.setCnt(stage01.getCnt()+1);
-			try { //³Ê¹« »¡¸® µ¹¾Æ¼­ ÃµÃµÈ÷ µ¹µµ·Ï
+			stage01.repaint();// Gamestage01ì˜ í™”ë©´ ê°±ì‹ 
+			stage01.setCnt(stage01.getCnt() + 1);
+			try { // ë„ˆë¬´ ë¹¨ë¦¬ ëŒì•„ì„œ ì²œì²œíˆ ëŒë„ë¡
 				sleep(50);
-			} catch (InterruptedException e) {}
+			} catch (InterruptedException e) {
+			}
 
 			jumpThread = new Stage01_jump(stage01, stage01.isJump());
-			//			dropThread = new Stage01_Drop(stage01, stage01.isDrop);
-			if(stage01.isJump()) {
+			// dropThread = new Stage01_Drop(stage01, stage01.isDrop);
+			if (stage01.isJump()) {
 				jumpThread.start();
-			}else {
+			} else {
 				jumpThread.setJumping(false);
 			}
 		}
 		String[] strarr = stage01.checkRanking();
 		String str = "";
-		for(int i = 0; i < strarr.length; i++) {
+		for (int i = 0; i < strarr.length; i++) {
 			str += (strarr[i] + "\n");
 		}
 		System.out.println(str);
-		if(!stage01.isGameOver()) {
-			JOptionPane.showMessageDialog(null, str, "Stage 1 ·©Å·", JOptionPane.PLAIN_MESSAGE);
+		if (!stage01.isGameOver()) {
+			JOptionPane.showMessageDialog(null, str, "Stage 1 ë­í‚¹", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
-
 
 	public boolean isOver() {
 		return isOver;
 	}
+
 	public void setOver(boolean isOver) {
 		this.isOver = isOver;
 	}
+
 	public Stage01 getStage01() {
 		return stage01;
 	}
+
 	public void setStage01(Stage01 stage01) {
 		this.stage01 = stage01;
 	}

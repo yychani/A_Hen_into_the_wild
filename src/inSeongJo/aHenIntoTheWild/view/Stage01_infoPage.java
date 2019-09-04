@@ -30,16 +30,16 @@ public class Stage01_infoPage extends JPanel{
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-		infoBackGround = toolkit.getImage("images/info.png").getScaledInstance(1024, 740, Image.SCALE_SMOOTH);//¹è°æ ÀÌ¹ÌÁö
+		infoBackGround = toolkit.getImage("images/info.png").getScaledInstance(1024, 740, Image.SCALE_SMOOTH);//ë°°ê²½ ì´ë¯¸ì§€
 		JLabel stage01Info = new JLabel();
-		stage01Info.setText("<html>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;- °ÔÀÓ Å¬¸®¾î Á¶°Ç -"
-				+ "<br>&nbsp¾Ö²Ù´«À» ÇÇÇØ ´ß ¹«´ı¿¡¼­ ÀÙ½ÏÀÌ¸¦ Å»Ãâ½ÃÄÑ¶ó!"
-				+ "<br><br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;- Á¶ÀÛ ¹æ¹ı -"
-				+ "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;ÀÌµ¿ : ¹æÇâÅ° ¡ç ¡æ"
-				+ "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;Á¡ÇÁ : Space Bar"
-				+ "<br>1<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;½ÃÀÛÇÏ·Á¸é Space Bar¸¦ ´©¸£½Ã¿À.</html>");
+		stage01Info.setText("<html>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;- ê²Œì„ í´ë¦¬ì–´ ì¡°ê±´ -"
+				+ "<br>&nbspì• ê¾¸ëˆˆì„ í”¼í•´ ë‹­ ë¬´ë¤ì—ì„œ ìì‹¹ì´ë¥¼ íƒˆì¶œì‹œì¼œë¼!"
+				+ "<br><br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;- ì¡°ì‘ ë°©ë²• -"
+				+ "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;ì´ë™ : ë°©í–¥í‚¤ â† â†’"
+				+ "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;ì í”„ : Space Bar"
+				+ "<br>1<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;ì‹œì‘í•˜ë ¤ë©´ Space Barë¥¼ ëˆ„ë¥´ì‹œì˜¤.</html>");
 		stage01Info.setBounds(100, 100, 800, 500);
-		stage01Info.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 30));
+		stage01Info.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 30));
 		stage01Info.setHorizontalAlignment(JLabel.CENTER);
 
 		Image stage1Start = new ImageIcon("images/ipssag/stage01Start.gif").getImage().getScaledInstance(256, 98, 0);
@@ -61,7 +61,7 @@ public class Stage01_infoPage extends JPanel{
 	}
 	@Override
 	protected void paintComponent(Graphics g) {
-		g.drawImage(infoBackGround, 0, 0, this);//¹è°æ ±×¸®±â
+		g.drawImage(infoBackGround, 0, 0, this);//ë°°ê²½ ê·¸ë¦¬ê¸°
 	}
 
 }

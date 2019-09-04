@@ -17,25 +17,23 @@ public class UserDao {
 	public UserDao() {
 	}
 
-	public ArrayList<User> readUserList(){
+	public ArrayList<User> readUserList() {
 		ObjectInputStream ois = null;
 		ArrayList<User> list = null;
-		
-		
+
 		try {
 			ois = new ObjectInputStream(new FileInputStream("userList.dat"));
-			
-			list = (ArrayList<User>)ois.readObject();
-			
+
+			list = (ArrayList<User>) ois.readObject();
+
 		} catch (FileNotFoundException e) {
 			new File("userList.dat");
 		} catch (EOFException e) {
-			
-		}
-		catch (ClassNotFoundException |IOException e) {
+
+		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		} finally {
-			if(ois != null) {
+			if (ois != null) {
 				try {
 					ois.close();
 				} catch (IOException e) {
@@ -43,12 +41,11 @@ public class UserDao {
 				}
 			}
 		}
-	
-		
+
 		return list;
 	}
 
-	// ÆÄÀÏ¿¡ ¸®½ºÆ® ±â·ÏÇÏ±â¿ë ¸Ş¼Òµå
+	// íŒŒì¼ì— ë¦¬ìŠ¤íŠ¸ ê¸°ë¡í•˜ê¸°ìš© ë©”ì†Œë“œ
 	public int writeUserList(ArrayList<User> list) {
 		ObjectOutputStream oos = null;
 		int result = 0;

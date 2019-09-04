@@ -2,8 +2,9 @@ package inSeongJo.aHenIntoTheWild.model.vo;
 
 import inSeongJo.aHenIntoTheWild.view.Stage01;
 
-public class Stage01_jump extends Thread{
+public class Stage01_jump extends Thread {
 	boolean jumping = false;
+
 	public boolean isJumping() {
 		return jumping;
 	}
@@ -13,7 +14,7 @@ public class Stage01_jump extends Thread{
 	}
 
 	Stage01 stage01;
-	int jumpingy[]=new int[]{0, -15, -10, -10, -5, -5, -5, 0}; 
+	int jumpingy[] = new int[] { 0, -15, -10, -10, -5, -5, -5, 0 };
 	int jumpIdx = 0;
 
 	public Stage01_jump(Stage01 stage01, boolean jumping) {
@@ -23,7 +24,7 @@ public class Stage01_jump extends Thread{
 
 	public void run() {
 
-		while(jumping && (jumpIdx < jumpingy.length)) {
+		while (jumping && (jumpIdx < jumpingy.length)) {
 
 			jumpTimeArrived(jumpIdx, jumpingy[jumpIdx]);
 
@@ -36,6 +37,7 @@ public class Stage01_jump extends Thread{
 		}
 		jumpTimeEnded();
 	}
+
 	public void jumpTimeArrived(int jumpIdx, int jumpy) {
 		stage01.addY(jumpy);
 	}

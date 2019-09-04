@@ -6,8 +6,8 @@ import inSeongJo.aHenIntoTheWild.view.MainFrame;
 public class Run {
 
 	public static void main(String[] args) {
-		// ¿©±â´Â ½ÇÇàÇØº¸°í Áö¿ì°í commitÇÏ±â
-		// ¾È±×·³ Å×Çì¶õ·Î¿¡¼­ Á×À½
+		// ì—¬ê¸°ëŠ” ì‹¤í–‰í•´ë³´ê³  ì§€ìš°ê³  commití•˜ê¸°
+		// ì•ˆê·¸ëŸ¼ í…Œí—¤ë€ë¡œì—ì„œ ì£½ìŒ
 		new MainFrame();
 	}
 }

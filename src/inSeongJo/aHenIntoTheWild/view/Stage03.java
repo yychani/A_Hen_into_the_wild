@@ -6,10 +6,12 @@ import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Toolkit;import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 
@@ -22,203 +24,202 @@ import javax.swing.JPanel;
 import inSeongJo.aHenIntoTheWild.controller.Stage03Manager;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
-public class Stage03 extends JPanel{
+public class Stage03 extends JPanel {
 	private MainFrame mf;
 	private Image background = new ImageIcon("images/stage03_image/background2.png").getImage();
 	private Graphics g;
 	private Stage03 s03;
-	
+
 	User user;
-	
+
 	private int time;
 	private int[] rate = new int[4];
 	private int x;
 	private int y;
 	private int growthLevel;
-	private int[][] iniRate = {{100, 100, 0, 0}, {50, 90, 20, 0}, {60, 60, 30, 0}}; //ÃÊ±â¼¼ÆÃ°ª : Æ÷¸¸°¨, Ã»°áµµ, ÇÇ·Îµµ, ¼ºÀåµµ
+	private int[][] iniRate = { { 100, 100, 0, 0 }, { 50, 90, 20, 0 }, { 60, 60, 30, 0 } }; // ì´ˆê¸°ì„¸íŒ…ê°’ : í¬ë§Œê°, ì²­ê²°ë„, í”¼ë¡œë„,
+																							// ì„±ì¥ë„
 	private String str = "";
 	private boolean riceBl, bathBl, playBl, loveBl, bedBl;
 	private boolean goOrStop = true;
 	private Stage03Manager sm = new Stage03Manager();
-	private Image fullImage = new ImageIcon("images/stage03_image/fullImage.png").getImage().getScaledInstance(188, 25, Image.SCALE_SMOOTH);
-	private Image cleanImage = new ImageIcon("images/stage03_image/cleanImage.png").getImage().getScaledInstance(188, 25, Image.SCALE_SMOOTH);
-	private Image tiredImage = new ImageIcon("images/stage03_image/tiredImage.png").getImage().getScaledInstance(188, 25, Image.SCALE_SMOOTH);
-	private Image growthImage = new ImageIcon("images/stage03_image/growthRate.png").getImage().getScaledInstance(40, 243, Image.SCALE_SMOOTH);
+	private Image fullImage = new ImageIcon("images/stage03_image/fullImage.png").getImage().getScaledInstance(188, 25,
+			Image.SCALE_SMOOTH);
+	private Image cleanImage = new ImageIcon("images/stage03_image/cleanImage.png").getImage().getScaledInstance(188,
+			25, Image.SCALE_SMOOTH);
+	private Image tiredImage = new ImageIcon("images/stage03_image/tiredImage.png").getImage().getScaledInstance(188,
+			25, Image.SCALE_SMOOTH);
+	private Image growthImage = new ImageIcon("images/stage03_image/growthRate.png").getImage().getScaledInstance(40,
+			243, Image.SCALE_SMOOTH);
 	private Image mouse = null;
 
 	public Stage03(MainFrame mf, int level, User user) {
-		
+
 		this.user = user;
-		
+
 		growthLevel = level;
 		s03 = this;
 		this.setName("Stage3");
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
-		this.setBackground(new Color(0,0,0,0));
+		this.setBackground(new Color(0, 0, 0, 0));
 		mf.add(this);
 
-		rate[0] = iniRate[growthLevel][0];	//ÀÓÀÇ·Î ¼³Á¤ÇÑ Æ÷¸¸°¨
-		rate[1] = iniRate[growthLevel][1];	//ÀÓÀÇ·Î ¼³Á¤ÇÑ Ã»°áµµ
-		rate[2] = iniRate[growthLevel][2];	//ÀÓÀÇ·Î ¼³Á¤ÇÑ ÇÇ·Îµµ
-		rate[3] = iniRate[growthLevel][3];	//¼ºÀåµµ
-		
-		String levelStr = "ÇöÀç ·¹º§ : " + (growthLevel+1) + " Lv";
+		rate[0] = iniRate[growthLevel][0]; // ì„ì˜ë¡œ ì„¤ì •í•œ í¬ë§Œê°
+		rate[1] = iniRate[growthLevel][1]; // ì„ì˜ë¡œ ì„¤ì •í•œ ì²­ê²°ë„
+		rate[2] = iniRate[growthLevel][2]; // ì„ì˜ë¡œ ì„¤ì •í•œ í”¼ë¡œë„
+		rate[3] = iniRate[growthLevel][3]; // ì„±ì¥ë„
+
+		String levelStr = "í˜„ì¬ ë ˆë²¨ : " + (growthLevel + 1) + " Lv";
 		JLabel levelLabel = new JLabel(levelStr);
 		levelLabel.setBounds(5, 5, 200, 20);
-		levelLabel.setFont(new Font("¹ÙÅÁ",Font.BOLD, 15));
+		levelLabel.setFont(new Font("ë°”íƒ•", Font.BOLD, 15));
 		add(levelLabel);
-		
-		Image riceIcon = new ImageIcon("images/stage03_image/riceIcon.png").getImage().getScaledInstance(100, 102, Image.SCALE_SMOOTH);
+
+		Image riceIcon = new ImageIcon("images/stage03_image/riceIcon.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
 		JButton ricebutton = new JButton(new ImageIcon(riceIcon));
 		ricebutton.setBounds(20, 620, 100, 102);
 		ricebutton.setBorderPainted(false);
 		ricebutton.setContentAreaFilled(false);
 		ricebutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		ricebutton.setToolTipText("Æ÷¸¸°¨ +5, ÇÇ·Îµµ+5, ¼ºÀåµµ+2");
+		ricebutton.setToolTipText("í¬ë§Œê° +5, í”¼ë¡œë„+5, ì„±ì¥ë„+2");
 		add(ricebutton);
-		
+
 		ricebutton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				riceBl = true;
-				System.out.println("¹ä¸ÔÀÌ±â ¹öÆ° ´­¸²");	
-				
-				
+				System.out.println("ë°¥ë¨¹ì´ê¸° ë²„íŠ¼ ëˆŒë¦¼");
+
 			}
 		});
-		
-		
-		Image bathIcon = new ImageIcon("images/stage03_image/bathIcon.png").getImage().getScaledInstance(100, 102, Image.SCALE_SMOOTH);
+
+		Image bathIcon = new ImageIcon("images/stage03_image/bathIcon.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
 		JButton bathbutton = new JButton(new ImageIcon(bathIcon));
 		bathbutton.setBounds(140, 620, 100, 102);
 		bathbutton.setBorderPainted(false);
 		bathbutton.setContentAreaFilled(false);
 		bathbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		bathbutton.setToolTipText("Ã»°áµµ +5, ÇÇ·Îµµ+5");
+		bathbutton.setToolTipText("ì²­ê²°ë„ +5, í”¼ë¡œë„+5");
 		add(bathbutton);
-		
+
 		bathbutton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				bathBl = true;
-				System.out.println("¾Ä±â±â ¹öÆ° ´­¸²");
-				
+				System.out.println("ì”»ê¸°ê¸° ë²„íŠ¼ ëˆŒë¦¼");
+
 			}
 		});
-		
-		Image playIcon = new ImageIcon("images/stage03_image/playIcon.png").getImage().getScaledInstance(100, 102, Image.SCALE_SMOOTH);
+
+		Image playIcon = new ImageIcon("images/stage03_image/playIcon.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
 		JButton playbutton = new JButton(new ImageIcon(playIcon));
 		playbutton.setBounds(260, 620, 100, 102);
 		playbutton.setBorderPainted(false);
 		playbutton.setContentAreaFilled(false);
 		playbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		playbutton.setToolTipText("Ã»°áµµ-5, ¼ºÀåµµ+5");
+		playbutton.setToolTipText("ì²­ê²°ë„-5, ì„±ì¥ë„+5");
 		add(playbutton);
-		
-		
-		
-		Image loveIcon = new ImageIcon("images/stage03_image/loveIcon.png").getImage().getScaledInstance(100, 102, Image.SCALE_SMOOTH);
+
+		Image loveIcon = new ImageIcon("images/stage03_image/loveIcon.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
 		JButton lovebutton = new JButton(new ImageIcon(loveIcon));
 		lovebutton.setBorderPainted(false);
 		lovebutton.setContentAreaFilled(false);
 		lovebutton.setBounds(380, 620, 100, 102);
 		lovebutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		lovebutton.setToolTipText("¼ºÀåµµ+5");
+		lovebutton.setToolTipText("ì„±ì¥ë„+5");
 		add(lovebutton);
-		
-		
-		
-		Image bedIcon = new ImageIcon("images/stage03_image/bedIcon.png").getImage().getScaledInstance(100, 102, Image.SCALE_SMOOTH);
+
+		Image bedIcon = new ImageIcon("images/stage03_image/bedIcon.png").getImage().getScaledInstance(100, 102,
+				Image.SCALE_SMOOTH);
 		JButton bedbutton = new JButton(new ImageIcon(bedIcon));
 		bedbutton.setBorderPainted(false);
 		bedbutton.setContentAreaFilled(false);
 		bedbutton.setBounds(500, 620, 100, 102);
 		bedbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		bedbutton.setToolTipText("ÇÇ·Îµµ0, Æ÷¸¸°¨-10");
+		bedbutton.setToolTipText("í”¼ë¡œë„0, í¬ë§Œê°-10");
 		add(bedbutton);
-		
-		
-		//ÃÊ·ÏÀÌ°¡ ¿òÁ÷ÀÌ´Â ¾²·¹µå
+
+		// ì´ˆë¡ì´ê°€ ì›€ì§ì´ëŠ” ì“°ë ˆë“œ
 		Greeny gr = new Greeny(this);
 		Thread th = new Thread(gr);
 		th.setDaemon(true);
 		th.start();
 
-//		Image dungji = new ImageIcon("images/stage03_image/dungji.png").getImage();
-//		JLabel dungjiLabel = new JLabel(new ImageIcon(dungji));
-//		dungjiLabel.setBounds(346, 435, 326, 193);
-//		add(dungjiLabel);
-		
-		//¼ºÀåÁö¼ö (Æ÷¸¸°¨, Ã»°áµµ, ÇÇ·Îµµ)
-		JLabel fullRateText = new JLabel("Æ÷¸¸°¨");
+		// Image dungji = new ImageIcon("images/stage03_image/dungji.png").getImage();
+		// JLabel dungjiLabel = new JLabel(new ImageIcon(dungji));
+		// dungjiLabel.setBounds(346, 435, 326, 193);
+		// add(dungjiLabel);
+
+		// ì„±ì¥ì§€ìˆ˜ (í¬ë§Œê°, ì²­ê²°ë„, í”¼ë¡œë„)
+		JLabel fullRateText = new JLabel("í¬ë§Œê°");
 		fullRateText.setBounds(30, 40, 100, 20);
-		fullRateText.setFont(new Font("¹ÙÅÁ",Font.PLAIN, 20));
+		fullRateText.setFont(new Font("ë°”íƒ•", Font.PLAIN, 20));
 		fullRateText.setForeground(Color.BLUE);
 		add(fullRateText);
 		JLabel fullRatePercent = new JLabel(rate[0] + "%");
 		fullRatePercent.setBounds(220, 70, 100, 20);
-		fullRatePercent.setFont(new Font("¹ÙÅÁ",Font.PLAIN, 20));
+		fullRatePercent.setFont(new Font("ë°”íƒ•", Font.PLAIN, 20));
 		fullRatePercent.setForeground(Color.BLUE);
 		add(fullRatePercent);
-		
-		JLabel cleanRateText = new JLabel("Ã»°áµµ");
+
+		JLabel cleanRateText = new JLabel("ì²­ê²°ë„");
 		cleanRateText.setBounds(30, 112, 100, 20);
-		cleanRateText.setFont(new Font("¹ÙÅÁ",Font.PLAIN, 20));
+		cleanRateText.setFont(new Font("ë°”íƒ•", Font.PLAIN, 20));
 		cleanRateText.setForeground(Color.BLUE);
 		add(cleanRateText);
 		JLabel cleanRatePercent = new JLabel(rate[1] + "%");
 		cleanRatePercent.setBounds(220, 142, 100, 20);
-		cleanRatePercent.setFont(new Font("¹ÙÅÁ",Font.PLAIN, 20));
+		cleanRatePercent.setFont(new Font("ë°”íƒ•", Font.PLAIN, 20));
 		cleanRatePercent.setForeground(Color.BLUE);
 		add(cleanRatePercent);
-		
-		
-		JLabel tiredRateText = new JLabel("ÇÇ·Îµµ");
+
+		JLabel tiredRateText = new JLabel("í”¼ë¡œë„");
 		tiredRateText.setBounds(30, 185, 100, 20);
-		tiredRateText.setFont(new Font("¹ÙÅÁ",Font.PLAIN, 20));
+		tiredRateText.setFont(new Font("ë°”íƒ•", Font.PLAIN, 20));
 		tiredRateText.setForeground(Color.RED);
 		add(tiredRateText);
 		JLabel tiredRatePercent = new JLabel(rate[2] + "%");
 		tiredRatePercent.setBounds(220, 214, 100, 20);
-		tiredRatePercent.setFont(new Font("¹ÙÅÁ",Font.PLAIN, 20));
+		tiredRatePercent.setFont(new Font("ë°”íƒ•", Font.PLAIN, 20));
 		tiredRatePercent.setForeground(Color.RED);
 		add(tiredRatePercent);
-		
-		
-		
-		//addMouseMotionListener(new MyEvent()); //À§Ä¡ È®ÀÎ
+
+		// addMouseMotionListener(new MyEvent()); //ìœ„ì¹˜ í™•ì¸
 
 		playbutton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				playBl = true;
-				System.out.println("³î¾ÆÁÖ±â ¹öÆ° ´­¸²");
-				//³î¾ÆÁÖ´Â ¹Ì´Ï°Ô ÆË¾÷Ã¢ ¸¸µé±â!
+				System.out.println("ë†€ì•„ì£¼ê¸° ë²„íŠ¼ ëˆŒë¦¼");
+				// ë†€ì•„ì£¼ëŠ” ë¯¸ë‹ˆê²Œ íŒì—…ì°½ ë§Œë“¤ê¸°!
 				rate = sm.playingMethod(rate);
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
 				playBl = false;
-				
-				
+
 			}
 		});
-		
+
 		lovebutton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loveBl = true;
-				System.out.println("¾ÖÁ¤ÁÖ±â ¹öÆ° ´­¸²");
+				System.out.println("ì• ì •ì£¼ê¸° ë²„íŠ¼ ëˆŒë¦¼");
 				LoadingClass lc = new LoadingClass(lovebutton, s03);
 				Thread th4 = new Thread(lc);
 				th4.setDaemon(true);
 				th4.start();
-				
+
 				rate = sm.lovingMethod(rate);
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
@@ -227,51 +228,51 @@ public class Stage03 extends JPanel{
 
 			}
 		});
-		
+
 		bedbutton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				bedBl = true;
-				System.out.println("ÀáÀÚ±â ¹öÆ° ´­¸²");
+				System.out.println("ì ìê¸° ë²„íŠ¼ ëˆŒë¦¼");
 				LoadingClass lc2 = new LoadingClass(bedbutton, s03);
 				Thread th5 = new Thread(lc2);
 				th5.setDaemon(true);
 				th5.start();
-				
+
 				rate = sm.sleepingMethod(rate);
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
 				bedBl = false;
-				
+
 			}
 		});
-		
+
 		addMouseListener(new MouseAdapter() {
-			
-			@Override 
-			public void mouseClicked(MouseEvent e) { //¾ÆÀÌÄÜÀÌ È°¼ºÈ­ µÇ°í, ÃÊ·ÏÀÌ¸¦ ÇâÇØ ´­·¯¾ß ÇÔ!
-				if(riceBl == true) { // 
+
+			@Override
+			public void mouseClicked(MouseEvent e) { // ì•„ì´ì½˜ì´ í™œì„±í™” ë˜ê³ , ì´ˆë¡ì´ë¥¼ í–¥í•´ ëˆŒëŸ¬ì•¼ í•¨!
+				if (riceBl == true) { //
 					rate = sm.eatingMethod(rate, e.getX(), e.getY());
-					//System.out.println("¾îµò°¡ ´­·¯¾¸");	
+					// System.out.println("ì–´ë”˜ê°€ ëˆŒëŸ¬ì”€");
 					fullRatePercent.setText(rate[0] + "%");
 					cleanRatePercent.setText(rate[1] + "%");
 					tiredRatePercent.setText(rate[2] + "%");
 					riceBl = false;
 				}
-				if(bathBl == true) { 
+				if (bathBl == true) {
 					rate = sm.cleaningMethod(rate, e.getX(), e.getY());
-					//System.out.println("¾îµò°¡ ´­·¯¾¸");	
+					// System.out.println("ì–´ë”˜ê°€ ëˆŒëŸ¬ì”€");
 					fullRatePercent.setText(rate[0] + "%");
 					cleanRatePercent.setText(rate[1] + "%");
 					tiredRatePercent.setText(rate[2] + "%");
 					bathBl = false;
 				}
 			}
-			
+
 		});
-		
+
 		Thread th2 = new Thread(new Runnable() {
 
 			@Override
@@ -279,12 +280,11 @@ public class Stage03 extends JPanel{
 				time = 0;
 				JLabel label = new JLabel("Timer : " + time);
 				label.setBounds(940, 0, 100, 50);
-				label.setFont(new Font("¹ÙÅÁ",Font.PLAIN, 15));
+				label.setFont(new Font("ë°”íƒ•", Font.PLAIN, 15));
 
 				s03.add(label);
-				
-				
-				while(goOrStop) {
+
+				while (goOrStop) {
 					time++;
 
 					try {
@@ -292,196 +292,186 @@ public class Stage03 extends JPanel{
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					if (time%2 == 0) {
-						label.setText("Timer : " + time/2);
+					if (time % 2 == 0) {
+						label.setText("Timer : " + time / 2);
 
 					}
 					rate[0]--;
 					rate[1]--;
 					rate[2]++;
-					g.drawImage(fullImage, 25, 69, (int)(188*(double)rate[0]/100.0), 25, null); // Æ÷¸¸°¨Ç¥½Ã 
+					g.drawImage(fullImage, 25, 69, (int) (188 * (double) rate[0] / 100.0), 25, null); // í¬ë§Œê°í‘œì‹œ
 					fullRatePercent.setText(rate[0] + "%");
-					
-					g.drawImage(cleanImage, 25, 140, (int)(188*(double)rate[1]/100.0), 25, null); // Ã»°áµµÇ¥½Ã 
+
+					g.drawImage(cleanImage, 25, 140, (int) (188 * (double) rate[1] / 100.0), 25, null); // ì²­ê²°ë„í‘œì‹œ
 					cleanRatePercent.setText(rate[1] + "%");
-					
-					g.drawImage(tiredImage, 25, 211, (int)(188*(double)rate[2]/100.0), 25, null); // ÇÇ·ÎµµÇ¥½Ã 
+
+					g.drawImage(tiredImage, 25, 211, (int) (188 * (double) rate[2] / 100.0), 25, null); // í”¼ë¡œë„í‘œì‹œ
 					tiredRatePercent.setText(rate[2] + "%");
 				}
-				
+
 			}
-			
+
 		});
 		th2.setDaemon(true);
 		th2.start();
-		
+
 		Thread th3 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				
-				while(goOrStop) {
-					if(rate[0] <= 20) {
+
+				while (goOrStop) {
+					if (rate[0] <= 20) {
 						goOrStop = false;
-						
-						int score = sm.scoreCalc(growthLevel, rate[3], time); //·¹º§, ¼ºÀåµµ, ½Ã°£
+
+						int score = sm.scoreCalc(growthLevel, rate[3], time); // ë ˆë²¨, ì„±ì¥ë„, ì‹œê°„
 						sm.scoreChange(score, user);
-						JOptionPane.showMessageDialog(null, "ÃÊ·ÏÀÌ°¡ ¹è°íÆÄ Á×¾ú½À´Ï´Ù. \n ÃÖÁ¾ ½ºÄÚ¾î : " +score);
-						
-						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
-						
-					} else if(rate[1] <= 20) {
-						goOrStop = false;
-						int score = sm.scoreCalc(growthLevel, rate[3], time); //·¹º§, ¼ºÀåµµ, ½Ã°£
-						sm.scoreChange(score, user);
-						JOptionPane.showMessageDialog(null, "ÃÊ·ÏÀÌ°¡ Àü¿°º´¿¡ °¨¿°µÇ¾î Á×¾ú½À´Ï´Ù. \nÃÖÁ¾ ½ºÄÚ¾î : " + score);
-						
+						JOptionPane.showMessageDialog(null, "ì´ˆë¡ì´ê°€ ë°°ê³ íŒŒ ì£½ì—ˆìŠµë‹ˆë‹¤. \n ìµœì¢… ìŠ¤ì½”ì–´ : " + score);
+
 						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
 
-					} else if(rate[2] >=80) {
+					} else if (rate[1] <= 20) {
+						goOrStop = false;
+						int score = sm.scoreCalc(growthLevel, rate[3], time); // ë ˆë²¨, ì„±ì¥ë„, ì‹œê°„
+						sm.scoreChange(score, user);
+						JOptionPane.showMessageDialog(null, "ì´ˆë¡ì´ê°€ ì „ì—¼ë³‘ì— ê°ì—¼ë˜ì–´ ì£½ì—ˆìŠµë‹ˆë‹¤. \nìµœì¢… ìŠ¤ì½”ì–´ : " + score);
+
+						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
+
+					} else if (rate[2] >= 80) {
 						sm.printResult(rate[3], time);
 						goOrStop = false;
-						int score = sm.scoreCalc(growthLevel, rate[3], time); //·¹º§, ¼ºÀåµµ, ½Ã°£
+						int score = sm.scoreCalc(growthLevel, rate[3], time); // ë ˆë²¨, ì„±ì¥ë„, ì‹œê°„
 						sm.scoreChange(score, user);
-						JOptionPane.showMessageDialog(null, "ÃÊ·ÏÀÌ°¡ °ú·Î»ç·Î Á×¾ú½À´Ï´Ù. \nÃÖÁ¾ ½ºÄÚ¾î : " + score);
+						JOptionPane.showMessageDialog(null, "ì´ˆë¡ì´ê°€ ê³¼ë¡œì‚¬ë¡œ ì£½ì—ˆìŠµë‹ˆë‹¤. \nìµœì¢… ìŠ¤ì½”ì–´ : " + score);
 
-						//ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+						// ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 						ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
-					} else if(rate[3] >= 90) {
+					} else if (rate[3] >= 90) {
 						goOrStop = false;
-						if (growthLevel <3) {
-							JOptionPane.showMessageDialog(null, "ÃÊ·ÏÀÌ°¡ " + (growthLevel+1) +"¹øÂ° ¼ºÀåÇß¾î¿ä!");
+						if (growthLevel < 3) {
+							JOptionPane.showMessageDialog(null, "ì´ˆë¡ì´ê°€ " + (growthLevel + 1) + "ë²ˆì§¸ ì„±ì¥í–ˆì–´ìš”!");
 							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel, user));
 						} else {
 							sm.printResult(rate[3], time);
-							int score = sm.scoreCalc(growthLevel, rate[3], time); //·¹º§, ¼ºÀåµµ, ½Ã°£
+							int score = sm.scoreCalc(growthLevel, rate[3], time); // ë ˆë²¨, ì„±ì¥ë„, ì‹œê°„
 							sm.scoreChange(score, user);
-							JOptionPane.showMessageDialog(null, "ÃÊ·ÏÀÌ°¡ µåµğ¾î ¾î¸¥ÀÌ µÇ¾ú³×¿ä! \nÃÖÁ¾ ½ºÄÚ¾î : " +score);
+							JOptionPane.showMessageDialog(null, "ì´ˆë¡ì´ê°€ ë“œë””ì–´ ì–´ë¥¸ì´ ë˜ì—ˆë„¤ìš”! \nìµœì¢… ìŠ¤ì½”ì–´ : " + score);
 							growthLevel = 0;
-							
+
 							ChangePanel.changePanel(mf, s03, new Stage03After(mf, user, score));
 						}
 					}
-					
+
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				
+
 			}
-			
+
 		});
 		th3.setDaemon(true);
 		th3.start();
-		
-		
+
 	}
-	
-	
+
 	@Override
 	public void paint(Graphics g) {
 		this.g = g;
-		g.drawImage(background, 0, 0, null); //¹è°æÀ» ±×·ÁÁÜ
-		paintComponents(g); //component¸¦ ±×·ÁÁÜ
-//		Image green;
-//		int gx, gy, width, height;
-//		
-//		if(growthLevel == 0) {
-//			gx = 412; gy =270; width = 200; height =279;
-//			green = new ImageIcon("images/stage03_image/greenE.gif").getImage();
-//
-//		} else if(growthLevel == 1) {
-//			gx = 312; gy = 180; width = 400; height = 421;
-//			green = new ImageIcon("images/stage03_image/greenELv2.gif").getImage();
-//		} else {
-//			gx = 412; gy =270; width = 200; height =279;
-//			green = new ImageIcon("images/stage03_image/greenE.gif").getImage();
-//		}
-//		
-//		g.drawImage(green, gx, gy, width, height, null); // ÃÊ·ÏÀÌ ÀÌ¹ÌÁö »ğÀÔ 
-//		
-		g.drawImage(fullImage, 25, 69, (int)(188*(double)rate[0]/100.0), 25, null); // Æ÷¸¸°¨Ç¥½Ã 
-		g.drawImage(cleanImage, 25, 140, (int)(188*(double)rate[1]/100.0), 25, null); // Ã»°áµµÇ¥½Ã 
-		g.drawImage(tiredImage, 25, 211, (int)(188*(double)rate[2]/100.0), 25, null); // ÇÇ·ÎµµÇ¥½Ã 
-		g.drawImage(growthImage, 934, 330, 40, (int)(-243*(double)rate[3]/100.0), null); // ¼ºÀåµµÇ¥½Ã 
-		
-		
+		g.drawImage(background, 0, 0, null); // ë°°ê²½ì„ ê·¸ë ¤ì¤Œ
+		paintComponents(g); // componentë¥¼ ê·¸ë ¤ì¤Œ
+		// Image green;
+		// int gx, gy, width, height;
+		//
+		// if(growthLevel == 0) {
+		// gx = 412; gy =270; width = 200; height =279;
+		// green = new ImageIcon("images/stage03_image/greenE.gif").getImage();
+		//
+		// } else if(growthLevel == 1) {
+		// gx = 312; gy = 180; width = 400; height = 421;
+		// green = new ImageIcon("images/stage03_image/greenELv2.gif").getImage();
+		// } else {
+		// gx = 412; gy =270; width = 200; height =279;
+		// green = new ImageIcon("images/stage03_image/greenE.gif").getImage();
+		// }
+		//
+		// g.drawImage(green, gx, gy, width, height, null); // ì´ˆë¡ì´ ì´ë¯¸ì§€ ì‚½ì…
+		//
+		g.drawImage(fullImage, 25, 69, (int) (188 * (double) rate[0] / 100.0), 25, null); // í¬ë§Œê°í‘œì‹œ
+		g.drawImage(cleanImage, 25, 140, (int) (188 * (double) rate[1] / 100.0), 25, null); // ì²­ê²°ë„í‘œì‹œ
+		g.drawImage(tiredImage, 25, 211, (int) (188 * (double) rate[2] / 100.0), 25, null); // í”¼ë¡œë„í‘œì‹œ
+		g.drawImage(growthImage, 934, 330, 40, (int) (-243 * (double) rate[3] / 100.0), null); // ì„±ì¥ë„í‘œì‹œ
+
 		if (riceBl == true) {
 			this.addMouseMotionListener(new MouseAdapter() {
 				@Override
-				public void mouseMoved(MouseEvent e) { //¼ı°¡¶ôÀÌ ¸¶¿ì½º¿¡ ¿Ã·ÁÁü 
+				public void mouseMoved(MouseEvent e) { // ìˆ«ê°€ë½ì´ ë§ˆìš°ìŠ¤ì— ì˜¬ë ¤ì§
 					mouse = new ImageIcon("images/stage03_image/spoon.png").getImage();
 					x = e.getX();
 					y = e.getY();
 				}
 			});
-		} else if(bathBl == true) {
+		} else if (bathBl == true) {
 			this.addMouseMotionListener(new MouseAdapter() {
 				@Override
-				public void mouseMoved(MouseEvent e) { //»ş¿ö±â°¡ ¸¶¿ì½º¿¡ ¿Ã·ÁÁü 
+				public void mouseMoved(MouseEvent e) { // ìƒ¤ì›Œê¸°ê°€ ë§ˆìš°ìŠ¤ì— ì˜¬ë ¤ì§
 					mouse = new ImageIcon("images/stage03_image/showerHead.png").getImage();
 					x = e.getX();
 					y = e.getY();
 				}
 			});
-		}else{ //default : ¸¶¿ì½º¿¡ ¾Æ¹«°Íµµ ¿Ã·ÁÁöÁö ¾ÊÀº »óÅÂ
+		} else { // default : ë§ˆìš°ìŠ¤ì— ì•„ë¬´ê²ƒë„ ì˜¬ë ¤ì§€ì§€ ì•Šì€ ìƒíƒœ
 			mouse = null;
 		}
-		
-		g.drawImage(mouse, x-20, y-30, 100, 68, null);
-		this.repaint(); //´Ù½Ã ±×·ÁÁØ´Ù´Â ÀÇ¹Ì?
-		
-		
-		
+
+		g.drawImage(mouse, x - 20, y - 30, 100, 68, null);
+		this.repaint(); // ë‹¤ì‹œ ê·¸ë ¤ì¤€ë‹¤ëŠ” ì˜ë¯¸?
+
 	}
+
 	public int getGrowthLevel() {
 		return growthLevel;
 	}
-
 
 	public boolean isGoOrStop() {
 		return goOrStop;
 	}
 
-
 	public void setGoOrStop(boolean goOrStop) {
 		this.goOrStop = goOrStop;
 	}
 
-
 	public void setGrowthLevel(int growthLevel) {
 		this.growthLevel = growthLevel;
 	}
-	
 
-	
 }
 
-class MyEvent extends MouseMotionAdapter{
-	
+class MyEvent extends MouseMotionAdapter {
+
 	public void display(String s, MouseEvent e) {
 		System.out.println(s + ": ( " + e.getX() + ", " + e.getY() + " )");
 	}
-	
+
 	@Override
 	public void mouseMoved(java.awt.event.MouseEvent e) {
 		display("mouse Moved", e);
 	}
-	
+
 }
 
-
-class Greeny implements Runnable{
+class Greeny implements Runnable {
 	private JPanel jp;
 	private boolean gr = false;
 	private Stage03 s03;
-	
 
-	Greeny(){}
+	Greeny() {
+	}
 
-	Greeny(Stage03 s03){
+	Greeny(Stage03 s03) {
 		this.s03 = s03;
 	}
 
@@ -492,31 +482,39 @@ class Greeny implements Runnable{
 		int gx, gy, width, height;
 		Image green1;
 		Image green2;
-		
-		if(growthLevel == 0) {
-			gx = 412; gy =270; width = 200; height =279;
+
+		if (growthLevel == 0) {
+			gx = 412;
+			gy = 270;
+			width = 200;
+			height = 279;
 			green1 = new ImageIcon("images/stage03_image/greenE1.png").getImage();
 			green2 = new ImageIcon("images/stage03_image/greenE2.png").getImage();
 
-		} else if(growthLevel == 1) {
-			gx = 312; gy = 180; width = 400; height = 421;
+		} else if (growthLevel == 1) {
+			gx = 312;
+			gy = 180;
+			width = 400;
+			height = 421;
 			green1 = new ImageIcon("images/stage03_image/greenELv2a.png").getImage();
 			green2 = new ImageIcon("images/stage03_image/greenELv2b.png").getImage();
 		} else {
-			gx = 412; gy =270; width = 200; height =279;
+			gx = 412;
+			gy = 270;
+			width = 200;
+			height = 279;
 			green1 = new ImageIcon("images/stage03_image/greenE1.png").getImage();
 			green2 = new ImageIcon("images/stage03_image/greenE2.png").getImage();
 		}
-		
+
 		JLabel greenLabel = new JLabel(new ImageIcon(green1));
 		greenLabel.setBounds(gx, gy, width, height);
 		s03.add(greenLabel);
 
 		JLabel greenLabel2 = new JLabel(new ImageIcon(green2));
 		greenLabel2.setBounds(gx, gy, width, height);
-		
 
-		while(goOrStop) {
+		while (goOrStop) {
 			if (gr == false) {
 				s03.remove(greenLabel);
 				s03.add(greenLabel2);
@@ -526,44 +524,40 @@ class Greeny implements Runnable{
 				s03.add(greenLabel);
 				gr = false;
 			}
-			
-			
 
 			try {
 				Thread.sleep(400);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
+
 			goOrStop = s03.isGoOrStop();
 		}
 
 	}
-	
-	
 
 }
 
-
-class LoadingClass implements Runnable{
+class LoadingClass implements Runnable {
 	JButton jb;
 	JPanel jp;
 	boolean goOrStop = true;
-	LoadingClass(){	}
-	
-	LoadingClass(JButton jb, JPanel jp){
+
+	LoadingClass() {
+	}
+
+	LoadingClass(JButton jb, JPanel jp) {
 		this.jb = jb;
 		this.jp = jp;
 	}
-	
+
 	@Override
 	public void run() {
-		
-		
-		//System.out.println("Th4°¡ ½ÇÇàµÊ");
+
+		// System.out.println("Th4ê°€ ì‹¤í–‰ë¨");
 		jb.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		jb.setEnabled(false);
-		
+
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -573,11 +567,5 @@ class LoadingClass implements Runnable{
 		jb.setEnabled(true);
 
 	}
-	
+
 }
-
-
-
-
-
-

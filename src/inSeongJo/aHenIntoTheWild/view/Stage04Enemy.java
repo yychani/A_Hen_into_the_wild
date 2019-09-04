@@ -10,15 +10,15 @@ import javax.swing.JPanel;
 public class Stage04Enemy {
 	private int x;
 	private int y;
-	
+
 	public Stage04Enemy(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
+
 	public void move() {
 		x -= 10;
 	}
-	
 
 	public int getX() {
 		return x;
@@ -36,9 +36,4 @@ public class Stage04Enemy {
 		this.y = y;
 	}
 
-	
-
-
 }
-
-

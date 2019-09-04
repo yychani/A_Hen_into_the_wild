@@ -46,274 +46,266 @@ public class JoinPage extends JPanel {
 
 		// mf.add(this);
 
-		// È¸¿ø°¡ÀÔ ÅØ½ºÆ®
-		JLabel joinText = new JLabel("È¸¿ø°¡ÀÔ");
+		// íšŒì›ê°€ì… í…ìŠ¤íŠ¸
+		JLabel joinText = new JLabel("íšŒì›ê°€ì…");
 		joinText.setBounds(450, 150, 300, 100);
-		joinText.setFont(new Font("³ª´®½ºÄù¾î ExtraBold", Font.PLAIN, 35));
+		joinText.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ ExtraBold", Font.PLAIN, 35));
 		joinText.setForeground(Color.DARK_GRAY);
 		add(joinText);
 
-		// ¾ÆÀÌµğ ÅØ½ºÆ®
-		JLabel idText = new JLabel("¾ÆÀÌµğ");
+		// ì•„ì´ë”” í…ìŠ¤íŠ¸
+		JLabel idText = new JLabel("ì•„ì´ë””");
 		idText.setBounds(235, 215, 300, 100);
-		idText.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
-		//idText.setBorder(BorderFactory.createBevelBorder(1, Color.black, shadow));
+		idText.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
+		// idText.setBorder(BorderFactory.createBevelBorder(1, Color.black, shadow));
 		idText.setForeground(Color.DARK_GRAY);
 		add(idText);
 
-		// ¾ÆÀÌµğ Áßº¹È®ÀÎ ¸Ş¼¼Áö
-		JLabel idCheckText = new JLabel("¾ÆÀÌµğ Áßº¹È®ÀÎÀ» ÇØÁÖ¼¼¿ä.");
+		// ì•„ì´ë”” ì¤‘ë³µí™•ì¸ ë©”ì„¸ì§€
+		JLabel idCheckText = new JLabel("ì•„ì´ë”” ì¤‘ë³µí™•ì¸ì„ í•´ì£¼ì„¸ìš”.");
 		idCheckText.setBounds(350, 240, 500, 100);
-		idCheckText.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 12));
+		idCheckText.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 12));
 		idCheckText.setForeground(Color.DARK_GRAY);
 		add(idCheckText);
 
-		// ºñ¹Ğ¹øÈ£ ÅØ½ºÆ®
-		JLabel passwordText = new JLabel("ºñ¹Ğ¹øÈ£");
+		// ë¹„ë°€ë²ˆí˜¸ í…ìŠ¤íŠ¸
+		JLabel passwordText = new JLabel("ë¹„ë°€ë²ˆí˜¸");
 		passwordText.setBounds(225, 285, 300, 100);
-		passwordText.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		passwordText.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
 		passwordText.setForeground(Color.DARK_GRAY);
 		add(passwordText);
 
-		// ºñ¹Ğ¹øÈ£ È®ÀÎ ÅØ½ºÆ®
-		JLabel repasswordText = new JLabel("ºñ¹Ğ¹øÈ£ È®ÀÎ");
+		// ë¹„ë°€ë²ˆí˜¸ í™•ì¸ í…ìŠ¤íŠ¸
+		JLabel repasswordText = new JLabel("ë¹„ë°€ë²ˆí˜¸ í™•ì¸");
 		repasswordText.setBounds(210, 355, 300, 100);
-		repasswordText.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		repasswordText.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
 		repasswordText.setForeground(Color.DARK_GRAY);
 		add(repasswordText);
 
-		// ´Ğ³×ÀÓ ÅØ½ºÆ®
-		JLabel nickNameText = new JLabel("´Ğ³×ÀÓ");
+		// ë‹‰ë„¤ì„ í…ìŠ¤íŠ¸
+		JLabel nickNameText = new JLabel("ë‹‰ë„¤ì„");
 		nickNameText.setBounds(235, 425, 300, 100);
-		nickNameText.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		nickNameText.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
 		nickNameText.setForeground(Color.DARK_GRAY);
 		add(nickNameText);
 
-		// ÀÌ¸ŞÀÏ ÅØ½ºÆ®
-		JLabel emailText = new JLabel("ÀÌ¸ŞÀÏ");
+		// ì´ë©”ì¼ í…ìŠ¤íŠ¸
+		JLabel emailText = new JLabel("ì´ë©”ì¼");
 		emailText.setBounds(235, 495, 300, 100);
-		emailText.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		emailText.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
 		emailText.setForeground(Color.DARK_GRAY);
 		add(emailText);
 
-		// ¾ÆÀÌµğ ÀÔ·Â¶õ
+		// ì•„ì´ë”” ì…ë ¥ë€
 		/* JTextField */ idTextField = new JTextField();
 		idTextField.setBounds(350, 250, 300, 30);
 		idTextField.setBorder(BorderFactory.createEmptyBorder());
 		idTextField.setBorder(BorderFactory.createBevelBorder(-1));
 		add(idTextField);
 
-		// ºñ¹Ğ¹øÈ£ ÀÔ·Â¶õ
+		// ë¹„ë°€ë²ˆí˜¸ ì…ë ¥ë€
 		/* JPasswordField */ passwordTextField = new JPasswordField();
 		passwordTextField.setBounds(350, 320, 300, 30);
 		passwordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(passwordTextField);
 
-		// ºñ¹Ğ¹øÈ£ ÀçÈ®ÀÎ ÀÔ·Â¶õ
+		// ë¹„ë°€ë²ˆí˜¸ ì¬í™•ì¸ ì…ë ¥ë€
 		JPasswordField repasswordTextField = new JPasswordField();
 		repasswordTextField.setBounds(350, 390, 300, 30);
 		repasswordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(repasswordTextField);
 
-		// ºñ¹Ğ¹øÈ£ ÀçÈ®ÀÎ ¾Ë¸² ÅØ½ºÆ®
-		JLabel passwordCheckText = new JLabel("ºñ¹Ğ¹øÈ£ ÀÏÄ¡ È®ÀÎÀÌ ÇÊ¿äÇÕ´Ï´Ù.");
+		// ë¹„ë°€ë²ˆí˜¸ ì¬í™•ì¸ ì•Œë¦¼ í…ìŠ¤íŠ¸
+		JLabel passwordCheckText = new JLabel("ë¹„ë°€ë²ˆí˜¸ ì¼ì¹˜ í™•ì¸ì´ í•„ìš”í•©ë‹ˆë‹¤.");
 		passwordCheckText.setBounds(350, 380, 500, 100);
-		passwordCheckText.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 12));
+		passwordCheckText.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 12));
 		passwordCheckText.setForeground(Color.WHITE);
 		add(passwordCheckText);
-		
-		//ºñ¹Ğ¹øÈ£ È®ÀÎ ¾Ë¶÷ ¾²·¹µå
+
+		// ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ì•ŒëŒ ì“°ë ˆë“œ
 		Thread th2 = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				while(true) {
+				while (true) {
 					pass1 = "";
 					pass2 = "";
-					for(int i = 0; i < passwordTextField.getPassword().length; i++) {
+					for (int i = 0; i < passwordTextField.getPassword().length; i++) {
 						pass1 += passwordTextField.getPassword()[i];
 					}
-					for(int i = 0; i < repasswordTextField.getPassword().length; i++) {
+					for (int i = 0; i < repasswordTextField.getPassword().length; i++) {
 						pass2 += repasswordTextField.getPassword()[i];
 					}
-					
-					if(pass1.equals(pass2)) {
-						passwordCheckText.setText("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù.");
+
+					if (pass1.equals(pass2)) {
+						passwordCheckText.setText("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤.");
 						passwordCheckText.setForeground(Color.BLUE);
-						System.out.println("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù.");
-						
+						System.out.println("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤.");
+
 					} else {
-						passwordCheckText.setText("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+						passwordCheckText.setText("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 						passwordCheckText.setForeground(Color.RED);
-						System.out.println("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+						System.out.println("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 					}
-					
+
 					try {
 						Thread.sleep(200);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				
-				
+
 			}
 		});
-		
-		if(repasswordTextField.getPassword() != null) {
+
+		if (repasswordTextField.getPassword() != null) {
 			th2.start();
 		}
-		
 
-		// ´Ğ³×ÀÓ ÀÔ·Â¶õ
+		// ë‹‰ë„¤ì„ ì…ë ¥ë€
 		/* JTextField */ nickNameTextField = new JTextField();
 		nickNameTextField.setBounds(350, 460, 300, 30);
 		nickNameTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(nickNameTextField);
 
-		// ÀÌ¸ŞÀÏ ÀÔ·Â¶õ
+		// ì´ë©”ì¼ ì…ë ¥ë€
 		/* JTextField */ emailTextField = new JTextField();
 		emailTextField.setBounds(350, 530, 300, 30);
 		emailTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(emailTextField);
 
-		// Áßº¹È®ÀÎ ¹öÆ°
-		JButton checkButton = new JButton("¾ÆÀÌµğ Áßº¹È®ÀÎ");
+		// ì¤‘ë³µí™•ì¸ ë²„íŠ¼
+		JButton checkButton = new JButton("ì•„ì´ë”” ì¤‘ë³µí™•ì¸");
 		checkButton.setBounds(670, 245, 180, 40);
-		checkButton.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		checkButton.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
 		checkButton.setBackground(Color.LIGHT_GRAY);
 		add(checkButton);
 
-		// ¾ÆÀÌµğ Áßº¹È®ÀÎ ÀÌº¥Æ®
+		// ì•„ì´ë”” ì¤‘ë³µí™•ì¸ ì´ë²¤íŠ¸
 		checkButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//¾ÆÀÌµğ ÅØ½ºÆ® ÇÊµå ¹ÌÀÔ·Â½Ã
-				if(idTextField.getText().equals("")) {
-					JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.", "¾ÆÀÌµğ ¹ÌÀÔ·Â",  1);
+				// ì•„ì´ë”” í…ìŠ¤íŠ¸ í•„ë“œ ë¯¸ì…ë ¥ì‹œ
+				if (idTextField.getText().equals("")) {
+					JOptionPane.showMessageDialog(null, "ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.", "ì•„ì´ë”” ë¯¸ì…ë ¥", 1);
 					return;
 				}
 
-				//¾ÆÀÌµğ Áßº¹È®ÀÎ
+				// ì•„ì´ë”” ì¤‘ë³µí™•ì¸
 				if (um.idCheck(idTextField.getText())) {
-					// true -> "»ç¿ëÇÏ½Ç ¼ö ¾ø´Â ¾ÆÀÌµğÀÔ´Ï´Ù."
-					// false -> "»ç¿ëÇÏ½Ç ¼ö ÀÖ´Â ¾ÆÀÌµğÀÔ´Ï´Ù."
-					idCheckText.setText("»ç¿ëÇÏ½Ç ¼ö ¾ø´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
+					// true -> "ì‚¬ìš©í•˜ì‹¤ ìˆ˜ ì—†ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤."
+					// false -> "ì‚¬ìš©í•˜ì‹¤ ìˆ˜ ìˆëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤."
+					idCheckText.setText("ì‚¬ìš©í•˜ì‹¤ ìˆ˜ ì—†ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
 					idCheckText.setForeground(Color.RED);
 					idTextField.setText("");
 				} else {
-					idCheckText.setText("»ç¿ëÇÏ½Ç ¼ö ÀÖ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
+					idCheckText.setText("ì‚¬ìš©í•˜ì‹¤ ìˆ˜ ìˆëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
 					idCheckText.setForeground(Color.BLUE);
 				}
 
 			}
 		});
 
-		// ¿Ï·á ¹öÆ°
-		JButton completeButton = new JButton("¿Ï·á");
+		// ì™„ë£Œ ë²„íŠ¼
+		JButton completeButton = new JButton("ì™„ë£Œ");
 		completeButton.setBounds(670, 620, 120, 40);
-		completeButton.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		completeButton.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
 		completeButton.setBackground(Color.LIGHT_GRAY);
 		completeButton.setBorderPainted(false);
 		add(completeButton);
-		
-		// char[] ÆĞ½º¿öµå -> StringÀ¸·Î º¯È¯ & À¯Àú °´Ã¼ »ı¼º & ¸ŞÀÎ ½ºÅ×ÀÌÁö·Î ÀÌµ¿
+
+		// char[] íŒ¨ìŠ¤ì›Œë“œ -> Stringìœ¼ë¡œ ë³€í™˜ & ìœ ì € ê°ì²´ ìƒì„± & ë©”ì¸ ìŠ¤í…Œì´ì§€ë¡œ ì´ë™
 		completeButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				//ÆĞ½º¿öµå char -> String
+
+				// íŒ¨ìŠ¤ì›Œë“œ char -> String
 				password = "";
 				char[] pass = passwordTextField.getPassword();
 
 				for (int i = 0; i < pass.length; i++) {
 					password += pass[i];
 				}
-				
+
 				String repassword = "";
 				char[] repass = repasswordTextField.getPassword();
 				for (int i = 0; i < repass.length; i++) {
 					repassword += repass[i];
 				}
-				
-				
-				
-				//¾ÆÀÌµğ Áßº¹ È®ÀÎÇß´ÂÁö È®ÀÎ
+
+				// ì•„ì´ë”” ì¤‘ë³µ í™•ì¸í–ˆëŠ”ì§€ í™•ì¸
 				if (um.idCheck(idTextField.getText())) {
-					// true -> "»ç¿ëÇÏ½Ç ¼ö ¾ø´Â ¾ÆÀÌµğÀÔ´Ï´Ù."
-					// false -> "»ç¿ëÇÏ½Ç ¼ö ÀÖ´Â ¾ÆÀÌµğÀÔ´Ï´Ù."
-					JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ¸¦ ´Ù½Ã ÇÑ¹ø È®ÀÎÇØÁÖ¼¼¿ä.", "¾ÆÀÌµğ È®ÀÎ",  1);
+					// true -> "ì‚¬ìš©í•˜ì‹¤ ìˆ˜ ì—†ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤."
+					// false -> "ì‚¬ìš©í•˜ì‹¤ ìˆ˜ ìˆëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤."
+					JOptionPane.showMessageDialog(null, "ì•„ì´ë””ë¥¼ ë‹¤ì‹œ í•œë²ˆ í™•ì¸í•´ì£¼ì„¸ìš”.", "ì•„ì´ë”” í™•ì¸", 1);
 				} else {
-					//ºñ¹Ğ¹øÈ£ ÀÏÄ¡ È®ÀÎ
-					if(!password.equals(repassword)){
-						System.out.println("ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡");
-						JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£°¡ ºÒÀÏÄ¡ÇÕ´Ï´Ù. ´Ù½Ã ÇÑ¹ø ÀÔ·ÂÇØÁÖ¼¼¿ä.", "ºñ¹Ğ¹øÈ£ È®ÀÎ",  1);
-						passwordCheckText.setText("´Ù½Ã ÇÑ¹ø ÀÔ·ÂÇØÁÖ¼¼¿ä.");
+					// ë¹„ë°€ë²ˆí˜¸ ì¼ì¹˜ í™•ì¸
+					if (!password.equals(repassword)) {
+						System.out.println("ë¹„ë°€ë²ˆí˜¸ ë¶ˆì¼ì¹˜");
+						JOptionPane.showMessageDialog(null, "ë¹„ë°€ë²ˆí˜¸ê°€ ë¶ˆì¼ì¹˜í•©ë‹ˆë‹¤. ë‹¤ì‹œ í•œë²ˆ ì…ë ¥í•´ì£¼ì„¸ìš”.", "ë¹„ë°€ë²ˆí˜¸ í™•ì¸", 1);
+						passwordCheckText.setText("ë‹¤ì‹œ í•œë²ˆ ì…ë ¥í•´ì£¼ì„¸ìš”.");
 						passwordCheckText.setForeground(Color.RED);
 						passwordTextField.setText("");
 						repasswordTextField.setText("");
-					}else {
-						System.out.println("ºñ¹Ğ¹øÈ£ ÀÏÄ¡");
-						//´Ğ³×ÀÓ ÀÔ·Â¶õ °ø¹é È®ÀÎ
-						if(nickNameTextField.getText().equals("")) {
-							System.out.println("´Ğ³×ÀÓ ¹ÌÀÔ·Â");
-							JOptionPane.showMessageDialog(null, "´Ğ³×ÀÔÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.", "´Ğ³×ÀÓ ¹ÌÀÔ·Â",  1);
-						}else {
-							if(emailTextField.getText().equals("")) {
-								System.out.println("ÀÌ¸ŞÀÏ ¹ÌÀÔ·Â");
-								JOptionPane.showMessageDialog(null, "ÀÌ¸ŞÀÏÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä.", "ÀÌ¸ŞÀÏ ¹ÌÀÔ·Â",  1);
-							}else {
-								//¸ğµç È¸¿ø°¡ÀÔ Á¶°Ç Åë°ú
-								//»õ·Î¿î À¯Àú °´Ã¼ »ı¼º
+					} else {
+						System.out.println("ë¹„ë°€ë²ˆí˜¸ ì¼ì¹˜");
+						// ë‹‰ë„¤ì„ ì…ë ¥ë€ ê³µë°± í™•ì¸
+						if (nickNameTextField.getText().equals("")) {
+							System.out.println("ë‹‰ë„¤ì„ ë¯¸ì…ë ¥");
+							JOptionPane.showMessageDialog(null, "ë‹‰ë„¤ì…ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.", "ë‹‰ë„¤ì„ ë¯¸ì…ë ¥", 1);
+						} else {
+							if (emailTextField.getText().equals("")) {
+								System.out.println("ì´ë©”ì¼ ë¯¸ì…ë ¥");
+								JOptionPane.showMessageDialog(null, "ì´ë©”ì¼ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.", "ì´ë©”ì¼ ë¯¸ì…ë ¥", 1);
+							} else {
+								// ëª¨ë“  íšŒì›ê°€ì… ì¡°ê±´ í†µê³¼
+								// ìƒˆë¡œìš´ ìœ ì € ê°ì²´ ìƒì„±
 								um.insertUser(inputUser());
-								//°¡ÀÔ¿Ï·á ÆË¾÷Ã¢
-								JOptionPane.showMessageDialog(null, "°¡ÀÔ¿Ï·á", "È¸¿ø°¡ÀÔ",  1);
-								//¸ŞÀÎ ÆäÀÌÁö ÀÌµ¿
+								// ê°€ì…ì™„ë£Œ íŒì—…ì°½
+								JOptionPane.showMessageDialog(null, "ê°€ì…ì™„ë£Œ", "íšŒì›ê°€ì…", 1);
+								// ë©”ì¸ í˜ì´ì§€ ì´ë™
 								th2.stop();
 								ChangePanel.changePanel(mf, JoinPage, new MainPage(mf));
 							}
 						}
 					}
-					
-					
+
 				}
-				
-				//ºñ¹Ğ¹øÈ£ ÀÏÄ¡ È®ÀÎ
-				/*if(password.equals(repassword)){
-					System.out.println("ºñ¹Ğ¹øÈ£ ÀÏÄ¡");
-				}else {
-					System.out.println("ºñ¹Ğ¹øÈ£ ºÒÀÏÄ¡");
-					JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£°¡ ºÒÀÏÄ¡ÇÕ´Ï´Ù. ´Ù½Ã ÇÑ¹ø ÀÔ·ÂÇØÁÖ¼¼¿ä.", "ºñ¹Ğ¹øÈ£ È®ÀÎ",  1);
-					passwordCheckText.setText("´Ù½Ã ÇÑ¹ø ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-					passwordCheckText.setForeground(Color.RED);
-					passwordTextField.setText("");
-					repasswordTextField.setText("");
-				}*/
 
-				//um.insertUser(inputUser());
+				// ë¹„ë°€ë²ˆí˜¸ ì¼ì¹˜ í™•ì¸
+				/*
+				 * if(password.equals(repassword)){ System.out.println("ë¹„ë°€ë²ˆí˜¸ ì¼ì¹˜"); }else {
+				 * System.out.println("ë¹„ë°€ë²ˆí˜¸ ë¶ˆì¼ì¹˜"); JOptionPane.showMessageDialog(null,
+				 * "ë¹„ë°€ë²ˆí˜¸ê°€ ë¶ˆì¼ì¹˜í•©ë‹ˆë‹¤. ë‹¤ì‹œ í•œë²ˆ ì…ë ¥í•´ì£¼ì„¸ìš”.", "ë¹„ë°€ë²ˆí˜¸ í™•ì¸", 1);
+				 * passwordCheckText.setText("ë‹¤ì‹œ í•œë²ˆ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+				 * passwordCheckText.setForeground(Color.RED); passwordTextField.setText("");
+				 * repasswordTextField.setText(""); }
+				 */
 
-				
-				//JOptionPane.showMessageDialog(null, "°¡ÀÔ¿Ï·á", "È¸¿ø°¡ÀÔ",  1);
+				// um.insertUser(inputUser());
 
-				//ChangePanel.changePanel(mf, JoinPage, new MainStage(mf));
+				// JOptionPane.showMessageDialog(null, "ê°€ì…ì™„ë£Œ", "íšŒì›ê°€ì…", 1);
+
+				// ChangePanel.changePanel(mf, JoinPage, new MainStage(mf));
 			}
 		});
 
-		// °¡ÀÔÃë¼Ò ¹öÆ°
-		JButton cancleButton = new JButton("°¡ÀÔÃë¼Ò");
+		// ê°€ì…ì·¨ì†Œ ë²„íŠ¼
+		JButton cancleButton = new JButton("ê°€ì…ì·¨ì†Œ");
 		cancleButton.setBounds(820, 620, 120, 40);
-		cancleButton.setFont(new Font("³ª´®½ºÄù¾î Bold", Font.PLAIN, 20));
+		cancleButton.setFont(new Font("ë‚˜ëˆ”ìŠ¤í€˜ì–´ Bold", Font.PLAIN, 20));
 		cancleButton.setBackground(Color.LIGHT_GRAY);
 		cancleButton.setBorderPainted(false);
 		add(cancleButton);
 
-		// °¡ÀÔÃë¼Ò -> ¸ŞÀÎÆäÀÌÁö·Î ÀÌµ¿
+		// ê°€ì…ì·¨ì†Œ -> ë©”ì¸í˜ì´ì§€ë¡œ ì´ë™
 		cancleButton.addMouseListener(new MyMouseAdapter());
 
 	}
 
-	// °¡ÀÔÃë¼Ò -> ¸ŞÀÎÆäÀÌÁö·Î ÀÌµ¿
+	// ê°€ì…ì·¨ì†Œ -> ë©”ì¸í˜ì´ì§€ë¡œ ì´ë™
 	class MyMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {

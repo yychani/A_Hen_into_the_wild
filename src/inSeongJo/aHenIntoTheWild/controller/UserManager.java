@@ -21,30 +21,30 @@ public class UserManager {
 	private ResultPrinter rp = new ResultPrinter();
 	ArrayList<User> ulist = null;
 
-	// »õ À¯Àú µî·Ï¿ë ¸Ş¼Òµå
+	// ìƒˆ ìœ ì € ë“±ë¡ìš© ë©”ì†Œë“œ
 	public void insertUser(User u) {
 
-		// ÆÄÀÏ¿¡ ±â·ÏµÈ ¸®½ºÆ® Á¶È¸
+		// íŒŒì¼ì— ê¸°ë¡ëœ ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
 		ulist = ud.readUserList();
 
-		// Á¶È¸ ³»¿ªÀÌ ÀÖ´ÂÁö È®ÀÎ
+		// ì¡°íšŒ ë‚´ì—­ì´ ìˆëŠ”ì§€ í™•ì¸
 		if (ulist == null) {
-			// Á¶È¸ ³»¿ªÀÌ ¾ø´Â °æ¿ì »õ·Î¿î À¯Àú »ı¼º
+			// ì¡°íšŒ ë‚´ì—­ì´ ì—†ëŠ” ê²½ìš° ìƒˆë¡œìš´ ìœ ì € ìƒì„±
 
 			ulist = new ArrayList<User>();
 		}
 
-		// À¯Àú¸®½ºÆ®¿¡ »õ·Î¿î À¯Àú°´Ã¼ Ãß°¡
+		// ìœ ì €ë¦¬ìŠ¤íŠ¸ì— ìƒˆë¡œìš´ ìœ ì €ê°ì²´ ì¶”ê°€
 		ulist.add(u);
 
-		// ¸®½ºÆ®¸¦ ÆÄÀÏ¿¡ ±â·Ï ÈÄ °á°ú°ª Á¤¼ö·Î ¸®ÅÏ
+		// ë¦¬ìŠ¤íŠ¸ë¥¼ íŒŒì¼ì— ê¸°ë¡ í›„ ê²°ê³¼ê°’ ì •ìˆ˜ë¡œ ë¦¬í„´
 		int result = ud.writeUserList(ulist);
 
 		System.out.println(ulist);
 
 	}
 
-	// ¾ÆÀÌµğ Áßº¹ È®ÀÎ
+	// ì•„ì´ë”” ì¤‘ë³µ í™•ì¸
 	public boolean idCheck(String id) {
 		ulist = ud.readUserList();
 		System.out.println(id);
@@ -56,48 +56,48 @@ public class UserManager {
 		if (ulist != null) {
 			for (User user : ulist) {
 				if (user.getId().equals(id)) {
-					System.out.println("¾ÆÀÌµğ Áßº¹");
+					System.out.println("ì•„ì´ë”” ì¤‘ë³µ");
 					check = true;
-					break; // Áßº¹µÇ´Â ¾ÆÀÌµğ, true°ª ¹İÈ¯
+					break; // ì¤‘ë³µë˜ëŠ” ì•„ì´ë””, trueê°’ ë°˜í™˜
 				}
 
 			}
 		} else {
-			System.out.println("³Î°ª");
+			System.out.println("ë„ê°’");
 		}
 
 		/*
 		 * for (User user : ulist) {
 		 * 
 		 * if (ulist != null) { if (user.getId().equals(id)) {
-		 * System.out.println("¾ÆÀÌµğ Áßº¹"); check = true; break; // Áßº¹µÇ´Â ¾ÆÀÌµğ, true°ª ¹İÈ¯ } }
-		 * else { System.out.println("³Î°ª"); } }
+		 * System.out.println("ì•„ì´ë”” ì¤‘ë³µ"); check = true; break; // ì¤‘ë³µë˜ëŠ” ì•„ì´ë””, trueê°’ ë°˜í™˜ } }
+		 * else { System.out.println("ë„ê°’"); } }
 		 */
 
 		return check;
 
 	}
 
-	// ·Î±×ÀÎ
+	// ë¡œê·¸ì¸
 	public User login(String id, String pw) {
 
-		// ·Î±×ÀÎ ¼º°ø : true , ½ÇÆĞ : false ¹İÈ¯
-		
+		// ë¡œê·¸ì¸ ì„±ê³µ : true , ì‹¤íŒ¨ : false ë°˜í™˜
+
 		ulist = ud.readUserList();
 
 		User loginUser = new User();
 		System.out.println(ulist);
 		if (ulist.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "È¸¿ø°¡ÀÔÀÌ ÇÊ¿äÇÕ´Ï´Ù.", "·Î±×ÀÎ",  1);
-		}else {
+			JOptionPane.showMessageDialog(null, "íšŒì›ê°€ì…ì´ í•„ìš”í•©ë‹ˆë‹¤.", "ë¡œê·¸ì¸", 1);
+		} else {
 			for (User user : ulist) {
 				if (user.getId().equals(id)) {
 					if (user.getPassword().equals(pw)) {
-						// ·Î±×ÀÎ ¼º°ø
+						// ë¡œê·¸ì¸ ì„±ê³µ
 						System.out.println(user);
 						loginUser = user;
 					} else {
-						// ·Î±×ÀÎ ½ÇÆĞ
+						// ë¡œê·¸ì¸ ì‹¤íŒ¨
 						loginUser.setId(null);
 						;
 					}
@@ -110,7 +110,7 @@ public class UserManager {
 		return loginUser;
 	}
 
-	// È¸¿ø Á¤º¸ º¯°æ ¸Ş¼Òµå
+	// íšŒì› ì •ë³´ ë³€ê²½ ë©”ì†Œë“œ
 	public User UserInfoChagne(String nickName, String email, String password, User user) {
 
 		ulist = ud.readUserList();
@@ -123,7 +123,7 @@ public class UserManager {
 				System.out.println(ulist.get(i));
 				userIndex = i;
 			} else {
-				System.out.println("ÀÔ·ÂÇÏ½Å È¸¿øÀÇ Á¤º¸°¡ ¾ø½À´Ï´Ù.");
+				System.out.println("ì…ë ¥í•˜ì‹  íšŒì›ì˜ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
 			}
 
 		}
@@ -140,23 +140,23 @@ public class UserManager {
 
 		return ulist.get(userIndex);
 	}
+
 	public void rankingMethod(User user, int score, int stage) {
 		int size = 0;
 		RankingDao rd = new RankingDao();
 		ArrayList<Ranking> list = rd.readRankingList(stage);
 		Ranking r = new Ranking();
-		Ranking rInit = new Ranking("ºó·©Å·", 0);
+		Ranking rInit = new Ranking("ë¹ˆë­í‚¹", 0);
 
-		if(list.size() == 0) {
+		if (list.size() == 0) {
 			list = new ArrayList<Ranking>();
 			r.setName(user.getNickName());
 			r.setScore(score);
 			list.add(r);
-			for (int i=1; i<5; i++) {
+			for (int i = 1; i < 5; i++) {
 				list.add(rInit);
 			}
-		}
-		else {
+		} else {
 			r.setName(user.getNickName());
 			r.setScore(score);
 			list.add(r);
@@ -182,13 +182,13 @@ public class UserManager {
 				}
 			});
 		}
-		if(list.size() < 5) {
+		if (list.size() < 5) {
 			size = list.size();
-		}else{
+		} else {
 			size = 5;
 		}
-		for(int i = 0; i < size; i++) {
-			System.out.println((i+1) + "µî : " + list.get(i).getName() + ", " + list.get(i).getScore());
+		for (int i = 0; i < size; i++) {
+			System.out.println((i + 1) + "ë“± : " + list.get(i).getName() + ", " + list.get(i).getScore());
 		}
 
 		int result = rd.writeRankingList(list, stage);
