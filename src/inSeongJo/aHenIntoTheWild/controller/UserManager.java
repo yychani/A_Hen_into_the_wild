@@ -6,10 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JOptionPane;
 
+import inSeongJo.aHenIntoTheWild.model.dao.RankingDao;
 import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
+import inSeongJo.aHenIntoTheWild.model.vo.Ranking;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 import inSeongJo.aHenIntoTheWild.view.ResultPrinter;
 
@@ -136,6 +139,60 @@ public class UserManager {
 		ud.writeUserList(ulist);
 
 		return ulist.get(userIndex);
+	}
+	public void rankingMethod(User user, int score, int stage) {
+		int size = 0;
+		RankingDao rd = new RankingDao();
+		ArrayList<Ranking> list = rd.readRankingList(stage);
+		Ranking r = new Ranking();
+		Ranking rInit = new Ranking("ºó·©Å·", 0);
+
+		if(list.size() == 0) {
+			list = new ArrayList<Ranking>();
+			r.setName(user.getNickName());
+			r.setScore(score);
+			list.add(r);
+			for (int i=1; i<5; i++) {
+				list.add(rInit);
+			}
+		}
+		else {
+			r.setName(user.getNickName());
+			r.setScore(score);
+			list.add(r);
+			list.sort(new Comparator() {
+
+				@Override
+				public int compare(Object o1, Object o2) {
+					Ranking cob1 = (Ranking) o1;
+					Ranking cob2 = (Ranking) o2;
+
+					int result = 0;
+
+					if (cob1.getScore() == cob2.getScore()) {
+						result = 0;
+					}
+					if (cob1.getScore() < cob2.getScore()) {
+						result = 1;
+					}
+					if (cob1.getScore() > cob2.getScore()) {
+						result = -1;
+					}
+					return result;
+				}
+			});
+		}
+		if(list.size() < 5) {
+			size = list.size();
+		}else{
+			size = 5;
+		}
+		for(int i = 0; i < size; i++) {
+			System.out.println((i+1) + "µî : " + list.get(i).getName() + ", " + list.get(i).getScore());
+		}
+
+		int result = rd.writeRankingList(list, stage);
+		System.out.println("result : " + result);
 	}
 
 }
