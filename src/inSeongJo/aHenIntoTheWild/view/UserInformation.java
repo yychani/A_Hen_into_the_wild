@@ -1,5 +1,6 @@
 package inSeongJo.aHenIntoTheWild.view;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -12,6 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -146,6 +148,29 @@ public class UserInformation extends JPanel{
 		add(btn2);
 		btn1.setBounds(300, 500, 150, 50);
 		btn2.setBounds(500, 500, 150, 50);
+		
+		
+		//홈버튼
+		Image homeImage = new ImageIcon("images/YJimages/home.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+		Image homePressedImage = new ImageIcon("images/YJimages/home_pressed.png").getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+		JButton homeButton = new JButton(new ImageIcon(homeImage));
+		homeButton.setBorderPainted(false);
+		homeButton.setContentAreaFilled(false);
+		homeButton.setFocusPainted(false);
+		homeButton.setBounds(20, 20, 70, 70);
+		homeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		homeButton.setPressedIcon(new ImageIcon(homePressedImage));;
+		add(homeButton);
+		
+		//메인 스테이지로 이동
+		homeButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, UserInformation, new MainStage(mf, user));
+				
+			}
+		});
 
 
 		//회원정보 변경으로 이동

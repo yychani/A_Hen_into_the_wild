@@ -140,7 +140,7 @@ public class MainPage extends JPanel {
 	class MyMouseAdapter extends MouseAdapter{
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			ChangePanel.changePanel(mf, mainPage, new JoinPage(mf));
+			ChangePanel.changePanel(mf, mainPage, new UserAgreements(mf));
 		}
 	}
 

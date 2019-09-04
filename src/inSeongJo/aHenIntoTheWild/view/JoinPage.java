@@ -36,6 +36,7 @@ public class JoinPage extends JPanel {
 	private JTextField emailTextField;
 	private String password;
 	private UserManager um = new UserManager();
+	private String pass1 = "", pass2 = "";
 
 	public JoinPage(MainFrame mf) {
 		this.mf = mf;
@@ -49,49 +50,50 @@ public class JoinPage extends JPanel {
 		JLabel joinText = new JLabel("회원가입");
 		joinText.setBounds(450, 150, 300, 100);
 		joinText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 35));
-		joinText.setForeground(Color.WHITE);
+		joinText.setForeground(Color.DARK_GRAY);
 		add(joinText);
 
 		// 아이디 텍스트
 		JLabel idText = new JLabel("아이디");
 		idText.setBounds(235, 215, 300, 100);
 		idText.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
-		idText.setForeground(Color.WHITE);
+		//idText.setBorder(BorderFactory.createBevelBorder(1, Color.black, shadow));
+		idText.setForeground(Color.DARK_GRAY);
 		add(idText);
 
 		// 아이디 중복확인 메세지
 		JLabel idCheckText = new JLabel("아이디 중복확인을 해주세요.");
 		idCheckText.setBounds(350, 240, 500, 100);
 		idCheckText.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 12));
-		idCheckText.setForeground(Color.WHITE);
+		idCheckText.setForeground(Color.DARK_GRAY);
 		add(idCheckText);
 
 		// 비밀번호 텍스트
 		JLabel passwordText = new JLabel("비밀번호");
 		passwordText.setBounds(225, 285, 300, 100);
 		passwordText.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
-		passwordText.setForeground(Color.WHITE);
+		passwordText.setForeground(Color.DARK_GRAY);
 		add(passwordText);
 
 		// 비밀번호 확인 텍스트
 		JLabel repasswordText = new JLabel("비밀번호 확인");
 		repasswordText.setBounds(210, 355, 300, 100);
 		repasswordText.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
-		repasswordText.setForeground(Color.WHITE);
+		repasswordText.setForeground(Color.DARK_GRAY);
 		add(repasswordText);
 
 		// 닉네임 텍스트
 		JLabel nickNameText = new JLabel("닉네임");
 		nickNameText.setBounds(235, 425, 300, 100);
 		nickNameText.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
-		nickNameText.setForeground(Color.WHITE);
+		nickNameText.setForeground(Color.DARK_GRAY);
 		add(nickNameText);
 
 		// 이메일 텍스트
 		JLabel emailText = new JLabel("이메일");
 		emailText.setBounds(235, 495, 300, 100);
 		emailText.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
-		emailText.setForeground(Color.WHITE);
+		emailText.setForeground(Color.DARK_GRAY);
 		add(emailText);
 
 		// 아이디 입력란
@@ -112,7 +114,6 @@ public class JoinPage extends JPanel {
 		repasswordTextField.setBounds(350, 390, 300, 30);
 		repasswordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(repasswordTextField);
-		
 
 		// 비밀번호 재확인 알림 텍스트
 		JLabel passwordCheckText = new JLabel("비밀번호 일치 확인이 필요합니다.");
@@ -120,6 +121,48 @@ public class JoinPage extends JPanel {
 		passwordCheckText.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 12));
 		passwordCheckText.setForeground(Color.WHITE);
 		add(passwordCheckText);
+		
+		//비밀번호 확인 알람 쓰레드
+		Thread th2 = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while(true) {
+					pass1 = "";
+					pass2 = "";
+					for(int i = 0; i < passwordTextField.getPassword().length; i++) {
+						pass1 += passwordTextField.getPassword()[i];
+					}
+					for(int i = 0; i < repasswordTextField.getPassword().length; i++) {
+						pass2 += repasswordTextField.getPassword()[i];
+					}
+					
+					if(pass1.equals(pass2)) {
+						passwordCheckText.setText("비밀번호가 일치합니다.");
+						passwordCheckText.setForeground(Color.BLUE);
+						System.out.println("비밀번호가 일치합니다.");
+						
+					} else {
+						passwordCheckText.setText("비밀번호가 일치하지 않습니다.");
+						passwordCheckText.setForeground(Color.RED);
+						System.out.println("비밀번호가 일치하지 않습니다.");
+					}
+					
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				
+			}
+		});
+		
+		if(repasswordTextField.getPassword() != null) {
+			th2.start();
+		}
+		
 
 		// 닉네임 입력란
 		/* JTextField */ nickNameTextField = new JTextField();
@@ -227,6 +270,7 @@ public class JoinPage extends JPanel {
 								//가입완료 팝업창
 								JOptionPane.showMessageDialog(null, "가입완료", "회원가입",  1);
 								//메인 페이지 이동
+								th2.stop();
 								ChangePanel.changePanel(mf, JoinPage, new MainPage(mf));
 							}
 						}

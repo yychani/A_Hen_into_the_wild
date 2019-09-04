@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -31,6 +32,7 @@ public class UserInfoChange extends JPanel {
 	private User user = new User();
 	private User presentUser;
 	private ArrayList<User> allUser;
+	private String pass1 = "", pass2 = "";
 
 	public UserInfoChange(MainFrame mf, User user) {
 		this.mf = mf;
@@ -59,7 +61,7 @@ public class UserInfoChange extends JPanel {
 		//JLabel text
 		// 회원정보변경 텍스트 
 		JLabel changeInfoText = new JLabel("회원정보변경");
-		changeInfoText.setBounds(35, 30, 300, 100);
+		changeInfoText.setBounds(380, 120, 300, 100);
 		changeInfoText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 50));
 		changeInfoText.setForeground(Color.DARK_GRAY);
 		add(changeInfoText);
@@ -68,21 +70,21 @@ public class UserInfoChange extends JPanel {
 		JLabel nickNameText = new JLabel("닉네임");
 		nickNameText.setBounds(270, 215, 300, 100);
 		nickNameText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
-		nickNameText.setForeground(Color.WHITE);
+		nickNameText.setForeground(Color.DARK_GRAY);
 		add(nickNameText);
 		
 		//이메일 텍스트
 		JLabel emailText = new JLabel("이메일");
 		emailText.setBounds(270, 295, 300, 100);
 		emailText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
-		emailText.setForeground(Color.WHITE);
+		emailText.setForeground(Color.DARK_GRAY);
 		add(emailText);
 		
 		//비밀번호 텍스트
 		JLabel passwordText = new JLabel("비밀번호");
 		passwordText.setBounds(265, 375, 300, 100);
 		passwordText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
-		passwordText.setForeground(Color.WHITE);
+		passwordText.setForeground(Color.DARK_GRAY);
 		add(passwordText);
 		
 		//비밀번호 확인 텍스트
@@ -102,29 +104,69 @@ public class UserInfoChange extends JPanel {
 		//JTextField
 		// 닉네임 변경 입력란
 		JTextField nickNameTextField = new JTextField();
-		nickNameTextField.setBounds(360, 250, 300, 30);
+		nickNameTextField.setBounds(370, 250, 300, 30);
 		nickNameTextField.setBorder(BorderFactory.createEmptyBorder());
 		nickNameTextField.setText(presentUser.getNickName());
 		add(nickNameTextField);
 		
 		// 이메일 변경 입력란
 		JTextField emailTextField = new JTextField();
-		emailTextField.setBounds(360, 330, 300, 30);
+		emailTextField.setBounds(370, 330, 300, 30);
 		emailTextField.setBorder(BorderFactory.createEmptyBorder());
 		emailTextField.setText(presentUser.getEmail());
 		add(emailTextField);
 		
 		// 비밀번호 변경 입력란
 		JPasswordField passwordTextField = new JPasswordField();
-		passwordTextField.setBounds(360, 410, 300, 30);
+		passwordTextField.setBounds(370, 410, 300, 30);
 		passwordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(passwordTextField);
 		
 		// 비밀번호 변경 재입력란
 		JPasswordField repasswordTextField = new JPasswordField();
-		repasswordTextField.setBounds(360, 490, 300, 30);
+		repasswordTextField.setBounds(370, 490, 300, 30);
 		repasswordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(repasswordTextField);
+		
+		//비밀번호 확인 알람 쓰레드
+		Thread th2 = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				while(true) {
+					pass1 = "";
+					pass2 = "";
+					for(int i = 0; i < passwordTextField.getPassword().length; i++) {
+						pass1 += passwordTextField.getPassword()[i];
+					}
+					for(int i = 0; i < repasswordTextField.getPassword().length; i++) {
+						pass2 += repasswordTextField.getPassword()[i];
+					}
+					
+					if(pass1.equals(pass2)) {
+						passwordCheckText.setText("비밀번호가 일치합니다.");
+						passwordCheckText.setForeground(Color.BLUE);
+						System.out.println("비밀번호가 일치합니다.");
+						
+					} else {
+						passwordCheckText.setText("비밀번호가 일치하지 않습니다.");
+						passwordCheckText.setForeground(Color.RED);
+						System.out.println("비밀번호가 일치하지 않습니다.");
+					}
+					
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				
+				
+			}
+		});
+		th2.start();
+		
+		
 		
 		//수정 완료 버튼
 		JButton modiCompleteButton = new JButton("수정 완료");
@@ -154,8 +196,25 @@ public class UserInfoChange extends JPanel {
 				for (int i = 0; i < repass.length; i++) {
 					repassword += repass[i];
 				}
+				
+				//비밀번호 미입력시 알림창
+				if(password == "") {
+					JOptionPane.showMessageDialog(null, "변경할 비밀번호를 입력해주세요.", "비밀번호 미입력",  1);
+					return;
+				}
+				
+				//비민번호 동일 확인
+				if(!password.equals(repassword)){
+					System.out.println("비밀번호 불일치");
+					JOptionPane.showMessageDialog(null, "비밀번호가 불일치합니다. 다시 한번 입력해주세요.", "비밀번호 확인",  1);
+					passwordTextField.setText("");
+					repasswordTextField.setText("");
+					return;
+				}
+				
 				presentUser = um.UserInfoChagne(nickNameTextField.getText(), emailTextField.getText(), password, user);
 			
+				th2.stop();
 				//로그인 정보 페이지로 이동
 				ChangePanel.changePanel(mf, UserInfoChange, new UserInformation(mf, presentUser));
 			}
@@ -178,6 +237,7 @@ public class UserInfoChange extends JPanel {
 			}
 		});
 		
+		
 
 	}
 
@@ -194,4 +254,25 @@ public class UserInfoChange extends JPanel {
 		paintComponents(g);
 		this.repaint();
 	}
+
+	public String getPass1() {
+		return pass1;
+	}
+
+	public void setPass1(String pass1) {
+		this.pass1 = pass1;
+	}
+
+	public String getPass2() {
+		return pass2;
+	}
+
+	public void setPass2(String pass2) {
+		this.pass2 = pass2;
+	}
+	
 }
+
+
+
+

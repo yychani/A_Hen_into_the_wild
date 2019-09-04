@@ -72,20 +72,28 @@ public class MainStage extends JPanel {
 		ipssakImage.setBounds(800, 500, 200, 200);
 		add(ipssakImage);
 		
+		//잎싹이 대사 텍스트
+		JLabel ipssakText = new JLabel("안녕? 난 잎싹이라고 해.");
+		ipssakText.setBounds(350, 510, 500, 100);
+		ipssakText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		ipssakText.setForeground(Color.DARK_GRAY);
+		add(ipssakText);
+		JLabel ipssakText2 = new JLabel("양계장은 너무 갑갑하지 않아? 난 이곳을 나가고 싶어.");
+		ipssakText2.setBounds(270, 545, 500, 100);
+		ipssakText2.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		ipssakText2.setForeground(Color.DARK_GRAY);
+		add(ipssakText2);
+		JLabel ipssakText3= new JLabel("우리 같이 마당으로 나가볼까?");
+		ipssakText3.setBounds(330, 580, 500, 100);
+		ipssakText3.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		ipssakText3.setForeground(Color.DARK_GRAY);
+		add(ipssakText3);
+		
 		//잎싹이 버블텍스트
-		Image bubble = new ImageIcon("images/YJimages/bubbletext2.png").getImage().getScaledInstance(850, 190, 0);
+		Image bubble = new ImageIcon("images/YJimages/bubble.png").getImage().getScaledInstance(850, 230, 0);
 		JLabel bubbleText = new JLabel(new ImageIcon(bubble));
 		bubbleText.setBounds(30, 500, 900, 200);
 		add(bubbleText);
-		
-		//잎싹이 대사 텍스트
-		JLabel ipssakText = new JLabel("안녕? 난 잎싹이라고 해.\n" + 
-				"양계장은 너무 갑갑하지 않아? 난 이곳을 나가고 싶어.\n" + 
-				"우리 같이 마당으로 나가볼까?");
-		ipssakText.setBounds(300, 500, 500, 100);
-		ipssakText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
-		ipssakText.setForeground(Color.WHITE);
-		add(ipssakText);
 		
 		//STAGE1 버튼
 		Image stage1Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);

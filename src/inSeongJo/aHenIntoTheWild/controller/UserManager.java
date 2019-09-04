@@ -16,7 +16,7 @@ import inSeongJo.aHenIntoTheWild.view.ResultPrinter;
 public class UserManager {
 	private UserDao ud = new UserDao();
 	private ResultPrinter rp = new ResultPrinter();
-	ArrayList<User> ulist;
+	ArrayList<User> ulist = null;
 
 	// 새 유저 등록용 메소드
 	public void insertUser(User u) {
@@ -79,24 +79,29 @@ public class UserManager {
 	public User login(String id, String pw) {
 
 		// 로그인 성공 : true , 실패 : false 반환
-
+		
 		ulist = ud.readUserList();
 
 		User loginUser = new User();
+		System.out.println(ulist);
+		if (ulist.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "회원가입이 필요합니다.", "로그인",  1);
+		}else {
+			for (User user : ulist) {
+				if (user.getId().equals(id)) {
+					if (user.getPassword().equals(pw)) {
+						// 로그인 성공
+						System.out.println(user);
+						loginUser = user;
+					} else {
+						// 로그인 실패
+						loginUser.setId(null);
+						;
+					}
 
-		for (User user : ulist) {
-			if (user.getId().equals(id)) {
-				if (user.getPassword().equals(pw)) {
-					// 로그인 성공
-					System.out.println(user);
-					loginUser = user;
-				} else {
-					// 로그인 실패
-					loginUser.setId(null);;
 				}
 
 			}
-
 		}
 
 		return loginUser;
