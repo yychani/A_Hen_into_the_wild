@@ -21,7 +21,7 @@ public class Stage03Manager {
 		return rate;
 	}
 	
-	//감소하는 메소드 
+	//감소하는 메소드 정의 
 	public int minusFor (int rate, int num) {
 		for (int i=num; i>0; i--) {
 			if(rate <= 0) {
@@ -35,8 +35,16 @@ public class Stage03Manager {
 
 	
 	//각 버튼마다 기능하는 메소드들 정의
-	public int[] eatingMethod(int[] rate, int x, int y) {
-		if((x > 450 && x < 580) && (y > 350 && y < 420)) {
+	public int[] eatingMethod(int[] rate, int x, int y, int level) {
+		int mouthX1, mouthX2, mouthY1, mouthY2;
+		if (level == 0) {
+			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 350;	mouthY2 = 420; //level1일때 좌표 
+		} else if (level == 1){
+			mouthX1 = 400;	mouthX2 = 540;	mouthY1 = 310;	mouthY2 = 380; //level2일때 좌표 
+		} else {
+			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 350;	mouthY2 = 420; //level3일때 (임시)좌표
+		}
+		if((x > mouthX1 && x < mouthX2) && (y > mouthY1 && y < mouthY2)) {
 			//포만감 증가
 			rate[0] = plusFor(rate[0], 5);
 			//피로도 증가
@@ -47,8 +55,16 @@ public class Stage03Manager {
 		return rate;
 	}
 	
-	public int[] cleaningMethod(int[] rate, int x, int y) {
-		if((x > 450 && x < 580) && (y > 280 && y < 370)) {
+	public int[] cleaningMethod(int[] rate, int x, int y, int level) {
+		int mouthX1, mouthX2, mouthY1, mouthY2;
+		if (level == 0) {
+			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 280;	mouthY2 = 370; //level1일때 좌표 
+		} else if (level == 1){
+			mouthX1 = 380;	mouthX2 = 580;	mouthY1 = 230;	mouthY2 = 310; //level2일때 좌표 
+		} else {
+			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 280;	mouthY2 = 370; //level3일때 (임시)좌표
+		}
+		if((x > mouthX1 && x < mouthX2) && (y > mouthY1 && y < mouthY2)) {
 			//피로도 감소
 			//rate[1] = plusFor(rate[1], 5);
 			//rate[2] = plusFor(rate[2], 5);
