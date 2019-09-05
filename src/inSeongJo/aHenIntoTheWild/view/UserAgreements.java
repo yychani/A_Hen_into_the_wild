@@ -138,7 +138,12 @@ public class UserAgreements extends JPanel {
 				}
 
 				if (allAgree.isSelected()) {
-					ChangePanel.changePanel(mf, UserAgreements, new JoinPage(mf));
+					if(useAgree1.isSelected()) {
+						if(useAgree2.isSelected()) {
+							ChangePanel.changePanel(mf, UserAgreements, new JoinPage(mf));
+						}
+					}
+					
 				}
 
 			}
