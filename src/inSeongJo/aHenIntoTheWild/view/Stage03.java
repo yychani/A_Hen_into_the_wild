@@ -69,9 +69,9 @@ public class Stage03 extends JPanel {
 		this.setBackground(new Color(0, 0, 0, 0));
 		mf.add(this);
 
-		rate[0] = iniRate[growthLevel][0]; // 임의로 설정한 포만감
-		rate[1] = iniRate[growthLevel][1]; // 임의로 설정한 청결도
-		rate[2] = iniRate[growthLevel][2]; // 임의로 설정한 피로도
+		rate[0] = iniRate[growthLevel][0]; // 초기 포만감
+		rate[1] = iniRate[growthLevel][1]; // 초기 청결도
+		rate[2] = iniRate[growthLevel][2]; // 초기 피로도
 		rate[3] = iniRate[growthLevel][3]; // 성장도
 		
 		//현재 레벨표시
@@ -96,6 +96,7 @@ public class Stage03 extends JPanel {
 		homebtn.setToolTipText("저장되지 않고 메인으로 돌아갑니다.");
 		add(homebtn);
 		
+		//홈버튼 눌렀을 때, 메인스테이지로 돌아감
 		homebtn.addActionListener(new ActionListener() {
 			
 			@Override
@@ -112,20 +113,14 @@ public class Stage03 extends JPanel {
 				while (goOrStop) {
 					if (rate[0] <= 20) {
 						goOrStop = false;
-//						JLabel gameOverLabel = new JLabel(new ImageIcon(gameOverImg));
-//						gameOverLabel.setBounds(50, 50, 850, 190);
-//						s03.add(gameOverLabel);
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
-						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n 최종 스코어 : " + score + "\n" + str);
+						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n최종 스코어 : " + score + "\n" + str);
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 
 					} else if (rate[1] <= 20) {
 						goOrStop = false;
-//						JLabel gameOverLabel = new JLabel(new ImageIcon(gameOverImg));
-//						gameOverLabel.setBounds(50, 50, 850, 190);
-//						s03.add(gameOverLabel);
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
@@ -135,9 +130,6 @@ public class Stage03 extends JPanel {
 					} else if (rate[2] >= 80) {
 						sm.printResult(rate[3], time);
 						goOrStop = false;
-//						JLabel gameOverLabel = new JLabel(new ImageIcon(gameOverImg));
-//						gameOverLabel.setBounds(50, 50, 850, 190);
-//						s03.add(gameOverLabel);
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
@@ -156,7 +148,7 @@ public class Stage03 extends JPanel {
 							int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 							sm.scoreChange(score, user);
 							String str = sm.rankingMethod(user, score);
-							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n최종 스코어 : " + score);
+							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n최종 스코어 : " + score + "\n" + str);
 							growthLevel = 0;
 							ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 						}
@@ -174,8 +166,8 @@ public class Stage03 extends JPanel {
 		});
 		th3.setDaemon(true);
 		th3.start();
-
-
+		
+		//밥먹이기 아이콘 설정
 		Image riceIcon = new ImageIcon("images/stage03_image/riceIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
 		Image riceIconPressed = new ImageIcon("images/stage03_image/riceIcon_pressed.png").getImage().getScaledInstance(100, 102,
@@ -188,7 +180,7 @@ public class Stage03 extends JPanel {
 		ricebutton.setToolTipText("포만감 +5, 피로도+5, 성장도+2");
 		ricebutton.setPressedIcon(new ImageIcon(riceIconPressed));
 		add(ricebutton);
-
+		//밥먹이기 눌렸을 때, 아이콘 생성되도록Bl을 true만듦(paint메소드에서 적용됨)
 		ricebutton.addActionListener(new ActionListener() {
 
 			@Override
@@ -198,7 +190,8 @@ public class Stage03 extends JPanel {
 
 			}
 		});
-
+		
+		//씻기기 아이콘 
 		Image bathIcon = new ImageIcon("images/stage03_image/bathIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
 		Image bathIconPressed = new ImageIcon("images/stage03_image/bathIcon_pressed.png").getImage().getScaledInstance(100, 102,
@@ -211,7 +204,7 @@ public class Stage03 extends JPanel {
 		bathbutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bathbutton.setToolTipText("청결도 +5, 피로도+5");
 		add(bathbutton);
-
+		//밥먹이기 눌렸을 때, 아이콘 생성되도록Bl을 true만듦(paint메소드에서 적용됨)
 		bathbutton.addActionListener(new ActionListener() {
 
 			@Override
@@ -222,6 +215,7 @@ public class Stage03 extends JPanel {
 			}
 		});
 
+		//놀아주기 아이콘 
 		Image playIcon = new ImageIcon("images/stage03_image/playIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
 		Image playIconPressed = new ImageIcon("images/stage03_image/playIcon_pressed.png").getImage().getScaledInstance(100, 102,
@@ -235,6 +229,7 @@ public class Stage03 extends JPanel {
 		playbutton.setToolTipText("청결도-5, 성장도+5");
 		add(playbutton);
 
+		//애정주기 아이콘
 		Image loveIcon = new ImageIcon("images/stage03_image/loveIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
 		Image loveIconPressed = new ImageIcon("images/stage03_image/loveIcon_pressed.png").getImage().getScaledInstance(100, 102,
@@ -247,7 +242,8 @@ public class Stage03 extends JPanel {
 		lovebutton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		lovebutton.setToolTipText("성장도+5");
 		add(lovebutton);
-
+		
+		//잠자기 아이콘
 		Image bedIcon = new ImageIcon("images/stage03_image/bedIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
 		Image bedIconPressed = new ImageIcon("images/stage03_image/bedIcon_pressed.png").getImage().getScaledInstance(100, 102,
@@ -308,6 +304,7 @@ public class Stage03 extends JPanel {
 
 		addMouseMotionListener(new MyEvent()); //위치 확인
 
+		//놀아주기 버튼 눌렀을 때, 지수들(rate)변화하게 만듦
 		playbutton.addActionListener(new ActionListener() {
 
 			@Override
@@ -323,7 +320,8 @@ public class Stage03 extends JPanel {
 
 			}
 		});
-
+		
+		//애정주기 버튼 눌렀을 때, 지수들(rate)변화하게 만듦
 		lovebutton.addActionListener(new ActionListener() {
 
 			@Override
@@ -343,7 +341,8 @@ public class Stage03 extends JPanel {
 
 			}
 		});
-
+		
+		//잠자기 버튼 눌렀을 때, 지수들(rate)변화하게 만듦
 		bedbutton.addActionListener(new ActionListener() {
 
 			@Override
@@ -364,20 +363,21 @@ public class Stage03 extends JPanel {
 			}
 		});
 
+		
 		addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) { // 아이콘이 활성화 되고, 초록이를 향해 눌러야 함!
-				if (riceBl == true) { //
-					rate = sm.eatingMethod(rate, e.getX(), e.getY());
+				if (riceBl == true) { //rice 아이콘이 활성화 되었을 때!
+					rate = sm.eatingMethod(rate, e.getX(), e.getY(), growthLevel);
 					// System.out.println("어딘가 눌러씀");
 					fullRatePercent.setText(rate[0] + "%");
 					cleanRatePercent.setText(rate[1] + "%");
 					tiredRatePercent.setText(rate[2] + "%");
 					riceBl = false;
 				}
-				if (bathBl == true) {
-					rate = sm.cleaningMethod(rate, e.getX(), e.getY());
+				if (bathBl == true) { //bath 아이콘이 활성화 되었을 때!
+					rate = sm.cleaningMethod(rate, e.getX(), e.getY(), growthLevel);
 					// System.out.println("어딘가 눌러씀");
 					fullRatePercent.setText(rate[0] + "%");
 					cleanRatePercent.setText(rate[1] + "%");
@@ -422,6 +422,7 @@ public class Stage03 extends JPanel {
 
 					g.drawImage(tiredImage, 25, 211, (int) (188 * (double) rate[2] / 100.0), 25, null); // 피로도표시
 					tiredRatePercent.setText(rate[2] + "%");
+					
 				}
 
 			}
@@ -509,6 +510,7 @@ class Greeny implements Runnable {
 	private JPanel jp;
 	private boolean gr = false;
 	private Stage03 s03;
+	private int time;
 
 	Greeny() {
 	}
@@ -524,7 +526,7 @@ class Greeny implements Runnable {
 		int gx, gy, width, height;
 		Image green1;
 		Image green2;
-
+		
 		if (growthLevel == 0) {
 			gx = 412;
 			gy = 270;
@@ -541,12 +543,12 @@ class Greeny implements Runnable {
 			green1 = new ImageIcon("images/stage03_image/greenELv2a.png").getImage();
 			green2 = new ImageIcon("images/stage03_image/greenELv2b.png").getImage();
 		} else {
-			gx = 412;
-			gy = 270;
-			width = 200;
-			height = 279;
-			green1 = new ImageIcon("images/stage03_image/greenE1.png").getImage();
-			green2 = new ImageIcon("images/stage03_image/greenE2.png").getImage();
+			gx = 280;
+			gy = 130;
+			width = 477;
+			height = 525;
+			green1 = new ImageIcon("images/stage03_image/greenELv3a.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			green2 = new ImageIcon("images/stage03_image/greenELv3b.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		}
 
 		JLabel greenLabel = new JLabel(new ImageIcon(green1));
@@ -596,11 +598,11 @@ class LoadingClass implements Runnable {
 	@Override
 	public void run() {
 
-		// System.out.println("Th4가 실행됨");
+		//마우스클릭을 할수 없도록
 		jb.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		jb.setEnabled(false);
 
-		try {
+		try { //클릭했을때 2초동안 잠금
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
