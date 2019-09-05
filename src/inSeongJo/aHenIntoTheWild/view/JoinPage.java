@@ -23,6 +23,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import inSeongJo.aHenIntoTheWild.controller.UserManager;
+import inSeongJo.aHenIntoTheWild.model.dao.SendEmail;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
 public class JoinPage extends JPanel {
@@ -263,6 +264,9 @@ public class JoinPage extends JPanel {
 								// 모든 회원가입 조건 통과
 								// 새로운 유저 객체 생성
 								um.insertUser(inputUser());
+								//이메일 보내기
+								SendEmail se = new SendEmail();
+								se.MailSend(emailTextField.getText(), nickNameTextField.getText());
 								// 가입완료 팝업창
 								JOptionPane.showMessageDialog(null, "가입완료", "회원가입", 1);
 								// 메인 페이지 이동
