@@ -167,7 +167,7 @@ public class Stage03 extends JPanel {
 		th3.setDaemon(true);
 		th3.start();
 		
-		//밥먹이기 아이콘 설정 
+		//밥먹이기 아이콘 설정
 		Image riceIcon = new ImageIcon("images/stage03_image/riceIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
 		Image riceIconPressed = new ImageIcon("images/stage03_image/riceIcon_pressed.png").getImage().getScaledInstance(100, 102,
@@ -598,11 +598,11 @@ class LoadingClass implements Runnable {
 	@Override
 	public void run() {
 
-		//마우스클릭을 할수 없도록 잠금
+		//마우스클릭을 할수 없도록
 		jb.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		jb.setEnabled(false);
 
-		try {
+		try { //클릭했을때 2초동안 잠금
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();

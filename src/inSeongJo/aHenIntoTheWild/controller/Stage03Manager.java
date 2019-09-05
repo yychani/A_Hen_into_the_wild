@@ -57,7 +57,7 @@ public class Stage03Manager {
 		return rate;
 	}
 	
-	//씻기기 메소드 
+	//씻기기 메소드
 	public int[] cleaningMethod(int[] rate, int x, int y, int level) {
 		int mouthX1, mouthX2, mouthY1, mouthY2;
 		if (level == 0) {
@@ -86,6 +86,7 @@ public class Stage03Manager {
 		return rate;
 	}
 	
+	//애정주기 메소드 
 	public int[] lovingMethod(int[] rate) {
 		
 		System.out.println("초록이가 행복해요!");
