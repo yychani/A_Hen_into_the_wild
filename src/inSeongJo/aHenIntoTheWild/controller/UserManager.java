@@ -140,7 +140,75 @@ public class UserManager {
 
 		return ulist.get(userIndex);
 	}
+	
+	// 임시비밀번호 : 기존 회원 확인 메소드
+	public String passwordChange(String id) {
+		
+		ulist = ud.readUserList();
+		
+		System.out.println(id);
+		
+		String userEmail = "";
+		
+		for (int i = 0; i < ulist.size(); i++) {
+			if (ulist.get(i).getId().equals(id)) {
+				System.out.println("입력하신 아이디의 회원이 있으니깐 임시 비밀번호 생성해서 이메일 보내라");
+				userEmail = ulist.get(i).getEmail();
+			} else {
+				System.out.println("입력하신 회원의 정보가 없습니다.");
+				userEmail = "none";
+			}
 
+		}
+		
+		return userEmail;
+		
+	}
+	
+	//임시 비밀번호 생성 메소드
+	public String randomPassword() {
+		int index = 0;
+		char[] charSet = new char[]	{
+				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 
+				'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 
+				'U', 'V', 'W', 'X', 'Y', 'Z'};
+		
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < 9; i++) {
+			index = (int)(charSet.length * Math.random());
+			sb.append(charSet[index]);
+		}
+		
+		return sb.toString();
+	}
+	
+	// 비밀번호 변경 메소드
+		public void passwordInfoChange(String id, String randomPass) {
+
+			ulist = ud.readUserList();
+
+			int userIndex = 0;
+			System.out.println(id + ",  " + randomPass);
+
+			for (int i = 0; i < ulist.size(); i++) {
+				if (ulist.get(i).getId().equals(id)) {
+					System.out.println(ulist.get(i));
+					userIndex = i;
+				} else {
+					System.out.println("입력하신 회원의 정보가 없습니다.");
+				}
+
+			}
+
+			ulist.get(userIndex).setPassword(randomPass);
+
+
+			ud.writeUserList(ulist);
+
+		}
+
+	//랭킹 정렬 메소드
 	public void rankingMethod(User user, int score, int stage) {
 		int size = 0;
 		RankingDao rd = new RankingDao();

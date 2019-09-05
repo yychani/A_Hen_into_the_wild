@@ -10,7 +10,7 @@ public class Stage04_Point {
 	}
 
 	public void move() {
-		y += 5;
+		y += 8;
 	}
 
 	public int getX() {

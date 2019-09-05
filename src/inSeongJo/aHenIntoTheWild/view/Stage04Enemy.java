@@ -17,7 +17,7 @@ public class Stage04Enemy {
 	}
 
 	public void move() {
-		x -= 10;
+		x -= 15;
 	}
 
 	public int getX() {

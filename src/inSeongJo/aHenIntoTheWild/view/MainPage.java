@@ -3,6 +3,7 @@ package inSeongJo.aHenIntoTheWild.view;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -27,6 +28,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import inSeongJo.aHenIntoTheWild.controller.UserManager;
+import inSeongJo.aHenIntoTheWild.model.dao.PasswordEmail;
 import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
@@ -77,6 +79,45 @@ public class MainPage extends JPanel {
 		passwordTextField.setBounds(350, 450, 300, 30);
 		passwordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(passwordTextField);
+
+		// 비밀번호를 잊으셨나요?
+		JButton passChangeButton = new JButton("비밀번호를 잊으셨나요?");
+		passChangeButton.setBounds(310, 475, 200, 40);
+		passChangeButton.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 12));
+		passChangeButton.setForeground(Color.WHITE);
+		passChangeButton.setBorderPainted(false);
+		passChangeButton.setContentAreaFilled(false);
+		passChangeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		add(passChangeButton);
+
+		passChangeButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				String result = JOptionPane
+						.showInputDialog("                 아이디를 입력해주세요.\r\n" + "\r\n" + "확인 선택시 이메일로 임시 비밀번호가 발급됩니다.");
+
+				if (result.equals("")) {
+					JOptionPane.showMessageDialog(null, "아이디를 입력해주세요.", "아이디 미입력", 1);
+				} else {
+					UserManager um = new UserManager();
+					PasswordEmail pe = new PasswordEmail();
+					String randomPass = um.randomPassword();
+
+					if (!um.passwordChange(result).equals("none")) {
+						// 임시 비밀번호 이메일 전송 메소드
+						pe.repasswordEmail(um.passwordChange(result), randomPass);
+						um.passwordInfoChange(result, randomPass);
+
+					} else if (um.passwordChange(result).equals("none")) {
+						JOptionPane.showMessageDialog(null, "존재하지 않는 회원입니다.", " ", 1);
+					}
+
+				}
+
+			}
+		});
 
 		// 로그인 버튼
 		JButton loginButton = new JButton("로그인");
