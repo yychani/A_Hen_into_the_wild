@@ -35,6 +35,8 @@ public class Stage03Manager {
 
 	
 	//각 버튼마다 기능하는 메소드들 정의
+	
+	//밥먹이기 메소드
 	public int[] eatingMethod(int[] rate, int x, int y, int level) {
 		int mouthX1, mouthX2, mouthY1, mouthY2;
 		if (level == 0) {
@@ -55,6 +57,7 @@ public class Stage03Manager {
 		return rate;
 	}
 	
+	//씻기기 메소드 
 	public int[] cleaningMethod(int[] rate, int x, int y, int level) {
 		int mouthX1, mouthX2, mouthY1, mouthY2;
 		if (level == 0) {

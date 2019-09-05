@@ -603,7 +603,7 @@ class LoadingClass implements Runnable {
 		jb.setEnabled(false);
 
 		try {
-			Thread.sleep(10);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
