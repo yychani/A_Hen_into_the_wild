@@ -136,6 +136,9 @@ public class Stage01 extends JPanel implements KeyListener {
 					}
 
 					Mytimer.setText("" + time);
+					if(time == 5) {
+						media.sound("countdown");
+					}
 					time--;
 					try {
 						Thread.sleep(1000);
@@ -281,6 +284,7 @@ public class Stage01 extends JPanel implements KeyListener {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("마우스 눌렀다 땜, 재시작");
+//				media.soundStop();
 				ChangePanel.changePanel(mf, stage01page, new Stage01(mf, user));
 			}
 
@@ -304,6 +308,7 @@ public class Stage01 extends JPanel implements KeyListener {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("마우스 눌렀다 땜, 재시작");
+//				media.soundStop();
 				ChangePanel.changePanel(mf, stage01page, new MainStage(mf, user));
 			}
 
@@ -319,10 +324,6 @@ public class Stage01 extends JPanel implements KeyListener {
 			add(retryButton);
 			add(homeButton);
 			g.drawImage(gameOverImg, 80, 80, this);
-			while(true) {
-				media.sound("gameover.wav");
-				break;
-			}
 			
 			s1thread.setOver(false);
 		} else if (isClear) {
@@ -341,11 +342,6 @@ public class Stage01 extends JPanel implements KeyListener {
 			add(homeButton);
 
 			s1thread.setOver(false);
-			while(true) {
-				media.sound("clear.wav");
-				break;
-			}
-
 		}
 	}
 
@@ -446,6 +442,14 @@ public class Stage01 extends JPanel implements KeyListener {
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
+	
+	public boolean isClear() {
+		return isClear;
+	}
+
+	public void setClear(boolean isClear) {
+		this.isClear = isClear;
+	}
 
 	public void move() { // 플레이어 움직이기(좌표 변경)
 		cnt++;
@@ -515,6 +519,8 @@ public class Stage01 extends JPanel implements KeyListener {
 			}
 			if (collision(x - w, y - h - 15, en.getX(), en.getY(), ipssagStanding[0], EnemyImg)) {
 				life--;
+				media.sound("punch");
+				x -= 20;
 				// System.out.println(life);
 				Enemy_List.remove(i);
 			}
@@ -657,7 +663,7 @@ public class Stage01 extends JPanel implements KeyListener {
 			System.out.println("점프");
 			if (isDrop == false) {
 				isJump = true;
-				media.sound("Jump.wav");
+				media.sound("Jump");
 			}
 
 			break;

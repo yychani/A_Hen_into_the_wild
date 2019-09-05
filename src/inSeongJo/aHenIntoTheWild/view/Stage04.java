@@ -35,7 +35,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private int life = 5;
 	private int score;
 	private int score2;
-	private int time = 3;
+	private int time = 20;
 	
 	
 	private boolean ds = false;

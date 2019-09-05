@@ -221,7 +221,7 @@ public class UserManager {
 			r.setName(user.getNickName());
 			r.setScore(score);
 			list.add(r);
-			for (int i = 1; i < 5; i++) {
+			for (int i = 0; i < 4; i++) {
 				list.add(rInit);
 			}
 		} else {

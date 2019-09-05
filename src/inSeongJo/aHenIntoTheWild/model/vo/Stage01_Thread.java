@@ -2,12 +2,14 @@ package inSeongJo.aHenIntoTheWild.model.vo;
 
 import javax.swing.JOptionPane;
 
+import inSeongJo.aHenIntoTheWild.view.Media;
 import inSeongJo.aHenIntoTheWild.view.Stage01;
 
 public class Stage01_Thread extends Thread {
 	Stage01 stage01;
 	Stage01_jump jumpThread;
 	int cnt;
+	Media media = new Media();
 	private boolean isOver = true;
 
 	public Stage01_Thread(Stage01 stage01) {
@@ -16,6 +18,14 @@ public class Stage01_Thread extends Thread {
 
 	@Override
 	public void run() {
+		media.sound("start");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		media.sound("reprae");
 		while (isOver) {
 			System.out.println("쓰레드 실행중");
 			// GamePanel의 플레이어 좌표 변경
@@ -35,6 +45,13 @@ public class Stage01_Thread extends Thread {
 			} else {
 				jumpThread.setJumping(false);
 			}
+		}
+		media.soundStop();
+		if(stage01.isClear()) {
+			media.sound("clear");
+		}
+		else if(stage01.isGameOver()) {
+			media.sound("gameover");
 		}
 		String[] strarr = stage01.checkRanking();
 		String str = "";
