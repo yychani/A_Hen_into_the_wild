@@ -37,7 +37,7 @@ public class Stage01_infoPage extends JPanel{
 				+ "<br><br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;- 조작 방법 -"
 				+ "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;이동 : 방향키 ← →"
 				+ "<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;점프 : Space Bar"
-				+ "<br>1<br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;시작하려면 Space Bar를 누르시오.</html>");
+				+ "<br><br>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;시작하려면 Space Bar를 누르시오.</html>");
 		stage01Info.setBounds(100, 100, 800, 500);
 		stage01Info.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		stage01Info.setHorizontalAlignment(JLabel.CENTER);

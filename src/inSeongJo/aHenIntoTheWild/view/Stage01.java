@@ -52,6 +52,7 @@ public class Stage01 extends JPanel implements KeyListener {
 	private boolean isJump = false, isDrop = false, gameOver = false, isClear = false;
 	private MainFrame mf;
 	private JPanel stage01;
+	private Media media = new Media();
 	int cnt = 0;
 	private int time = 20;
 	private int score = 0;
@@ -315,11 +316,14 @@ public class Stage01 extends JPanel implements KeyListener {
 
 		// System.out.println(time);
 		if (gameOver && isClear == false) {
-			g.drawImage(gameOverImg, 80, 80, this);
-
 			add(retryButton);
 			add(homeButton);
-
+			g.drawImage(gameOverImg, 80, 80, this);
+			while(true) {
+				media.sound("gameover.wav");
+				break;
+			}
+			
 			s1thread.setOver(false);
 		} else if (isClear) {
 			g.drawImage(gameClearImg, 100, 40, this);
@@ -337,6 +341,10 @@ public class Stage01 extends JPanel implements KeyListener {
 			add(homeButton);
 
 			s1thread.setOver(false);
+			while(true) {
+				media.sound("clear.wav");
+				break;
+			}
 
 		}
 	}
@@ -649,6 +657,7 @@ public class Stage01 extends JPanel implements KeyListener {
 			System.out.println("점프");
 			if (isDrop == false) {
 				isJump = true;
+				media.sound("Jump.wav");
 			}
 
 			break;
