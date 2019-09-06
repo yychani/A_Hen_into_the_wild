@@ -15,11 +15,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import inSeongJo.aHenIntoTheWild.model.vo.MediaThread;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
 public class MainStage extends JPanel {
 	private MainFrame mf;
-	private JPanel MainStage;
+	private MainStage mainstage;
 	User user;
 	private Image background = new ImageIcon("images/YJimages/main_none.png").getImage();
 	// private JLabel label = new JLabel(background);
@@ -29,7 +30,7 @@ public class MainStage extends JPanel {
 	public MainStage(MainFrame mf, User user) {
 		this.mf = mf;
 		this.user = user;
-		MainStage = this;
+		mainstage = this;
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		// mf.add(this);
@@ -71,14 +72,7 @@ public class MainStage extends JPanel {
 		saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		saveButton.setPressedIcon(new ImageIcon(savePressedImage));
 		add(saveButton);
-		saveButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, MainStage, new VideoTest(mf));
-				
-			}
-		});
+		
 
 		// 잎싹이 이미지
 		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 250, 0);
@@ -120,7 +114,7 @@ public class MainStage extends JPanel {
 		stage1Button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ChangePanel.changePanel(mf, MainStage, new Stage01_infoPage(mf, user));
+				ChangePanel.changePanel(mf, mainstage, new Stage01_infoPage(mf, user));
 			}
 		});
 		add(stage1Button);
@@ -137,7 +131,7 @@ public class MainStage extends JPanel {
 		stage2Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, MainStage, new Stage02(mf));
+				ChangePanel.changePanel(mf, mainstage, new Stage02(mf));
 			}
 		});
 
@@ -154,7 +148,7 @@ public class MainStage extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, MainStage, new Stage03InfoPage(mf, user));
+				ChangePanel.changePanel(mf, mainstage, new Stage03InfoPage(mf, user));
 
 			}
 		});
@@ -172,7 +166,7 @@ public class MainStage extends JPanel {
 		stage4Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, MainStage, new Stage04(mf, user));
+				ChangePanel.changePanel(mf, mainstage, new Stage04(mf, user));
 			}
 		});
 	}
@@ -193,7 +187,7 @@ public class MainStage extends JPanel {
 	class MyMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			ChangePanel.changePanel(mf, MainStage, new UserInformation(mf, user));
+			ChangePanel.changePanel(mf, mainstage, new UserInformation(mf, user));
 			System.out.println("클릭되었습니다.");
 		}
 	}
