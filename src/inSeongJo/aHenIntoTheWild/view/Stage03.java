@@ -29,6 +29,7 @@ public class Stage03 extends JPanel {
 	private Image background = new ImageIcon("images/stage03_image/background2.png").getImage();
 	private Graphics g;
 	private Stage03 s03;
+	private Media media = new Media();
 
 	User user;
 
@@ -81,6 +82,8 @@ public class Stage03 extends JPanel {
 		levelLabel.setFont(new Font("바탕", Font.BOLD, 15));
 		add(levelLabel);
 		
+		
+		
 		//메인스테이지로 돌아가는 버튼
 		Image goHome = new ImageIcon("images/YJimages/home.png").getImage().getScaledInstance(60, 60,
 				Image.SCALE_SMOOTH);
@@ -101,18 +104,24 @@ public class Stage03 extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				goOrStop = false;
 				ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 			}
 		});
 		
 		//게임오버되는 상황 체크하는 쓰레드
 		Thread th3 = new Thread(new Runnable() {
+			private Media media2 = new Media();
+			
 			@Override
 			public void run() {
+				media2.sound("stage03bgm");
 
 				while (goOrStop) {
 					if (rate[0] <= 20) {
 						goOrStop = false;
+						media2.soundStop();
+						media.sound("gameover");
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
@@ -121,6 +130,8 @@ public class Stage03 extends JPanel {
 
 					} else if (rate[1] <= 20) {
 						goOrStop = false;
+						media2.soundStop();
+						media.sound("gameover");
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
@@ -130,6 +141,8 @@ public class Stage03 extends JPanel {
 					} else if (rate[2] >= 80) {
 						sm.printResult(rate[3], time);
 						goOrStop = false;
+						media2.soundStop();
+						media.sound("gameover");
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
@@ -139,11 +152,13 @@ public class Stage03 extends JPanel {
 						goOrStop = false;
 						if (growthLevel < 2) {
 							gameOverImg = null;
-							
+							media2.soundStop();
 							JOptionPane.showMessageDialog(null, "초록이가 " + (growthLevel + 1) + "번째 성장했어요!");
 							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel, user));							
 						} else {
 							gameOverImg = gameClearImg;
+							media2.soundStop();
+							media.sound("clear");
 							sm.printResult(rate[3], time);
 							int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 							sm.scoreChange(score, user);
@@ -160,6 +175,7 @@ public class Stage03 extends JPanel {
 						e.printStackTrace();
 					}
 				}
+				
 
 			}
 
@@ -186,6 +202,7 @@ public class Stage03 extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				riceBl = true;
+				media.sound("clickFX");
 				System.out.println("밥먹이기 버튼 눌림");
 
 			}
@@ -210,6 +227,7 @@ public class Stage03 extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				bathBl = true;
+				media.sound("clickFX");
 				System.out.println("씻기기 버튼 눌림");
 
 			}
@@ -310,6 +328,7 @@ public class Stage03 extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				playBl = true;
+				media.sound("clickFX");
 				System.out.println("놀아주기 버튼 눌림");
 				// 놀아주는 미니게 팝업창 만들기!
 				rate = sm.playingMethod(rate);
@@ -327,6 +346,7 @@ public class Stage03 extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				loveBl = true;
+				media.sound("clickFX");
 				System.out.println("애정주기 버튼 눌림");
 				LoadingClass lc = new LoadingClass(lovebutton, s03);
 				Thread th4 = new Thread(lc);
@@ -348,6 +368,7 @@ public class Stage03 extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				bedBl = true;
+				media.sound("clickFX");
 				System.out.println("잠자기 버튼 눌림");
 				LoadingClass lc2 = new LoadingClass(bedbutton, s03);
 				Thread th5 = new Thread(lc2);
@@ -603,7 +624,7 @@ class LoadingClass implements Runnable {
 		jb.setEnabled(false);
 
 		try { //클릭했을때 2초동안 잠금
-			Thread.sleep(2000);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
