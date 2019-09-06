@@ -75,7 +75,7 @@ public class MainStage extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, MainStage, new VideoTest(mf));
+				//ChangePanel.changePanel(mf, MainStage, new VideoTest(mf));
 				
 			}
 		});
