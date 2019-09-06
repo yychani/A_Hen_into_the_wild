@@ -52,7 +52,9 @@ public class VideoTest extends JPanel{
 				skip.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {
+						
 						emp.stop();
+						mf.remove(vt);
 						ChangePanel.changePanel(mf, vt, np);
 					}
 				});
