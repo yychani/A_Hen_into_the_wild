@@ -160,7 +160,7 @@ public class MainPage extends JPanel {
 				if (um.login(idTextField.getText(), password).getId() != null) {
 					System.out.println(um.login(idTextField.getText(), password));
 					JOptionPane.showMessageDialog(null, "로그인 성공", "로그인", 1);
-					ChangePanel.changePanel(mf, mainPage, new MainStage(mf, um.login(idTextField.getText(), password)));
+					ChangePanel.changePanel(mf, mainPage, new StartPage(mf, um.login(idTextField.getText(), password)));
 				} else {
 					JOptionPane.showMessageDialog(null, "로그인 실패", "로그인", 1);
 					System.out.println("메인페이지 : 로그인 실패");
