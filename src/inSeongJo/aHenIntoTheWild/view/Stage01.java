@@ -40,7 +40,6 @@ public class Stage01 extends JPanel implements KeyListener {
 	private int width, height;// 패널 사이즈 가져오기
 	private int life = 5;
 	private int x, y, w, h;// xy : 플레이어의 중심 좌표 / wh : 이미지 절반폭;
-	private int ipX, ipY; // ipXY 잎싹이 왼쪽 모서리 좌표
 	private int dx = 0, dy = 0;// 플레이어 이미지의 이동속도, 이동방향z
 	private Image stage01Background, leftWall, rightWall, ipssagJump, ipssagJumpR, EnemyImg, EnemyImgR, emptyLife,
 			gameOverImg, gameClearImg, scoreImg;
@@ -54,7 +53,8 @@ public class Stage01 extends JPanel implements KeyListener {
 	private JPanel stage01;
 	private Media media = new Media();
 	int cnt = 0;
-	private int time = 20;
+	private int leftW = 0, rightW = 0, f1 = 0, f2 = 0, f3 = 0, f4 = 0, f5 = 0, f6 = 0, f7 = 0, f8 = 0, f9 = 0, f10 = 0, f11 = 0, f12 = 0, backY = 0, ipY = 0;
+	private int time = 25;
 	private int score = 0;
 	// GUI 관련 프로그램의 편의를 위해 만들어진 도구상자(Toolkit) 객체
 	Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -76,7 +76,7 @@ public class Stage01 extends JPanel implements KeyListener {
 		leftWall = toolkit.getImage("images/left_wall.png");
 		rightWall = toolkit.getImage("images/right_wall.png");// 벽 이미지
 		stage01Footrest = new ArrayList<>();
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 12; i++) {
 			stage01Footrest.add(toolkit.getImage("images/Stage01_footrest.png")); // 발판 이미지
 		}
 		lifeArray = new ArrayList<>();
@@ -114,11 +114,13 @@ public class Stage01 extends JPanel implements KeyListener {
 		JLabel lifeText = new JLabel("Life : ");
 		lifeText.setBounds(10, 10, 100, 50);
 		lifeText.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		lifeText.setForeground(Color.ORANGE);
 		add(lifeText);
 
 		JLabel countText = new JLabel("Count : ");
 		countText.setBounds(880, 2, 100, 70);
 		countText.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		countText.setForeground(Color.ORANGE);
 		add(countText);
 
 		Thread timer = new Thread(new Runnable() {
@@ -127,7 +129,7 @@ public class Stage01 extends JPanel implements KeyListener {
 				JLabel Mytimer = new JLabel();
 				Mytimer.setBounds(960, 0, 70, 70);
 				Mytimer.setFont(new Font("맑은 고딕", Font.BOLD, 40));
-				Mytimer.setForeground(Color.BLACK);
+				Mytimer.setForeground(Color.ORANGE);
 				stage01page.add(Mytimer);
 				while (true) {
 					if (time == -1 || gameOver == true || isClear == true) {
@@ -152,6 +154,40 @@ public class Stage01 extends JPanel implements KeyListener {
 		timer.setDaemon(true);
 		timer.start();
 
+		Thread changeY = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					leftW+=3;
+					rightW+=3;
+					f1+=3;
+					f2+=3;
+					f3+=3;
+					f4+=3;
+					f5+=3;
+					f6+=3;
+					f7+=3;
+					f8+=3;
+					f9+=3;
+					f10+=3;
+					f11+=3;
+					f12+=3;
+					backY+=3;
+					ipY+=3;
+					if(backY == 300) {
+						break;
+					}
+				}
+
+			}
+		});
+		changeY.setDaemon(true);
+		changeY.start();
 		this.setFocusable(true);
 		this.addKeyListener(this);
 
@@ -166,9 +202,9 @@ public class Stage01 extends JPanel implements KeyListener {
 			height = getHeight();
 
 			// 리사이징
-			stage01Background = stage01Background.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-			leftWall = leftWall.getScaledInstance(300, 700, Image.SCALE_SMOOTH);
-			rightWall = rightWall.getScaledInstance(300, 700, Image.SCALE_SMOOTH);
+			stage01Background = stage01Background.getScaledInstance(width, height + 300, Image.SCALE_SMOOTH);
+			leftWall = leftWall.getScaledInstance(300, 1000, Image.SCALE_SMOOTH);
+			rightWall = rightWall.getScaledInstance(300, 1000, Image.SCALE_SMOOTH);
 			for (int i = 0; i < stage01Footrest.size(); i++) {
 				stage01Footrest.set(i, (stage01Footrest.get(i)).getScaledInstance(150, 100, Image.SCALE_SMOOTH));
 			}
@@ -205,17 +241,22 @@ public class Stage01 extends JPanel implements KeyListener {
 
 		// 이곳에 화가객체가 있으므로 그림 그리는 작업은 무조건 여기서
 
-		g.drawImage(stage01Background, 0, 0, this);// 배경 그리기
-		g.drawImage(leftWall, 0, 68, this);// 왼쪽 벽 그리기
-		g.drawImage(rightWall, width - 300, 68, this);// 왼쪽 벽 그리기
-		g.drawImage(stage01Footrest.get(0), width / 2 - 70, 650, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(1), width / 2 - 150, 570, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(2), width / 2, 490, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(3), width / 2 - 180, 410, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(4), width / 2 - 80, 330, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(5), width / 2 - 200, 250, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(6), width / 2 - 50, 170, this); // 발판 그리기
-		g.drawImage(stage01Footrest.get(6), width / 2 + 40, 90, this); // 발판 그리기
+		g.drawImage(stage01Background, 0, - 300 + backY, this);// 배경 그리기
+		g.drawImage(leftWall, 0, 68 - 300 + leftW, this);// 왼쪽 벽 그리기
+		g.drawImage(rightWall, width - 300, 68 - 300 + rightW, this);// 왼쪽 벽 그리기
+		g.drawImage(stage01Footrest.get(0), width / 2 - 70, 650 + f1, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(1), width / 2 - 150, 570 + f2, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(2), width / 2, 490 + f3, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(3), width / 2 - 180, 410 + f4, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(4), width / 2 - 80, 330 + f5, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(5), width / 2 - 200, 250 + f6, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(6), width / 2 - 50, 170 + f7, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(7), width / 2 + 40, 90 + f8, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(8), width / 2 - 20, 10 + f9, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(9), width / 2 - 180, -70 + f10, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(10), width / 2 - 80, -150 + f11, this); // 발판 그리기
+		g.drawImage(stage01Footrest.get(11), width / 2 + 60, -230 + f12, this); // 발판 그리기
+		
 		drawLife(g);
 		drawIpssag(g);
 		drawEnemy(g);
@@ -348,16 +389,16 @@ public class Stage01 extends JPanel implements KeyListener {
 	public void drawIpssag(Graphics g) {
 		if (isRight) {
 			if (isJump) {
-				g.drawImage(ipssagJumpR, x - w, y - h - 15, this);
+				g.drawImage(ipssagJumpR, x - w, y - h - 15 + ipY, this);
 			} else if (isMoving) {
 				if ((cnt / 5 % 2) == 0) {
-					g.drawImage(ipssagMovingR[1], x - w, y - h - 15, this);
+					g.drawImage(ipssagMovingR[1], x - w, y - h - 15 + ipY, this);
 				} else {
-					g.drawImage(ipssagMovingR[0], x - w, y - h - 15, this);
+					g.drawImage(ipssagMovingR[0], x - w, y - h - 15 + ipY, this);
 				}
 			} else {
 				if ((cnt / 5 % 2) == 0) {
-					g.drawImage(ipssagStandingR[1], x - w, y - h - 15, this);
+					g.drawImage(ipssagStandingR[1], x - w, y - h - 15 + ipY, this);
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -365,7 +406,7 @@ public class Stage01 extends JPanel implements KeyListener {
 						e.printStackTrace();
 					}
 				} else {
-					g.drawImage(ipssagStandingR[0], x - w, y - h - 15, this);
+					g.drawImage(ipssagStandingR[0], x - w, y - h - 15 + ipY, this);
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -377,16 +418,16 @@ public class Stage01 extends JPanel implements KeyListener {
 			}
 		} else {
 			if (isJump) {
-				g.drawImage(ipssagJump, x - w, y - h - 15, this);
+				g.drawImage(ipssagJump, x - w, y - h - 15 + ipY, this);
 			} else if (isMoving) {
 				if ((cnt / 5 % 2) == 0) {
-					g.drawImage(ipssagMoving[1], x - w, y - h - 15, this);
+					g.drawImage(ipssagMoving[1], x - w, y - h - 15 + ipY, this);
 				} else {
-					g.drawImage(ipssagMoving[0], x - w, y - h - 15, this);
+					g.drawImage(ipssagMoving[0], x - w, y - h - 15 + ipY, this);
 				}
 			} else {
 				if ((cnt / 5 % 2) == 0) {
-					g.drawImage(ipssagStanding[1], x - w, y - h - 15, this);
+					g.drawImage(ipssagStanding[1], x - w, y - h - 15 + ipY, this);
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -394,7 +435,7 @@ public class Stage01 extends JPanel implements KeyListener {
 						e.printStackTrace();
 					}
 				} else {
-					g.drawImage(ipssagStanding[0], x - w, y - h - 15, this);
+					g.drawImage(ipssagStanding[0], x - w, y - h - 15 + ipY, this);
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
@@ -417,14 +458,6 @@ public class Stage01 extends JPanel implements KeyListener {
 
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
-	}
-
-	public int getIpX() {
-		return ipX;
-	}
-
-	public void setIpX(int ipX) {
-		this.ipX = ipX;
 	}
 
 	public int getIpY() {
@@ -463,32 +496,44 @@ public class Stage01 extends JPanel implements KeyListener {
 		if (x > width - w - 280 && (y - h) > 19)
 			x = width - w - 280; // 오른쪽 벽 넘지 못하게
 		// System.out.println(isDrop);
-		System.out.println("x = " + (x - w) + " y = " + (y - h));
-		if ((x == 0 && y == 0) || (x - w) >= 390 && (x - w) <= 510 && (y - h) <= 575 && (y - h) >= 570) {
+//		System.out.println("x = " + (x - w) + " y = " + (y - h));
+		if ((x == 0 && y == 0) || (x - w) >= 390 && (x - w) <= 510 && (y - h + f1) <= 575 + f1 && (y - h + f1) >= 570 + f1) {
 			// System.out.println("발판위에 서있다.");
 			isDrop = false;
-		} else if ((x - w) >= 300 && (x - w) <= 430 && (y - h) <= 495 && (y - h) >= 490) {
+		} else if ((x - w) >= 300 && (x - w) <= 430 && (y - h + f2) <= 495 + f2 && (y - h + f2) >= 490 + f2) {
 			// System.out.println("발판위에 서있다.");
 			isDrop = false;
-		} else if ((x - w) >= 450 && (x - w) <= 570 && (y - h) <= 415 && (y - h) >= 410) {
+		} else if ((x - w) >= 450 && (x - w) <= 570 && (y - h + f3) <= 415 + f3 && (y - h + f3) >= 410 + f3) {
 			// System.out.println("발판위에 서있다.");
 			isDrop = false;
-		} else if ((x - w) >= 270 && (x - w) <= 390 && (y - h) <= 335 && (y - h) >= 330) {
+		} else if ((x - w) >= 270 && (x - w) <= 390 && (y - h + f4) <= 335 + f4 && (y - h + f4) >= 330 + f4) {
 			// System.out.println("발판위에 서있다.");
 			isDrop = false;
-		} else if ((x - w) >= 370 && (x - w) <= 490 && (y - h) <= 255 && (y - h) >= 250) {
+		} else if ((x - w) >= 370 && (x - w) <= 490 && (y - h + f5) <= 255 + f5 && (y - h + f5) >= 250 + f5) {
 			// System.out.println("발판위에 서있다.");
 			isDrop = false;
-		} else if ((x - w) >= 250 && (x - w) <= 370 && (y - h) <= 175 && (y - h) >= 170) {
+		} else if ((x - w) >= 250 && (x - w) <= 370 && (y - h + f6) <= 175 + f6 && (y - h + f6) >= 170 + f6) {
 			// System.out.println("발판위에 서있다.");
 			isDrop = false;
-		} else if ((x - w) >= 400 && (x - w) <= 520 && (y - h) <= 95 && (y - h) >= 90) {
+		} else if ((x - w) >= 400 && (x - w) <= 520 && (y - h + f7) <= 95 + f7 && (y - h + f7) >= 90 + f7) {
 			// System.out.println("발판위에 서있다.");
 			isDrop = false;
-		} else if ((x - w) >= 490 && (x - w) <= 610 && (y - h) <= 15 && (y - h) >= 10) {
+		} else if ((x - w) >= 490 && (x - w) <= 610 && (y - h + f8) <= 15 + f8 && (y - h + f8) >= 10 + f8) {
 			// System.out.println("발판위에 서있다.");
 			isDrop = false;
-		} else if ((x - w) >= 650 && (x - w) <= 1000 && y - h <= -35 && (y - h) >= -40) {
+		} else if ((x - w) >= 430 && (x - w) <= 550 && (y - h + f9) <= -65 + f9 && (y - h + f9) >= -70 + f9) {
+			// System.out.println("발판위에 서있다.");
+			isDrop = false;
+		} else if ((x - w) >= 270 && (x - w) <= 390 && (y - h + f10) <= -145 + f10 && (y - h + f10) >= -150 + f10) {
+			// System.out.println("발판위에 서있다.");
+			isDrop = false;
+		} else if ((x - w) >= 370 && (x - w) <= 490 && (y - h + f11) <= -225 + f11 && (y - h + f11) >= -230 + f11) {
+			// System.out.println("발판위에 서있다.");
+			isDrop = false;
+		} else if ((x - w) >= 510 && (x - w) <= 630 && (y - h + f12) <= -305 + f12 && (y - h + f12) >= -310 + f12) {
+			// System.out.println("발판위에 서있다.");
+			isDrop = false;
+		} else if ((x - w) >= 650 && (x - w) <= 1000 && (y - h + backY) <= -335 + backY && (y - h + backY) >= -340 + backY) {
 			System.out.println("클리어");
 			isDrop = false;
 			isClear = true;
@@ -497,7 +542,7 @@ public class Stage01 extends JPanel implements KeyListener {
 			y -= ddy;
 			isDrop = true;
 		}
-		if (y - h - 15 > 700) {
+		if (y - h - 15 > 700 - backY) {
 			gameOver = true;
 		}
 	}
@@ -517,7 +562,7 @@ public class Stage01 extends JPanel implements KeyListener {
 			} else if (en.getX() > 1500 && i % 2 != 0) {
 				Enemy_List.remove(i);
 			}
-			if (collision(x - w, y - h - 15, en.getX(), en.getY(), ipssagStanding[0], EnemyImg)) {
+			if (collision(x - w, y - h - 15 + ipY, en.getX(), en.getY() + ipY, ipssagStanding[0], EnemyImg)) {
 				life--;
 				media.sound("punch");
 				x -= 20;
@@ -527,10 +572,16 @@ public class Stage01 extends JPanel implements KeyListener {
 		}
 
 		if (cnt % 201 == 0 || cnt == 1) {
-			en = new Stage01_Enemy(1024 + 100, ((int) (Math.random() * 600) + 100),
+			en = new Stage01_Enemy(1024 + 100, ((int) (Math.random() * 600) + 100) + ipY,
 					(enemySpeed + (int) (Math.random() * 10)));
 			Enemy_List.add(en);
-			en = new Stage01_Enemy(-100, ((int) (Math.random() * 600) + 100),
+			en = new Stage01_Enemy(-100, ((int) (Math.random() * 600) + 100) + ipY,
+					(enemySpeed + (int) (Math.random() * 10)));
+			Enemy_List.add(en);
+			en = new Stage01_Enemy(1024 + 100, ((int) (Math.random() * 300) -300) + ipY,
+					(enemySpeed + (int) (Math.random() * 10)));
+			Enemy_List.add(en);
+			en = new Stage01_Enemy(-100, ((int) (Math.random() * 300) -300) + ipY,
 					(enemySpeed + (int) (Math.random() * 10)));
 			Enemy_List.add(en);
 		}
@@ -541,9 +592,9 @@ public class Stage01 extends JPanel implements KeyListener {
 			en = Enemy_List.get(i);
 			// System.out.println("x = " + en.getX() + " y = " + en.getY());
 			if (i % 2 == 0) {
-				g.drawImage(EnemyImgR, en.getX(), en.getY(), this);
+				g.drawImage(EnemyImgR, en.getX(), en.getY() + ipY, this);
 			} else {
-				g.drawImage(EnemyImg, en.getX(), en.getY(), this);
+				g.drawImage(EnemyImg, en.getX(), en.getY() + ipY, this);
 			}
 		}
 	}

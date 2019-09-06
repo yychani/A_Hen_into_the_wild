@@ -53,13 +53,14 @@ public class Stage01_Thread extends Thread {
 		else if(stage01.isGameOver()) {
 			media.sound("gameover");
 		}
-		String[] strarr = stage01.checkRanking();
-		String str = "";
-		for (int i = 0; i < strarr.length; i++) {
-			str += (strarr[i] + "\n");
-		}
-		System.out.println(str);
+		
 		if (!stage01.isGameOver()) {
+			String[] strarr = stage01.checkRanking();
+			String str = "";
+			for (int i = 0; i < strarr.length; i++) {
+				str += (strarr[i] + "\n");
+			}
+			System.out.println(str);
 			JOptionPane.showMessageDialog(null, str, "Stage 1 랭킹", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
