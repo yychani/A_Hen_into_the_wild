@@ -45,7 +45,6 @@ public class Stage03InfoPage extends JPanel {
 
 			}
 		});
-		//add(stage01Info);
 	}
 
 	@Override

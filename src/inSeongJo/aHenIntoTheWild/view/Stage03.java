@@ -623,8 +623,8 @@ class LoadingClass implements Runnable {
 		jb.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		jb.setEnabled(false);
 
-		try { //클릭했을때 2초동안 잠금
-			Thread.sleep(10);
+		try { //클릭했을때 1초동안 잠금
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
