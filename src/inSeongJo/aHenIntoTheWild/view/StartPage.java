@@ -62,6 +62,7 @@ public class StartPage extends JPanel {
 				MediaThread mt = new MediaThread(startPage, 50);
 				
 				mt.start();
+				mf.remove(startPage);
 			}
 		});
 
