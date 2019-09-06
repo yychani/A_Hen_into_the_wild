@@ -491,9 +491,9 @@ public class Stage01 extends JPanel implements KeyListener {
 		int ddy = -10;
 
 		// 플레이어 좌표가 화면 밖으로 나가지 않도록 // 나중에 벽으로 수정
-		if (x < w + 280 && (y - h) > 19)
+		if (x < w + 280 && (y - h) > -319 + backY)
 			x = w + 280; // 왼쪽 벽 넘지 못하게
-		if (x > width - w - 280 && (y - h) > 19)
+		if (x > width - w - 280 && (y - h) > -319 + backY)
 			x = width - w - 280; // 오른쪽 벽 넘지 못하게
 		// System.out.println(isDrop);
 //		System.out.println("x = " + (x - w) + " y = " + (y - h));
