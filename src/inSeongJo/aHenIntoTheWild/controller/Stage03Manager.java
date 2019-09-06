@@ -6,8 +6,10 @@ import java.util.Comparator;
 import inSeongJo.aHenIntoTheWild.model.dao.RankingDao;
 import inSeongJo.aHenIntoTheWild.model.vo.Ranking;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
+import inSeongJo.aHenIntoTheWild.view.Media;
 
 public class Stage03Manager {
+	private Media media = new Media();
 	
 	//증가하는 메소드 
 	public int plusFor (int rate, int num) {
@@ -47,6 +49,7 @@ public class Stage03Manager {
 			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 350;	mouthY2 = 420; //level3일때 (임시)좌표
 		}
 		if((x > mouthX1 && x < mouthX2) && (y > mouthY1 && y < mouthY2)) {
+			media.sound("eatingFx");
 			//포만감 증가
 			rate[0] = plusFor(rate[0], 5);
 			//피로도 증가
@@ -68,6 +71,7 @@ public class Stage03Manager {
 			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 280;	mouthY2 = 370; //level3일때 (임시)좌표
 		}
 		if((x > mouthX1 && x < mouthX2) && (y > mouthY1 && y < mouthY2)) {
+			media.sound("showerFx");
 			//피로도 감소
 			//rate[1] = plusFor(rate[1], 5);
 			//rate[2] = plusFor(rate[2], 5);
