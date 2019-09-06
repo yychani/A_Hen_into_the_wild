@@ -70,8 +70,15 @@ public class MainStage extends JPanel {
 		saveButton.setBounds(930, 20, 70, 70);
 		saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		saveButton.setPressedIcon(new ImageIcon(savePressedImage));
-		;
 		add(saveButton);
+		saveButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, MainStage, new VideoTest(mf));
+				
+			}
+		});
 
 		// 잎싹이 이미지
 		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 250, 0);
