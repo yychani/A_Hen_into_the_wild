@@ -95,9 +95,9 @@ public class UserManager {
 
 		User loginUser = new User();
 		System.out.println(ulist);
-		if (ulist.isEmpty()) {
-			JOptionPane.showMessageDialog(null, "회원가입이 필요합니다.", "로그인", 1);
-		} else {
+//		if (ulist.isEmpty()) {
+//			JOptionPane.showMessageDialog(null, "회원가입이 필요합니다.", "로그인", 1);
+//		} else {
 			for (User user : ulist) {
 				if (user.getId().equals(id)) {
 					if (user.getPassword().equals(pw)) {
@@ -113,7 +113,7 @@ public class UserManager {
 				}
 
 			}
-		}
+//		}
 
 		return loginUser;
 	}
