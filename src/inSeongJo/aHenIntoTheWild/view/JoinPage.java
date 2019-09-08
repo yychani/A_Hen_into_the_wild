@@ -235,10 +235,10 @@ public class JoinPage extends JPanel {
 				JFrame df = new JFrame();
 				df.setLayout(null);
 				df.setSize(500, 230);
+				JPanel panel = new JPanel();
 				Dialog dl = new Dialog(df, "email");
 				dl.setBounds(300, 200, 200, 200);
-				df.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				df.setVisible(true);
+				
 
 				JLabel text = new JLabel("인증번호를 입력해주세요.");
 				text.setBounds(20, 20, 200, 20);
@@ -252,6 +252,8 @@ public class JoinPage extends JPanel {
 				JButton verifyButton = new JButton("인증확인");
 				verifyButton.setBounds(100, 80, 100, 20);
 				df.add(verifyButton);
+				
+				df.setVisible(true);
 
 				verifyButton.addActionListener(new ActionListener() {
 
@@ -338,10 +340,10 @@ public class JoinPage extends JPanel {
 				}
 
 				// 아이디 중복 확인했는지 확인
-				if (um.idCheck(idTextField.getText())) {
+				if (idCheckText.equals("아이디 중복확인을 해주세요.")) {
 					// true -> "사용하실 수 없는 아이디입니다."
 					// false -> "사용하실 수 있는 아이디입니다."
-					JOptionPane.showMessageDialog(null, "아이디를 다시 한번 확인해주세요.", "아이디 확인", 1);
+					JOptionPane.showMessageDialog(null, "아이디 중복확인이 필요합니다.", "아이디 중복확인", 1);
 				} else {
 					// 비밀번호 일치 확인
 					if (!password.equals(repassword)) {
