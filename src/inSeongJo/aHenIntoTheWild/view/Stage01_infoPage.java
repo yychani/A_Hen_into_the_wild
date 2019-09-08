@@ -23,10 +23,11 @@ public class Stage01_infoPage extends JPanel{
 	public Stage01_infoPage(MainFrame mf, User user) {
 		this.mf = mf;
 		this.user = user;
+		stage01Infopage = this;
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
-		stage01Infopage = this;
-		mf.add(this);
+		
+//		mf.add(this);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
@@ -42,7 +43,7 @@ public class Stage01_infoPage extends JPanel{
 		stage01Info.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		stage01Info.setHorizontalAlignment(JLabel.CENTER);
 
-		Image stage1Start = new ImageIcon("images/ipssag/stage01Start.gif").getImage().getScaledInstance(256, 98, 0);
+		Image stage1Start = new ImageIcon("images/ipssag/stage01Start.gif").getImage().getScaledInstance(350, 125, Image.SCALE_SMOOTH);
 		JButton stage3Button = new JButton(new ImageIcon(stage1Start));
 		stage3Button.setBorderPainted(false);
 		stage3Button.setContentAreaFilled(false);

@@ -13,6 +13,11 @@ public class User implements Serializable {
 	private int stage2Score;
 	private int stage3Score;
 	private int stage4Score;
+	private boolean stage1Video = false;
+	private boolean stage2Video = false;
+	private boolean stage3Video = false;
+	private boolean stage4Video = false;
+	
 
 	@Override
 	public String toString() {
@@ -109,5 +114,38 @@ public class User implements Serializable {
 	public void setStage4Score(int stage4Score) {
 		this.stage4Score = stage4Score;
 	}
+
+	public boolean isStage1Video() {
+		return stage1Video;
+	}
+
+	public void setStage1Video(boolean stage1Video) {
+		this.stage1Video = stage1Video;
+	}
+
+	public boolean isStage2Video() {
+		return stage2Video;
+	}
+
+	public void setStage2Video(boolean stage2Video) {
+		this.stage2Video = stage2Video;
+	}
+
+	public boolean isStage3Video() {
+		return stage3Video;
+	}
+
+	public void setStage3Video(boolean stage3Video) {
+		this.stage3Video = stage3Video;
+	}
+
+	public boolean isStage4Video() {
+		return stage4Video;
+	}
+
+	public void setStage4Video(boolean stage4Video) {
+		this.stage4Video = stage4Video;
+	}
+	
 
 }

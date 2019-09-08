@@ -14,12 +14,13 @@ public class MediaThread extends Thread{
 	}
 	@Override
 	public void run() {
+		
 		try {
 			Thread.sleep(time * 1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		jPanel.setVisible(true);
+//		jPanel.setVisible(true);
 		
 	}
 }
