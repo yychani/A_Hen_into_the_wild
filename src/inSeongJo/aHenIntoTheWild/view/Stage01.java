@@ -379,6 +379,7 @@ public class Stage01 extends JPanel implements KeyListener {
 			add(scoreText);
 			System.out.println(score);
 
+			user.setStage1Score(score);
 			add(retryButton);
 			add(homeButton);
 
