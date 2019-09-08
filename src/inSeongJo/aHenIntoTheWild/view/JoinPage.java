@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ import javax.swing.JTextField;
 
 import inSeongJo.aHenIntoTheWild.controller.UserManager;
 import inSeongJo.aHenIntoTheWild.model.dao.SendEmail;
+import inSeongJo.aHenIntoTheWild.model.dao.VerifyEmail;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
 public class JoinPage extends JPanel {
@@ -37,6 +39,7 @@ public class JoinPage extends JPanel {
 	private JPasswordField passwordTextField;
 	private JTextField nickNameTextField;
 	private JTextField emailTextField;
+	private JTextField emailTextField2;
 	private String password;
 	private UserManager um = new UserManager();
 	private String pass1 = "", pass2 = "";
@@ -99,6 +102,13 @@ public class JoinPage extends JPanel {
 		emailText.setForeground(Color.DARK_GRAY);
 		add(emailText);
 
+		// 이메일 인증 유뮤 텍스트
+		JLabel emailVeriTest = new JLabel("이메일 인증이 필요합니다.");
+		emailVeriTest.setBounds(350, 520, 300, 100);
+		emailVeriTest.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 12));
+		emailVeriTest.setForeground(Color.WHITE);
+		add(emailVeriTest);
+
 		// 아이디 입력란
 		/* JTextField */ idTextField = new JTextField();
 		idTextField.setBounds(350, 250, 300, 30);
@@ -125,13 +135,13 @@ public class JoinPage extends JPanel {
 		passwordCheckText.setForeground(Color.WHITE);
 		add(passwordCheckText);
 
-		//비밀번호 재확인 알림 변경 이벤트
+		// 비밀번호 재확인 알림 변경 이벤트
 		repasswordTextField.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 				password = "";
@@ -146,23 +156,22 @@ public class JoinPage extends JPanel {
 				for (int i = 0; i < repass.length; i++) {
 					repassword += repass[i];
 				}
-				
-				if(password.equals(repassword)) {
+
+				if (password.equals(repassword)) {
 					passwordCheckText.setText("비밀번호가 일치합니다.");
 					passwordCheckText.setForeground(Color.BLUE);
-				}else {
+				} else {
 					passwordCheckText.setText("비밀번호가 일치하지 않습니다.");
 					passwordCheckText.setForeground(Color.RED);
 				}
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 			}
 		});
 
-		
 		// 닉네임 입력란
 		/* JTextField */ nickNameTextField = new JTextField();
 		nickNameTextField.setBounds(350, 460, 300, 30);
@@ -171,9 +180,104 @@ public class JoinPage extends JPanel {
 
 		// 이메일 입력란
 		/* JTextField */ emailTextField = new JTextField();
-		emailTextField.setBounds(350, 530, 300, 30);
+		emailTextField.setBounds(350, 530, 90, 30);
 		emailTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(emailTextField);
+		
+		// 이메일 주소 입력란
+		emailTextField2 = new JTextField();
+		emailTextField2.setBounds(440, 530, 100, 30);
+		emailTextField2.setBorder(BorderFactory.createEmptyBorder());
+		add(emailTextField2);
+
+		String[] emails = { "직접입력", "@naver.com", "@daum.net", "@gmail.com", "@hotmail.com", "@nate.com",
+				"@yahoo.co.kr", "@paran.com", "@empas.com", "@dreamwiz.com" };
+		JComboBox emailList = new JComboBox(emails);
+
+		emailList.setSelectedIndex(0);
+
+		emailList.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				JComboBox cb = (JComboBox) e.getSource();
+
+				String email = (String) cb.getSelectedItem();
+
+				emailTextField2.setText(email);
+
+			}
+		});
+		emailList.setBounds(550, 530, 120, 30);
+		add(emailList);
+
+		// 이메일 인증 버튼
+		JButton verifyButton = new JButton("인증번호 전송");
+		verifyButton.setBounds(750, 530, 150, 30);
+		verifyButton.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
+		verifyButton.setBackground(Color.LIGHT_GRAY);
+		add(verifyButton);
+
+		verifyButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				String verificationNumber = um.verificationNumber();
+				String userEmailAddress = emailTextField.getText() + emailTextField2.getText();
+
+				// 인증번호 메일 보내기
+				VerifyEmail ve = new VerifyEmail();
+				ve.MailSend(userEmailAddress, nickNameTextField.getText(), verificationNumber);
+
+				// 인증번호 입력 창
+				JFrame df = new JFrame();
+				df.setLayout(null);
+				df.setSize(500, 230);
+				JPanel panel = new JPanel();
+				Dialog dl = new Dialog(df, "email");
+				dl.setBounds(300, 200, 200, 200);
+				
+
+				JLabel text = new JLabel("인증번호를 입력해주세요.");
+				text.setBounds(20, 20, 200, 20);
+				df.add(text);
+
+				JTextField verifyTextField = new JTextField();
+				verifyTextField.setBounds(20, 50, 200, 20);
+				verifyTextField.setBorder(BorderFactory.createEmptyBorder());
+				df.add(verifyTextField);
+
+				JButton verifyButton = new JButton("인증확인");
+				verifyButton.setBounds(100, 80, 100, 20);
+				df.add(verifyButton);
+				
+				df.setVisible(true);
+
+				verifyButton.addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+
+						if (verifyTextField.getText().equals(verificationNumber)) {
+							JOptionPane.showMessageDialog(null, "인증완료! 회원가입을 완료해주세요", "인증완료", 1);
+							emailVeriTest.setText("이메일 인증 완료");
+							emailVeriTest.setForeground(Color.BLUE);
+							System.out.println("인증번호 동일 가입 가능");
+						} else {
+							JOptionPane.showMessageDialog(null, 
+									"인증번호 불일치! 다시 한번 확인해주세요", "인증번호 불일치", 1);
+							emailVeriTest.setForeground(Color.RED);
+							System.out.println("인증번호 불일치 가입 블가능");
+						}
+
+					}
+				});
+
+			}
+		});
+		
 
 		// 중복확인 버튼
 		JButton checkButton = new JButton("아이디 중복확인");
@@ -264,7 +368,7 @@ public class JoinPage extends JPanel {
 								// 모든 회원가입 조건 통과
 								// 새로운 유저 객체 생성
 								um.insertUser(inputUser());
-								//이메일 보내기
+								// 이메일 보내기
 								SendEmail se = new SendEmail();
 								se.MailSend(emailTextField.getText(), nickNameTextField.getText());
 								// 가입완료 팝업창
