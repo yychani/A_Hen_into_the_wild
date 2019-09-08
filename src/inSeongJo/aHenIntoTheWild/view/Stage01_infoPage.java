@@ -43,7 +43,7 @@ public class Stage01_infoPage extends JPanel{
 		stage01Info.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		stage01Info.setHorizontalAlignment(JLabel.CENTER);
 
-		Image stage1Start = new ImageIcon("images/ipssag/stage01Start.gif").getImage().getScaledInstance(350, 125, Image.SCALE_SMOOTH);
+		Image stage1Start = new ImageIcon("images/ipssag/stage01Start.gif").getImage().getScaledInstance(350, 125, 0);
 		JButton stage3Button = new JButton(new ImageIcon(stage1Start));
 		stage3Button.setBorderPainted(false);
 		stage3Button.setContentAreaFilled(false);
