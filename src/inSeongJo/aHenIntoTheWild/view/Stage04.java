@@ -48,7 +48,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private int life = 5;
 	private int sCnt = 0;
 	private int sCnt2 = 0;
-	private int time = 30;
+	private int time = 3;
 	private int score;
 
 
@@ -75,12 +75,12 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	// private Image empty = new ImageIcon()
 	private Image die = new ImageIcon("images/Images/emptyLife.png").getImage().getScaledInstance(20, 20, 0);
 	private Image overImage = new ImageIcon("images/Images/gameOver2.png").getImage().getScaledInstance(800, 200, 0);
-	private Image clearImage = new ImageIcon("images/Images/gameClear.png").getImage().getScaledInstance(800, 250, 0);
+	private Image clearImage = new ImageIcon("images/Images/gameClear.png").getImage().getScaledInstance(800, 220, 0);
 	private Image chorok = new ImageIcon("images/Images/chorok.gif").getImage().getScaledInstance(150, 170, 0);
 	private Image enemy = new ImageIcon("images/Images/bird.gif").getImage().getScaledInstance(150, 150, 0);
 	private Image star = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(40, 40, 0);
 	private Image star2 = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(40, 40, 0);
-	private Image homeButton = new ImageIcon("images/Images/homebutton.png").getImage().getScaledInstance(70, 70, 0);
+	private Image homeButton = new ImageIcon("images/Images/homeButton2.png").getImage().getScaledInstance(70, 70, 0);
 	private ArrayList<Image> life_Array;
 
 	JButton homeB = new JButton(new ImageIcon(homeButton));
@@ -459,17 +459,17 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				g.drawImage(life_Array.get(i), 830 + (i * 40), 700, this);
 			}
 
-		}else {
+		}else if(life == 0 ){
 			life_Array.set(4, die);
 			life_Array.set(3, die);
 			life_Array.set(2, die);
 			life_Array.set(1, die);
 			life_Array.set(0, die);
 			//         stop = false;
-			//         gameOver = true;
-			for(int i = 0; i < life_Array.size(); i++) {
-				g.drawImage(life_Array.get(i), 830, 700, this);
-			}
+			         gameOver = true;
+//			for(int i = 0; i < life_Array.size(); i++) {
+//				g.drawImage(life_Array.get(i), 830, 700, this);
+//			}
 		}
 	}
 	public boolean collision(int x1, int y1, int x2, int y2, Image chorok, Image enemy) {
@@ -610,8 +610,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		score = (sCnt* 50) - (sCnt2 * 20);
 
-		Image retry = new ImageIcon("images/Images/retry3.png").getImage().getScaledInstance(150, 100, 0);
-		Image main = new ImageIcon("images/Images/main3.png").getImage().getScaledInstance(150, 100, 0);
+		Image retry = new ImageIcon("images/Images/retry2.png").getImage().getScaledInstance(150, 90, 0);
+		Image main = new ImageIcon("images/Images/main2.png").getImage().getScaledInstance(150, 90, 0);
 		Image countStar = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(60, 60, 0);
 		Image countStar2 = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(60, 60, 0);
 		
@@ -705,7 +705,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 
 		if(gameOver == true) {
-			g.drawImage(overImage, 120, 250, null);
+			g.drawImage(overImage, 120, 200, null);
 			add(retryB);
 			add(goMain);
 			//			add(sText);
@@ -715,7 +715,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			//         g.drawImage(goMain, 550, 410, null);
 			thS = false;
 		}else if(gameClear == true) {
-			g.drawImage(clearImage, 120, 150, null);
+			g.drawImage(clearImage, 120, 200, null);
 			g.drawImage(star, 350, 400,null);
 			g.drawImage(star2, 350, 450,null);
 			add(retryB);
