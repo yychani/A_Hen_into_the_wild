@@ -77,6 +77,14 @@ public class UserManager {
 		return check;
 
 	}
+	
+	//이메일 인증번호 6자리 생성 메소드
+	public String verificationNumber() {
+		
+		int random = (int) (Math.random()*999999) + 1;
+		String verifyNumber = String.valueOf(random);
+		return verifyNumber;
+	}
 
 	// 로그인
 	public User login(String id, String pw) {
