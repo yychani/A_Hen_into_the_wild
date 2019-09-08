@@ -76,15 +76,14 @@ public class MainStage extends JPanel {
 		saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		saveButton.setPressedIcon(new ImageIcon(savePressedImage));
 		add(saveButton);
-		
+
 		saveButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			
+
 			}
 		});
-		
 
 		// 잎싹이 이미지
 		Image ipssak = new ImageIcon("images/YJimages/ipssak.png").getImage().getScaledInstance(180, 250, 0);
@@ -126,7 +125,16 @@ public class MainStage extends JPanel {
 		stage1Button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ChangePanel.changePanel(mf, mainstage, new Stage01_infoPage(mf, user));
+				if (user.isStage1Video()) {
+					ChangePanel.changePanel(mf, mainstage, new Stage01_infoPage(mf, user));
+				} else {
+					mainstage.setVisible(false);
+					new VideoTest(mf, "scene1", user, new Stage01_infoPage(mf, user));
+					MediaThread mt = new MediaThread(mainstage, 51);
+					user.setStage1Video(true);
+					mt.start();
+					mf.remove(mainstage);
+				}
 			}
 		});
 		add(stage1Button);

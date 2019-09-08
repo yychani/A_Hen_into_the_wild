@@ -163,6 +163,9 @@ public class Stage01 extends JPanel implements KeyListener {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					if (gameOver == true || isClear == true) {
+						break;
+					}
 					leftW+=3;
 					rightW+=3;
 					f1+=3;
