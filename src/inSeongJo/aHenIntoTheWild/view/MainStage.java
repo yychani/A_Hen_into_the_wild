@@ -9,12 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
 import inSeongJo.aHenIntoTheWild.model.vo.MediaThread;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
@@ -26,6 +28,8 @@ public class MainStage extends JPanel {
 	// private JLabel label = new JLabel(background);
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
+	private UserDao ud = new UserDao();
+	ArrayList<User> ulist = null;
 
 	public MainStage(MainFrame mf, User user) {
 		this.mf = mf;
@@ -72,6 +76,14 @@ public class MainStage extends JPanel {
 		saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		saveButton.setPressedIcon(new ImageIcon(savePressedImage));
 		add(saveButton);
+		
+		saveButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+			}
+		});
 		
 
 		// 잎싹이 이미지
