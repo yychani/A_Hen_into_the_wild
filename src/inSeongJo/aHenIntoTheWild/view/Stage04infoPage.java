@@ -53,7 +53,7 @@ public class Stage04infoPage extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, stage01Infopage, new Stage01(mf, user));
+				ChangePanel.changePanel(mf, stage01Infopage, new Stage04(mf, user));
 
 			}
 		});
