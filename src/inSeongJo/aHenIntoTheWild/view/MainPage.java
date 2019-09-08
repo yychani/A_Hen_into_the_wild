@@ -83,7 +83,7 @@ public class MainPage extends JPanel {
 		// 비밀번호를 잊으셨나요?
 		JButton passChangeButton = new JButton("비밀번호를 잊으셨나요?");
 		passChangeButton.setBounds(310, 475, 200, 40);
-		passChangeButton.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 12));
+		passChangeButton.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
 		passChangeButton.setForeground(Color.WHITE);
 		passChangeButton.setBorderPainted(false);
 		passChangeButton.setContentAreaFilled(false);
