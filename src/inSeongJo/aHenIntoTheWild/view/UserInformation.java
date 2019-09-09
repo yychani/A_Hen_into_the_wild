@@ -1,5 +1,6 @@
 package inSeongJo.aHenIntoTheWild.view;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 
 import javax.swing.JButton;
@@ -53,6 +55,13 @@ public class UserInformation extends JPanel {
 		Dimension d = tk.getScreenSize();
 		UserDao userdao = new UserDao();// userdao에 있는 파일 읽어들이는 메소드 불러오기 위함
 		allUser = userdao.readUserList();
+		
+		//회원정보 텍스트
+		JLabel userInfoText = new JLabel("회원정보");
+		userInfoText.setBounds(380, 120, 300, 100);
+		userInfoText.setFont(new Font("맑은 고딕", Font.PLAIN, 50));
+		userInfoText.setForeground(Color.DARK_GRAY);
+		add(userInfoText);
 
 		// User 타입의 변수 u에 allUser라는 ArrayList를 대입하며 출력
 		// 입력한 id와 데이터에 저장된 아이디를 비교해 같으면 출력
@@ -80,10 +89,15 @@ public class UserInformation extends JPanel {
 		add(stage);
 
 		id.setBounds(150, 150, 50, 50);
+		id.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		nik.setBounds(150, 250, 50, 50);
+		nik.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		email.setBounds(150, 350, 50, 50);
+		email.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		rank.setBounds(550, 150, 50, 50);
+		rank.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		stage.setBounds(550, 250, 50, 50);
+		stage.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 
 		// TextField를 panel에 붙이고 위치를 지정하는 동시에 TextField에 회원 정보 표시
 		for (int i = 0; i < tarr.length; i++) {
@@ -91,25 +105,29 @@ public class UserInformation extends JPanel {
 			add(tarr[i]);
 			switch (i) {
 			case 0:
-				tarr[i].setBounds(200, 150, 250, 50);
+				tarr[i].setBounds(200, 150, 250, 30);
+				tarr[i].setBorder(BorderFactory.createEmptyBorder());
 				tarr[i].setText(presentUser.getId()); // 회원정보 중 id표시
 				tarr[i].setEditable(false); // 값 변경하지 못하게 하는 메소드
 				break;
 
 			case 1:
-				tarr[i].setBounds(200, 250, 250, 50);
+				tarr[i].setBounds(200, 250, 250, 30);
+				tarr[i].setBorder(BorderFactory.createEmptyBorder());
 				tarr[i].setText(presentUser.getNickName()); // 회원정보 중 닉네임 표시
 				tarr[i].setEditable(false);
 				break;
 
 			case 2:
-				tarr[i].setBounds(200, 350, 250, 50);
+				tarr[i].setBounds(200, 350, 250, 30);
+				tarr[i].setBorder(BorderFactory.createEmptyBorder());
 				tarr[i].setText(presentUser.getEmail()); // 회원 정보 중 이메일 표시
 				tarr[i].setEditable(false);
 				break;
 
 			case 3:
-				tarr[i].setBounds(600, 150, 250, 50);
+				tarr[i].setBounds(600, 150, 250, 30);
+				tarr[i].setBorder(BorderFactory.createEmptyBorder());
 				tarr[i].setText(presentUser.getTotalScore() + "");// 회원정보 중 전체 점수 표시 (단, totalscore가 int형이므로 문자열로 변환)
 				tarr[i].setEditable(false);
 
@@ -119,6 +137,7 @@ public class UserInformation extends JPanel {
 					if (presentUser.getStage3Score() == 0) {
 						if (presentUser.getStage2Score() == 0) {
 							if (presentUser.getStage1Score() == 0) {
+								tarr[i].setBorder(BorderFactory.createEmptyBorder());
 								tarr[i].setText("클리어한 스테이지가 없습니다.");
 								tarr[i].setEditable(false);
 								break;
@@ -141,13 +160,17 @@ public class UserInformation extends JPanel {
 			}
 		}
 
-		btn1.setFont(f1);
-		btn2.setFont(f1);
+		btn1.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
+		btn2.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
+		btn1.setBackground(Color.LIGHT_GRAY);
+		btn2.setBackground(Color.LIGHT_GRAY);
+		btn1.setBorderPainted(false);
+		btn2.setBorderPainted(false);
 		add(btn1);
 		add(btn2);
 
-		btn1.setBounds(300, 500, 150, 50);
-		btn2.setBounds(500, 500, 150, 50);
+		btn1.setBounds(300, 620, 150, 40);
+		btn2.setBounds(500, 620, 150, 40);
 		btn2.addActionListener(new ActionListener() {
 			
 			@Override
