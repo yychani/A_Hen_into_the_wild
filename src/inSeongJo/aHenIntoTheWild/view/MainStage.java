@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
@@ -29,7 +30,7 @@ public class MainStage extends JPanel {
 	private Graphics ScreenGraphics;
 	private Image ScreenImage;
 	private UserDao ud = new UserDao();
-	ArrayList<User> ulist = null;
+	ArrayList<User> ulist = ud.readUserList();
 
 	public MainStage(MainFrame mf, User user) {
 		this.mf = mf;
@@ -79,9 +80,23 @@ public class MainStage extends JPanel {
 
 		saveButton.addActionListener(new ActionListener() {
 
+			//파일 저장 기능
+			//기존 회원 정보와 로그인한 유저의 회원 정보 비교해 맞으면 그 정보를 파일에 저장
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				int i=0;
+				for(User u: ulist) {
+					if(user.getId().equals(u.getId())) {
+						if(user.getPassword().equals(u.getPassword())) {
+							ulist.set(i, user);
+							ud.writeUserList(ulist);
+						}
+					}
+					i++;
+				}
+				System.out.println(ulist);
+				JOptionPane.showMessageDialog(null, "파일 저장 완료!");
+				
 			}
 		});
 
