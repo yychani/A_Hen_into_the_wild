@@ -88,15 +88,15 @@ public class UserInformation extends JPanel {
 		add(rank);
 		add(stage);
 
-		id.setBounds(150, 150, 50, 50);
+		id.setBounds(80, 250, 100, 50);
 		id.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-		nik.setBounds(150, 250, 50, 50);
+		nik.setBounds(80, 350, 100, 50);
 		nik.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-		email.setBounds(150, 350, 50, 50);
+		email.setBounds(80, 450, 100, 50);
 		email.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-		rank.setBounds(550, 150, 50, 50);
+		rank.setBounds(500, 250, 100, 50);
 		rank.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-		stage.setBounds(550, 250, 50, 50);
+		stage.setBounds(500, 350, 100, 50);
 		stage.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 
 		// TextField를 panel에 붙이고 위치를 지정하는 동시에 TextField에 회원 정보 표시
@@ -105,34 +105,35 @@ public class UserInformation extends JPanel {
 			add(tarr[i]);
 			switch (i) {
 			case 0:
-				tarr[i].setBounds(200, 150, 250, 30);
+				tarr[i].setBounds(200, 250, 250, 50);
 				tarr[i].setBorder(BorderFactory.createEmptyBorder());
 				tarr[i].setText(presentUser.getId()); // 회원정보 중 id표시
 				tarr[i].setEditable(false); // 값 변경하지 못하게 하는 메소드
 				break;
 
 			case 1:
-				tarr[i].setBounds(200, 250, 250, 30);
+				tarr[i].setBounds(200, 350, 250, 50);
 				tarr[i].setBorder(BorderFactory.createEmptyBorder());
 				tarr[i].setText(presentUser.getNickName()); // 회원정보 중 닉네임 표시
 				tarr[i].setEditable(false);
 				break;
 
 			case 2:
-				tarr[i].setBounds(200, 350, 250, 30);
+				tarr[i].setBounds(200, 450, 250, 50);
 				tarr[i].setBorder(BorderFactory.createEmptyBorder());
 				tarr[i].setText(presentUser.getEmail()); // 회원 정보 중 이메일 표시
 				tarr[i].setEditable(false);
 				break;
 
 			case 3:
-				tarr[i].setBounds(600, 150, 250, 30);
+				tarr[i].setBounds(600, 250, 250, 50);
 				tarr[i].setBorder(BorderFactory.createEmptyBorder());
-				tarr[i].setText(presentUser.getTotalScore() + "");// 회원정보 중 전체 점수 표시 (단, totalscore가 int형이므로 문자열로 변환)
+				tarr[i].setText(presentUser.getTotalScore() + "");// 회원정보 중 랭킹 표시 (단, totalscore가 int형이므로 문자열로 변환)
 				tarr[i].setEditable(false);
+				break;
 
 			case 4:
-				tarr[i].setBounds(600, 250, 250, 50);
+				tarr[i].setBounds(600, 350, 250, 50);
 				if (presentUser.getStage4Score() == 0) {
 					if (presentUser.getStage3Score() == 0) {
 						if (presentUser.getStage2Score() == 0) {
