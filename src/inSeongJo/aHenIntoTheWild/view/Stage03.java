@@ -350,8 +350,19 @@ public class Stage03 extends JPanel {
 		tiredRatePercent.setFont(new Font("바탕", Font.PLAIN, 20));
 		tiredRatePercent.setForeground(Color.RED);
 		add(tiredRatePercent);
+		
+		JLabel growthRateText = new JLabel("성장도");
+		growthRateText.setBounds(920, 50, 100, 20);
+		growthRateText.setFont(new Font("바탕", Font.BOLD, 20));
+		growthRateText.setForeground(Color.GREEN);
+		add(growthRateText);
+		JLabel growthRatePercent = new JLabel(rate[3] + "%");
+		growthRatePercent.setBounds(940, 345, 120, 20);
+		growthRatePercent.setFont(new Font("바탕", Font.BOLD, 20));
+		growthRatePercent.setForeground(Color.GREEN);
+		add(growthRatePercent);
 
-		//addMouseMotionListener(new MyEvent()); //위치 확인
+		addMouseMotionListener(new MyEvent()); //위치 확인
 
 		//놀아주기 버튼 눌렀을 때, 지수들(rate)변화하게 만듦
 		playbutton.addActionListener(new ActionListener() {
@@ -366,6 +377,7 @@ public class Stage03 extends JPanel {
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
+				growthRatePercent.setText(rate[3] + "%");
 				playBl = false;
 
 			}
@@ -388,6 +400,7 @@ public class Stage03 extends JPanel {
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
+				growthRatePercent.setText(rate[3] + "%");
 				loveBl = false;
 
 			}
@@ -410,6 +423,7 @@ public class Stage03 extends JPanel {
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
+				growthRatePercent.setText(rate[3] + "%");
 				bedBl = false;
 
 			}
@@ -426,6 +440,7 @@ public class Stage03 extends JPanel {
 					fullRatePercent.setText(rate[0] + "%");
 					cleanRatePercent.setText(rate[1] + "%");
 					tiredRatePercent.setText(rate[2] + "%");
+					growthRatePercent.setText(rate[3] + "%");
 					riceBl = false;
 				}
 				if (bathBl == true) { //bath 아이콘이 활성화 되었을 때!
@@ -434,6 +449,7 @@ public class Stage03 extends JPanel {
 					fullRatePercent.setText(rate[0] + "%");
 					cleanRatePercent.setText(rate[1] + "%");
 					tiredRatePercent.setText(rate[2] + "%");
+					growthRatePercent.setText(rate[3] + "%");
 					bathBl = false;
 				}
 			}
