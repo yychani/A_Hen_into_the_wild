@@ -105,6 +105,7 @@ public class Stage03 extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				goOrStop = false;
+//				media.soundStop();
 				ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
 			}
 		});
@@ -175,8 +176,8 @@ public class Stage03 extends JPanel {
 						e.printStackTrace();
 					}
 				}
+				media2.soundStop();
 				
-
 			}
 
 		});
