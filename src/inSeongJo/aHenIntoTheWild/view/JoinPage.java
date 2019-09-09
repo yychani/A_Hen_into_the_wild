@@ -212,7 +212,7 @@ public class JoinPage extends JPanel {
 		emailList.setBounds(550, 530, 120, 30);
 		add(emailList);
 
-		// 이메일 인증 버튼
+		//// 이메일 인증 버튼
 		JButton verifyButton = new JButton("인증번호 전송");
 		verifyButton.setBounds(690, 530, 150, 30);
 		verifyButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));

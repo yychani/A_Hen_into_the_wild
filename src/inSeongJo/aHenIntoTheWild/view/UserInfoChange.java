@@ -60,7 +60,7 @@ public class UserInfoChange extends JPanel {
 			}
 		}
 
-		// JLabel text
+		//// JLabel text
 		// 회원정보변경 텍스트
 		JLabel changeInfoText = new JLabel("회원정보변경");
 		changeInfoText.setBounds(380, 120, 300, 100);

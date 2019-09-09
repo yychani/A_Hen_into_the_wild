@@ -128,7 +128,7 @@ public class MainPage extends JPanel {
 		loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(loginButton);
 
-		// 회원 가입 버튼
+		//// 회원 가입 버튼
 		JButton joinButton = new JButton("회원가입");
 		joinButton.setBounds(670, 445, 120, 40);
 		joinButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));

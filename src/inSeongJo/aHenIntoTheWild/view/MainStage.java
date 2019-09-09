@@ -39,7 +39,7 @@ public class MainStage extends JPanel {
 		this.setLayout(null);
 		// mf.add(this);
 
-		// 유저 객체 정보 출력
+		//// 유저 객체 정보 출력
 		JLabel loginInfo = new JLabel("환영합니다. " + user.getNickName() + "님");
 		loginInfo.setBounds(100, 8, 300, 100);
 		loginInfo.setFont(new Font("맑은 고딕", Font.PLAIN, 17));

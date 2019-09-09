@@ -102,7 +102,7 @@ public class UserAgreements extends JPanel {
 			}
 		});
 
-		// 취소 버튼 (메인페이지로 이동)
+		//// 취소 버튼 (메인페이지로 이동)
 		JButton cancleButton = new JButton("취소");
 		cancleButton.setBounds(350, 650, 100, 40);
 		cancleButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
