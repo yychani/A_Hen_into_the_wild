@@ -163,7 +163,7 @@ public class MainStage extends JPanel {
 		stage2Button.setFocusPainted(false);
 		stage2Button.setBounds(250, 200, 300, 300);
 		stage2Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		add(stage2Button);
+		
 		stage2Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -177,13 +177,13 @@ public class MainStage extends JPanel {
 		stage3Button.setBorderPainted(false);
 		stage3Button.setContentAreaFilled(false);
 		stage3Button.setFocusPainted(false);
-		stage3Button.setBounds(470, 200, 300, 300);
 		stage3Button.setDisabledIcon(new ImageIcon(lockImage));
+		stage3Button.setBounds(470, 200, 300, 300);
+		stage3Button.setEnabled(false);
 		stage3Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		add(stage3Button);
-		stage3Button.addMouseListener(new MouseAdapter() {
+		stage3Button.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				if (user.isStage3Video()) {
 					ChangePanel.changePanel(mf, mainstage, new Stage03InfoPage(mf, user));
 				} else {
@@ -196,6 +196,7 @@ public class MainStage extends JPanel {
 				}
 			}
 		});
+		
 		// STAGE4 버튼
 		Image stage4Image = new ImageIcon("images/YJimages/STAGE4.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage4Button = new JButton(new ImageIcon(stage4Image));
@@ -205,7 +206,6 @@ public class MainStage extends JPanel {
 		stage4Button.setDisabledIcon(new ImageIcon(lockImage));
 		stage4Button.setBounds(710, 200, 300, 300);
 		stage4Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		add(stage4Button);
 
 		stage4Button.addActionListener(new ActionListener() {
 			@Override
@@ -215,7 +215,7 @@ public class MainStage extends JPanel {
 				} else {
 					mainstage.setVisible(false);
 					new VideoTest(mf, "scene4", user, new Stage04infoPage(mf, user));
-					MediaThread mt = new MediaThread(mainstage, 60);
+					MediaThread mt = new MediaThread(mainstage, 75);
 					user.setStage4Video(true);
 					mt.start();
 					mf.remove(mainstage);
@@ -224,22 +224,28 @@ public class MainStage extends JPanel {
 		});
 		
 		
-		if(user.getStage1Score() ==0) {
+		
+		if(user.getStage1Score() == 0) {
 			stage2Button.setEnabled(false);
 			stage3Button.setEnabled(false);
 			stage4Button.setEnabled(false);
 		}else {
-			if(user.getStage2Score() ==0) {
+			if(user.getStage2Score() == 0) {
 				stage3Button.setEnabled(false);
 				stage4Button.setEnabled(false);
 			}else {
-				if(user.getStage3Score() ==0) {
+				if(user.getStage3Score() == 0) {
 					stage4Button.setEnabled(false);
 				}
 			}
 				
 		}
-		
+		System.out.println(stage2Button.isEnabled() + " "
+				 + stage3Button.isEnabled() + " "
+				 + stage4Button.isEnabled());
+		add(stage2Button);
+		add(stage3Button);
+		add(stage4Button);
 	}
 
 	public void paint(Graphics g) {
