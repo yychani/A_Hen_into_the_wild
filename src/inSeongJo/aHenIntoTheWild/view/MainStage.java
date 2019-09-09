@@ -42,7 +42,7 @@ public class MainStage extends JPanel {
 		// 유저 객체 정보 출력
 		JLabel loginInfo = new JLabel("환영합니다. " + user.getNickName() + "님");
 		loginInfo.setBounds(100, 8, 300, 100);
-		loginInfo.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 17));
+		loginInfo.setFont(new Font("맑은 고딕", Font.PLAIN, 17));
 		loginInfo.setForeground(Color.DARK_GRAY);
 		add(loginInfo);
 
@@ -94,17 +94,17 @@ public class MainStage extends JPanel {
 		// 잎싹이 대사 텍스트
 		JLabel ipssakText = new JLabel("안녕? 난 잎싹이라고 해.");
 		ipssakText.setBounds(350, 510, 500, 100);
-		ipssakText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		ipssakText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		ipssakText.setForeground(Color.DARK_GRAY);
 		add(ipssakText);
 		JLabel ipssakText2 = new JLabel("양계장은 너무 갑갑하지 않아? 난 이곳을 나가고 싶어.");
 		ipssakText2.setBounds(270, 545, 500, 100);
-		ipssakText2.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		ipssakText2.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		ipssakText2.setForeground(Color.DARK_GRAY);
 		add(ipssakText2);
 		JLabel ipssakText3 = new JLabel("우리 같이 마당으로 나가볼까?");
 		ipssakText3.setBounds(330, 580, 500, 100);
-		ipssakText3.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		ipssakText3.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		ipssakText3.setForeground(Color.DARK_GRAY);
 		add(ipssakText3);
 
