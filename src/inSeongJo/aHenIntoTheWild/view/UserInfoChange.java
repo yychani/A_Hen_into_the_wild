@@ -98,7 +98,7 @@ public class UserInfoChange extends JPanel {
 
 		// 비밀번호 재확인 알림 텍스트
 		JLabel passwordCheckText = new JLabel("비밀번호 일치 확인이 필요합니다.");
-		passwordCheckText.setBounds(360, 485, 500, 100);
+		passwordCheckText.setBounds(365, 485, 500, 100);
 		passwordCheckText.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
 		passwordCheckText.setForeground(Color.WHITE);
 		add(passwordCheckText);
