@@ -313,15 +313,14 @@ public class Stage01 extends JPanel implements KeyListener {
 	}
 
 	public void gameStatusCheck(Graphics g) {
-		Image retry = new ImageIcon("images/buttons/Retry_button_Normal.png").getImage().getScaledInstance(200, 140, 0);
-		Image retryPressed = new ImageIcon("images/buttons/Retry_button_Pressed.png").getImage().getScaledInstance(200,
-				140, 0);
+		Image retry = new ImageIcon("images/buttons/Retry_button_Normal.png").getImage().getScaledInstance(210, 70, 0);
+		Image retryPressed = new ImageIcon("images/buttons/Retry_button_Pressed.png").getImage().getScaledInstance(210, 70, 0);
 		JButton retryButton = new JButton(new ImageIcon(retry));
-		JButton retryPButton = new JButton(new ImageIcon(retryPressed));
+		retryButton.setPressedIcon(new ImageIcon(retryPressed));
 		retryButton.setBorderPainted(false);
 		retryButton.setContentAreaFilled(false);
 		retryButton.setFocusPainted(false);
-		retryButton.setBounds(200, 500, 300, 300);
+		retryButton.setBounds(300, 500, 210, 70);
 
 		retryButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		retryButton.addMouseListener(new MouseAdapter() {
@@ -335,17 +334,16 @@ public class Stage01 extends JPanel implements KeyListener {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				System.out.println("마우스 눌려지고 있음");
-				retryButton.setIcon(new ImageIcon(retryPressed));
 			}
 		});
-		Image home = new ImageIcon("images/buttons/Home_button_Normal.png").getImage().getScaledInstance(200, 140, 0);
-		Image homePressed = new ImageIcon("images/buttons/Home_button_Pressed.png").getImage().getScaledInstance(200,
-				140, 0);
+		Image home = new ImageIcon("images/buttons/Home_button_Normal.png").getImage().getScaledInstance(210, 70, 0);
+		Image homePressed = new ImageIcon("images/buttons/Home_button_Pressed.png").getImage().getScaledInstance(210, 70, 0);
 		JButton homeButton = new JButton(new ImageIcon(home));
+		homeButton.setPressedIcon(new ImageIcon(homePressed));
 		homeButton.setBorderPainted(false);
 		homeButton.setContentAreaFilled(false);
 		homeButton.setFocusPainted(false);
-		homeButton.setBounds(500, 500, 300, 300);
+		homeButton.setBounds(550, 500, 210, 70);
 
 		homeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		homeButton.addMouseListener(new MouseAdapter() {
