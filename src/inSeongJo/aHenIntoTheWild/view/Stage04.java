@@ -78,8 +78,10 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private Image enemy = new ImageIcon("images/Images/bird.gif").getImage().getScaledInstance(150, 150, 0);
 	private Image star = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(40, 40, 0);
 	private Image star2 = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(40, 40, 0);
+	private Image homeButton = new ImageIcon("images/Images/homebutton.png").getImage().getScaledInstance(70, 70, 0);
 	private ArrayList<Image> life_Array;
 
+	JButton homeB = new JButton(new ImageIcon(homeButton));
 
 
 	// 스레드 생성
@@ -104,10 +106,51 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		for(int i = 0; i < 5; i++) {
 			life_Array.add(new ImageIcon("images/Images/life.png").getImage().getScaledInstance(20, 20, 0));
 		}
+		
+		homeB.setBounds(950, 30, 70, 70);
+		homeB.setBorderPainted(false);
+		homeB.setContentAreaFilled(false);
+		add(homeB);
+		
+		homeB.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ChangePanel.changePanel(mf, stage04, new MainStage(mf, user));
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		
 
 		// -5, -50
 		JLabel lifeText = new JLabel();
-		lifeText.setBounds(500, 500, 100, 50);
+		lifeText.setBounds(500, 500, 500, 50);
 		lifeText.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		add(lifeText);
 
@@ -569,6 +612,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		Image main = new ImageIcon("images/Images/main3.png").getImage().getScaledInstance(150, 100, 0);
 		Image countStar = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(60, 60, 0);
 		Image countStar2 = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(60, 60, 0);
+		
 		JButton retryB = new JButton(new ImageIcon(retry));
 		JButton goMain = new JButton(new ImageIcon(main));
 
@@ -667,7 +711,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			System.out.println("star2 : " + sCnt2);
 			//         g.drawImage(retry, 50, 400, null);
 			//         g.drawImage(goMain, 550, 410, null);
-			thS = false;;
+			thS = false;
 		}else if(gameClear == true) {
 			g.drawImage(clearImage, 120, 150, null);
 			g.drawImage(star, 350, 400,null);
