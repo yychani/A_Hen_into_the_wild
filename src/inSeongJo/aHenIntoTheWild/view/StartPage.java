@@ -83,6 +83,11 @@ public class StartPage extends JPanel {
 							user.setStage3Score(0);
 							user.setStage4Score(0);
 							
+							user.setStage1Video(false);
+							user.setStage2Video(false);
+							user.setStage3Video(false);
+							user.setStage4Video(false);
+							
 							ulist.set(i, user);
 							ud.readUserList();
 							System.out.println("스테이지1 점수: "+user.getStage1Score());

@@ -40,7 +40,8 @@ public class UserInformation extends JPanel {
 	private Font f1;
 	private JPanel UserInformation; // 화면 전환을 위해 changePanel메소드에서 사용할 필드.
 	private ArrayList<User> allUser;
-
+	MainPage mainPage;
+	
 	public UserInformation(MainFrame mf, User user) {
 		this.user = user;
 		UserInformation = this;
@@ -147,6 +148,15 @@ public class UserInformation extends JPanel {
 
 		btn1.setBounds(300, 500, 150, 50);
 		btn2.setBounds(500, 500, 150, 50);
+		btn2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ChangePanel.changePanel(mf, UserInformation, new MainPage(mf));
+			}
+		});
+		
+		
 
 		// 홈버튼
 		Image homeImage = new ImageIcon("images/YJimages/home.png").getImage().getScaledInstance(70, 70,
