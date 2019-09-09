@@ -13,8 +13,12 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.sun.jna.platform.linux.LibC.Sysinfo;
 
 import inSeongJo.aHenIntoTheWild.controller.UserManager;
 import inSeongJo.aHenIntoTheWild.model.dao.RankingDao;
@@ -28,7 +32,9 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	Stage04Enemy se;
 	Stage04_Point sp,sp2;
 	User user;
-
+	// private 
+	// private
+	//private
 	private MainFrame mf;
 	private MainStage ms;
 	private JPanel stage04;
@@ -74,8 +80,10 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private Image enemy = new ImageIcon("images/Images/bird.gif").getImage().getScaledInstance(150, 150, 0);
 	private Image star = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(40, 40, 0);
 	private Image star2 = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(40, 40, 0);
+	private Image homeButton = new ImageIcon("images/Images/homebutton.png").getImage().getScaledInstance(70, 70, 0);
 	private ArrayList<Image> life_Array;
 
+	JButton homeB = new JButton(new ImageIcon(homeButton));
 
 
 	// 스레드 생성
@@ -100,10 +108,51 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		for(int i = 0; i < 5; i++) {
 			life_Array.add(new ImageIcon("images/Images/life.png").getImage().getScaledInstance(20, 20, 0));
 		}
+		
+		homeB.setBounds(950, 30, 70, 70);
+		homeB.setBorderPainted(false);
+		homeB.setContentAreaFilled(false);
+		add(homeB);
+		
+		homeB.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ChangePanel.changePanel(mf, stage04, new MainStage(mf, user));
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		
 
 		// -5, -50
 		JLabel lifeText = new JLabel();
-		lifeText.setBounds(500, 500, 100, 50);
+		lifeText.setBounds(500, 500, 500, 50);
 		lifeText.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		add(lifeText);
 
@@ -122,8 +171,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		Thread th2 = new Thread(t);
 		th2.start();
-
-		//      pointProcess2();
 	}
 
 	@Override
@@ -156,11 +203,19 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			}
 		} catch (Exception e) {
 		}
-
+		if(gameClear == true) {
+			System.out.println("왜안돼???");
+			String[] strr = checkRanking();
+			String str = "";
+			for(int i = 0; i < strr.length; i++) {
+				str += (strr[i] + "\n");
+			}
+			System.out.println(str);
+			//메세지창이 어떤 Frame에서 보여지게 될 것인지 지정, 보통null을 사용
+			JOptionPane.showMessageDialog(null, str, "Stage 4 랭킹", JOptionPane.PLAIN_MESSAGE);
+		}
 		//      System.out.println("score : " + score);
 		//      System.out.println("score2 : " + score2);
-
-
 	}
 
 	//모든 스윙 컴포넌트는 자신의 모양을 그리는paintComponent() 메소드를 보유
@@ -183,7 +238,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		this.repaint();
 	}
-
+	
 	private void EnemyProcess() {
 		// System.out.println("계십니까~");
 
@@ -192,7 +247,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			// System.out.println("하...");
 			if (se.getX() <= -60) {
 				Enemy_List.remove(i);
-
 				//            System.out.println("여기는?");
 			} else {
 				se.move();
@@ -208,10 +262,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				} else {
 					life--;
 					System.out.println("stop : " + life);
-
 				}
 				Enemy_List.remove(i);
-
 			}
 		}
 
@@ -279,6 +331,12 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			Point_List .add(sp);
 
 		}
+		if (cnt2 % 179 == 0) {
+			//         System.out.println("예~~~~~~~~~~~~");
+			sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
+			Point_List .add(sp);
+
+		}
 
 
 
@@ -324,43 +382,9 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		}
 
 
-
-
-		//      System.out.println("Score : " + score);
-
 	}
 
-	/*   public void pointProcess2() {
 
-      for (int i = 0; i < Point_List2.size(); ++i) {
-         sp2 = (Point_List2.get(i));
-
-         if (sp2.getX() <= -60) {
-            Point_List2.remove(i);
-
-         } else {
-            sp2.move();
-         }
-         if (Math.abs((x + chorok.getWidth(null) / 2) - (sp2.getX() + star2.getWidth(null) / 2)) < (star2.getWidth(null) / 2
-               + chorok.getWidth(null) / 2 - 40)
-               && Math.abs((y + chorok.getHeight(null) / 2)
-                     - (sp2.getY() + star2.getHeight(null) / 2)) < (star2.getHeight(null) / 2 + chorok.getHeight(null) / 2
-                           - 40)) {
-            Point_List2.remove(i);
-            score++;
-            System.out.println("score : " + score);
-         }else {
-         }
-      }
-
-   if (cnt3 % 190 == 0) {
-      System.out.println("이게왜안돼");
-      sp2 = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
-      Point_List2.add(sp2);
-      System.out.println("송기준");
-   }
-
-   }*/
 
 	public void drawEnemy(Graphics g) {
 		// System.out.println("여기가문제네");
@@ -562,7 +586,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				if(time == 0) {
 					gameClear = true;
 					stop = false;
-					//               thS = false;
+					thS = false;
 				}else {
 					time--;
 				}
@@ -576,8 +600,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			}
 		}
 	}
-
-
 	//      Image retry = new ImageIcon("images/Images/retry.png").getImage().getScaledInstance(300, 300, 0);
 	//      Image goMain = new ImageIcon("images/Images/main.png").getImage().getScaledInstance(300, 300, 0);
 
@@ -585,13 +607,17 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	//   retry (380, 280, 0);
 	//  goMain (430, 300, 0);
 	public void gameButton(Graphics g) {
-		
+
 		score = (sCnt* 50) - (sCnt2 * 20);
 
 		Image retry = new ImageIcon("images/Images/retry3.png").getImage().getScaledInstance(150, 100, 0);
 		Image main = new ImageIcon("images/Images/main3.png").getImage().getScaledInstance(150, 100, 0);
+		Image countStar = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(60, 60, 0);
+		Image countStar2 = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(60, 60, 0);
+		
 		JButton retryB = new JButton(new ImageIcon(retry));
 		JButton goMain = new JButton(new ImageIcon(main));
+
 
 		//외곽선을 없애준다.
 		retryB.setBorderPainted(false);
@@ -603,19 +629,13 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		retryB.setFocusPainted(false);
 		goMain.setFocusPainted(false);
 
-		retryB.setBounds(50, 450, 380, 280);
-		goMain.setBounds(550, 450, 430, 300);
+		retryB.setBounds(50, 470, 380, 280);
+		goMain.setBounds(550, 470, 430, 300);
 		//커서바꾸기
 		retryB.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		goMain.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-		
-		JLabel sText = new JLabel(score + "");
-		sText.setBounds(500, 280, 200, 70);
-		sText.setFont(new Font("맑은 고딕", Font.BOLD, 70));
-		sText.setForeground(Color.BLACK);
-		
-		System.out.println("score : " + score); 
-		
+
+
 		retryB.addMouseListener(new MouseListener() {
 
 
@@ -685,79 +705,102 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 
 		if(gameOver == true) {
-			g.drawImage(overImage, 120, 200, null);
+			g.drawImage(overImage, 120, 250, null);
 			add(retryB);
 			add(goMain);
-			add(sText);
-			System.out.println("star1 : " + sCnt);
-			System.out.println("star2 : " + sCnt2);
-			//         g.drawImage(retry, 50, 400, null);
-			//         g.drawImage(goMain, 550, 410, null);
-			thS = false;;
-		}else if(gameClear == true) {
-			g.drawImage(clearImage, 120, 200, null);
-			add(retryB);
-			add(goMain);
-			add(sText);
+			//			add(sText);
 			System.out.println("star1 : " + sCnt);
 			System.out.println("star2 : " + sCnt2);
 			//         g.drawImage(retry, 50, 400, null);
 			//         g.drawImage(goMain, 550, 410, null);
 			thS = false;
+		}else if(gameClear == true) {
+			g.drawImage(clearImage, 120, 150, null);
+			g.drawImage(star, 350, 400,null);
+			g.drawImage(star2, 350, 450,null);
+			add(retryB);
+			JLabel scoreText = new JLabel(score + "");
+			JLabel scoreText2 = new JLabel("점수 : ");
+			JLabel cStar = new JLabel(sCnt + " 개 ");
+			JLabel cStar2 = new JLabel(sCnt2 + " 개");
 
+			scoreText2.setBounds(300, 500, 200, 70);
+			scoreText.setBounds(550, 500, 200, 70);
+			cStar.setBounds(550, 390, 200, 70);
+			cStar2.setBounds(550, 440, 200, 70);
 
+			scoreText.setFont(new Font("맑은 고딕", Font.BOLD, 40));
+			scoreText2.setFont(new Font("맑은 고딕", Font.BOLD, 40));
+			cStar.setFont(new Font("맑은 고딕", Font.BOLD, 40));
+			cStar2.setFont(new Font("맑은 고딕", Font.BOLD, 40));
+			scoreText.setForeground(Color.WHITE);
+			scoreText2.setForeground(Color.WHITE);
+			cStar.setForeground(Color.WHITE);
+			cStar2.setForeground(Color.WHITE);
+			add(scoreText);
+			add(scoreText2);
+			add(cStar);
+			add(cStar2);
+			//			System.out.println(score);
+			user.setStage4Score(score);
+			add(retryB);
+			add(goMain);
 
+			//			thS = false;
+
+			//			gameClear = false;
 		} 
 
 	}
 
 	//sCnt , sCnt2
 	public String[] checkRanking() {
+
 		UserManager um = new UserManager();
 		RankingDao rd = new RankingDao();
 
 		// ArrayList<String> rankStr = new ArrayList<>();
 		um.rankingMethod(user, score, 4);
-		ArrayList<Ranking> list = rd.readRankingList(4);
+		ArrayList<Ranking> rankList = rd.readRankingList(4);
 
-		int size = 0;
-		if (list.size() < 5) {
-			size = list.size();
-		} else {
-			size = 5;
+		int count = 0;
+		if(rankList.size() > 5 ) {
+			count = 5;
+		}else {
+			count = rankList.size();
 		}
-		String[] rankStr = new String[size];
-		if (list.size() == 0) {
-			System.out.println("기존 랭킹이 없습니다.");
-			list = new ArrayList<Ranking>();
-		} else {
-			for (int i = 0; i < size; i++) {
-				if (!(list.get(i).getName().equals(null))) {
-					// System.out.println(list.get(i));
-					// rankStr.add(list.get(i).getName());
-					rankStr[i] = list.get(i).getName();
-					System.out.println(rankStr[i]);
-				}
+
+
+		String[] rStr = new String[count];
+		if(rankList.size() == 0) {
+			System.out.println("랭킹이 없습니다. 게임을 플레이하세요!");
+			rankList = new ArrayList<Ranking>();
+
+		}else {
+			for(int i = 0; i < count; i++) {
+					rStr[i] = rankList.get(i).getName();
+					System.out.println(rStr[i]);
+				
 			}
 		}
 
-		JLabel[] rankLa = new JLabel[5];
-		for (int i = 0; i < rankStr.length; i++) {
-			// for(int j = 0; j < i; j++) {
-			// if(!(list.get(i).getScore() == list.get(j).getScore())) {
-			rankStr[i] = new String((i + 1) + "등 : " + list.get(i).getName() + "    " + list.get(i).getScore());
-			// }
-			rankLa[i] = new JLabel();
-			rankLa[i].setText(rankStr[i]);
-			rankLa[i].setBounds(440, 320 + 30 * (i + 1), 200, 100);
-			rankLa[i].setFont(new Font("맑은 고딕", Font.BOLD, 20));
-			rankLa[i].setForeground(Color.BLACK);
-			System.out.println(rankStr[i]);
+		JLabel[] rankLabel = new JLabel[5];
+		for(int i = 0; i < rStr.length; i++) {
+			rStr[i] = new String((i + 1) + "등 : " + rankList.get(i).getName() + " " + rankList.get(i).getScore());
+			rankLabel[i] = new JLabel();
+			rankLabel[i].setText(rStr[i]);
+			rankLabel[i].setBounds(440, 320 + 30 * (i + 1), 200, 100);
+			rankLabel[i].setFont(new Font("맑은 고딕", Font.BOLD, 20));
+			rankLabel[i].setForeground(Color.BLACK);
+			System.out.println(rStr[i]);
 		}
 
-		// }
-		return rankStr;
-
+		
+		return rStr;
 	}
+
+	/*	public class DialogTest extends JFrame {
+
+	}*/
 
 }
