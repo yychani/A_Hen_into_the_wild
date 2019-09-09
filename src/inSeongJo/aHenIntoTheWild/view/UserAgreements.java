@@ -34,7 +34,7 @@ public class UserAgreements extends JPanel {
 		// 이용약관 텍스트
 		JLabel usersAgreementsText = new JLabel("이용약관");
 		usersAgreementsText.setBounds(420, 140, 300, 100);
-		usersAgreementsText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 40));
+		usersAgreementsText.setFont(new Font("맑은 고딕", Font.PLAIN, 40));
 		usersAgreementsText.setForeground(Color.DARK_GRAY);
 		add(usersAgreementsText);
 
@@ -102,10 +102,10 @@ public class UserAgreements extends JPanel {
 			}
 		});
 
-		// 취소 버튼 (메인페이지로 이동)
+		//// 취소 버튼 (메인페이지로 이동)
 		JButton cancleButton = new JButton("취소");
 		cancleButton.setBounds(350, 650, 100, 40);
-		cancleButton.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
+		cancleButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
 		cancleButton.setBorderPainted(false);
 		cancleButton.setBackground(Color.LIGHT_GRAY);
 		cancleButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -122,7 +122,7 @@ public class UserAgreements extends JPanel {
 		// 확인 버튼
 		JButton confirmButton = new JButton("확인");
 		confirmButton.setBounds(500, 650, 100, 40);
-		confirmButton.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
+		confirmButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
 		confirmButton.setBorderPainted(false);
 		confirmButton.setBackground(Color.LIGHT_GRAY);
 		confirmButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
