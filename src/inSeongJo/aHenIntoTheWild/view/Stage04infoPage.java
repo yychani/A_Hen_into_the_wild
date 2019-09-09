@@ -26,7 +26,7 @@ public class Stage04infoPage extends JPanel{
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		stage01Infopage = this;
-		mf.add(this);
+//		mf.add(this);
 
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
