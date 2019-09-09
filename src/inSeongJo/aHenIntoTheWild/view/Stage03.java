@@ -9,6 +9,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import inSeongJo.aHenIntoTheWild.controller.Stage03Manager;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
@@ -34,12 +37,14 @@ public class Stage03 extends JPanel {
 	User user;
 
 	private int time;
+	private int lockTime = 1000;
 	private int[] rate = new int[4];
 	private int x;
 	private int y;
 	private int growthLevel;
 	private int[][] iniRate = { { 100, 100, 0, 0 }, { 50, 90, 20, 0 }, { 60, 60, 30, 0 } }; // 초기세팅값 : 포만감, 청결도, 피로도,
 
+	
 	private String str = "";
 	private boolean riceBl, bathBl, playBl, loveBl, bedBl;
 	private boolean goOrStop = true;
@@ -121,7 +126,7 @@ public class Stage03 extends JPanel {
 				while (goOrStop) {
 					if (rate[0] <= 20) {
 						goOrStop = false;
-						media2.soundStop();
+						//media2.soundStop();
 						media.sound("gameover");
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
@@ -131,7 +136,7 @@ public class Stage03 extends JPanel {
 
 					} else if (rate[1] <= 20) {
 						goOrStop = false;
-						media2.soundStop();
+						//media2.soundStop();
 						media.sound("gameover");
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
@@ -142,7 +147,7 @@ public class Stage03 extends JPanel {
 					} else if (rate[2] >= 80) {
 						sm.printResult(rate[3], time);
 						goOrStop = false;
-						media2.soundStop();
+						//media2.soundStop();
 						media.sound("gameover");
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
@@ -153,12 +158,12 @@ public class Stage03 extends JPanel {
 						goOrStop = false;
 						if (growthLevel < 2) {
 							gameOverImg = null;
-							media2.soundStop();
+							//media2.soundStop();
 							JOptionPane.showMessageDialog(null, "초록이가 " + (growthLevel + 1) + "번째 성장했어요!");
 							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel, user));							
 						} else {
 							gameOverImg = gameClearImg;
-							media2.soundStop();
+							//media2.soundStop();
 							media.sound("clear");
 							sm.printResult(rate[3], time);
 							int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
@@ -184,6 +189,31 @@ public class Stage03 extends JPanel {
 		th3.setDaemon(true);
 		th3.start();
 		
+		JTextField hiden = new JTextField();
+		hiden.setBounds(150, 5, 50, 20);
+		hiden.setBorder(null);
+		hiden.setBackground(null);
+		add(hiden);
+		
+		hiden.requestFocus();
+		hiden.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String hStr = hiden.getText();
+				System.out.println(hStr);
+				
+				if(hStr.equals("holdset10")) {
+				lockTime = 10;
+			} else if(hStr.equals("holdset1000")) {
+				lockTime = 1000;
+			} 
+				
+				
+			}
+		});
+		
+	
 		//밥먹이기 아이콘 설정
 		Image riceIcon = new ImageIcon("images/stage03_image/riceIcon.png").getImage().getScaledInstance(100, 102,
 				Image.SCALE_SMOOTH);
@@ -321,7 +351,7 @@ public class Stage03 extends JPanel {
 		tiredRatePercent.setForeground(Color.RED);
 		add(tiredRatePercent);
 
-		addMouseMotionListener(new MyEvent()); //위치 확인
+		//addMouseMotionListener(new MyEvent()); //위치 확인
 
 		//놀아주기 버튼 눌렀을 때, 지수들(rate)변화하게 만듦
 		playbutton.addActionListener(new ActionListener() {
@@ -349,7 +379,7 @@ public class Stage03 extends JPanel {
 				loveBl = true;
 				media.sound("clickFX");
 				System.out.println("애정주기 버튼 눌림");
-				LoadingClass lc = new LoadingClass(lovebutton, s03);
+				LoadingClass lc = new LoadingClass(lovebutton, s03, lockTime);
 				Thread th4 = new Thread(lc);
 				th4.setDaemon(true);
 				th4.start();
@@ -371,7 +401,7 @@ public class Stage03 extends JPanel {
 				bedBl = true;
 				media.sound("clickFX");
 				System.out.println("잠자기 버튼 눌림");
-				LoadingClass lc2 = new LoadingClass(bedbutton, s03);
+				LoadingClass lc2 = new LoadingClass(bedbutton, s03, lockTime);
 				Thread th5 = new Thread(lc2);
 				th5.setDaemon(true);
 				th5.start();
@@ -513,6 +543,14 @@ public class Stage03 extends JPanel {
 		this.growthLevel = growthLevel;
 	}
 
+	public int getLockTime() {
+		return lockTime;
+	}
+
+	public void setLockTime(int lockTime) {
+		this.lockTime = lockTime;
+	}
+
 }
 
 class MyEvent extends MouseMotionAdapter {
@@ -609,12 +647,15 @@ class LoadingClass implements Runnable {
 	JPanel jp;
 	boolean goOrStop = true;
 
+	int lockTime;
+
 	LoadingClass() {
 	}
 
-	LoadingClass(JButton jb, JPanel jp) {
+	LoadingClass(JButton jb, JPanel jp, int lockTime) {
 		this.jb = jb;
 		this.jp = jp;
+		this.lockTime = lockTime;
 	}
 
 	@Override
@@ -625,7 +666,7 @@ class LoadingClass implements Runnable {
 		jb.setEnabled(false);
 
 		try { //클릭했을때 1초동안 잠금
-			Thread.sleep(1000);
+			Thread.sleep(lockTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
