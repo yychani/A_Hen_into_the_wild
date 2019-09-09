@@ -164,15 +164,21 @@ public class MainStage extends JPanel {
 		stage3Button.setBounds(470, 200, 300, 300);
 		stage3Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(stage3Button);
-		stage3Button.addActionListener(new ActionListener() {
-
+		stage3Button.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, mainstage, new Stage03InfoPage(mf, user));
-
+			public void mouseClicked(MouseEvent e) {
+				if (user.isStage3Video()) {
+					ChangePanel.changePanel(mf, mainstage, new Stage03InfoPage(mf, user));
+				} else {
+					mainstage.setVisible(false);
+					new VideoTest(mf, "scene3", user, new Stage03InfoPage(mf, user));
+					MediaThread mt = new MediaThread(mainstage, 60);
+					user.setStage3Video(true);
+					mt.start();
+					mf.remove(mainstage);
+				}
 			}
 		});
-
 		// STAGE4 버튼
 		Image stage4Image = new ImageIcon("images/YJimages/STAGE4.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage4Button = new JButton(new ImageIcon(stage4Image));
@@ -186,7 +192,16 @@ public class MainStage extends JPanel {
 		stage4Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, mainstage, new Stage04(mf, user));
+				if (user.isStage4Video()) {
+					ChangePanel.changePanel(mf, mainstage, new Stage04infoPage(mf, user));
+				} else {
+					mainstage.setVisible(false);
+					new VideoTest(mf, "scene4", user, new Stage04infoPage(mf, user));
+					MediaThread mt = new MediaThread(mainstage, 60);
+					user.setStage4Video(true);
+					mt.start();
+					mf.remove(mainstage);
+				}
 			}
 		});
 	}
