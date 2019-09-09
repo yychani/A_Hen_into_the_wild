@@ -34,6 +34,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	User user;
 	// private 
 	// private
+	//private
 	private MainFrame mf;
 	private MainStage ms;
 	private JPanel stage04;
