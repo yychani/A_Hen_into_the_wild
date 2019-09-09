@@ -60,46 +60,46 @@ public class UserInfoChange extends JPanel {
 			}
 		}
 
-		// JLabel text
+		//// JLabel text
 		// 회원정보변경 텍스트
 		JLabel changeInfoText = new JLabel("회원정보변경");
 		changeInfoText.setBounds(380, 120, 300, 100);
-		changeInfoText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 50));
+		changeInfoText.setFont(new Font("맑은 고딕", Font.PLAIN, 50));
 		changeInfoText.setForeground(Color.DARK_GRAY);
 		add(changeInfoText);
 
 		// 닉네임 텍스트
 		JLabel nickNameText = new JLabel("닉네임");
 		nickNameText.setBounds(270, 215, 300, 100);
-		nickNameText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		nickNameText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		nickNameText.setForeground(Color.DARK_GRAY);
 		add(nickNameText);
 
 		// 이메일 텍스트
 		JLabel emailText = new JLabel("이메일");
 		emailText.setBounds(270, 295, 300, 100);
-		emailText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		emailText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		emailText.setForeground(Color.DARK_GRAY);
 		add(emailText);
 
 		// 비밀번호 텍스트
 		JLabel passwordText = new JLabel("비밀번호");
 		passwordText.setBounds(265, 375, 300, 100);
-		passwordText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		passwordText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		passwordText.setForeground(Color.DARK_GRAY);
 		add(passwordText);
 
 		// 비밀번호 확인 텍스트
 		JLabel repasswordText = new JLabel("비밀번호 확인");
 		repasswordText.setBounds(240, 455, 300, 100);
-		repasswordText.setFont(new Font("나눔스퀘어 ExtraBold", Font.PLAIN, 20));
+		repasswordText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		repasswordText.setForeground(Color.WHITE);
 		add(repasswordText);
 
 		// 비밀번호 재확인 알림 텍스트
 		JLabel passwordCheckText = new JLabel("비밀번호 일치 확인이 필요합니다.");
 		passwordCheckText.setBounds(360, 485, 500, 100);
-		passwordCheckText.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 12));
+		passwordCheckText.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
 		passwordCheckText.setForeground(Color.WHITE);
 		add(passwordCheckText);
 		
@@ -171,7 +171,7 @@ public class UserInfoChange extends JPanel {
 		// 수정 완료 버튼
 		JButton modiCompleteButton = new JButton("수정 완료");
 		modiCompleteButton.setBounds(450, 620, 120, 40);
-		modiCompleteButton.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
+		modiCompleteButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
 		modiCompleteButton.setBackground(Color.LIGHT_GRAY);
 		modiCompleteButton.setBorderPainted(false);
 		modiCompleteButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -222,7 +222,7 @@ public class UserInfoChange extends JPanel {
 		// 수정 취소 버튼
 		JButton modiCancleButton = new JButton("수정 취소");
 		modiCancleButton.setBounds(650, 620, 120, 40);
-		modiCancleButton.setFont(new Font("나눔스퀘어 Bold", Font.PLAIN, 20));
+		modiCancleButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
 		modiCancleButton.setBackground(Color.LIGHT_GRAY);
 		modiCancleButton.setBorderPainted(false);
 		modiCancleButton.setCursor(new Cursor(Cursor.HAND_CURSOR));

@@ -71,7 +71,7 @@ public class UserInformation extends JPanel {
 			e.getMessage();
 		}
 
-		f1 = new Font("나눔스퀘어_ac Bold", Font.PLAIN, 20);
+		f1 = new Font("맑은 고딕", Font.PLAIN, 20);
 
 		add(id);
 		add(nik);
