@@ -20,6 +20,7 @@ public class Stage01_infoPage extends JPanel{
 	private JPanel stage01Infopage;
 	private Image infoBackGround;
 	private User user;
+	
 	public Stage01_infoPage(MainFrame mf, User user) {
 		this.mf = mf;
 		this.user = user;

@@ -61,13 +61,6 @@ public class StartPage extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				startPage.setVisible(false);
-				new VideoTest(mf, "intro", user, new MainStage(mf, user));
-				MediaThread mt = new MediaThread(startPage, 50);
-				
-				mt.start();
-				mf.remove(startPage);
-				
 				int i=0; 
 				for(User u: ulist) {
 					if(user.getId().equals(u.getId())) {
@@ -101,6 +94,14 @@ public class StartPage extends JPanel {
 					}
 				
 				}
+				startPage.setVisible(false);
+				new VideoTest(mf, "intro", user, new MainStage(mf, user));
+				MediaThread mt = new MediaThread(startPage, 50);
+				
+				mt.start();
+				mf.remove(startPage);
+				
+				
 			}
 		});
 
@@ -139,7 +140,9 @@ public class StartPage extends JPanel {
 				ChangePanel.changePanel(mf, startPage , new MainStage(mf, user));
 			}
 		});
-		
+		if(user.getStage1Score() == 0) {
+			continued.setEnabled(false);
+		}
 		
 	}
 	public void paintComponent(Graphics g) {
