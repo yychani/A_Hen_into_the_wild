@@ -5,152 +5,916 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Stage02 extends JPanel {
+import inSeongJo.aHenIntoTheWild.model.vo.User;
 
-	boolean keyUp = false;
-	boolean keyDown = false;
-	boolean keyLeft = false;
-	boolean keyRight = false;
-	boolean playerMove = false;
-	boolean KeySpace = false;
+// 프레임 생성을 위한 JFrame 상속
+//키보드 이벤트 처리를 위한 KeyListener를 상속
+//스레드를 돌리기 위한 Runnable 상속
+public class Stage02 extends JPanel implements KeyListener, Runnable {
+	Stage04Enemy se;
+	Stage04_Point sp,sp2;
+	User user;
 
 	private MainFrame mf;
+	private JPanel stage04;
+	Stage02 Stage02 = this;
+	// 캐릭터의 좌표 변수
 
-	private Image ScreenImage;
-	private Graphics ScreenGraphics;
+	private int x = 100;
+	private int y = 100;
+	private int ax = 500;
+	private int ay = 500;
+	private int w;
+	private int h;
+	//   private int time;
 
-	Timer t = new Timer();
-
-	int x = 300;
-	int y = 100;
-
-	int x2 = 550;
-
-	int y2 = 300;
-
-	private int nX;
-
-	private int nY;
-
-	private int nH;
-
-	private int nW;
-
-	Image Missile_img; // 미사일 이미지 변수
+	private int life = 5;
+	private int score;
+	private int score2;
+	private int time = 99;
+	
+	private int pattern = 1;
 
 	ArrayList Missile_List = new ArrayList();
-
 	Missile ms; // 미사일 클래스 접근 키
+	Image buffImage; Graphics buffg;
+	private boolean ds = false;
+	private boolean stop = true;
+	private boolean thS = true;
+	private boolean gameOver = false;
+	private boolean gameClear = false;
+	Timer t = new Timer();
 
-	// Missile_img = tk.getImage("images/MSImages/wind.png");
+	int Hp = 300;
+	int hpX = 100;
+	int agguHp = 300;
 
-	// 미사일 이미지를 불러온다.
+	int cnt;
+	int cnt2;
+	int cnt3;
+	//에너미 관련
+	private Image enemy = new ImageIcon("images/MSImages/aggu_reverse.png").getImage().getScaledInstance(150, 150, 0);
+	Enemy en; //에너미 클래스 접근 키
+	ArrayList Enemy_List = new ArrayList();
 
-	Image iconNagne = new ImageIcon("images/MSImages/nagne.png").getImage().getScaledInstance(200, 200, 0);// 나그네 이미지
-	JLabel nagne = new JLabel(new ImageIcon(iconNagne));
-	private JLabel hpbar2;
-	private Image IntroBG = new ImageIcon("images/MSImages/stage2_background.jpeg").getImage(); // 베경 이미지
-	private JLabel hpbar = new JLabel(new ImageIcon("images/MSImages/hpbar.png"));
-	private JLabel wind;
+	int e_w = ImageWidthValue("images/MSImages/aggu_reverse.png");
+	int e_h = ImageHeightValue("images/MSImages/aggu_reverse.png");
+	//적 이미지의 w(넓이)값, h(높이) 값을 계산하여 받습니다.
+	//해당 메소드는 아래에 이미지 크기값 계산용으로
+	//추가된 메소드 입니다.
 
-	public Stage02(MainFrame mf) {
+	int m_w = ImageWidthValue("images/MSImages/wind4.png");
+	int m_h = ImageHeightValue("images/MSImages/wind4.png");
 
-		setName("stage2");
-		setBounds(0, 0, 1024, 768);
+	//hp
+	private JLabel enemyHp = new JLabel(new ImageIcon("images/MSImages/hpbar.PNG"));
+	private JLabel nagneHp = new JLabel(new ImageIcon("images/MSImages/hpbar.PNG"));
+	//private JLabel hpbar2 = new JLabel(new ImageIcon("src/images/hpbar.png"));
 
-		int x, y; // 케릭터의 현재 좌표를 받을 변수
-		int cnt; // 무한 루프를 카운터 하기 위한 변수
+	// 키보드 입력 처리를 위한 변수
 
+	boolean KeyUp = false;
+	boolean KeyDown = false;
+	boolean KeyLeft = false;
+	boolean KeyRight = false;
+	boolean KeySpace = false;
+
+	private int backX = 0;
+	//   private Image empty = new ImageIcon()
+	//   private Image emptyLife = new ImageIcon("images/MSImages/emptyLife.png").getImage().getScaledInstance(20, 20, 0);
+	//   private Image overImage = new ImageIcon("images/MSImages/gameOver2.png").getImage().getScaledInstance(800, 200, 0);
+	//   private Image clearImage = new ImageIcon("images/MSImages/gameClear.png").getImage().getScaledInstance(800, 250, 0);
+	private Image chorok = new ImageIcon("images/MSImages/nagne.png").getImage().getScaledInstance(150, 150, 0);
+	//	private Image enemy = new ImageIcon("images/MSImages/aggu_reverse.gif").getImage().getScaledInstance(150, 150, 0);
+	//   private Image star = new ImageIcon("images/MSImages/star2.png").getImage().getScaledInstance(40, 40, 0);
+
+	//   private Image star2 = new ImageIcon("images/MSImages/star.png").getImage().getScaledInstance(40, 40, 0);
+
+	private ArrayList<Image> life_Array;
+	private Image nagne = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(40, 40, 0);
+	//   private Image me_img = new ImageIcon("images/MSImages/nagne.png").getImage().getScaledInstance(40, 40, 0);
+	private Image Missile_img = new ImageIcon("images/MSImages/wind4.png").getImage().getScaledInstance(100, 100, 0);
+
+	// 스레드 생성
+	Thread th;
+	Image BG = new ImageIcon("images/MSImages/stage2_background.jpeg").getImage()/*.getScaledInstance(1024, 768, Image.SCALE_SMOOTH)*/;
+
+	ArrayList<Stage04_Point> Point_List = new ArrayList<>();
+	ArrayList<Stage04_Point> Point_List2 = new ArrayList<>();
+
+	public Stage02(MainFrame mf, User user) {
+
+		this.mf = mf;
+		this.user = user;
+		this.setBounds(0, 0, 1600, 768);
+		this.setLayout(null);
+		// stage04 = this;
 		mf.add(this);
-		setFocusable(true);
-		setBackground(new Color(0, 0, 0, 0));
-		setLayout(null);
+		start();
 
-		// 애꾸 쓰레드
-		ThreadAggu ag = new ThreadAggu(this, nagne, wind);
-		Thread th = new Thread(ag);
-		th.start();
+		life_Array= new ArrayList<>();
+		for(int i = 0; i < 5; i++) {
+			life_Array.add(new ImageIcon("images/Images/life.png").getImage().getScaledInstance(20, 20, 0));
+		}
 
-		// 시계 쓰레드
-		Thread th2 = new Thread(t);
-		th2.start();
+		// -5, -50
+		JLabel lifeText = new JLabel();
+		lifeText.setBounds(500, 500, 100, 50);
+		lifeText.setFont(new Font("맑은 고딕", Font.BOLD, 30));
+		add(lifeText);
 
-		// 미사일 스레드
-		Missile ms = new Missile(this, nagne);
-		Thread th3 = new Thread(ms);
-		// th3.start();
+		enemyHp.setBounds(500, 100, 300, 100);
+		add(enemyHp);
 
-		// 나그네
-		nagne.setBounds(100, 450, 300, 300);
-		add(nagne);
+		nagneHp.setBounds(100, 100, 300, 100);
+		add(nagneHp);
+		setVisible(true);
+		this.setFocusable(true);
+		this.addKeyListener(this);
 
-		// 나그네hp
-		hpbar.setBounds(100, 50, 300, 300);
-		add(hpbar);
-
-		// 나그네 키보드
-		this.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
-				switch (e.getKeyCode()) {
-				case KeyEvent.VK_UP:
-					System.out.println("이동했어요 위");
-					ReduceHp(hpbar);
-					ReduceHpEnemy(hpbar2);
-					nagne.setLocation(nagne.getX(), nagne.getY() - 30);
-					nY = nagne.getY();
-					System.out.println(nY);
-					break;
-
-				case KeyEvent.VK_DOWN:
-					System.out.println("이동했어요 아래");
-					nagne.setLocation(nagne.getX(), nagne.getY() + 30);
-					nY = nagne.getY();
-					System.out.println(nY);
-					break;
-
-				case KeyEvent.VK_LEFT:
-					System.out.println("이동했어요 왼");
-					nagne.setLocation(nagne.getX() - 30, nagne.getY());
-					nX = nagne.getX();
-					System.out.println(nX);
-					break;
-
-				case KeyEvent.VK_RIGHT:
-					System.out.println("이동했어요 오");
-					nagne.setLocation(nagne.getX() + 30, nagne.getY());
-					nX = nagne.getX();
-					System.out.println(nX);
-					break;
-
-				case KeyEvent.VK_SPACE:
-					System.out.println("스페스눌");// 스페이스키 입력 처리 추가
-					th3.start();
-					th3.interrupt();
-					break;
-				}
-			}
-		});
 	}
 
+
+
+	public void MissileProcess(){ // 미사일 처리 메소드
+		if ( KeySpace == true){ // 스페이스바 키 상태가 true 면
+			if( ( cnt % 30 ) == 0){
+				ms = new Missile(x, y); // 좌표 체크하여 넘기기
+				Missile_List.add(ms);    // 해당 미사일 추가
+			}
+		}
+
+		for ( int i = 0 ; i < Missile_List.size() ; ++i){
+			ms = (Missile) Missile_List.get(i);
+			ms.move();
+			if ( ms.x > 500 - 20 ){
+				Missile_List.remove(i);
+			}
+			//편의상 그림그리기 부분에 있던 미사일 이동과
+			//미사일이 화면에서 벗어났을시 명령 처리를
+			//이쪽으로 옮겼습니다.
+			for (int j = 0 ; j < Enemy_List.size(); ++ j){
+				en = (Enemy) Enemy_List.get(j);
+				System.out.println("ms.x : " + ms.x);
+				System.out.println("ms.y : " + ms.y);
+				System.out.println("en.x : " + en.x);
+				System.out.println("en.y : " + en.y);
+				System.out.println("m_w : " + m_w);
+				System.out.println("m_h : " + m_h);
+				System.out.println("e_w : " + e_w);
+				System.out.println("e_h : " + e_h);
+				
+				if (Crash(ms.x,ms.y,en.x,en.y, 100, 100, e_w, e_h)){
+					//미사일과 적 객체를 하나하나 판별하여
+					//접촉했을시 미사일과 적을 화면에서 지웁니다.
+					//판별엔 Crash 메소드에서 계산하는 방식을 씁니다.
+					Missile_List.remove(i);
+					reducenaHp(nagneHp);
+					reduceHp(enemyHp);
+					Enemy_List.remove(j);
+				}
+			}
+		}
+	}
+
+	public void start() {
+		addKeyListener(this); // 키보드 이벤트 실행
+		th = new Thread(this);
+		th.setDaemon(true);// 스레드 생성
+		th.start(); // 스레드 실행
+		//      timer.start();
+
+		Thread th2 = new Thread(t);
+		th2.start();
+	}
+
+	@Override
+	public void run() {
+		try { // 예외옵션 설정으로 에러 방지
+			while (thS) { // while 문으로 무한 루프 시키기
+				KeyProcess(); // 키보드 입력처리를 하여 x,y 갱신
+				MissileProcess(); //미사일 처리 메소드 실행
+				EnemyProcess();//에너미
+				repaint(); // 갱신된 x,y값으로 이미지 새로 그리기
+				//				ThreadAggu ag = new ThreadAggu(this,chorok);
+				//				Thread th3 = new Thread(ag);
+				//				th3.start();
+				Thread.sleep(20); // 20 milli sec 로 스레드 돌리기
+				cnt++;
+				cnt2++;
+				cnt3++;
+			}
+		} catch (Exception e) {
+		}
+		System.out.println("score : " + score);
+		System.out.println("score2 : " + score2);
+
+	}
+	public void EnemyProcess(){//적 행동 처리 메소드
+		for (int i = 0 ; i < Enemy_List.size() ; ++i ){ 
+			en = (Enemy)(Enemy_List.get(i)); 
+			//배열에 적이 생성되어있을 때 해당되는 적을 판별
+			en.move(pattern); //해당 적을 이동시킨다.
+			if(en.x < -200){ //적의 좌표가 화면 밖으로 넘어가면
+				Enemy_List.remove(i); // 해당 적을 배열에서 삭제
+//				pattern = (int) (Math.random() * 3 + 1); //패턴 변수 추가
+			}
+		}
+
+		if ( cnt % 300 == 0 ){ //루프 카운트 300회 마다
+			System.out.println(time +"time " );
+			if(time == 85) {
+				System.out.println(time +"time2 " );
+				en = new Enemy(500, 300);
+				System.out.println("애꾸없다");
+				Enemy_List.add(en); 
+			}
+									
+			//						//﻿각 좌표로 적을 생성한 후 배열에 추가한다.
+			en = new Enemy(1000,  500);
+			Enemy_List.add(en);
+			System.out.println("애꾸없다5");
+		}
+		//			if (collision(x - w, y - h - 15 + ipY, en.getX(), en.getY() + ipY, ipssagStanding[0], enemy)) {
+		//				life--;
+		////				media.sound("punch");
+		//				x -= 20;
+		//				// System.out.println(life);
+		//				Enemy_List.remove(i);
+		//			}		
+	}
+	public boolean Crash(int x1, int y1, int x2, int y2, int w1, int h1, int w2, int h2){
+		//﻿충돌 판정을 위한 새로운 Crash 메소드를 만들었습니다.
+		//판정을 위해 충돌할 두 사각 이미지의 좌표 및 
+		//넓이와 높이값을 받아들입니다.
+		//여기서 이미지의 넓이, 높이값을 계산하기 위해 밑에 보면
+		//이미지 크기 계산용 메소드를 또 추가했습니다.
+		boolean check = false;
+		if ( Math.abs( ( x1 + w1 / 2 )  - ( x2 + w2 / 2 ))  <  ( w2 / 2 + w1 / 2 )  
+				&& Math.abs( ( y1 + h1 / 2 )  - ( y2 + h2 / 2 ))  <  ( h2 / 2 + h1/ 2 ) ){
+			//충돌 계산식입니다. 사각형 두개의 거리및 겹치는 여부를 확인
+			//하는 방식이라고 알고 있는데, 만들다보니 생각보다 식이 
+			//복잡해진것 같습니다.
+			//이보다 더 간편한 방식이 있을 것도 같은데 
+			//일단 이렇게 해봤습니다.
+			check = true;//위 값이 true면 check에 true를 전달합니다.
+		}else{ check = false;}
+		return check; //check의 값을 메소드에 리턴 시킵니다.
+	}
+	//모든 스윙 컴포넌트는 자신의 모양을 그리는paintComponent() 메소드를 보유
+	//스윙컴포넌트가 자신의 모양을  그리는 메소드
+	@Override
+	protected void paintComponent(Graphics g) {
+		g.drawImage(BG, 0, 0, this);
+		//		Draw_Enemy(); 
+		g.drawImage(chorok, x, y, this);
+		drawEnemy(g);
+		//		g.drawImage(enemy, x, y, this);
+		//      g.drawImage(star2,500,500,this);
+		// g.drawImage(star, 500,500, this);
+		Draw_Missile(g); // 그려진 미사일 가져와 실행
+		//      drawEnemy(g);
+		this.repaint();
+	}
+	public int ImageWidthValue(String file){ 
+		// 이미지 넓이 크기 값 계산용 메소드 입니다.
+		// 파일을 받아들여 그 파일 값을 계산 하도록 하는 것입니다.
+		int x = 0;
+		try{
+			File f = new File(file); // 파일을 받습니다.
+			BufferedImage bi = ImageIO.read(f);
+			//받을 파일을 이미지로 읽어들입니다.
+			x = bi.getWidth(); //이미지의 넓이 값을 받습니다.
+		}catch(Exception e){}
+		return x; //받은 넓이 값을 리턴 시킵니다.
+	}
+
+	public int ImageHeightValue(String file){ // 이미지 높이 크기 값 계산
+		int y = 0;
+		try{
+			File f = new File(file);
+			BufferedImage bi = ImageIO.read(f);
+			y = bi.getHeight();
+		}catch(Exception e){}
+		return y;
+	}
+
+
+	public void Draw_Enemy(Graphics g){ // 적 이미지를 그리는 부분
+		for (int i = 0 ; i < Enemy_List.size() ; ++i ){
+			//		en = (Enemy)(Enemy_List.get(i));
+			g.drawImage(enemy, en.x, en.y, this);
+			//배열에 생성된 각 적을 판별하여 이미지 그리기
+		}
+	}
+	class Enemy{ // 적 위치 파악 및 이동을 위한 클래스
+		int x;
+		int y;
+
+		Enemy(int x, int y){ // 적좌표를 받아 객체화 시키기 위한 메소드
+			this.x = x;
+			this.y = y;
+		}
+		public void move(int pattern){ // x좌표 -3 만큼 이동 시키는 명령 메소드
+//			int random  = (int) 1/*(Math.random() *3 +1 )*/;
+			if(pattern == 1) {
+				System.out.println("pattern : " + 1);
+				
+				System.out.println("x : " + x);
+//				if(x <= 200) {
+//					x += 3;
+//				} else {
+//					x -= 3;
+//				}
+				x -= 3;
+				//			y -= 10;
+			} else if (pattern == 2) {
+			System.out.println("pattern : " + 2);
+			x -= 3;
+		} else {
+			System.out.println("pattern : " + 3);
+			x -= 10;
+			y += 30;
+		}
+
+		}
+		public int getX() {
+			return this.x;
+		}
+		public int getY() {
+			return this.y;
+		}
+	}
+	public void reducenaHp(JLabel jl) {
+		Hp -= 30;
+		hpX += 30;
+		jl.setBounds(hpX, 100, Hp, 100);
+	}
+
+	public void reduceHp(JLabel jl) {
+		agguHp -= 30;
+		jl.setBounds(500, 100, agguHp, 100);
+	}
+	public void Draw_Missile(Graphics g){ // 미사일 그리는 메소드
+
+		for (int i = 0 ; i < Missile_List.size()  ; ++i){
+			ms = (Missile) (Missile_List.get(i)); 
+			g.drawImage(Missile_img, ms.x, ms.y, this); 
+		}
+	}
+	//	private void EnemyProcess() {
+	//
+	//		// System.out.println("계십니까~");
+	//
+	//		for (int i = 0; i < Enemy_List.size(); ++i) {
+	//
+	//			se = (Enemy_List.get(i));
+	//
+	//			// System.out.println("하...");
+	//			if (se.getX() <= -60) {
+	//				Enemy_List.remove(i);
+	//				//            System.out.println("여기는?");
+	//			} else {
+	//				se.move();
+	//			}
+	//			if (collision(x - w, y - h - 15, se.getX(), se.getY(), chorok, enemy)) {
+	//				/*
+	//				 * // life--; 
+	//				 * System.out.println("life : " + life);
+	//				 */
+	//				if(life == 0) {
+	//					gameOver = true;
+	//					System.out.println("life : " + life);
+	//				} else {
+	//					life--;
+	//					System.out.println("stop : " + life);
+	//				}
+	//				Enemy_List.remove(i);
+	//			}
+	//		}
+	//
+	//		// cnt가 이 될때마다 적생성
+	//		if (cnt % 50 == 0) {
+	//
+	//			se = new Stage04Enemy(855 + 100, ((int) (Math.random() * 630) - 75));
+	//			Enemy_List.add(se);
+	//		}
+	//
+	//		if (cnt % 80 == 0) {
+	//
+	//			se = new Stage04Enemy(855 + 100, ((int) (Math.random() * 630) - 75));
+	//			Enemy_List.add(se);
+	//
+	//		}
+	//	}
+
+
+
+	// -10 <= x <= 880 -75 <= y <= 590
+	//   public void pointProcess() {
+	//      for (int i = 0; i < Point_List.size(); ++i) {
+	//         sp = (Point_List.get(i));
+	//
+	//         if (sp.getX() <= -60) {
+	//            Point_List.remove(i);
+	//
+	//         } else {
+	//            sp.move();
+	//         }
+	//         if (Math.abs((x + chorok.getWidth(null) / 2) - (sp.getX() + star.getWidth(null) / 2)) < (star.getWidth(null) / 2
+	//               + chorok.getWidth(null) / 2 - 40)
+	//               && Math.abs((y + chorok.getHeight(null) / 2)
+	//                     - (sp.getY() + star.getHeight(null) / 2)) < (star.getHeight(null) / 2 + chorok.getHeight(null) / 2
+	//                           - 40)) {
+	//            Point_List.remove(i);
+	//            score++;
+	//            System.out.println("score : " + score);
+	//         }else {
+	//         }
+	//
+	//
+	//      }
+	//      if (cnt2 % 70 == 0) {
+	//         //         System.out.println("언제될꺼야?");
+	//
+	//         sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
+	//         Point_List.add(sp);
+	//      }
+	//      if (cnt2 % 219 == 0) {
+	//         //         System.out.println("지금되면안돼?");
+	//         sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
+	//         Point_List.add(sp);
+	//      }      
+	//
+	//      if (cnt2 % 313 == 0) {
+	//         //         System.out.println("내일은 될꺼야?");
+	//         sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
+	//         Point_List.add(sp);
+	//      }
+	//      if (cnt2 % 130 == 0) {
+	//         //         System.out.println("예~~~~~~~~~~~~");
+	//         sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
+	//         Point_List .add(sp);
+	//
+	//      }
+	//      System.out.println("Score : " + score);
+	//   }
+	//
+	//
+	//
+
+	public void drawEnemy(Graphics g) {
+		// System.out.println("여기가문제네");
+		for (int i = 0; i < Enemy_List.size(); ++i) {
+			// 타입형이 맞지 않아서 형변환해주어야 한다.
+			en = (Enemy) Enemy_List.get(i);
+			g.drawImage(enemy, en.getX(), en.getY(), this);
+		}
+	}
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	/*public void drawEnemy(Graphics g) {
+		// System.out.println("여기가문제네");
+//		for (int i = 0; i < Enemy_List.size(); ++i) {
+			// 타입형이 맞지 않아서 형변환해주어야 한다.
+			//			en = enemy;
+		for(int i = 0; i < 1000; i ++) {
+//		ax= 500;
+//		ay = 500;
+		ax -= 5;
+		System.out.println("ax : " + ax);
+		System.out.println("ay : " + ay);
+		g.drawImage(enemy, ax, ay, this);
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+		if(i == 999) {
+//			enemy.remove(i);
+//			remove(g);
+			ax = 500;
+			ay = 500;
+		}
+		}
+
+//		}
+	}*/
+
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	//   public void drawPoint(Graphics g) {
+
+	//      for (int i = 0; i < Point_List.size(); ++i) {
+
+	//         int random = (int) (Math.random() * 100) + 1;
+
+	//         sp = Point_List.get(i);
+
+	//
+
+	//         g.drawImage(star, sp.getX(), sp.getY(), this);
+
+	//      }
+
+	//   }
+
+	//   public void drawPoint2(Graphics g) {
+
+	//      for (int i = 0; i < Point_List2.size(); ++i) {
+
+	//         int random = (int) (Math.random() * 100) + 1;
+
+	//         sp2 = Point_List2.get(i);
+
+	//         g.drawImage(star2, sp2.getX(), sp2.getY(), this);
+
+	//      }
+
+	//   }
+
+	//life_Array
+
+	// -10 <= x <= 880 -75 <= y <= 590
+
+	//   public void drawLife(Graphics g) {
+
+	//      if(life == 5) {
+
+	//         for(int i = 0; i < life_Array.size(); i++) {
+
+	//            g.drawImage(life_Array.get(i), 830 + (i * 40), 700, this);
+
+	//         }
+
+	//
+
+	//      }else if(life == 4){
+
+	//         life_Array.set(4, emptyLife);
+
+	//         for(int i = 0; i < life_Array.size(); i++) {
+
+	//            g.drawImage(life_Array.get(i), 830 + (i * 40), 700, this);
+
+	//         }
+
+	//
+
+	//      }else if(life == 3) {
+
+	//         life_Array.set(4, emptyLife);
+
+	//         life_Array.set(3, emptyLife);
+
+	//         for(int i = 0; i < life_Array.size(); i++) {
+
+	//            g.drawImage(life_Array.get(i), 830 + (i * 40), 700, this);
+
+	//         }
+
+	//      }else if(life == 2) {
+
+	//         life_Array.set(4, emptyLife);
+
+	//         life_Array.set(3, emptyLife);
+
+	//         life_Array.set(2, emptyLife);
+
+	//         for(int i = 0; i < life_Array.size(); i++) {
+
+	//            g.drawImage(life_Array.get(i), 830 + (i * 40), 700, this);
+
+	//         }
+
+	//
+
+	//      } else if(life == 1) {
+
+	//         life_Array.set(4, emptyLife);
+
+	//         life_Array.set(3, emptyLife);
+
+	//         life_Array.set(2, emptyLife);
+
+	//         life_Array.set(1, emptyLife);
+
+	//         for(int i = 0; i < life_Array.size(); i++) {
+
+	//            g.drawImage(life_Array.get(i), 830 + (i * 40), 700, this);
+
+	//         }
+
+	//         
+
+	//      }else {
+
+	//         life_Array.set(4, emptyLife);
+
+	//         life_Array.set(3, emptyLife);
+
+	//         life_Array.set(2, emptyLife);
+
+	//         life_Array.set(1, emptyLife);
+
+	//         life_Array.set(0, emptyLife);
+
+	////         stop = false;
+
+	////         gameOver = true;
+
+	//         for(int i = 0; i < life_Array.size(); i++) {
+
+	//         g.drawImage(life_Array.get(i), 830, 700, this);
+
+	//         }
+
+	//      }
+
+	//   }
+
+	public boolean collision(int x1, int y1, int x2, int y2, Image chorok, Image enemy) {
+
+		boolean check = false;
+
+		if (Math.abs((x1 + chorok.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < (enemy.getWidth(null) / 2
+
+				+ chorok.getWidth(null) / 2 - 80)
+
+				&& Math.abs((y1 + chorok.getHeight(null) / 2)
+
+						- (y2 + enemy.getHeight(null) / 2)) < (enemy.getHeight(null) / 2 + chorok.getHeight(null) / 2
+
+								- 80)) {
+
+			// 이미지 넓이, 높이값 바로 받음
+
+			check = true;
+
+		} else {
+
+			check = false;
+
+		}
+
+		return check;
+
+	}
+
+
+
+	public void keyPressed(KeyEvent e) {
+
+
+
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
+			System.out.println("x : " + x + " y : " + y);
+			KeyUp = true;
+			break;
+		case KeyEvent.VK_DOWN:
+			// System.out.println("아래");
+			System.out.println("x : " + x + " y : " + y);
+			KeyDown = true;
+			break;
+		case KeyEvent.VK_LEFT:
+			// System.out.println("왼쪽");
+			System.out.println("x : " + x + " y : " + y);
+			KeyLeft = true;
+			break;
+		case KeyEvent.VK_RIGHT:
+			// System.out.println("오른쪽");
+			System.out.println("x : " + x + " y : " + y);
+			KeyRight = true;
+			break;
+		case KeyEvent.VK_SPACE : // 스페이스키 입력 처리 추가
+			KeySpace = true;
+			break;
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {
+		// 키보드가 눌러졌다가 때어졌을때 이벤트 처리하는 곳
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_UP:
+			KeyUp = false;
+			break;
+		case KeyEvent.VK_DOWN:
+			KeyDown = false;
+			break;
+		case KeyEvent.VK_LEFT:
+			KeyLeft = false;
+			break;
+		case KeyEvent.VK_RIGHT:
+			KeyRight = false;
+			break;
+		case KeyEvent.VK_SPACE : // 스페이스키 입력 처리 추가
+			KeySpace = false;
+			break;
+		}
+	}
+
+	public void keyTyped(KeyEvent e) {
+	}
+
+	// 키보드가 타이핑 될때 이벤트 처리하는 곳
+
+
+
+	// -10 <= x <= 880 -75 <= y <= 590
+	public void KeyProcess() {
+		// 실제로 캐릭터 움직임 실현을 위해
+		// 위에서 받아들인 키값을 바탕으로
+		// 키 입력시마다 5만큼의 이동을 시킨다.
+		// System.out.println("제발");
+		if (KeyUp == true) {
+			if (y <= -75) {
+				y -= 0;
+			} else {
+				y -= 5;
+			}
+		} else if (KeyDown == true) {
+			if (y >= 590) {
+				y += 0;
+			} else {
+				y += 5;
+			}
+		} else if (KeyLeft == true) {
+			if (x <= -10) {
+				x -= 0;
+			} else {
+				x -= 5;
+			}
+		} else if (KeyRight == true) {
+			if (x >= 880) {
+				x += 0;
+			} else {
+				x += 5;                  
+			}
+		}
+		// move();
+	}
+	class Missile{
+		int x;
+		int y; //편의상 변수 명 변경
+		Missile(int x, int y){
+			this.x = x; 
+			this.y = y;//편의상 변수명 변경
+		}
+		public void move(){
+			x += 10;
+		}
+	}
+	//class ThreadAggu implements Runnable {
+	//
+	//	private int x = 500;
+	//	private int y;
+	//	int y2 = 300;
+	//	private JPanel jp;
+	//	private Image img;
+	//	private JLabel jl2;
+	//	private int agguHp = 100;
+	//	private Image enemy = new ImageIcon("images/MSImages/aggu_reverse.gif").getImage().getScaledInstance(150, 150, 0);
+	//	Image iconAggu = new ImageIcon("images/MSImages/aggu_reverse.png").getImage().getScaledInstance(250, 250, 0);//애꾸눈 이미지
+	//	JLabel aggu = new JLabel(new ImageIcon(iconAggu));
+	//	private JLabel hpbar2 = new JLabel(new ImageIcon("images/MSImages/hpbar.png"));
+	//	Image iconWind = new ImageIcon("images/MSImages/wind4.png").getImage().getScaledInstance(100, 100, 0);
+	//	JLabel wind = new JLabel(new ImageIcon(iconWind));
+	//	Point pos; //미사일 좌표 변수
+	//
+	//	public ThreadAggu () { } 
+	//
+	//	public ThreadAggu (JPanel jp,Image img, int x, int y) { 
+	//		pos = new Point(x, y); //미사일 좌표를 체크
+	//		this.jp = jp;
+	//		this.img = img;
+	//		// this.jl2 = jl2;
+	//	}
+	//	ThreadAggu(int x, int y){ //미사일 좌표를 입력 받는 메소드
+	//		pos = new Point(x, y); //미사일 좌표를 체크
+	//
+	//	}
+	//
+	//
+	//
+	//
+	//	public void moveBack(Image img) {
+	//
+	//		//			img.x();
+	//
+	//	}
+	//
+	//
+	//
+	//	public boolean Crash(int x, int y, int h, int w, int x2 , int y2, int h2 , int w2) {
+	//
+	//		boolean isTrue = false;
+	//
+	//		if(x  >= x2) {
+	//
+	//			isTrue = true;
+	//
+	//		}
+	//
+	//		return isTrue;
+	//
+	//	}
+	//
+	//
+	//
+	//
+	//
+	//
+	//	public void run() {
+	//
+	//		// wind.setBounds(500, 500, 100, 100);
+	//
+	//		// jp.add(wind);
+	//
+	//		aggu.setBounds(500,450,300,300);//애꾸 세팅
+	//
+	//		// aggu.move(x, y);
+	//
+	//		jp.add(aggu);
+	//
+	//		hpbar2.setBounds(550,50,300,300); //애꾸피 세팅 
+	//
+	//		jp.add(hpbar2);
+	//
+	//		System.out.println("이게 지나간다고?");
+	//
+	//		for(int i = 0; i < 1000; i++) {
+	//
+	//			System.out.println("여기도? 지나간다고?");
+	//
+	//			System.out.println("i : "  + i);
+	//
+	//			aggu.setBounds(500-i*10,450,300,300);// 애꾸이동 
+	//
+	//			//애꾸 충돌 시
+	//
+	//			// if(Crash(jl.getX(),jl.getY(),100,100,aggu.getX(),aggu.getY(),aggu.getHeight(),aggu.getWidth())) {
+	//
+	//			// System.out.println("i :" + i);
+	//
+	//			try {
+	//
+	//				Thread.sleep(100);
+	//
+	//			} catch (InterruptedException e) {
+	//
+	//
+	//				e.printStackTrace();
+	//
+	//			}
+	//
+	//			// agguHp-= 10;
+	//
+	//			// i=0;
+	//
+	//			// ReduceHpEnemy(hpbar2);//체력바 감소 
+	//
+	//			// if(agguHp == 0 ) {
+	//
+	//			// jp.remove(aggu);
+	//
+	//			// }
+	//
+	//			//				moveBack(aggu);// 충돌 시 위치 초기화
+	//
+	//			// }
+	//
+	//		}
+	//
+	//	}
+	//
+	//}
+
 	class Timer implements Runnable {
-		private int time = 99;
 
 		@Override
 		public void run() {
 			JLabel Mytimer = new JLabel("" + time);
-			Mytimer.setBounds(430, 150, 100, 100);
-			Mytimer.setFont(new Font("바탕", Font.PLAIN, 70));
+			Mytimer.setBounds(440, 110, 100, 100);
+			Mytimer.setFont(new Font("맑은 고딕", Font.BOLD, 40));
 			Mytimer.setForeground(Color.ORANGE);
 			add(Mytimer);
-			while (true) {
+			while (thS) {
+				if(time == 0) {
+					gameClear = true;
+					stop = false;
+					//               thS = false;
+				}else {
+				}
 				time--;
 				Mytimer.setText("" + time);
 				try {
@@ -162,191 +926,24 @@ public class Stage02 extends JPanel {
 		}
 	}
 
-	public void MissileProcess() { // 미사일 처리 메소드
-		if (KeySpace) { // 스페이스바 키 상태가 true 면
-			// ms = new Missile(x, y); // 좌표 체크하여 넘기기
-			Missile_List.add(ms); // 해당 미사일 추가
-		}
-	}
+	//   public void gameSet(Graphics g) {
 
-	// public void Draw_Missile(){ // 미사일 그리는 메소드
-	// for (int i = 0 ; i < Missile_List.size() ; ++i){
-	// //미사일 존재 유무를 확인한다.
-	//
-	// ms = (Missile) (Missile_List.get(i));
-	// // 미사일 위치값을 확인
-	//
-	// buffg.drawImage(Missile_img, ms.pos.x + 150, ms.pos.y + 30, this);
-	// // 현재 좌표에 미사일 그리기.
-	// // 이미지 크기를 감안한 미사일 발사 좌표는 수정됨.
-	//
-	// ms.move();
-	// // 그려진 미사일을 정해진 숫자만큼 이동시키기
-	//
-	// if ( ms.pos.x > f_width ){ // 미사일이 화면 밖으로 나가면
-	// Missile_List.remove(i); // 미사일 지우기
-	// }
-	// }
-	// }
+	//      if(gameOver == true) {
 
-	public void ReduceHp(JLabel j) {
+	//         g.drawImage(overImage, 120, 200, null);
 
-		x -= 50;
+	//         thS = false;;
 
-		y += 50;
+	//      }else if(gameClear == true) {
 
-		j.setBounds(y, 50, x, 300);
+	//         g.drawImage(clearImage, 120, 200, null);
 
-	}
+	//         thS = false;
 
-	public void ReduceHpEnemy(JLabel j) {
+	//      }
 
-		y2 -= 50;
+	//   }
 
-		j.setBounds(550, 50, y2, 300);
 
-	}
 
-	public void paint(Graphics g) {
-
-		ScreenImage = createImage(1024, 768);
-		ScreenGraphics = ScreenImage.getGraphics();
-		screenDraw(ScreenGraphics);
-		// Draw_Missile(); // 그려진 미사일 가져와 실행
-		g.drawImage(ScreenImage, 0, 0, null);
-	}
-
-	public void screenDraw(Graphics g) {
-		g.drawImage(IntroBG, 0, 0, null);
-		paintComponents(g);
-		this.repaint();
-	}
-
-	public void moveBack(JLabel jl) {
-		jl.setBounds(500, 450, 300, 300);
-	}
-
-	public boolean Crash(int x, int y, int h, int w, int x2, int y2, int h2, int w2) {
-		boolean isTrue = true;
-
-		if (x + w >= x2) {
-			isTrue = false;
-		}
-		return isTrue;
-	}
-}
-
-class ThreadAggu implements Runnable {
-
-	private int x = 500;
-	private int y;
-	int y2 = 300;
-	private JPanel jp;
-	private JLabel jl;
-	private JLabel jl2;
-	private int agguHp = 100;
-
-	Image iconAggu = new ImageIcon("images/MSImages/aggu_reverse.png").getImage().getScaledInstance(250, 250, 0);// 애꾸눈
-																													// 이미지
-	JLabel aggu = new JLabel(new ImageIcon(iconAggu));
-	private JLabel hpbar2 = new JLabel(new ImageIcon("images/MSImages/hpbar.png"));
-	Image iconWind = new ImageIcon("images/MSImages/wind4.png").getImage().getScaledInstance(100, 100, 0);
-	JLabel wind = new JLabel(new ImageIcon(iconWind));
-
-	public ThreadAggu() {
-	}
-
-	public ThreadAggu(JPanel jp, JLabel jl, JLabel jl2) {
-		this.jp = jp;
-		this.jl = jl;
-		this.jl2 = jl2;
-	}
-
-	public void moveBack(JLabel jl) {
-		jl.setBounds(500, 450, 300, 300);
-	}
-
-	public boolean Crash(int x, int y, int h, int w, int x2, int y2, int h2, int w2) {
-		boolean isTrue = false;
-		if (x + w >= x2) {
-			isTrue = true;
-		}
-		return isTrue;
-	}
-
-	public void ReduceHpEnemy(JLabel j) {
-		y2 -= 30;
-		j.setBounds(550, 50, y2, 300);
-	}
-
-	public void run() {
-		// wind.setBounds(500, 500, 100, 100);
-		// jp.add(wind);
-		aggu.setBounds(500, 450, 300, 300);// 애꾸 세팅
-		jp.add(aggu);
-		hpbar2.setBounds(550, 50, 300, 300); // 애꾸피 세팅
-		jp.add(hpbar2);
-		System.out.println("이게 지나간다고?");
-		for (int i = 0; i < 1000; i++) {
-			aggu.setBounds(500 - i, 450, 300, 300);// 애꾸이동
-			// 애꾸 충돌 시
-			System.out.println("나그네 위치 : " + jl.getX());
-			if (Crash(jl.getX(), jl.getY(), 100, 100, aggu.getX(), aggu.getY(), aggu.getHeight(), aggu.getWidth())) {
-				System.out.println("i :" + i);
-				agguHp -= 10;
-				i = 0;
-				ReduceHpEnemy(hpbar2);// 체력바 감소
-				if (agguHp == 0) {
-					jp.remove(aggu);
-				}
-				moveBack(aggu);// 충돌 시 위치 초기화
-			}
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-}
-
-class Missile implements Runnable { // 미사일 위치 파악 및 이동을 위한 클래스 추가
-
-	Image iconWind = new ImageIcon("images/MSImages/wind4.png").getImage().getScaledInstance(100, 100, 0);
-	JLabel wind = new JLabel(new ImageIcon(iconWind));
-	private JPanel jp;
-	private JLabel jl;
-	Point pos; // 미사일 좌표 변수
-
-	Missile(JPanel jp, JLabel jl) { // 미사일 좌표를 입력 받는 메소드
-		this.jp = jp;
-		this.jl = jl; // 미사일 좌표를 체크
-	}
-
-	public void move() { // 미사일 이동을 위한 메소드
-		pos.x += 10; // x 좌표에 10만큼 미사일 이동
-	}
-
-	@Override
-	public void run() {
-		System.out.println("이거 실행 되나요?");
-		System.out.println("x : " + jl.getX());
-		System.out.println("y : " + jl.getY());
-		System.out.println("w : " + jl.getWidth());
-		System.out.println("h : " + jl.getHeight());
-		wind.setBounds(jl.getX(), jl.getY(), jl.getWidth(), jl.getHeight());
-		jp.add(wind);
-		for (int i = 0; i < 1000; i++) {
-
-			wind.setBounds(300 + i, jl.getY(), jl.getWidth(), jl.getHeight());
-			if (i == 200) {
-				jp.remove(wind);
-			}
-			try {
-				Thread.sleep(5);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 }
