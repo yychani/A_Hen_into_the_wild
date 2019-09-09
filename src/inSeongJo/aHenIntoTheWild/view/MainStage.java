@@ -77,7 +77,6 @@ public class MainStage extends JPanel {
 		saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		saveButton.setPressedIcon(new ImageIcon(savePressedImage));
 		add(saveButton);
-
 		saveButton.addActionListener(new ActionListener() {
 
 			//파일 저장 기능
@@ -129,6 +128,7 @@ public class MainStage extends JPanel {
 		bubbleText.setBounds(30, 500, 900, 200);
 		add(bubbleText);
 
+		Image lockImage = new ImageIcon("images/buttons/lockbutton.png").getImage().getScaledInstance(200, 200, 0);
 		// STAGE1 버튼
 		Image stage1Image = new ImageIcon("images/YJimages/STAGE1.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage1Button = new JButton(new ImageIcon(stage1Image));
@@ -159,6 +159,7 @@ public class MainStage extends JPanel {
 		JButton stage2Button = new JButton(new ImageIcon(stage2Image));
 		stage2Button.setBorderPainted(false);
 		stage2Button.setContentAreaFilled(false);
+		stage2Button.setDisabledIcon(new ImageIcon(lockImage));
 		stage2Button.setFocusPainted(false);
 		stage2Button.setBounds(250, 200, 300, 300);
 		stage2Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -166,7 +167,15 @@ public class MainStage extends JPanel {
 		stage2Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, mainstage, new Stage02(mf));
+				
+				if(user.getStage1Score() ==0) {
+					stage2Button.setEnabled(false);
+				}
+						
+				
+				
+				ChangePanel.changePanel(mf, mainstage, new Stage02(mf, user));
+				
 			}
 		});
 
@@ -177,11 +186,34 @@ public class MainStage extends JPanel {
 		stage3Button.setContentAreaFilled(false);
 		stage3Button.setFocusPainted(false);
 		stage3Button.setBounds(470, 200, 300, 300);
+		stage3Button.setDisabledIcon(new ImageIcon(lockImage));
 		stage3Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(stage3Button);
 		stage3Button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				if(user.getStage1Score() ==0 && user.getStage2Score() ==0) {
+					JButton lock = new JButton(new ImageIcon("images/buttons/lockbutton.png"));
+					lock.setSize(300, 300);
+					lock.setBorderPainted(false);
+					lock.setContentAreaFilled(false);
+					lock.setFocusPainted(false);
+					add(lock);
+					lock.setOpaque(false);
+					
+					if(user.getStage1Score() ==0) {
+						stage2Button.setEnabled(false);
+						stage3Button.setEnabled(false);
+					}else {
+						if(user.getStage2Score() ==0) {
+							stage3Button.setEnabled(false);
+						}
+							
+					}
+					
+				}
+				
 				if (user.isStage3Video()) {
 					ChangePanel.changePanel(mf, mainstage, new Stage03InfoPage(mf, user));
 				} else {
@@ -200,6 +232,7 @@ public class MainStage extends JPanel {
 		stage4Button.setBorderPainted(false);
 		stage4Button.setContentAreaFilled(false);
 		stage4Button.setFocusPainted(false);
+		stage4Button.setDisabledIcon(new ImageIcon(lockImage));
 		stage4Button.setBounds(710, 200, 300, 300);
 		stage4Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(stage4Button);
@@ -219,6 +252,24 @@ public class MainStage extends JPanel {
 				}
 			}
 		});
+		
+		
+		if(user.getStage1Score() ==0) {
+			stage2Button.setEnabled(false);
+			stage3Button.setEnabled(false);
+			stage4Button.setEnabled(false);
+		}else {
+			if(user.getStage2Score() ==0) {
+				stage3Button.setEnabled(false);
+				stage4Button.setEnabled(false);
+			}else {
+				if(user.getStage3Score() ==0) {
+					stage4Button.setEnabled(false);
+				}
+			}
+				
+		}
+		
 	}
 
 	public void paint(Graphics g) {
