@@ -31,15 +31,17 @@ public class MainStage extends JPanel {
 	private Image ScreenImage;
 	private UserDao ud = new UserDao();
 	ArrayList<User> ulist = ud.readUserList();
+	Media media = new Media();
 
-	public MainStage(MainFrame mf, User user) {
+	public MainStage(MainFrame mf, User user, Media media) {
 		this.mf = mf;
 		this.user = user;
+		this.media = media;
 		mainstage = this;
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		// mf.add(this);
-
+		media.sound("Sleepy_Wood");
 		//// 유저 객체 정보 출력
 		JLabel loginInfo = new JLabel("환영합니다. " + user.getNickName() + "님");
 		loginInfo.setBounds(100, 8, 300, 100);
@@ -62,7 +64,14 @@ public class MainStage extends JPanel {
 		;
 		add(userButton);
 
-		userButton.addMouseListener(new MyMouseAdapter());
+		userButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				media.soundStop();
+				ChangePanel.changePanel(mf, mainstage, new UserInformation(mf, user));
+				System.out.println("클릭되었습니다.");
+			}
+		});
 
 		// 저장 버튼
 		Image saveImage = new ImageIcon("images/YJimages/save.png").getImage().getScaledInstance(55, 55,
@@ -79,14 +88,14 @@ public class MainStage extends JPanel {
 		add(saveButton);
 		saveButton.addActionListener(new ActionListener() {
 
-			//파일 저장 기능
-			//기존 회원 정보와 로그인한 유저의 회원 정보 비교해 맞으면 그 정보를 파일에 저장
+			// 파일 저장 기능
+			// 기존 회원 정보와 로그인한 유저의 회원 정보 비교해 맞으면 그 정보를 파일에 저장
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int i=0;
-				for(User u: ulist) {
-					if(user.getId().equals(u.getId())) {
-						if(user.getPassword().equals(u.getPassword())) {
+				int i = 0;
+				for (User u : ulist) {
+					if (user.getId().equals(u.getId())) {
+						if (user.getPassword().equals(u.getPassword())) {
 							ulist.set(i, user);
 							ud.writeUserList(ulist);
 						}
@@ -95,7 +104,7 @@ public class MainStage extends JPanel {
 				}
 				System.out.println(ulist);
 				JOptionPane.showMessageDialog(null, "파일 저장 완료!");
-				
+
 			}
 		});
 
@@ -140,15 +149,17 @@ public class MainStage extends JPanel {
 		stage1Button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				media.soundStop();
 				if (user.isStage1Video()) {
-					ChangePanel.changePanel(mf, mainstage, new Stage01_infoPage(mf, user));
+					ChangePanel.changePanel(mf, mainstage, new Stage01_infoPage(mf, user, media));
 				} else {
 					mainstage.setVisible(false);
-					new VideoTest(mf, "scene1", user, new Stage01_infoPage(mf, user));
+					new VideoTest(mf, "scene1", user, new Stage01_infoPage(mf, user, media), media);
 					MediaThread mt = new MediaThread(mainstage, 51);
 					user.setStage1Video(true);
 					mt.start();
 					mf.remove(mainstage);
+					media.soundStop();
 				}
 			}
 		});
@@ -163,11 +174,22 @@ public class MainStage extends JPanel {
 		stage2Button.setFocusPainted(false);
 		stage2Button.setBounds(250, 200, 300, 300);
 		stage2Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		
+
 		stage2Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, mainstage, new Stage02_infoPage(mf, user));
+				media.soundStop();
+				if (user.isStage2Video()) {
+					ChangePanel.changePanel(mf, mainstage, new Stage02_infoPage(mf, user, media));
+				} else {
+					mainstage.setVisible(false);
+					new VideoTest(mf, "scene2", user, new Stage02_infoPage(mf, user, media), media);
+					MediaThread mt = new MediaThread(mainstage, 70);
+					user.setStage2Video(true);
+					mt.start();
+					mf.remove(mainstage);
+					media.soundStop();
+				}
 			}
 		});
 
@@ -184,11 +206,12 @@ public class MainStage extends JPanel {
 		stage3Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				media.soundStop();
 				if (user.isStage3Video()) {
-					ChangePanel.changePanel(mf, mainstage, new Stage03InfoPage(mf, user));
+					ChangePanel.changePanel(mf, mainstage, new Stage03InfoPage(mf, user, media));
 				} else {
 					mainstage.setVisible(false);
-					new VideoTest(mf, "scene3", user, new Stage03InfoPage(mf, user));
+					new VideoTest(mf, "scene3", user, new Stage03InfoPage(mf, user, media), media);
 					MediaThread mt = new MediaThread(mainstage, 60);
 					user.setStage3Video(true);
 					mt.start();
@@ -196,7 +219,7 @@ public class MainStage extends JPanel {
 				}
 			}
 		});
-		
+
 		// STAGE4 버튼
 		Image stage4Image = new ImageIcon("images/YJimages/STAGE4.png").getImage().getScaledInstance(200, 200, 0);
 		JButton stage4Button = new JButton(new ImageIcon(stage4Image));
@@ -210,11 +233,12 @@ public class MainStage extends JPanel {
 		stage4Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				media.soundStop();
 				if (user.isStage4Video()) {
-					ChangePanel.changePanel(mf, mainstage, new Stage04infoPage(mf, user));
+					ChangePanel.changePanel(mf, mainstage, new Stage04infoPage(mf, user, media));
 				} else {
 					mainstage.setVisible(false);
-					new VideoTest(mf, "scene4", user, new Stage04infoPage(mf, user));
+					new VideoTest(mf, "scene4", user, new Stage04infoPage(mf, user, media), media);
 					MediaThread mt = new MediaThread(mainstage, 75);
 					user.setStage4Video(true);
 					mt.start();
@@ -222,27 +246,23 @@ public class MainStage extends JPanel {
 				}
 			}
 		});
-		
-		
-		
-		if(user.getStage1Score() == 0) {
+
+		if (user.getStage1Score() == 0) {
 			stage2Button.setEnabled(false);
 			stage3Button.setEnabled(false);
 			stage4Button.setEnabled(false);
-		}else {
-			if(user.getStage2Score() == 0) {
+		} else {
+			if (user.getStage2Score() == 0) {
 				stage3Button.setEnabled(false);
 				stage4Button.setEnabled(false);
-			}else {
-				if(user.getStage3Score() == 0) {
+			} else {
+				if (user.getStage3Score() == 0) {
 					stage4Button.setEnabled(false);
 				}
 			}
-				
+
 		}
-		System.out.println(stage2Button.isEnabled() + " "
-				 + stage3Button.isEnabled() + " "
-				 + stage4Button.isEnabled());
+		System.out.println(stage2Button.isEnabled() + " " + stage3Button.isEnabled() + " " + stage4Button.isEnabled());
 		add(stage2Button);
 		add(stage3Button);
 		add(stage4Button);
@@ -261,11 +281,4 @@ public class MainStage extends JPanel {
 		this.repaint();
 	}
 
-	class MyMouseAdapter extends MouseAdapter {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			ChangePanel.changePanel(mf, mainstage, new UserInformation(mf, user));
-			System.out.println("클릭되었습니다.");
-		}
-	}
 }

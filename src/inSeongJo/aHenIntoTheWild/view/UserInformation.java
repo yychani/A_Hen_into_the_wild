@@ -202,7 +202,7 @@ public class UserInformation extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, UserInformation, new MainStage(mf, user));
+				ChangePanel.changePanel(mf, UserInformation, new MainStage(mf, user, new Media()));
 
 			}
 		});

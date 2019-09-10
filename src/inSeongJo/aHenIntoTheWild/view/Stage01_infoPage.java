@@ -21,7 +21,7 @@ public class Stage01_infoPage extends JPanel{
 	private Image infoBackGround;
 	private User user;
 	
-	public Stage01_infoPage(MainFrame mf, User user) {
+	public Stage01_infoPage(MainFrame mf, User user, Media media) {
 		this.mf = mf;
 		this.user = user;
 		stage01Infopage = this;
@@ -29,7 +29,7 @@ public class Stage01_infoPage extends JPanel{
 		this.setLayout(null);
 		
 //		mf.add(this);
-
+		media.soundStop();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
 		infoBackGround = toolkit.getImage("images/info.png").getScaledInstance(1024, 740, Image.SCALE_SMOOTH);//배경 이미지
@@ -55,6 +55,7 @@ public class Stage01_infoPage extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				media.soundStop();
 				ChangePanel.changePanel(mf, stage01Infopage, new Stage01(mf, user));
 
 			}
