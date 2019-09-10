@@ -33,7 +33,7 @@ public class LoadingPage extends JPanel{
 			@Override
 			public void run() {
 				media.sound("keyboard");
-				while (i < 1500) {
+				while (i < 2300) {
 					try {
 						Thread.sleep(1);
 					} catch (InterruptedException e) {

@@ -175,7 +175,8 @@ public class Stage02 extends JPanel implements KeyListener, Runnable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//				goOrStop = false;
-				ChangePanel.changePanel(mf, Stage02, new MainStage(mf, user));
+				thS = false;
+				ChangePanel.changePanel(mf, Stage02, new MainStage(mf, user, new Media()));
 			}
 		});
 
@@ -415,6 +416,7 @@ public class Stage02 extends JPanel implements KeyListener, Runnable {
 	
 	public void EndProcess(Graphics g, boolean isClear) { //게임 클리어 & 오버 시 화면 띄우기
 		if(!thS && isClear == true) {
+			thS = false;
 			g.drawImage(clearImage, 100, 300, this);
 			//외곽선을 없애준다.
 			mainbtn.setBorderPainted(false);
@@ -435,6 +437,7 @@ public class Stage02 extends JPanel implements KeyListener, Runnable {
 			add(retrybtn);
 //			media.soundStop();
 		} else if(!thS && isClear == false){
+			thS = false;
 			g.drawImage(overImage, 100, 300, this);
 			//외곽선을 없애준다.
 			mainbtn.setBorderPainted(false);
@@ -494,7 +497,7 @@ public class Stage02 extends JPanel implements KeyListener, Runnable {
 				@Override
 				public void mouseReleased(MouseEvent e) {
 					System.out.println("너는 클릭이야?");
-					ChangePanel.changePanel(mf, Stage02, new MainStage(mf,user));
+					ChangePanel.changePanel(mf, Stage02, new MainStage(mf, user, new Media()));
 				}
 
 				@Override
@@ -1048,6 +1051,7 @@ public class Stage02 extends JPanel implements KeyListener, Runnable {
 					gameClear = true;
 					stop = false;
 					thS = false;
+					break;
 				}else {
 				}
 				
