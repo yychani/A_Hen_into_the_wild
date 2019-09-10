@@ -14,11 +14,9 @@ import inSeongJo.aHenIntoTheWild.model.dao.RankingDao;
 import inSeongJo.aHenIntoTheWild.model.dao.UserDao;
 import inSeongJo.aHenIntoTheWild.model.vo.Ranking;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
-import inSeongJo.aHenIntoTheWild.view.ResultPrinter;
 
 public class UserManager {
 	private UserDao ud = new UserDao();
-	private ResultPrinter rp = new ResultPrinter();
 	ArrayList<User> ulist = null;
 
 	// 새 유저 등록용 메소드
