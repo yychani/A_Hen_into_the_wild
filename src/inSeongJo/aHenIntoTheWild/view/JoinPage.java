@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -103,11 +105,11 @@ public class JoinPage extends JPanel {
 		add(emailText);
 
 		// 이메일 인증 유뮤 텍스트
-		JLabel emailVeriTest = new JLabel("이메일 인증이 필요합니다.");
-		emailVeriTest.setBounds(350, 520, 300, 100);
-		emailVeriTest.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
-		emailVeriTest.setForeground(Color.WHITE);
-		add(emailVeriTest);
+		JLabel emailVeriText = new JLabel("이메일 인증이 필요합니다.");
+		emailVeriText.setBounds(350, 520, 300, 100);
+		emailVeriText.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+		emailVeriText.setForeground(Color.WHITE);
+		add(emailVeriText);
 
 		// 아이디 입력란
 		/* JTextField */ idTextField = new JTextField();
@@ -115,12 +117,65 @@ public class JoinPage extends JPanel {
 		idTextField.setBorder(BorderFactory.createEmptyBorder());
 		idTextField.setBorder(BorderFactory.createBevelBorder(-1));
 		add(idTextField);
+		
+		//비밀번호 조건 텍스트
+		JLabel passwordConditionText = new JLabel("숫자, 영어 소문자, 대문자, 특수문자를 포함해 비밀번호를 작성해주세요.");
+		passwordConditionText.setBounds(350, 310, 400, 100);
+		passwordConditionText.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+		passwordConditionText.setForeground(Color.WHITE);
+		add(passwordConditionText);
 
 		// 비밀번호 입력란
 		/* JPasswordField */ passwordTextField = new JPasswordField();
 		passwordTextField.setBounds(350, 320, 300, 30);
 		passwordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(passwordTextField);
+		
+		passwordTextField.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				password = "";
+				char[] pass = passwordTextField.getPassword();
+
+				for (int i = 0; i < pass.length; i++) {
+					password += pass[i];
+				}
+				// 비밀번호 유효성 검사식 1: 숫자, 특수문자가 포함되어야 한다.
+				String regExp_symbol = "([0-9].*[!,@,#,^,&,*,(,)])|([!,@,#,^,&,*,(,)].*[0-9])";
+				// 비밀번호 유효성 검사식2 : 영문자 대소문자가 적어도 하나씩은 포함되어야 한다.
+				String regExp_alpha = "([a-z].*[A-Z])|([A-Z].*[a-z])";
+				
+				//정규 표현식 컴파일
+				Pattern pattern_symbol = Pattern.compile(regExp_symbol);
+				Pattern pattern_alpha = Pattern.compile(regExp_alpha);
+				
+				// 문자 매칭
+				Matcher matcher_symbol = pattern_symbol.matcher(password);
+				Matcher matcher_alpha = pattern_alpha.matcher(password);
+				
+				if(matcher_symbol.find() && matcher_alpha.find()) {
+					System.out.println(password + "는 비밀번호로 적절합니다.");
+					passwordConditionText.setText("사용가능한 비밀번호 입니다.");
+					passwordConditionText.setForeground(Color.BLUE);
+				}else {
+					System.out.println(password + "는 비밀번호로 부적절하다!!! 바꿔라");
+					passwordConditionText.setText("사용 불가능한 비밀번호 입니다.");
+					passwordConditionText.setForeground(Color.RED);
+				}
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+			}
+		});
 
 		// 비밀번호 재확인 입력란
 		JPasswordField repasswordTextField = new JPasswordField();
@@ -262,13 +317,13 @@ public class JoinPage extends JPanel {
 
 						if (verifyTextField.getText().equals(verificationNumber)) {
 							JOptionPane.showMessageDialog(null, "인증완료! 회원가입을 완료해주세요", "인증완료", 1);
-							emailVeriTest.setText("이메일 인증 완료");
-							emailVeriTest.setForeground(Color.BLUE);
+							emailVeriText.setText("이메일 인증 완료");
+							emailVeriText.setForeground(Color.BLUE);
 							System.out.println("인증번호 동일 가입 가능");
 						} else {
 							JOptionPane.showMessageDialog(null, 
 									"인증번호 불일치! 다시 한번 확인해주세요", "인증번호 불일치", 1);
-							emailVeriTest.setForeground(Color.RED);
+							emailVeriText.setForeground(Color.RED);
 							System.out.println("인증번호 불일치 가입 블가능");
 						}
 
