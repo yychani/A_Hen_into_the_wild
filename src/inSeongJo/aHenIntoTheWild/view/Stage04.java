@@ -121,7 +121,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ChangePanel.changePanel(mf, stage04, new MainStage(mf, user));
+				ChangePanel.changePanel(mf, stage04, new MainStage(mf, user, new Media()));
 
 			}
 
@@ -695,7 +695,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				System.out.println("너는 클릭이야?");
 				click = false;
 				media3.soundStop();
-				ChangePanel.changePanel(mf, stage04, new MainStage(mf,user));
+				ChangePanel.changePanel(mf, stage04, new MainStage(mf,user, new Media()));
 			}
 
 			@Override

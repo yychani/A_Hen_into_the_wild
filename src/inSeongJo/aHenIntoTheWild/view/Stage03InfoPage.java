@@ -20,14 +20,14 @@ public class Stage03InfoPage extends JPanel {
 	private Image infoBackGround;
 	private User user;
 
-	public Stage03InfoPage(MainFrame mf, User user) {
+	public Stage03InfoPage(MainFrame mf, User user, Media media) {
 		this.mf = mf;
 		this.user = user;
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		stage03Infopage = this;
 //		mf.add(this);
-
+		media.soundStop();
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 
 		infoBackGround = toolkit.getImage("images/stage03_image/GrowthGreenInfo.jpg").getScaledInstance(1024, 768,
@@ -41,6 +41,7 @@ public class Stage03InfoPage extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				media.soundStop();
 				ChangePanel.changePanel(mf, stage03Infopage, new Stage03(mf, 0, user));
 
 			}

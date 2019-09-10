@@ -40,6 +40,7 @@ public class StartPage extends JPanel {
 		mf.add(this);
 		
 		media.soundStop();
+		media.sound("Sleepy_Wood");
 		background = toolkit.getImage("images/YJimages/Main_title.png").getScaledInstance(1024, 768, 0);// 배경 이미지
 		//새로하기 버튼
 		JButton newStart = new JButton();
@@ -83,8 +84,9 @@ public class StartPage extends JPanel {
 					}
 				
 				}
+				media.soundStop();
 				startPage.setVisible(false);
-				new VideoTest(mf, "intro", user, new MainStage(mf, user));
+				new VideoTest(mf, "intro", user, new MainStage(mf, user, media), media);
 				MediaThread mt = new MediaThread(startPage, 50);
 				
 				mt.start();
@@ -120,7 +122,7 @@ public class StartPage extends JPanel {
 					i++;
 				}
 				
-				ChangePanel.changePanel(mf, startPage , new MainStage(mf, user));
+				ChangePanel.changePanel(mf, startPage , new MainStage(mf, user, media));
 			}
 		});
 		if(user.getStage1Score() == 0) {

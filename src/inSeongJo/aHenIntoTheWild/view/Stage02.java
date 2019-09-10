@@ -172,7 +172,7 @@ public class Stage02 extends JPanel implements KeyListener, Runnable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//				goOrStop = false;
-				ChangePanel.changePanel(mf, Stage02, new MainStage(mf, user));
+				ChangePanel.changePanel(mf, Stage02, new MainStage(mf, user, new Media()));
 			}
 		});
 

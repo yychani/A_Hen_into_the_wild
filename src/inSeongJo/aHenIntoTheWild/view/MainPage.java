@@ -51,7 +51,9 @@ public class MainPage extends JPanel {
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		mf.add(this);
+
 		media.sound("login");
+
 		UserDao ud = new UserDao();
 		ArrayList<User> list = ud.readUserList();
 		System.out.println(list);
@@ -133,10 +135,10 @@ public class MainPage extends JPanel {
 		JButton joinButton = new JButton("회원가입");
 		joinButton.setBounds(670, 445, 120, 40);
 		joinButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
-		//joinButton.setContentAreaFilled(false);
+		// joinButton.setContentAreaFilled(false);
 		joinButton.setBackground(Color.LIGHT_GRAY);
 		joinButton.setBorderPainted(false);
-		//joinButton.setBorder(new RoundedBorder(20));
+		// joinButton.setBorder(new RoundedBorder(20));
 		joinButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		// joinButton.setBorder(new RoundedBorder(10));
 		add(joinButton);
@@ -161,7 +163,8 @@ public class MainPage extends JPanel {
 				if (um.login(idTextField.getText(), password).getId() != null) {
 					System.out.println(um.login(idTextField.getText(), password));
 					JOptionPane.showMessageDialog(null, "로그인 성공", "로그인", 1);
-					ChangePanel.changePanel(mf, mainPage, new LoginLoading(mf, um.login(idTextField.getText(), password), media));
+					ChangePanel.changePanel(mf, mainPage,
+							new LoginLoading(mf, um.login(idTextField.getText(), password), media));
 				} else {
 					JOptionPane.showMessageDialog(null, "로그인 실패", "로그인", 1);
 					System.out.println("메인페이지 : 로그인 실패");
@@ -176,6 +179,7 @@ public class MainPage extends JPanel {
 	class MyMouseAdapter extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			media.soundStop();
 			ChangePanel.changePanel(mf, mainPage, new UserAgreements(mf));
 		}
 	}
