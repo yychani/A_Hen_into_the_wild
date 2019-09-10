@@ -5,6 +5,8 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -22,6 +24,7 @@ import com.sun.jna.platform.linux.LibC.Sysinfo;
 
 import inSeongJo.aHenIntoTheWild.controller.UserManager;
 import inSeongJo.aHenIntoTheWild.model.dao.RankingDao;
+import inSeongJo.aHenIntoTheWild.model.vo.MediaThread;
 import inSeongJo.aHenIntoTheWild.model.vo.Ranking;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
@@ -34,7 +37,9 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	User user;
 	//	bgmTh bgm = new bgmTh();
 
+	//bgm
 	private Media media3 = new Media();
+
 	private MainFrame mf;
 	private MainStage ms;
 	private JPanel stage04;
@@ -48,7 +53,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private int life = 5;
 	private int sCnt = 0;
 	private int sCnt2 = 0;
-	private int time = 30;
+	private int time = 3;
 	private int score;
 
 
@@ -121,7 +126,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ChangePanel.changePanel(mf, stage04, new MainStage(mf, user));
+				ChangePanel.changePanel(mf, stage04, new MainStage(mf, user, new Media()));
 
 			}
 
@@ -185,7 +190,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		try { // 예외옵션 설정으로 에러 방지
 
-			media3.sound("stage4bgm");
+			media3.sound("stage04bgm");
 			while (thS) { // while 문으로 무한 루프 시키기
 				KeyProcess(); // 키보드 입력처리를 하여 x,y 갱신
 				//            System.out.println("KeyProcess");
@@ -213,7 +218,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		}
 		if(gameClear == true) {
 			System.out.println("왜안돼???");
-//			media3.soundStop();	
+			//			media3.soundStop();	
 			String[] strr = checkRanking();
 			String str = "";
 			for(int i = 0; i < strr.length; i++) {
@@ -266,10 +271,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				se.move();
 			}
 			if (collision(x - w, y - h - 15, se.getX(), se.getY(), chorok, enemy)) {
-				/*
-				 * // life--; 
-				 * System.out.println("life : " + life);
-				 */
+				//				media3.sound("crash");
 				if(life == 0) {
 					gameOver = true;
 					System.out.println("life : " + life);
@@ -314,6 +316,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 							- (sp.getY() + star.getHeight(null) / 2)) < (star.getHeight(null) / 2 + chorok.getHeight(null) / 2
 									- 40)) {
 				Point_List.remove(i);
+				//				media3.sound("coin");
 				sCnt++;
 				System.out.println("sCnt : " + sCnt);
 			}else {
@@ -632,23 +635,29 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		JButton retryB = new JButton(new ImageIcon(retry));
 		JButton goMain = new JButton(new ImageIcon(main));
+		JButton goMain2 = new JButton(new ImageIcon(main));
 
 
 		//외곽선을 없애준다.
 		retryB.setBorderPainted(false);
 		goMain.setBorderPainted(false);
+		goMain2.setBorderPainted(false);
 		//버튼의 내용영역 채우지 않기함
 		retryB.setContentAreaFilled(false);
 		goMain.setContentAreaFilled(false);
+		goMain2.setContentAreaFilled(false);
 		//버튼이 선택되었을때 생기는 테두리 사용안함
 		retryB.setFocusPainted(false);
 		goMain.setFocusPainted(false);
+		goMain2.setFocusPainted(false);
 
 		retryB.setBounds(50, 470, 380, 280);
 		goMain.setBounds(550, 470, 430, 300);
+		goMain2.setBounds(550, 470, 430, 300);
 		//커서바꾸기
 		retryB.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		goMain.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		goMain2.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
 
 		retryB.addMouseListener(new MouseListener() {
@@ -695,7 +704,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				System.out.println("너는 클릭이야?");
 				click = false;
 				media3.soundStop();
-				ChangePanel.changePanel(mf, stage04, new MainStage(mf,user));
+				ChangePanel.changePanel(mf, stage04, new MainStage(mf,user, new Media()));
 			}
 
 			@Override
@@ -721,9 +730,24 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 			}
 		});
+		goMain2.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				media3.soundStop();
 
-		if(gameOver == true) {
+					stage04.setVisible(false);
+					new VideoTest(mf, "scene4", user, new MainStage(mf, user));
+					MediaThread mt = new MediaThread(ms, 75);
+					user.setStage4Video(true);
+					mt.start();
+					mf.remove(stage04);
+
+			}
+		});
+	
+
+		if(gameOver == true && gameClear == false) {
 			g.drawImage(overImage, 120, 200, null);
 			add(retryB);
 			add(goMain);
@@ -733,7 +757,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			//         g.drawImage(retry, 50, 400, null);
 			//         g.drawImage(goMain, 550, 410, null);
 			thS = false;
-		}else if(gameClear == true) {
+		}else if(gameClear == true && gameOver == false) {
 			g.drawImage(clearImage, 120, 200, null);
 			g.drawImage(star, 350, 400,null);
 			g.drawImage(star2, 350, 450,null);
@@ -763,11 +787,9 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			//			System.out.println(score);
 			user.setStage4Score(score);
 			add(retryB);
-			add(goMain);
+			add(goMain2);
 
-			//			thS = false;
 
-			//			gameClear = false;
 		} 
 
 	}
@@ -818,22 +840,5 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		return rStr;
 	}
 
-	/*	class bgmTh implements Runnable {
 
-		private Media media3 = new Media();
-
-		@Override
-		public void run() {
-				if(time == 0 || gameOver == true|| gameClear == true) {
-					media3.soundStop();
-				}else {
-					media3.sound("Reminiscence2");
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-		}
-	}*/
 }

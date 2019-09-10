@@ -35,4 +35,12 @@ public class Media {
 	public void soundStop() {
 		clip.stop();
 	}
+	public boolean runningCheck() {
+		if(clip == null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 }
