@@ -31,7 +31,7 @@ public class StartPage extends JPanel {
 	UserDao ud = new UserDao();
 	ArrayList<User> ulist = ud.readUserList();
 	
-	public StartPage(MainFrame mf, User user) {
+	public StartPage(MainFrame mf, User user, Media media) {
 		this.mf = mf;
 		this.user = user;
 		startPage = this;
@@ -39,7 +39,8 @@ public class StartPage extends JPanel {
 		this.setLayout(null);
 		mf.add(this);
 		
-		
+		media.soundStop();
+		media.sound("Sleepy_Wood");
 		background = toolkit.getImage("images/YJimages/Main_title.png").getScaledInstance(1024, 768, 0);// 배경 이미지
 		//새로하기 버튼
 		JButton newStart = new JButton();
@@ -65,11 +66,6 @@ public class StartPage extends JPanel {
 				for(User u: ulist) {
 					if(user.getId().equals(u.getId())) {
 						if(user.getPassword().equals(u.getPassword())) {
-//							System.out.println("스테이지1 점수: "+user.getStage1Score());
-//							System.out.println("스테이지2 점수: "+user.getStage2Score());
-//							System.out.println("스테이지3 점수: "+user.getStage3Score());
-//							System.out.println("스테이지4 점수: "+user.getStage4Score());
-//							System.out.println("전체 스테이지 점수: "+user.getTotalScore());
 							
 							user.setStage1Score(0);
 							user.setStage2Score(0);
@@ -83,19 +79,14 @@ public class StartPage extends JPanel {
 							
 							ulist.set(i, user);
 							ud.readUserList();
-							System.out.println("스테이지1 점수: "+user.getStage1Score());
-							System.out.println("스테이지2 점수: "+user.getStage2Score());
-							System.out.println("스테이지3 점수: "+user.getStage3Score());
-							System.out.println("스테이지4 점수: "+user.getStage4Score());
-							System.out.println("전체 스테이지 점수: "+user.getTotalScore());
-							
 						}
 						i++;		
 					}
 				
 				}
+				media.soundStop();
 				startPage.setVisible(false);
-				new VideoTest(mf, "intro", user, new MainStage(mf, user));
+				new VideoTest(mf, "intro", user, new MainStage(mf, user, media), media);
 				MediaThread mt = new MediaThread(startPage, 50);
 				
 				mt.start();
@@ -126,18 +117,12 @@ public class StartPage extends JPanel {
 							
 							ulist.set(i, user);
 							ud.readUserList();
-							
-							System.out.println("스테이지1 점수: "+user.getStage1Score());
-							System.out.println("스테이지2 점수: "+user.getStage2Score());
-							System.out.println("스테이지3 점수: "+user.getStage3Score());
-							System.out.println("스테이지4 점수: "+user.getStage4Score());
-							System.out.println("전체 스테이지 점수: "+user.getTotalScore());
 						}
 					}
 					i++;
 				}
 				
-				ChangePanel.changePanel(mf, startPage , new MainStage(mf, user));
+				ChangePanel.changePanel(mf, startPage , new MainStage(mf, user, media));
 			}
 		});
 		if(user.getStage1Score() == 0) {
@@ -147,27 +132,6 @@ public class StartPage extends JPanel {
 	}
 	public void paintComponent(Graphics g) {
 		g.drawImage(background, 0, 0, null);
-//		this.repaint();
-	}
-	
-	class RoundedBorder implements Border {
-
-		private int radius;
-
-		RoundedBorder(int radius) {
-			this.radius = radius;
-		}
-
-		public Insets getBorderInsets(Component c) {
-			return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-		}
-
-		public boolean isBorderOpaque() {
-			return true;
-		}
-
-		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-			g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-		}
+		repaint();
 	}
 }

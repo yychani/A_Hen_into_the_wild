@@ -111,7 +111,7 @@ public class Stage03 extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				goOrStop = false;
 //				media.soundStop();
-				ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+				ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
 			}
 		});
 		
@@ -132,7 +132,7 @@ public class Stage03 extends JPanel {
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
 						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n최종 스코어 : " + score + "\n" + str);
-						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
 
 					} else if (rate[1] <= 20) {
 						goOrStop = false;
@@ -142,7 +142,7 @@ public class Stage03 extends JPanel {
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
 						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다. \n최종 스코어 : " + score + "\n" + str);
-						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
 
 					} else if (rate[2] >= 80) {
 						sm.printResult(rate[3], time);
@@ -153,7 +153,7 @@ public class Stage03 extends JPanel {
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
 						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다. \n최종 스코어 : " + score + "\n" + str);
-						ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
 					} else if (rate[3] >= 90) {
 						goOrStop = false;
 						if (growthLevel < 2) {
@@ -171,7 +171,7 @@ public class Stage03 extends JPanel {
 							String str = sm.rankingMethod(user, score);
 							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n최종 스코어 : " + score + "\n" + str);
 							growthLevel = 0;
-							ChangePanel.changePanel(mf, s03, new MainStage(mf, user));
+							ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
 						}
 					}
 
