@@ -117,8 +117,8 @@ public class JoinPage extends JPanel {
 		idTextField.setBorder(BorderFactory.createEmptyBorder());
 		idTextField.setBorder(BorderFactory.createBevelBorder(-1));
 		add(idTextField);
-		
-		//비밀번호 조건 텍스트
+
+		// 비밀번호 조건 텍스트
 		JLabel passwordConditionText = new JLabel("숫자, 영어 소문자, 대문자, 특수문자를 포함해 비밀번호를 작성해주세요.");
 		passwordConditionText.setBounds(350, 310, 400, 100);
 		passwordConditionText.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
@@ -130,14 +130,14 @@ public class JoinPage extends JPanel {
 		passwordTextField.setBounds(350, 320, 300, 30);
 		passwordTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(passwordTextField);
-		
+
 		passwordTextField.addKeyListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent e) {
-				
+
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent e) {
 				password = "";
@@ -150,30 +150,30 @@ public class JoinPage extends JPanel {
 				String regExp_symbol = "([0-9].*[!,@,#,^,&,*,(,)])|([!,@,#,^,&,*,(,)].*[0-9])";
 				// 비밀번호 유효성 검사식2 : 영문자 대소문자가 적어도 하나씩은 포함되어야 한다.
 				String regExp_alpha = "([a-z].*[A-Z])|([A-Z].*[a-z])";
-				
-				//정규 표현식 컴파일
+
+				// 정규 표현식 컴파일
 				Pattern pattern_symbol = Pattern.compile(regExp_symbol);
 				Pattern pattern_alpha = Pattern.compile(regExp_alpha);
-				
+
 				// 문자 매칭
 				Matcher matcher_symbol = pattern_symbol.matcher(password);
 				Matcher matcher_alpha = pattern_alpha.matcher(password);
-				
-				if(matcher_symbol.find() && matcher_alpha.find()) {
+
+				if (matcher_symbol.find() && matcher_alpha.find()) {
 					System.out.println(password + "는 비밀번호로 적절합니다.");
 					passwordConditionText.setText("사용가능한 비밀번호 입니다.");
 					passwordConditionText.setForeground(Color.BLUE);
-				}else {
+				} else {
 					System.out.println(password + "는 비밀번호로 부적절하다!!! 바꿔라");
 					passwordConditionText.setText("사용 불가능한 비밀번호 입니다.");
 					passwordConditionText.setForeground(Color.RED);
 				}
-				
+
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
-				
+
 			}
 		});
 
@@ -238,7 +238,7 @@ public class JoinPage extends JPanel {
 		emailTextField.setBounds(350, 530, 90, 30);
 		emailTextField.setBorder(BorderFactory.createEmptyBorder());
 		add(emailTextField);
-		
+
 		// 이메일 주소 입력란
 		emailTextField2 = new JTextField();
 		emailTextField2.setBounds(445, 530, 100, 30);
@@ -293,7 +293,6 @@ public class JoinPage extends JPanel {
 				JPanel panel = new JPanel();
 				Dialog dl = new Dialog(df, "email");
 				dl.setBounds(300, 200, 200, 200);
-				
 
 				JLabel text = new JLabel("인증번호를 입력해주세요.");
 				text.setBounds(20, 20, 200, 20);
@@ -307,7 +306,7 @@ public class JoinPage extends JPanel {
 				JButton verifyButton = new JButton("인증확인");
 				verifyButton.setBounds(100, 80, 100, 20);
 				df.add(verifyButton);
-				
+
 				df.setVisible(true);
 
 				verifyButton.addActionListener(new ActionListener() {
@@ -321,8 +320,7 @@ public class JoinPage extends JPanel {
 							emailVeriText.setForeground(Color.BLUE);
 							System.out.println("인증번호 동일 가입 가능");
 						} else {
-							JOptionPane.showMessageDialog(null, 
-									"인증번호 불일치! 다시 한번 확인해주세요", "인증번호 불일치", 1);
+							JOptionPane.showMessageDialog(null, "인증번호 불일치! 다시 한번 확인해주세요", "인증번호 불일치", 1);
 							emailVeriText.setForeground(Color.RED);
 							System.out.println("인증번호 불일치 가입 블가능");
 						}
@@ -332,7 +330,6 @@ public class JoinPage extends JPanel {
 
 			}
 		});
-		
 
 		// 중복확인 버튼
 		JButton checkButton = new JButton("아이디 중복확인");
@@ -395,62 +392,44 @@ public class JoinPage extends JPanel {
 					repassword += repass[i];
 				}
 
-				// 아이디 중복 확인했는지 확인
-				if (um.idCheck(idTextField.getText())) {
-					// true -> "사용하실 수 없는 아이디입니다."
-					// false -> "사용하실 수 있는 아이디입니다."
-					JOptionPane.showMessageDialog(null, "아이디를 다시 한번 확인해주세요.", "아이디 확인", 1);
-				} else {
-					// 비밀번호 일치 확인
-					if (!password.equals(repassword)) {
-						System.out.println("비밀번호 불일치");
-						JOptionPane.showMessageDialog(null, "비밀번호가 불일치합니다. 다시 한번 입력해주세요.", "비밀번호 확인", 1);
-						passwordCheckText.setText("다시 한번 입력해주세요.");
-						passwordCheckText.setForeground(Color.RED);
-						passwordTextField.setText("");
-						repasswordTextField.setText("");
-					} else {
-						System.out.println("비밀번호 일치");
-						// 닉네임 입력란 공백 확인
-						if (nickNameTextField.getText().equals("")) {
-							System.out.println("닉네임 미입력");
-							JOptionPane.showMessageDialog(null, "닉네입을 입력해주세요.", "닉네임 미입력", 1);
-						} else {
-							if (emailTextField.getText().equals("")) {
-								System.out.println("이메일 미입력");
-								JOptionPane.showMessageDialog(null, "이메일을 입력해주세요.", "이메일 미입력", 1);
+				// 아이디 중복확인 체크
+				if (idCheckText.getText().equals("사용하실 수 있는 아이디입니다.")) {
+					System.out.println("아이디 중복확인 완료");
+					if (passwordConditionText.getText().equals("사용가능한 비밀번호 입니다.")) {
+						System.out.println("아이디 중복 확인 완료, 비밀번호 사용 가능");
+						// 비밀 번호 일치
+						if (passwordCheckText.getText().equals("비밀번호가 일치합니다.")) {
+							// 닉네임
+							if (!nickNameTextField.getText().equals("")) {
+								// 이메일 인증 유무
+								if (emailVeriText.getText().equals("이메일 인증 완료")) {
+									// 모든 회원가입 조건 통과
+									// 새로운 유저 객체 생성
+									um.insertUser(inputUser());
+									// 이메일 보내기
+									SendEmail se = new SendEmail();
+									se.MailSend(emailTextField.getText(), nickNameTextField.getText());
+									// 가입완료 팝업창
+									JOptionPane.showMessageDialog(null, "가입완료", "회원가입", 1);
+									// 메인 페이지 이동
+									ChangePanel.changePanel(mf, JoinPage, new MainPage(mf));
+								} else {
+									JOptionPane.showMessageDialog(null, "이메일 인증을 완료해주세요.", "이메일 미인증", 1);
+								}
+								// 닉네임 미입력
 							} else {
-								// 모든 회원가입 조건 통과
-								// 새로운 유저 객체 생성
-								um.insertUser(inputUser());
-								// 이메일 보내기
-								SendEmail se = new SendEmail();
-								se.MailSend(emailTextField.getText(), nickNameTextField.getText());
-								// 가입완료 팝업창
-								JOptionPane.showMessageDialog(null, "가입완료", "회원가입", 1);
-								// 메인 페이지 이동
-								ChangePanel.changePanel(mf, JoinPage, new MainPage(mf));
+								JOptionPane.showMessageDialog(null, "닉네임을 입력해주세요.", "닉네임 미입력", 1);
 							}
+						} else {
+							JOptionPane.showMessageDialog(null, "비밀번호가 불일치합니다.", " ", 1);
 						}
+					} else {
+						JOptionPane.showMessageDialog(null, "사용 불가능한 비밀번호 입니다.", " ", 1);
 					}
-
+				} else {
+					JOptionPane.showMessageDialog(null, "아이디 중복확인이 필요합니다.", "아이디 확인", 1);
 				}
 
-				// 비밀번호 일치 확인
-				/*
-				 * if(password.equals(repassword)){ System.out.println("비밀번호 일치"); }else {
-				 * System.out.println("비밀번호 불일치"); JOptionPane.showMessageDialog(null,
-				 * "비밀번호가 불일치합니다. 다시 한번 입력해주세요.", "비밀번호 확인", 1);
-				 * passwordCheckText.setText("다시 한번 입력해주세요.");
-				 * passwordCheckText.setForeground(Color.RED); passwordTextField.setText("");
-				 * repasswordTextField.setText(""); }
-				 */
-
-				// um.insertUser(inputUser());
-
-				// JOptionPane.showMessageDialog(null, "가입완료", "회원가입", 1);
-
-				// ChangePanel.changePanel(mf, JoinPage, new MainStage(mf));
 			}
 		});
 
