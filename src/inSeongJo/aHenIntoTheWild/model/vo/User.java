@@ -8,17 +8,17 @@ public class User implements Serializable {
 	private String password;
 	private String email;
 	private String nickName;
-	private int totalScore;
+	
 	private int stage1Score;
 	private int stage2Score;
 	private int stage3Score;
 	private int stage4Score;
+	private int totalScore;
 	private boolean stage1Video = false;
 	private boolean stage2Video = false;
 	private boolean stage3Video = false;
 	private boolean stage4Video = false;
 	
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", password=" + password + ", email=" + email + ", nickName=" + nickName

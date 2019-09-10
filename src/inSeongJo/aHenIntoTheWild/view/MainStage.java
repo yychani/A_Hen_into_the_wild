@@ -92,12 +92,14 @@ public class MainStage extends JPanel {
 			// 기존 회원 정보와 로그인한 유저의 회원 정보 비교해 맞으면 그 정보를 파일에 저장
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int i = 0;
-				for (User u : ulist) {
-					if (user.getId().equals(u.getId())) {
-						if (user.getPassword().equals(u.getPassword())) {
+				int i=0;
+				for(User u: ulist) {
+					if(user.getId().equals(u.getId())) {
+						if(user.getPassword().equals(u.getPassword())) {
+							user.setTotalScore(user.getStage1Score()+user.getStage2Score()+user.getStage3Score()+user.getStage4Score());
 							ulist.set(i, user);
 							ud.writeUserList(ulist);
+							
 						}
 					}
 					i++;
