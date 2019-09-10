@@ -10,12 +10,12 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -29,12 +29,12 @@ public class UserInformation extends JPanel {
 	JLabel id = new JLabel("아이디");
 	JLabel nik = new JLabel("닉네임");
 	JLabel email = new JLabel("이메일");
-	JLabel rank = new JLabel("랭킹");
 	JLabel stage = new JLabel("Stage");
+	JLabel totalscore = new JLabel("전체 점수");
 	User user;
 	User presentUser;
 
-	JTextField tarr[] = new JTextField[5];
+	JTextField tarr[] = new JTextField[6];
 
 	JButton btn1 = new JButton("회원정보 수정");
 	JButton btn2 = new JButton("로그아웃");
@@ -72,7 +72,7 @@ public class UserInformation extends JPanel {
 				}
 			}
 		}
-
+		
 		try {
 			img = tk.getImage("images/YJimages/Main_none.png").getScaledInstance(1024, 768, Image.SCALE_SMOOTH);
 
@@ -82,23 +82,57 @@ public class UserInformation extends JPanel {
 
 		f1 = new Font("맑은 고딕", Font.PLAIN, 20);
 
+		String scores[] = {"stage1 점수", "stage2 점수","stage3 점수", "stage4 점수"}; 
+		JComboBox scoreList = new JComboBox(scores);
+		
+		scoreList.setSelectedIndex(1);
+		
+		scoreList.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JComboBox cb = (JComboBox)e.getSource();
+				
+				String name = (String)cb.getSelectedItem();
+				
+				if(name.equals("stage1 점수")) {
+					tarr[3].setText(presentUser.getStage1Score()+"");
+				}
+				
+				if(name.equals("stage2 점수")) {
+					tarr[3].setText(presentUser.getStage2Score()+"");
+				}
+				if(name.equals("stage3 점수")) {
+					tarr[3].setText(presentUser.getStage3Score()+"");
+				}
+				if(name.equals("stage4 점수")) {
+					tarr[3].setText(presentUser.getStage4Score()+"");
+				};// 회원정보 중 점수 표시 (단, totalscore가 int형이므로 문자열로 변환)
+			}
+		});
+		
 		add(id);
 		add(nik);
 		add(email);
-		add(rank);
+		add(scoreList);
 		add(stage);
-
+		add(totalscore);
+		
 		id.setBounds(80, 250, 100, 50);
 		id.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		nik.setBounds(80, 350, 100, 50);
 		nik.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		email.setBounds(80, 450, 100, 50);
 		email.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-		rank.setBounds(500, 250, 100, 50);
-		rank.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		scoreList.setBounds(440, 250, 150, 50);
+		scoreList.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 		stage.setBounds(500, 350, 100, 50);
 		stage.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		totalscore.setBounds(500, 450, 100, 50);
+		totalscore.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
 
+		int totalScore = presentUser.getStage1Score()+presentUser.getStage2Score()+presentUser.getStage3Score()+presentUser.getStage4Score();
+		
 		// TextField를 panel에 붙이고 위치를 지정하는 동시에 TextField에 회원 정보 표시
 		for (int i = 0; i < tarr.length; i++) {
 			tarr[i] = new JTextField();
@@ -128,7 +162,6 @@ public class UserInformation extends JPanel {
 			case 3:
 				tarr[i].setBounds(600, 250, 250, 50);
 				tarr[i].setBorder(BorderFactory.createEmptyBorder());
-				tarr[i].setText(presentUser.getTotalScore() + "");// 회원정보 중 랭킹 표시 (단, totalscore가 int형이므로 문자열로 변환)
 				tarr[i].setEditable(false);
 				break;
 
@@ -158,6 +191,13 @@ public class UserInformation extends JPanel {
 					tarr[i].setEditable(false);
 					break;
 				}
+				
+			case 5: tarr[i].setBounds(600, 450, 250, 50);
+			tarr[i].setBorder(BorderFactory.createEmptyBorder());
+			tarr[i].setText(totalScore+"");
+			tarr[i].setEditable(false);
+			break;
+			
 			}
 		}
 
