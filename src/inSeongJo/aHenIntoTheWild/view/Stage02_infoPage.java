@@ -54,12 +54,7 @@ public class Stage02_infoPage extends JPanel{
 		stage3Button.setBorderPainted(false);
 		stage3Button.setContentAreaFilled(false);
 		stage3Button.setFocusPainted(false);
-		stage4Button.setBorderPainted(false);
-		stage4Button.setContentAreaFilled(false);
-		stage4Button.setFocusPainted(false);
-		stage5Button.setBorderPainted(false);
-		stage5Button.setContentAreaFilled(false);
-		stage5Button.setFocusPainted(false);
+	
 		stage3Button.setBounds(80, 550, 350, 125);
 		stage4Button.setBounds(530, 550, 384, 147);
 		stage5Button.setBounds(330, 550, 384, 147);

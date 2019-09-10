@@ -110,6 +110,7 @@ public class StartPage extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				media.soundStop();
 				int i=0; 
 				for(User u: ulist) {
 					if(user.getId().equals(u.getId())) {

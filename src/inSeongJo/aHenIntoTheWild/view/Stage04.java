@@ -737,8 +737,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				media3.soundStop();
 
 					stage04.setVisible(false);
-					new VideoTest(mf, "scene4", user, new MainStage(mf, user));
-					MediaThread mt = new MediaThread(ms, 75);
+					new VideoTest(mf, "ending", user, new Ending(mf, user, media3), media3);
+					MediaThread mt = new MediaThread(ms, 41);
 					user.setStage4Video(true);
 					mt.start();
 					mf.remove(stage04);
