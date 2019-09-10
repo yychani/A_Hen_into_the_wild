@@ -32,9 +32,9 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	Stage04Enemy se;
 	Stage04_Point sp,sp2;
 	User user;
-	// private 
-	// private
-	//private
+	//	bgmTh bgm = new bgmTh();
+
+	private Media media3 = new Media();
 	private MainFrame mf;
 	private MainStage ms;
 	private JPanel stage04;
@@ -48,7 +48,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private int life = 5;
 	private int sCnt = 0;
 	private int sCnt2 = 0;
-	private int time = 3;
+	private int time = 30;
 	private int score;
 
 
@@ -57,6 +57,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private boolean thS = true;
 	private boolean gameOver = false;
 	private boolean gameClear = false;
+	private boolean click = true;
+	private boolean click2 = true;
 
 	Timer t = new Timer();
 
@@ -88,6 +90,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 	// 스레드 생성
 	Thread th;
+	Thread th3 = new Thread();
 	Image BG = new ImageIcon("images/Images/lastsky.png").getImage()/*.getScaledInstance(1024, 768, Image.SCALE_SMOOTH)*/;
 
 	ArrayList<Stage04Enemy> Enemy_List = new ArrayList<>();
@@ -108,47 +111,47 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		for(int i = 0; i < 5; i++) {
 			life_Array.add(new ImageIcon("images/Images/life.png").getImage().getScaledInstance(20, 20, 0));
 		}
-		
+
 		homeB.setBounds(950, 30, 70, 70);
 		homeB.setBorderPainted(false);
 		homeB.setContentAreaFilled(false);
 		add(homeB);
-		
+
 		homeB.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				ChangePanel.changePanel(mf, stage04, new MainStage(mf, user));
-				
+
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 		});
-		
-		
+
+
 
 		// -5, -50
 		JLabel lifeText = new JLabel();
@@ -171,6 +174,10 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		Thread th2 = new Thread(t);
 		th2.start();
+		//		Thread th3 = new Thread(bgm);
+		//			th3.start();	
+
+
 	}
 
 	@Override
@@ -178,6 +185,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		try { // 예외옵션 설정으로 에러 방지
 
+			media3.sound("stage4bgm");
 			while (thS) { // while 문으로 무한 루프 시키기
 				KeyProcess(); // 키보드 입력처리를 하여 x,y 갱신
 				//            System.out.println("KeyProcess");
@@ -205,6 +213,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		}
 		if(gameClear == true) {
 			System.out.println("왜안돼???");
+//			media3.soundStop();	
 			String[] strr = checkRanking();
 			String str = "";
 			for(int i = 0; i < strr.length; i++) {
@@ -213,9 +222,14 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			System.out.println(str);
 			//메세지창이 어떤 Frame에서 보여지게 될 것인지 지정, 보통null을 사용
 			JOptionPane.showMessageDialog(null, str, "Stage 4 랭킹", JOptionPane.PLAIN_MESSAGE);
+			/*	}else if(click == false) {
+			media3.soundStop();	
+		}*/
+
+			//      System.out.println("score : " + score);
+			//      System.out.println("score2 : " + score2);
+
 		}
-		//      System.out.println("score : " + score);
-		//      System.out.println("score2 : " + score2);
 	}
 
 	//모든 스윙 컴포넌트는 자신의 모양을 그리는paintComponent() 메소드를 보유
@@ -238,7 +252,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		this.repaint();
 	}
-	
+
 	private void EnemyProcess() {
 		// System.out.println("계십니까~");
 
@@ -466,10 +480,11 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			life_Array.set(1, die);
 			life_Array.set(0, die);
 			//         stop = false;
-			         gameOver = true;
-//			for(int i = 0; i < life_Array.size(); i++) {
-//				g.drawImage(life_Array.get(i), 830, 700, this);
-//			}
+			gameOver = true;
+			thS = false;
+			//			for(int i = 0; i < life_Array.size(); i++) {
+			//				g.drawImage(life_Array.get(i), 830, 700, this);
+			//			}
 		}
 	}
 	public boolean collision(int x1, int y1, int x2, int y2, Image chorok, Image enemy) {
@@ -614,7 +629,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		Image main = new ImageIcon("images/Images/main2.png").getImage().getScaledInstance(150, 90, 0);
 		Image countStar = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(60, 60, 0);
 		Image countStar2 = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(60, 60, 0);
-		
+
 		JButton retryB = new JButton(new ImageIcon(retry));
 		JButton goMain = new JButton(new ImageIcon(main));
 
@@ -644,6 +659,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("너의용도는 뭐야?");
+				click = false;
+				media3.soundStop();
 				ChangePanel.changePanel(mf, stage04, new Stage04(mf, user));
 
 			}
@@ -676,6 +693,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("너는 클릭이야?");
+				click = false;
+				media3.soundStop();
 				ChangePanel.changePanel(mf, stage04, new MainStage(mf,user));
 			}
 
@@ -778,9 +797,9 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		}else {
 			for(int i = 0; i < count; i++) {
-					rStr[i] = rankList.get(i).getName();
-					System.out.println(rStr[i]);
-				
+				rStr[i] = rankList.get(i).getName();
+				System.out.println(rStr[i]);
+
 			}
 		}
 
@@ -795,12 +814,26 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			System.out.println(rStr[i]);
 		}
 
-		
+
 		return rStr;
 	}
 
-	/*	public class DialogTest extends JFrame {
+	/*	class bgmTh implements Runnable {
 
+		private Media media3 = new Media();
+
+		@Override
+		public void run() {
+				if(time == 0 || gameOver == true|| gameClear == true) {
+					media3.soundStop();
+				}else {
+					media3.sound("Reminiscence2");
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+		}
 	}*/
-
 }
