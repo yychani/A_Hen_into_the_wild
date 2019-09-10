@@ -167,7 +167,7 @@ public class MainStage extends JPanel {
 		stage2Button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ChangePanel.changePanel(mf, mainstage, new Stage02(mf, user));
+				ChangePanel.changePanel(mf, mainstage, new Stage02_infoPage(mf, user));
 			}
 		});
 
