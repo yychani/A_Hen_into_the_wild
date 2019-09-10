@@ -34,6 +34,7 @@ import inSeongJo.aHenIntoTheWild.model.vo.User;
 
 public class MainPage extends JPanel {
 	private MainFrame mf;
+	private Media media = new Media();
 	private JPanel mainPage;
 	private Image background = new ImageIcon("images/YJimages/Main_title.png").getImage().getScaledInstance(1024, 768,
 			0);
@@ -50,7 +51,7 @@ public class MainPage extends JPanel {
 		this.setBounds(0, 0, 1024, 768);
 		this.setLayout(null);
 		mf.add(this);
-
+		media.sound("login");
 		UserDao ud = new UserDao();
 		ArrayList<User> list = ud.readUserList();
 		System.out.println(list);
@@ -160,7 +161,7 @@ public class MainPage extends JPanel {
 				if (um.login(idTextField.getText(), password).getId() != null) {
 					System.out.println(um.login(idTextField.getText(), password));
 					JOptionPane.showMessageDialog(null, "로그인 성공", "로그인", 1);
-					ChangePanel.changePanel(mf, mainPage, new StartPage(mf, um.login(idTextField.getText(), password)));
+					ChangePanel.changePanel(mf, mainPage, new LoginLoading(mf, um.login(idTextField.getText(), password), media));
 				} else {
 					JOptionPane.showMessageDialog(null, "로그인 실패", "로그인", 1);
 					System.out.println("메인페이지 : 로그인 실패");
