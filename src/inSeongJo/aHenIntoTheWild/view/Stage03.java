@@ -37,7 +37,7 @@ public class Stage03 extends JPanel {
 	User user;
 
 	private int time;
-	private int lockTime = 2000;
+	private int lockTime = 1500;
 	private int[] rate = new int[4];
 	private int x;
 	private int y;
@@ -48,6 +48,7 @@ public class Stage03 extends JPanel {
 	private String str = "";
 	private boolean riceBl, bathBl, playBl, loveBl, bedBl;
 	private boolean goOrStop = true;
+	private boolean timePause = true;
 	private Stage03Manager sm = new Stage03Manager();
 	private Image fullImage = new ImageIcon("images/stage03_image/fullImage.png").getImage().getScaledInstance(188, 25,
 			Image.SCALE_SMOOTH);
@@ -131,7 +132,7 @@ public class Stage03 extends JPanel {
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
-						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n최종 스코어 : " + score + "\n" + str);
+						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n당신의 점수 : " + score + "\n" + str);
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
 
 					} else if (rate[1] <= 20) {
@@ -141,7 +142,7 @@ public class Stage03 extends JPanel {
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
-						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다. \n최종 스코어 : " + score + "\n" + str);
+						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다. \n당신의 점수 : " + score + "\n" + str);
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
 
 					} else if (rate[2] >= 80) {
@@ -152,13 +153,13 @@ public class Stage03 extends JPanel {
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 						sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
-						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다. \n최종 스코어 : " + score + "\n" + str);
+						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다. \n당신의 점수 : " + score + "\n" + str);
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
-					} else if (rate[3] >= 90) {
+					} else if (rate[3] >= 100) {
 						goOrStop = false;
 						if (growthLevel < 2) {
 							gameOverImg = null;
-							//media2.soundStop();
+							
 							JOptionPane.showMessageDialog(null, "초록이가 " + (growthLevel + 1) + "번째 성장했어요!");
 							ChangePanel.changePanel(mf, s03, new Stage03(mf, ++growthLevel, user));							
 						} else {
@@ -169,7 +170,7 @@ public class Stage03 extends JPanel {
 							int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
 							sm.scoreChange(score, user);
 							String str = sm.rankingMethod(user, score);
-							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n최종 스코어 : " + score + "\n" + str);
+							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n당신의 점수 : " + score + "\n" + str);
 							growthLevel = 0;
 							ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
 						}
@@ -207,7 +208,11 @@ public class Stage03 extends JPanel {
 				lockTime = 10;
 			} else if(hStr.equals("holdset1000")) {
 				lockTime = 1000;
-			} 
+			} else if(hStr.equals("timehold")) {
+				timePause = false;
+			} else if(hStr.equals("start")) {
+				timePause = true;
+			}
 				
 				
 			}
@@ -476,21 +481,24 @@ public class Stage03 extends JPanel {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					if (time % 2 == 0) {
-						label.setText("Timer : " + time / 2);
+					if (timePause) {
+						if (time % 2 == 0) {
+							label.setText("Timer : " + time / 2);
 
+						}
+						rate[0]--;
+						rate[1]--;
+						rate[2]++;
+						g.drawImage(fullImage, 25, 69, (int) (188 * (double) rate[0] / 100.0), 25, null); // 포만감표시
+						fullRatePercent.setText(rate[0] + "%");
+
+						g.drawImage(cleanImage, 25, 140, (int) (188 * (double) rate[1] / 100.0), 25, null); // 청결도표시
+						cleanRatePercent.setText(rate[1] + "%");
+
+						g.drawImage(tiredImage, 25, 211, (int) (188 * (double) rate[2] / 100.0), 25, null); // 피로도표시
+						tiredRatePercent.setText(rate[2] + "%");
 					}
-					rate[0]--;
-					rate[1]--;
-					rate[2]++;
-					g.drawImage(fullImage, 25, 69, (int) (188 * (double) rate[0] / 100.0), 25, null); // 포만감표시
-					fullRatePercent.setText(rate[0] + "%");
-
-					g.drawImage(cleanImage, 25, 140, (int) (188 * (double) rate[1] / 100.0), 25, null); // 청결도표시
-					cleanRatePercent.setText(rate[1] + "%");
-
-					g.drawImage(tiredImage, 25, 211, (int) (188 * (double) rate[2] / 100.0), 25, null); // 피로도표시
-					tiredRatePercent.setText(rate[2] + "%");
+					
 					
 				}
 
@@ -514,7 +522,9 @@ public class Stage03 extends JPanel {
 		g.drawImage(growthImage, 934, 330, 40, (int) (-243 * (double) rate[3] / 100.0), null); // 성장도표시
 
 		if (goOrStop == false) {
-			g.drawImage(gameOverImg, 80, 80, 850, 190, null);
+			if(rate[0] <= 20 || rate[1] <= 20 || rate[2] >= 80 || rate[3] >= 100) { //게임이 끝나는 조건
+				g.drawImage(gameOverImg, 80, 80, 850, 190, null);
+			}
 		} 
 		
 		if (riceBl == true) {
@@ -651,7 +661,7 @@ class Greeny implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
+			
 			goOrStop = s03.isGoOrStop();
 		}
 
