@@ -158,7 +158,7 @@ public class Stage03 extends JPanel {
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
 					} else if (rate[3] >= 100) {
 						goOrStop = false;
-						if (growthLevel < 2) {
+						if (growthLevel < 1) {
 							gameOverImg = null;
 							
 							JOptionPane.showMessageDialog(null, "초록이가 " + (growthLevel + 1) + "번째 성장했어요!");
@@ -205,9 +205,9 @@ public class Stage03 extends JPanel {
 				String hStr = hiden.getText();
 				System.out.println(hStr);
 				
-				if(hStr.equals("holdset10")) {
+				if(hStr.equals("set10")) {
 				lockTime = 10;
-			} else if(hStr.equals("holdset1000")) {
+			} else if(hStr.equals("set1000")) {
 				lockTime = 1000;
 			} else if(hStr.equals("timehold")) {
 				timePause = false;
