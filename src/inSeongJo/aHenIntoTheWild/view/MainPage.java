@@ -125,8 +125,8 @@ public class MainPage extends JPanel {
 		// 로그인 버튼
 		JButton loginButton = new JButton("로그인");
 		loginButton.setBounds(670, 375, 120, 40);
-		loginButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
-		loginButton.setBackground(Color.LIGHT_GRAY);
+		loginButton.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+		loginButton.setBackground(new Color(210, 208, 170));
 		loginButton.setBorderPainted(false);
 		loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(loginButton);
@@ -134,11 +134,11 @@ public class MainPage extends JPanel {
 		//// 회원 가입 버튼
 		JButton joinButton = new JButton("회원가입");
 		joinButton.setBounds(670, 445, 120, 40);
-		joinButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
+		joinButton.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		// joinButton.setContentAreaFilled(false);
-		joinButton.setBackground(Color.LIGHT_GRAY);
+		joinButton.setBackground(new Color(210, 208, 170));
 		joinButton.setBorderPainted(false);
-		// joinButton.setBorder(new RoundedBorder(20));
+		 joinButton.setBorder(new RoundedBorder(20));
 		joinButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		// joinButton.setBorder(new RoundedBorder(10));
 		add(joinButton);
