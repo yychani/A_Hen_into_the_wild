@@ -1,6 +1,7 @@
 package inSeongJo.aHenIntoTheWild.view;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -57,14 +58,14 @@ public class JoinPage extends JPanel {
 		// 회원가입 텍스트
 		JLabel joinText = new JLabel("회원가입");
 		joinText.setBounds(450, 150, 300, 100);
-		joinText.setFont(new Font("맑은 고딕", Font.PLAIN, 35));
+		joinText.setFont(new Font("맑은 고딕", Font.BOLD, 35));
 		joinText.setForeground(Color.DARK_GRAY);
 		add(joinText);
 
 		// 아이디 텍스트
 		JLabel idText = new JLabel("아이디");
 		idText.setBounds(235, 215, 300, 100);
-		idText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		idText.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		// idText.setBorder(BorderFactory.createBevelBorder(1, Color.black, shadow));
 		idText.setForeground(Color.DARK_GRAY);
 		add(idText);
@@ -72,35 +73,35 @@ public class JoinPage extends JPanel {
 		// 아이디 중복확인 메세지
 		JLabel idCheckText = new JLabel("아이디 중복확인을 해주세요.");
 		idCheckText.setBounds(350, 240, 500, 100);
-		idCheckText.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+		idCheckText.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		idCheckText.setForeground(Color.DARK_GRAY);
 		add(idCheckText);
 
 		// 비밀번호 텍스트
 		JLabel passwordText = new JLabel("비밀번호");
 		passwordText.setBounds(225, 285, 300, 100);
-		passwordText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		passwordText.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		passwordText.setForeground(Color.DARK_GRAY);
 		add(passwordText);
 
 		// 비밀번호 확인 텍스트
 		JLabel repasswordText = new JLabel("비밀번호 확인");
 		repasswordText.setBounds(210, 355, 300, 100);
-		repasswordText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		repasswordText.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		repasswordText.setForeground(Color.DARK_GRAY);
 		add(repasswordText);
 
 		// 닉네임 텍스트
 		JLabel nickNameText = new JLabel("닉네임");
 		nickNameText.setBounds(235, 425, 300, 100);
-		nickNameText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		nickNameText.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		nickNameText.setForeground(Color.DARK_GRAY);
 		add(nickNameText);
 
 		// 이메일 텍스트
 		JLabel emailText = new JLabel("이메일");
 		emailText.setBounds(235, 495, 300, 100);
-		emailText.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		emailText.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		emailText.setForeground(Color.DARK_GRAY);
 		add(emailText);
 
@@ -270,8 +271,10 @@ public class JoinPage extends JPanel {
 		//// 이메일 인증 버튼
 		JButton verifyButton = new JButton("인증번호 전송");
 		verifyButton.setBounds(690, 530, 150, 30);
-		verifyButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
-		verifyButton.setBackground(Color.LIGHT_GRAY);
+		verifyButton.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+		verifyButton.setBackground(new Color(210, 208, 170));
+		verifyButton.setBorderPainted(false);
+		verifyButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(verifyButton);
 
 		verifyButton.addActionListener(new ActionListener() {
@@ -302,6 +305,8 @@ public class JoinPage extends JPanel {
 				verifyTextField.setBounds(20, 50, 200, 20);
 				verifyTextField.setBorder(BorderFactory.createEmptyBorder());
 				df.add(verifyTextField);
+				
+				df.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 				JButton verifyButton = new JButton("인증확인");
 				verifyButton.setBounds(100, 80, 100, 20);
@@ -316,6 +321,9 @@ public class JoinPage extends JPanel {
 
 						if (verifyTextField.getText().equals(verificationNumber)) {
 							JOptionPane.showMessageDialog(null, "인증완료! 회원가입을 완료해주세요", "인증완료", 1);
+							dl.setVisible(false);
+							dl.dispose();
+							
 							emailVeriText.setText("이메일 인증 완료");
 							emailVeriText.setForeground(Color.BLUE);
 							System.out.println("인증번호 동일 가입 가능");
@@ -334,8 +342,10 @@ public class JoinPage extends JPanel {
 		// 중복확인 버튼
 		JButton checkButton = new JButton("아이디 중복확인");
 		checkButton.setBounds(670, 245, 180, 40);
-		checkButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
-		checkButton.setBackground(Color.LIGHT_GRAY);
+		checkButton.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+		checkButton.setBackground(new Color(210, 208, 170));
+		checkButton.setBorderPainted(false);
+		checkButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(checkButton);
 
 		// 아이디 중복확인 이벤트
@@ -367,9 +377,10 @@ public class JoinPage extends JPanel {
 		// 완료 버튼
 		JButton completeButton = new JButton("완료");
 		completeButton.setBounds(670, 620, 120, 40);
-		completeButton.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
-		completeButton.setBackground(Color.LIGHT_GRAY);
+		completeButton.setFont(new Font("맑은 고딕", Font.BOLD, 18));
+		completeButton.setBackground(new Color(210, 208, 170));
 		completeButton.setBorderPainted(false);
+		completeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(completeButton);
 
 		// char[] 패스워드 -> String으로 변환 & 유저 객체 생성 & 메인 스테이지로 이동
@@ -436,9 +447,10 @@ public class JoinPage extends JPanel {
 		// 가입취소 버튼
 		JButton cancleButton = new JButton("가입취소");
 		cancleButton.setBounds(820, 620, 120, 40);
-		cancleButton.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-		cancleButton.setBackground(Color.LIGHT_GRAY);
+		cancleButton.setFont(new Font("맑은 고딕", Font.BOLD, 20));
+		cancleButton.setBackground(new Color(210, 208, 170));
 		cancleButton.setBorderPainted(false);
+		cancleButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		add(cancleButton);
 
 		// 가입취소 -> 메인페이지로 이동
@@ -474,7 +486,7 @@ public class JoinPage extends JPanel {
 		u.setId(idTextField.getText());
 		u.setPassword(password);
 		u.setNickName(nickNameTextField.getText());
-		u.setEmail(emailTextField.getText());
+		u.setEmail(emailTextField.getText()+emailTextField2.getText());
 
 		return u;
 	}
