@@ -44,7 +44,7 @@ public class Stage02_infoPage extends JPanel{
 		stage01Info.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		stage01Info.setHorizontalAlignment(JLabel.CENTER);
 
-		Image stage1Start = new ImageIcon("images/MSImages/nagne.png").getImage().getScaledInstance(350, 125, 0);
+		Image stage1Start = new ImageIcon("images/MSImages/nagne.png").getImage().getScaledInstance(310, 175, 0);
 		
 		Image stage2Start = new ImageIcon("images/MSImages/aggu_reverse.png").getImage().getScaledInstance(350, 125, 0);
 		Image stage3Start = new ImageIcon("images/MSImages/lightening.png").getImage().getScaledInstance(350, 125, 0);
@@ -54,9 +54,14 @@ public class Stage02_infoPage extends JPanel{
 		stage3Button.setBorderPainted(false);
 		stage3Button.setContentAreaFilled(false);
 		stage3Button.setFocusPainted(false);
-	
-		stage3Button.setBounds(80, 550, 350, 125);
-		stage4Button.setBounds(530, 550, 384, 147);
+		stage4Button.setBorderPainted(false);
+		stage4Button.setContentAreaFilled(false);
+		stage4Button.setFocusPainted(false);
+		stage5Button.setBorderPainted(false);
+		stage5Button.setContentAreaFilled(false);
+		stage5Button.setFocusPainted(false);
+		stage3Button.setBounds(70, 550, 310, 175);
+		stage4Button.setBounds(600, 580, 384, 147);
 		stage5Button.setBounds(330, 550, 384, 147);
 		add(stage3Button);
 		add(stage4Button);
