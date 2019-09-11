@@ -53,7 +53,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private int life = 5;
 	private int sCnt = 0;
 	private int sCnt2 = 0;
-	private int time = 3;
+	private int time = 30;
 	private int score;
 
 
@@ -83,11 +83,11 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private Image die = new ImageIcon("images/Images/emptyLife.png").getImage().getScaledInstance(20, 20, 0);
 	private Image overImage = new ImageIcon("images/Images/gameOver2.png").getImage().getScaledInstance(800, 200, 0);
 	private Image clearImage = new ImageIcon("images/Images/gameClear.png").getImage().getScaledInstance(800, 220, 0);
-	private Image chorok = new ImageIcon("images/Images/chorok.gif").getImage().getScaledInstance(150, 170, 0);
-	private Image enemy = new ImageIcon("images/Images/bird.gif").getImage().getScaledInstance(150, 150, 0);
+	private Image chorok = new ImageIcon("images/Images/chorok6.gif").getImage().getScaledInstance(150, 170, 0);
+	private Image enemy = new ImageIcon("images/Images/enemy5.gif").getImage().getScaledInstance(200, 200, 0);
 	private Image star = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(40, 40, 0);
 	private Image star2 = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(40, 40, 0);
-	private Image homeButton = new ImageIcon("images/Images/homeButton2.png").getImage().getScaledInstance(70, 70, 0);
+	private Image homeButton = new ImageIcon("images/Images/homebutton.png").getImage().getScaledInstance(70, 70, 0);
 	private ArrayList<Image> life_Array;
 
 	JButton homeB = new JButton(new ImageIcon(homeButton));
@@ -117,7 +117,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			life_Array.add(new ImageIcon("images/Images/life.png").getImage().getScaledInstance(20, 20, 0));
 		}
 
-		homeB.setBounds(950, 30, 70, 70);
+		homeB.setBounds(950, 0, 70, 70);
 		homeB.setBorderPainted(false);
 		homeB.setContentAreaFilled(false);
 		add(homeB);
@@ -126,6 +126,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				thS = false;
+				media3.soundStop();
 				ChangePanel.changePanel(mf, stage04, new MainStage(mf, user, new Media()));
 
 			}
@@ -175,14 +177,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		th = new Thread(this);
 		th.setDaemon(true);// 스레드 생성
 		th.start(); // 스레드 실행
-		//      timer.start();
-
 		Thread th2 = new Thread(t);
 		th2.start();
-		//		Thread th3 = new Thread(bgm);
-		//			th3.start();	
-
-
 	}
 
 	@Override
@@ -190,26 +186,19 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		try { // 예외옵션 설정으로 에러 방지
 
-			media3.sound("stage04bgm");
+			media3.sound("Reminiscence (2)");
 			while (thS) { // while 문으로 무한 루프 시키기
 				KeyProcess(); // 키보드 입력처리를 하여 x,y 갱신
-				//            System.out.println("KeyProcess");
 
 				EnemyProcess();
-				//            System.out.println("KeyProcess");
 
 				pointProcess();
-				//            System.out.println("poinProcess");
-				//            pointProcess2();
-
+				
 				pointProcess2();
 
 				repaint(); // 갱신된 x,y값으로 이미지 새로 그리기
 
 				Thread.sleep(20); // 20 milli sec 로 스레드 돌리기
-				//            if(backX >= -2048) {
-				//               backX -= 1;
-				//            }
 				cnt++;
 				cnt2++;
 				cnt3++;
@@ -227,13 +216,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			System.out.println(str);
 			//메세지창이 어떤 Frame에서 보여지게 될 것인지 지정, 보통null을 사용
 			JOptionPane.showMessageDialog(null, str, "Stage 4 랭킹", JOptionPane.PLAIN_MESSAGE);
-			/*	}else if(click == false) {
-			media3.soundStop();	
-		}*/
-
-			//      System.out.println("score : " + score);
-			//      System.out.println("score2 : " + score2);
-
 		}
 	}
 
@@ -244,17 +226,11 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		g.drawImage(BG, 0, 0, this);
 		g.drawImage(chorok, x, y, this);
-		//      g.drawImage(star2,500,500,this);
-		// g.drawImage(star, 500,500, this);
-
 		drawEnemy(g);
 		drawPoint(g);
 		drawPoint2(g);
 		drawLife(g);
-		//      gameSet(g);
 		gameButton(g);
-		//      drawPoint2(g);
-
 		this.repaint();
 	}
 
@@ -285,28 +261,25 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		// cnt가 이 될때마다 적생성
 		if (cnt % 50 == 0) {
-
-
 			se = new Stage04Enemy(950, ((int) (Math.random() * 630) - 75));
 			Enemy_List.add(se);
 		}
-
 		if (cnt % 80 == 0) {
-
 			se = new Stage04Enemy(950, ((int) (Math.random() * 630) - 75));
 			Enemy_List.add(se);
-
+		}
+		if(cnt % 130 == 0) {
+			se = new Stage04Enemy(950, ((int) (Math.random() * 630) - 75));
+			Enemy_List.add(se);
+		
 		}
 	}
-
 	// -10 <= x <= 880 -75 <= y <= 590
 	public void pointProcess() {
 		for (int i = 0; i < Point_List.size(); ++i) {
 			sp = (Point_List.get(i));
-
 			if (sp.getX() <= -60) {
 				Point_List.remove(i);
-
 			} else {
 				sp.move();
 			}
@@ -321,8 +294,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				System.out.println("sCnt : " + sCnt);
 			}else {
 			}
-
-
 		}
 
 		if (cnt2 % 70 == 0) {
@@ -354,10 +325,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			Point_List .add(sp);
 
 		}
-
-
-
-		//      System.out.println("Score : " + score);
 
 	}
 
@@ -618,10 +585,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			}
 		}
 	}
-	//      Image retry = new ImageIcon("images/Images/retry.png").getImage().getScaledInstance(300, 300, 0);
-	//      Image goMain = new ImageIcon("images/Images/main.png").getImage().getScaledInstance(300, 300, 0);
-
-
 	//   retry (380, 280, 0);
 	//  goMain (430, 300, 0);
 	public void gameButton(Graphics g) {
@@ -758,19 +721,19 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			//         g.drawImage(goMain, 550, 410, null);
 			thS = false;
 		}else if(gameClear == true && gameOver == false) {
-			g.drawImage(clearImage, 120, 200, null);
+			g.drawImage(clearImage, 120, 150, null);
 			g.drawImage(star, 350, 400,null);
 			g.drawImage(star2, 350, 450,null);
 			add(retryB);
 			JLabel scoreText = new JLabel(score + "");
 			JLabel scoreText2 = new JLabel("점수 : ");
-			JLabel cStar = new JLabel(sCnt + " 개 ");
-			JLabel cStar2 = new JLabel(sCnt2 + " 개");
+			JLabel cStar = new JLabel( " :   " + sCnt + " 개 ");
+			JLabel cStar2 = new JLabel( " :   " + sCnt2 + " 개");
 
 			scoreText2.setBounds(300, 500, 200, 70);
 			scoreText.setBounds(550, 500, 200, 70);
-			cStar.setBounds(550, 390, 200, 70);
-			cStar2.setBounds(550, 440, 200, 70);
+			cStar.setBounds(415, 385, 200, 70);
+			cStar2.setBounds(415, 435, 200, 70);
 
 			scoreText.setFont(new Font("맑은 고딕", Font.BOLD, 40));
 			scoreText2.setFont(new Font("맑은 고딕", Font.BOLD, 40));
@@ -785,7 +748,10 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			add(cStar);
 			add(cStar2);
 			//			System.out.println(score);
-			user.setStage4Score(score);
+			if(score > user.getStage4Score()) {
+				user.setStage4Score(score);	
+			}
+			
 			add(retryB);
 			add(goMain2);
 
