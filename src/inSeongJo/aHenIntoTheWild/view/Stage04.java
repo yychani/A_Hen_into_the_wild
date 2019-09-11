@@ -79,6 +79,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	boolean KeyLeft = false;
 	boolean KeyRight = false;
 	private int backX = 0;
+	//
 
 	// private Image empty = new ImageIcon()
 	private Image die = new ImageIcon("images/Images/emptyLife.png").getImage().getScaledInstance(20, 20, 0);
