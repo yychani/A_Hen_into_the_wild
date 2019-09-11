@@ -37,7 +37,7 @@ public class Stage03 extends JPanel {
 	User user;
 
 	private int time;
-	private int lockTime = 1000;
+	private int lockTime = 2000;
 	private int[] rate = new int[4];
 	private int x;
 	private int y;
@@ -362,7 +362,7 @@ public class Stage03 extends JPanel {
 		growthRatePercent.setForeground(Color.GREEN);
 		add(growthRatePercent);
 
-		addMouseMotionListener(new MyEvent()); //위치 확인
+		//addMouseMotionListener(new MyEvent()); //위치 확인
 
 		//놀아주기 버튼 눌렀을 때, 지수들(rate)변화하게 만듦
 		playbutton.addActionListener(new ActionListener() {
@@ -455,7 +455,8 @@ public class Stage03 extends JPanel {
 			}
 
 		});
-
+		
+		// 지수들 줄어드는 쓰레드
 		Thread th2 = new Thread(new Runnable() {
 
 			@Override
@@ -514,7 +515,7 @@ public class Stage03 extends JPanel {
 
 		if (goOrStop == false) {
 			g.drawImage(gameOverImg, 80, 80, 850, 190, null);
-		}
+		} 
 		
 		if (riceBl == true) {
 			this.addMouseMotionListener(new MouseAdapter() {
