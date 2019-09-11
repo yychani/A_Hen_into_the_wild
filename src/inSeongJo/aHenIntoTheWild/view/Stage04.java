@@ -72,6 +72,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	int cnt2;
 	int cnt3;
 
+	//민석하이
 	// 키보드 입력 처리를 위한 변수
 	boolean KeyUp = false;
 	boolean KeyDown = false;
