@@ -28,6 +28,7 @@ import inSeongJo.aHenIntoTheWild.controller.Stage03Manager;
 import inSeongJo.aHenIntoTheWild.model.vo.User;
 
 public class Stage03 extends JPanel {
+
 	private MainFrame mf;
 	private Image background = new ImageIcon("images/stage03_image/background2.png").getImage();
 	private Graphics g;
@@ -37,7 +38,7 @@ public class Stage03 extends JPanel {
 	User user;
 
 	private int time;
-	private int lockTime = 1500;
+	private int lockTime = 1000;
 	private int[] rate = new int[4];
 	private int x;
 	private int y;
@@ -367,7 +368,7 @@ public class Stage03 extends JPanel {
 		growthRatePercent.setForeground(Color.GREEN);
 		add(growthRatePercent);
 
-		//addMouseMotionListener(new MyEvent()); //위치 확인
+		addMouseMotionListener(new MyEvent()); //위치 확인
 
 		//놀아주기 버튼 눌렀을 때, 지수들(rate)변화하게 만듦
 		playbutton.addActionListener(new ActionListener() {
@@ -406,7 +407,7 @@ public class Stage03 extends JPanel {
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
 				growthRatePercent.setText(rate[3] + "%");
-				loveBl = false;
+				//loveBl = false;
 
 			}
 		});
@@ -429,7 +430,7 @@ public class Stage03 extends JPanel {
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
 				growthRatePercent.setText(rate[3] + "%");
-				bedBl = false;
+				//bedBl = false;
 
 			}
 		});
@@ -577,7 +578,22 @@ public class Stage03 extends JPanel {
 	public void setLockTime(int lockTime) {
 		this.lockTime = lockTime;
 	}
+	
+	public boolean isLoveBl() {
+		return loveBl;
+	}
 
+	public void setLoveBl(boolean loveBl) {
+		this.loveBl = loveBl;
+	}
+
+	public boolean isBedBl() {
+		return bedBl;
+	}
+
+	public void setBedBl(boolean bedBl) {
+		this.bedBl = bedBl;
+	}
 }
 
 class MyEvent extends MouseMotionAdapter {
@@ -613,27 +629,29 @@ class Greeny implements Runnable {
 		int gx, gy, width, height;
 		Image green1;
 		Image green2;
+
+
 		
 		if (growthLevel == 0) {
 			gx = 412;
 			gy = 270;
 			width = 200;
 			height = 279;
-			green1 = new ImageIcon("images/stage03_image/greenE1.png").getImage();
-			green2 = new ImageIcon("images/stage03_image/greenE2.png").getImage();
+			green1 = new ImageIcon("images/stage03_image/greenE1.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			green2 = new ImageIcon("images/stage03_image/greenE2.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
 		} else if (growthLevel == 1) {
-			gx = 312;
-			gy = 180;
-			width = 400;
-			height = 421;
-			green1 = new ImageIcon("images/stage03_image/greenELv2a.png").getImage();
-			green2 = new ImageIcon("images/stage03_image/greenELv2b.png").getImage();
+			gx = 380; //312;
+			gy = 230; //180;
+			width = 320; //400;
+			height = 337; //421;
+			green1 = new ImageIcon("images/stage03_image/greenELv2a.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+			green2 = new ImageIcon("images/stage03_image/greenELv2b.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		} else {
-			gx = 280;
-			gy = 130;
-			width = 477;
-			height = 525;
+			gx = 320;
+			gy = 230;
+			width = 382; //477;
+			height = 420; //525;
 			green1 = new ImageIcon("images/stage03_image/greenELv3a.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 			green2 = new ImageIcon("images/stage03_image/greenELv3b.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		}
@@ -675,6 +693,8 @@ class LoadingClass implements Runnable {
 	boolean goOrStop = true;
 
 	int lockTime;
+	Image lovelove = new ImageIcon("images/stage03_image/love.png").getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+	Image sleeping = new ImageIcon("images/stage03_image/sleep.png").getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 
 	LoadingClass() {
 	}
@@ -687,16 +707,34 @@ class LoadingClass implements Runnable {
 
 	@Override
 	public void run() {
+		JLabel loveLabel = new JLabel(new ImageIcon(lovelove));
+		JLabel sleepLabel = new JLabel(new ImageIcon(sleeping));
+		
+		loveLabel.setBounds(350, 200, 80, 80);
+		sleepLabel.setBounds(580, 170, 100, 100);
+
 
 		//마우스클릭을 할수 없도록
 		jb.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		jb.setEnabled(false);
+		
+		if(((Stage03)jp).isLoveBl()) { //잠기는 동안 love 아이콘 보이도록
+			((Stage03)jp).add(loveLabel);
+			((Stage03)jp).setLoveBl(false);
+		}
+		
+		if(((Stage03)jp).isBedBl()) { //잠기는 동안 sleeping 아이콘 보이도록
+			((Stage03)jp).add(sleepLabel);
+			((Stage03)jp).setBedBl(false);
+		}
 
 		try { //클릭했을때 1초동안 잠금
 			Thread.sleep(lockTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		((Stage03)jp).remove(loveLabel);
+		((Stage03)jp).remove(sleepLabel);
 		jb.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		jb.setEnabled(true);
 
