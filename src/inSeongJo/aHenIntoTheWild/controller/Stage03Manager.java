@@ -44,9 +44,9 @@ public class Stage03Manager {
 		if (level == 0) {
 			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 350;	mouthY2 = 420; //level1일때 좌표 
 		} else if (level == 1){
-			mouthX1 = 400;	mouthX2 = 540;	mouthY1 = 310;	mouthY2 = 380; //level2일때 좌표 
+			mouthX1 = 440;	mouthX2 = 570;	mouthY1 = 340;	mouthY2 = 390; //level2일때 좌표 
 		} else {
-			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 350;	mouthY2 = 420; //level3일때 (임시)좌표
+			mouthX1 = 424;	mouthX2 = 533;	mouthY1 = 304;	mouthY2 = 380; //level3일때 (임시)좌표
 		}
 		if((x > mouthX1 && x < mouthX2) && (y > mouthY1 && y < mouthY2)) {
 			media.sound("eatingFx");
@@ -66,9 +66,9 @@ public class Stage03Manager {
 		if (level == 0) {
 			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 280;	mouthY2 = 370; //level1일때 좌표 
 		} else if (level == 1){
-			mouthX1 = 380;	mouthX2 = 580;	mouthY1 = 230;	mouthY2 = 310; //level2일때 좌표 
+			mouthX1 = 435;	mouthX2 = 575;	mouthY1 = 250;	mouthY2 = 343; //level2일때 좌표 
 		} else {
-			mouthX1 = 450;	mouthX2 = 580;	mouthY1 = 280;	mouthY2 = 370; //level3일때 (임시)좌표
+			mouthX1 = 424;	mouthX2 = 533;	mouthY1 = 304;	mouthY2 = 380; //level3일때 (임시)좌표
 		}
 		if((x > mouthX1 && x < mouthX2) && (y > mouthY1 && y < mouthY2)) {
 			media.sound("showerFx");
