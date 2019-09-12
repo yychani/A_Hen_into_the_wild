@@ -315,8 +315,7 @@ public class Stage01 extends JPanel implements KeyListener {
 
 	public void gameStatusCheck(Graphics g) {
 		Image retry = new ImageIcon("images/buttons/Retry_button_Normal.png").getImage().getScaledInstance(210, 70, 0);
-		Image retryPressed = new ImageIcon("images/buttons/Retry_button_Pressed.png").getImage().getScaledInstance(210,
-				70, 0);
+		Image retryPressed = new ImageIcon("images/buttons/Retry_button_Pressed.png").getImage().getScaledInstance(210, 70, 0);
 		JButton retryButton = new JButton(new ImageIcon(retry));
 		retryButton.setPressedIcon(new ImageIcon(retryPressed));
 		retryButton.setBorderPainted(false);
@@ -329,13 +328,7 @@ public class Stage01 extends JPanel implements KeyListener {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("마우스 눌렀다 땜, 재시작");
-				// media.soundStop();
 				ChangePanel.changePanel(mf, stage01page, new Stage01(mf, user));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				System.out.println("마우스 눌려지고 있음");
 			}
 		});
 		Image home = new ImageIcon("images/buttons/Home_button_Normal.png").getImage().getScaledInstance(210, 70, 0);
@@ -353,18 +346,10 @@ public class Stage01 extends JPanel implements KeyListener {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				System.out.println("마우스 눌렀다 땜, 재시작");
-				// media.soundStop();
 				ChangePanel.changePanel(mf, stage01page, new MainStage(mf, user, new Media()));
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				System.out.println("마우스 눌려지고 있음");
-				homeButton.setIcon(new ImageIcon(homePressed));
 			}
 		});
 
-		// System.out.println(time);
 		if (gameOver && isClear == false) {
 			add(retryButton);
 			add(homeButton);
@@ -409,7 +394,6 @@ public class Stage01 extends JPanel implements KeyListener {
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} else {
@@ -417,7 +401,6 @@ public class Stage01 extends JPanel implements KeyListener {
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -438,7 +421,6 @@ public class Stage01 extends JPanel implements KeyListener {
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} else {
@@ -446,7 +428,6 @@ public class Stage01 extends JPanel implements KeyListener {
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -502,48 +483,32 @@ public class Stage01 extends JPanel implements KeyListener {
 			x = w + 280; // 왼쪽 벽 넘지 못하게
 		if (x > width - w - 280 && (y - h) > -319 + backY)
 			x = width - w - 280; // 오른쪽 벽 넘지 못하게
-		// System.out.println(isDrop);
-		// System.out.println("x = " + (x - w) + " y = " + (y - h));
-		if ((x == 0 && y == 0)
-				|| (x - w) >= 390 && (x - w) <= 510 && (y - h + f1) <= 575 + f1 && (y - h + f1) >= 570 + f1) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+		if ((x == 0 && y == 0) || (x - w) >= 390 && (x - w) <= 510 && (y - h + f1) <= 575 + f1 && (y - h + f1) >= 570 + f1) {
+			isDrop = false; // 첫번째 발판
 		} else if ((x - w) >= 300 && (x - w) <= 430 && (y - h + f2) <= 495 + f2 && (y - h + f2) >= 490 + f2) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 두번째 발판
 		} else if ((x - w) >= 450 && (x - w) <= 570 && (y - h + f3) <= 415 + f3 && (y - h + f3) >= 410 + f3) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 세번째 발판
 		} else if ((x - w) >= 270 && (x - w) <= 390 && (y - h + f4) <= 335 + f4 && (y - h + f4) >= 330 + f4) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 네번째 발판
 		} else if ((x - w) >= 370 && (x - w) <= 490 && (y - h + f5) <= 255 + f5 && (y - h + f5) >= 250 + f5) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 다섯 번째 발판
 		} else if ((x - w) >= 250 && (x - w) <= 370 && (y - h + f6) <= 175 + f6 && (y - h + f6) >= 170 + f6) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 여섯 번째 발판
 		} else if ((x - w) >= 400 && (x - w) <= 520 && (y - h + f7) <= 95 + f7 && (y - h + f7) >= 90 + f7) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 일곱 번째 발판
 		} else if ((x - w) >= 490 && (x - w) <= 610 && (y - h + f8) <= 15 + f8 && (y - h + f8) >= 10 + f8) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 여덟번째 발판
 		} else if ((x - w) >= 430 && (x - w) <= 550 && (y - h + f9) <= -65 + f9 && (y - h + f9) >= -70 + f9) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 아홉번째 발판
 		} else if ((x - w) >= 270 && (x - w) <= 390 && (y - h + f10) <= -145 + f10 && (y - h + f10) >= -150 + f10) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 열번째 발판
 		} else if ((x - w) >= 370 && (x - w) <= 490 && (y - h + f11) <= -225 + f11 && (y - h + f11) >= -230 + f11) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
+			isDrop = false; // 열한번째 발판
 		} else if ((x - w) >= 510 && (x - w) <= 630 && (y - h + f12) <= -305 + f12 && (y - h + f12) >= -310 + f12) {
-			// System.out.println("발판위에 서있다.");
-			isDrop = false;
-		} else if ((x - w) >= 650 && (x - w) <= 1000 && (y - h + backY) <= -335 + backY
-				&& (y - h + backY) >= -340 + backY) {
-			System.out.println("클리어");
+			isDrop = false; // 열두번째 발판
+		} else if ((x - w) >= 650 && (x - w) <= 1000 && (y - h + backY) <= -335 + backY && (y - h + backY) >= -340 + backY) {
+			System.out.println("클리어"); // 클리어 위치
 			isDrop = false;
 			isClear = true;
 		} else {
@@ -554,33 +519,31 @@ public class Stage01 extends JPanel implements KeyListener {
 		if (y - h - 15 > 700 - backY) {
 			gameOver = true;
 		}
-	}
-	// move
+	}// move
 
 	public void enemyProcess() {
 
 		for (int i = 0; i < Enemy_List.size(); ++i) {
 			en = Enemy_List.get(i);
 			if (i % 2 == 0) {
-				en.move();
+				en.move(); // 짝수 인덱스 객체는 오른쪽에서 왼쪽으로 
 			} else {
-				en.move2();
+				en.move2(); // 홀수 인덱스 객체는 왼쪽에서 오른쪽으로 
 			}
 			if (en.getX() < -200 && i % 2 == 0) {
-				Enemy_List.remove(i);
+				Enemy_List.remove(i); // 짝수 객체가 왼쪽으로 사라지면 리스트에서 제거
 			} else if (en.getX() > 1500 && i % 2 != 0) {
-				Enemy_List.remove(i);
+				Enemy_List.remove(i); // 홀수 객체가 오른쪽으로 사라지면 리스트에서 제거
 			}
 			if (collision(x - w, y - h - 15 + ipY, en.getX(), en.getY() + ipY, ipssagStanding[0], EnemyImg)) {
 				life--;
 				media.sound("punch");
-				x -= 20;
-				// System.out.println(life);
-				Enemy_List.remove(i);
+				x -= 20; // 잎싹이 넉백
+				Enemy_List.remove(i); // 충돌 부
 			}
 		}
 
-		if (cnt % 201 == 0 || cnt == 1) {
+		if (cnt % 201 == 0 || cnt == 1) { // 애꾸가 생성되는 delay 조절, 총 4마리 
 			en = new Stage01_Enemy(1024 + 100, ((int) (Math.random() * 600) + 100) + ipY,
 					(enemySpeed + (int) (Math.random() * 10)));
 			Enemy_List.add(en);
@@ -610,11 +573,8 @@ public class Stage01 extends JPanel implements KeyListener {
 
 	public boolean collision(int x1, int y1, int x2, int y2, Image ipssag, Image enemy) {
 		boolean check = false;
-		if (Math.abs((x1 + ipssag.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < (enemy.getWidth(null) / 2
-				+ ipssag.getWidth(null) / 2 - 40)
-				&& Math.abs((y1 + ipssag.getHeight(null) / 2)
-						- (y2 + enemy.getHeight(null) / 2)) < (enemy.getHeight(null) / 2 + ipssag.getHeight(null) / 2
-								- 40)) {
+		if (Math.abs((x1 + ipssag.getWidth(null) / 2) - (x2 + enemy.getWidth(null) / 2)) < (enemy.getWidth(null) / 2 + ipssag.getWidth(null) / 2 - 40)
+				&& Math.abs((y1 + ipssag.getHeight(null) / 2) - (y2 + enemy.getHeight(null) / 2)) < (enemy.getHeight(null) / 2 + ipssag.getHeight(null) / 2- 40)) {
 			// 이미지 넓이, 높이값 바로 받음
 			check = true;
 		} else {
@@ -627,7 +587,6 @@ public class Stage01 extends JPanel implements KeyListener {
 		UserManager userManager = new UserManager();
 		RankingDao rankingDao = new RankingDao();
 
-		// ArrayList<String> rankStr = new ArrayList<>();
 		userManager.rankingMethod(user, score, 1);
 		ArrayList<Ranking> list = rankingDao.readRankingList(1);
 
@@ -644,20 +603,14 @@ public class Stage01 extends JPanel implements KeyListener {
 		} else {
 			for (int i = 0; i < size; i++) {
 				if (!(list.get(i).getName().equals(null))) {
-					// System.out.println(list.get(i));
-					// rankStr.add(list.get(i).getName());
 					rankStr[i] = list.get(i).getName();
 					System.out.println(rankStr[i]);
 				}
 			}
 		}
-
 		JLabel[] rankLa = new JLabel[5];
 		for (int i = 0; i < rankStr.length; i++) {
-			// for(int j = 0; j < i; j++) {
-			// if(!(list.get(i).getScore() == list.get(j).getScore())) {
 			rankStr[i] = new String((i + 1) + "등 : " + list.get(i).getName() + "    " + list.get(i).getScore());
-			// }
 			rankLa[i] = new JLabel();
 			rankLa[i].setText(rankStr[i]);
 			rankLa[i].setBounds(440, 320 + 30 * (i + 1), 200, 100);
@@ -665,10 +618,7 @@ public class Stage01 extends JPanel implements KeyListener {
 			rankLa[i].setForeground(Color.BLACK);
 			System.out.println(rankStr[i]);
 		}
-
-		// }
 		return rankStr;
-
 	}
 
 	public boolean isJump() {

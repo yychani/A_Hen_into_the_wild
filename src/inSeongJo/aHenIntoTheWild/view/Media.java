@@ -10,6 +10,7 @@ import javax.sound.sampled.DataLine;
 
 public class Media {
 	Clip clip;
+
 	public void sound(String file) {
 		File bgm;
 		AudioInputStream stream;
@@ -17,8 +18,6 @@ public class Media {
 		DataLine.Info info;
 
 		bgm = new File("sounds/" + file + ".wav"); // 사용시에는 개별 폴더로 변경할 것
-
-		
 
 		try {
 			stream = AudioSystem.getAudioInputStream(bgm);
@@ -30,17 +29,22 @@ public class Media {
 		} catch (Exception e) {
 			System.out.println("err : " + e);
 		}
+		if (clip.getFrameLength() > 700000) {
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+		}// BGM만 반복 FX는 한번만 재생
 
 	}
+
 	public void soundStop() {
 		clip.stop();
 	}
+
 	public boolean runningCheck() {
-		if(clip == null) {
+		if (clip == null) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
+
 }
