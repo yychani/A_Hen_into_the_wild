@@ -22,6 +22,7 @@ public class Ending extends JPanel{
 	Media media = new Media();
 	private User user;
 	boolean endingB = true;
+	private int backY = 0;
 
 	public Ending(MainFrame mf, User user, Media media) {
 		this.user = user;
@@ -52,12 +53,11 @@ public class Ending extends JPanel{
 				ChangePanel.changePanel(mf, ending, new MainStage(mf, user, new Media()));
 			}
 		});
-		loadingImage = toolkit.getImage("images/end.gif").getScaledInstance(1024, 740, 0);//배경 이미지
+		loadingImage = toolkit.getImage("images/endingCredit.png").getScaledInstance(1024, 2068, 0);//배경 이미지
 		Thread timer = new Thread(new Runnable() {
 			int i = 0;
 			@Override
 			public void run() {
-//				media.sound("keyboard");
 				while (endingB) {
 					try {
 						Thread.sleep(1);
@@ -71,10 +71,30 @@ public class Ending extends JPanel{
 			}
 		});
 		timer.start();
+		Thread changeY = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						Thread.sleep(30);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					backY -= 2;
+					if (backY == -1400) {
+						break;
+					}
+					
+				}
+
+			}
+		});
+		changeY.setDaemon(true);
+		changeY.start();
 		
 	}
 	@Override
 	protected void paintComponent(Graphics g) {
-		g.drawImage(loadingImage, 0, 0, this);// 배경 그리기
+		g.drawImage(loadingImage, 0, backY, this);// 배경 그리기
 	}
 }
