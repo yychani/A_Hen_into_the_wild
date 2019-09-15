@@ -418,7 +418,7 @@ public class JoinPage extends JPanel {
 									um.insertUser(inputUser());
 									// 이메일 보내기
 									SendEmail se = new SendEmail();
-									se.MailSend(emailTextField.getText(), nickNameTextField.getText());
+									se.MailSend(emailTextField.getText() + emailTextField2.getText(), nickNameTextField.getText());
 									// 가입완료 팝업창
 									JOptionPane.showMessageDialog(null, "가입완료", "회원가입", 1);
 									// 메인 페이지 이동
