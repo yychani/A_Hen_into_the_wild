@@ -35,7 +35,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	Stage04Enemy se;
 	Stage04_Point sp,sp2;
 	User user;
-	//	bgmTh bgm = new bgmTh();
 
 	//bgm
 	private Media media3 = new Media();
@@ -49,21 +48,17 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private int y = 100;
 	private int w;
 	private int h;
-	//   private int time;
 	private int life = 5;
 	private int sCnt = 0;
 	private int sCnt2 = 0;
 	private int time = 30;
 	private int score;
 
-
 	private boolean ds = false;
 	private boolean stop = true;
 	private boolean thS = true;
 	private boolean gameOver = false;
 	private boolean gameClear = false;
-//	private boolean click = true;
-//	private boolean click2 = true;
 
 	Timer t = new Timer();
 
@@ -72,15 +67,12 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	int cnt2;
 	int cnt3;
 
-	//민석하이
 	// 키보드 입력 처리를 위한 변수
 	boolean KeyUp = false;
 	boolean KeyDown = false;
 	boolean KeyLeft = false;
 	boolean KeyRight = false;
 	private int backX = 0;
-	//
-
 	// private Image empty = new ImageIcon()
 	private Image die = new ImageIcon("images/Images/emptyLife.png").getImage().getScaledInstance(20, 20, 0);
 	private Image overImage = new ImageIcon("images/Images/gameOver2.png").getImage().getScaledInstance(800, 200, 0);
@@ -97,13 +89,12 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 	// 스레드 생성
 	Thread th;
-	Thread th3 = new Thread();
+//	Thread th3 = new Thread();
 	Image BG = new ImageIcon("images/Images/lastsky.png").getImage()/*.getScaledInstance(1024, 768, Image.SCALE_SMOOTH)*/;
 
 	ArrayList<Stage04Enemy> Enemy_List = new ArrayList<>();
 	ArrayList<Stage04_Point> Point_List = new ArrayList<>();
 	ArrayList<Stage04_Point> Point_List2 = new ArrayList<>();
-
 
 	public Stage04(MainFrame mf, User user) {
 		this.mf = mf;
@@ -136,33 +127,26 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 
 			}
 
 		});
 
-
-
-		// -5, -50
 		JLabel lifeText = new JLabel();
 		lifeText.setBounds(500, 500, 500, 50);
 		lifeText.setFont(new Font("맑은 고딕", Font.BOLD, 30));
@@ -177,7 +161,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	public void start() {
 //		addKeyListener(this); // 키보드 이벤트 실행
 		th = new Thread(this);
-//		th.setDaemon(true);// 스레드 생성
 		th.start(); // 스레드 실행
 		Thread th2 = new Thread(t);
 		th2.start();
@@ -201,7 +184,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		}
 		if(gameClear == true) {
 			System.out.println("왜안돼???");
-			//			media3.soundStop();	
 			String[] strr = checkRanking();
 			String str = "";
 			for(int i = 0; i < strr.length; i++) {
@@ -262,7 +244,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		
 		}
 	}
-	// -10 <= x <= 880 -75 <= y <= 590
 	public void pointProcess() {
 		for (int i = 0; i < Point_List.size(); ++i) {
 			sp = (Point_List.get(i));
@@ -277,7 +258,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 							- (sp.getY() + star.getHeight(null) / 2)) < (star.getHeight(null) / 2 + chorok.getHeight(null) / 2
 									- 40)) {
 				Point_List.remove(i);
-				//				media3.sound("coin");
 				sCnt++;
 				System.out.println("sCnt : " + sCnt);
 			}else {
@@ -285,30 +265,25 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		}
 
 		if (cnt2 % 70 == 0) {
-			//         System.out.println("언제될꺼야?");
 
 			sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
 			Point_List.add(sp);
 		}
 		if (cnt2 % 219 == 0) {
-			//         System.out.println("지금되면안돼?");
 			sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
 			Point_List.add(sp);
 		}      
 
 		if (cnt2 % 313 == 0) {
-			//         System.out.println("내일은 될꺼야?");
 			sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
 			Point_List.add(sp);
 		}
 		if (cnt2 % 130 == 0) {
-			//         System.out.println("예~~~~~~~~~~~~");
 			sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
 			Point_List .add(sp);
 
 		}
 		if (cnt2 % 179 == 0) {
-			//         System.out.println("예~~~~~~~~~~~~");
 			sp = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
 			Point_List .add(sp);
 
@@ -337,26 +312,17 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			}else {
 			}
 
-
 		}
 
 		if (cnt2 % 90 == 0) {
-			//         System.out.println("언제될꺼야?");
-
 			sp2 = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
 			Point_List2.add(sp2);
 		}
 		if (cnt2 % 170 == 0) {
-			//         System.out.println("언제될꺼야?");
-
 			sp2 = new Stage04_Point((int) (Math.random() * 890) - 10, -80);
 			Point_List2.add(sp2);
 		}
-
-
 	}
-
-
 
 	public void drawEnemy(Graphics g) {
 		for (int i = 0; i < Enemy_List.size(); ++i) {
@@ -373,12 +339,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 			g.drawImage(star, sp.getX(), sp.getY(), this);
 
-
 		}
-
 	}
-
-
 
 	public void drawPoint2(Graphics g) {
 		for (int i = 0; i < Point_List2.size(); ++i) {
@@ -386,13 +348,9 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			sp2 = Point_List2.get(i);
 
 			g.drawImage(star2, sp2.getX(), sp2.getY(), this);
-
-
 		}
-
 	}
 
-	//life_Array
 	// -10 <= x <= 880 -75 <= y <= 590
 	public void drawLife(Graphics g) {
 		if(life == 5) {
@@ -438,9 +396,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			//         stop = false;
 			gameOver = true;
 			thS = false;
-			//			for(int i = 0; i < life_Array.size(); i++) {
-			//				g.drawImage(life_Array.get(i), 830, 700, this);
-			//			}
 		}
 	}
 	public boolean collision(int x1, int y1, int x2, int y2, Image chorok, Image enemy) {
@@ -466,17 +421,14 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			KeyUp = true;
 			break;
 		case KeyEvent.VK_DOWN:
-			// System.out.println("아래");
 			System.out.println("x : " + x + " y : " + y);
 			KeyDown = true;
 			break;
 		case KeyEvent.VK_LEFT:
-			// System.out.println("왼쪽");
 			System.out.println("x : " + x + " y : " + y);
 			KeyLeft = true;
 			break;
 		case KeyEvent.VK_RIGHT:
-			// System.out.println("오른쪽");
 			System.out.println("x : " + x + " y : " + y);
 			KeyRight = true;
 			break;
@@ -509,43 +461,33 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 	// -10 <= x <= 880 -75 <= y <= 590
 	public void KeyProcess() {
-		// 실제로 캐릭터 움직임 실현을 위해
-		// 위에서 받아들인 키값을 바탕으로
-		// 키 입력시마다 5만큼의 이동을 시킨다.
-
-		// System.out.println("제발");
 		if (KeyUp == true) {
 			if (y <= -75) {
 				y -= 0;
 			} else {
-				y -= 5;
+				y -= 7;
 			}
 		} else if (KeyDown == true) {
 			if (y >= 590) {
 				y += 0;
 			} else {
-				y += 5;
+				y += 7;
 			}
 		} else if (KeyLeft == true) {
 			if (x <= -10) {
 				x -= 0;
 			} else {
-				x -= 5;
+				x -= 7;
 			}
 		} else if (KeyRight == true) {
 			if (x >= 880) {
 				x += 0;
 			} else {
-				x += 5;
+				x += 7;
 			}
 		}
-
-		// move();
-
 	}
 	class Timer implements Runnable {
-
-
 		@Override
 		public void run() {
 			JLabel Mytimer = new JLabel("" + time);
@@ -571,8 +513,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			}
 		}
 	}
-	//   retry (380, 280, 0);
-	//  goMain (430, 300, 0);
 	public void gameButton(Graphics g) {
 
 		score = (sCnt* 50) - (sCnt2 * 20);
@@ -601,43 +541,33 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		goMain.setBounds(550, 470, 430, 300);
 		goMain2.setBounds(550, 470, 430, 300);
 		//커서바꾸기
-		retryB.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-		goMain.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-		goMain2.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+		retryB.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		goMain.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		goMain2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 
 		retryB.addMouseListener(new MouseListener() {
+			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				media3.soundStop();
 				ChangePanel.changePanel(mf, stage04, new Stage04(mf, user));
 			}
-
 			@Override
 			public void mousePressed(MouseEvent e) {
-
 			}
-
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		goMain.addMouseListener(new MouseListener() {
-
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				media3.soundStop();
@@ -646,25 +576,15 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-
 			}
-
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
-
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
 			}
 		});
 		goMain2.addActionListener(new ActionListener() {
@@ -680,8 +600,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 					mf.remove(stage04);
 			}
 		});
-	
-
 		if(gameOver == true && gameClear == false) {
 			g.drawImage(overImage, 120, 200, null);
 			add(retryB);
@@ -721,19 +639,13 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			}
 			add(retryB);
 			add(goMain2);
-
-
 		} 
 
 	}
-
-	//sCnt , sCnt2
 	public String[] checkRanking() {
-
 		UserManager um = new UserManager();
 		RankingDao rd = new RankingDao();
-
-		// ArrayList<String> rankStr = new ArrayList<>();
+		
 		um.rankingMethod(user, score, 4);
 		ArrayList<Ranking> rankList = rd.readRankingList(4);
 
@@ -743,18 +655,14 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		}else {
 			count = rankList.size();
 		}
-
-
 		String[] rStr = new String[count];
 		if(rankList.size() == 0) {
 			System.out.println("랭킹이 없습니다. 게임을 플레이하세요!");
 			rankList = new ArrayList<Ranking>();
-
 		}else {
 			for(int i = 0; i < count; i++) {
 				rStr[i] = rankList.get(i).getName();
 				System.out.println(rStr[i]);
-
 			}
 		}
 
@@ -768,8 +676,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			rankLabel[i].setForeground(Color.BLACK);
 			System.out.println(rStr[i]);
 		}
-
-
 		return rStr;
 	}
 
