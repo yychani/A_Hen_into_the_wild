@@ -62,8 +62,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	private boolean thS = true;
 	private boolean gameOver = false;
 	private boolean gameClear = false;
-	private boolean click = true;
-	private boolean click2 = true;
+//	private boolean click = true;
+//	private boolean click2 = true;
 
 	Timer t = new Timer();
 
@@ -175,31 +175,23 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 	}
 
 	public void start() {
-		addKeyListener(this); // 키보드 이벤트 실행
+//		addKeyListener(this); // 키보드 이벤트 실행
 		th = new Thread(this);
-		th.setDaemon(true);// 스레드 생성
+//		th.setDaemon(true);// 스레드 생성
 		th.start(); // 스레드 실행
 		Thread th2 = new Thread(t);
 		th2.start();
 	}
-
 	@Override
 	public void run() {
-
 		try { // 예외옵션 설정으로 에러 방지
-
-			media3.sound("Reminiscence (2)");
+			media3.sound("stage04bgm");
 			while (thS) { // while 문으로 무한 루프 시키기
 				KeyProcess(); // 키보드 입력처리를 하여 x,y 갱신
-
 				EnemyProcess();
-
 				pointProcess();
-				
 				pointProcess2();
-
 				repaint(); // 갱신된 x,y값으로 이미지 새로 그리기
-
 				Thread.sleep(20); // 20 milli sec 로 스레드 돌리기
 				cnt++;
 				cnt2++;
@@ -220,11 +212,11 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			JOptionPane.showMessageDialog(null, str, "Stage 4 랭킹", JOptionPane.PLAIN_MESSAGE);
 		}
 	}
-
 	//모든 스윙 컴포넌트는 자신의 모양을 그리는paintComponent() 메소드를 보유
 	//스윙컴포넌트가 자신의 모양을  그리는 메소드
+	//JPanel클래스를 상속, 밑에 메소드를 오버라이딩
 	@Override
-	protected void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 
 		g.drawImage(BG, 0, 0, this);
 		g.drawImage(chorok, x, y, this);
@@ -236,20 +228,15 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 		this.repaint();
 	}
 
-	private void EnemyProcess() {
-		// System.out.println("계십니까~");
-
+	public void EnemyProcess() {
 		for (int i = 0; i < Enemy_List.size(); ++i) {
 			se = (Enemy_List.get(i));
-			// System.out.println("하...");
 			if (se.getX() <= -60) {
 				Enemy_List.remove(i);
-				//            System.out.println("여기는?");
 			} else {
 				se.move();
 			}
 			if (collision(x - w, y - h - 15, se.getX(), se.getY(), chorok, enemy)) {
-				//				media3.sound("crash");
 				if(life == 0) {
 					gameOver = true;
 					System.out.println("life : " + life);
@@ -260,7 +247,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 				Enemy_List.remove(i);
 			}
 		}
-
 		// cnt가 이 될때마다 적생성
 		if (cnt % 50 == 0) {
 			se = new Stage04Enemy(950, ((int) (Math.random() * 630) - 75));
@@ -373,9 +359,7 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 
 	public void drawEnemy(Graphics g) {
-		// System.out.println("여기가문제네");
 		for (int i = 0; i < Enemy_List.size(); ++i) {
-			// 타입형이 맞지 않아서 형변환해주어야 한다.
 			se = Enemy_List.get(i);
 
 			g.drawImage(enemy, se.getX(), se.getY(), this);
@@ -595,9 +579,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 		Image retry = new ImageIcon("images/Images/retry2.png").getImage().getScaledInstance(150, 90, 0);
 		Image main = new ImageIcon("images/Images/main2.png").getImage().getScaledInstance(150, 90, 0);
-		Image countStar = new ImageIcon("images/Images/star2.png").getImage().getScaledInstance(60, 60, 0);
-		Image countStar2 = new ImageIcon("images/Images/star.png").getImage().getScaledInstance(60, 60, 0);
-
 		JButton retryB = new JButton(new ImageIcon(retry));
 		JButton goMain = new JButton(new ImageIcon(main));
 		JButton goMain2 = new JButton(new ImageIcon(main));
@@ -626,17 +607,10 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 
 		retryB.addMouseListener(new MouseListener() {
-
-
-			//pressed를하면 눌르고있으면 계속 생성이되서 키가 안먹는다,
-			//released를 하면 눌렀다 떼면 생성이되어서 하나만 생성이 되어서 키가먹는다.
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("너의용도는 뭐야?");
-				click = false;
 				media3.soundStop();
 				ChangePanel.changePanel(mf, stage04, new Stage04(mf, user));
-
 			}
 
 			@Override
@@ -666,8 +640,6 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("너는 클릭이야?");
-				click = false;
 				media3.soundStop();
 				ChangePanel.changePanel(mf, stage04, new MainStage(mf,user, new Media()));
 			}
@@ -700,14 +672,12 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				media3.soundStop();
-
 					stage04.setVisible(false);
 					new VideoTest(mf, "ending", user, new Ending(mf, user, media3), media3);
 					MediaThread mt = new MediaThread(ms, 41);
 					user.setStage4Video(true);
 					mt.start();
 					mf.remove(stage04);
-
 			}
 		});
 	
@@ -716,11 +686,8 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			g.drawImage(overImage, 120, 200, null);
 			add(retryB);
 			add(goMain);
-			//			add(sText);
 			System.out.println("star1 : " + sCnt);
 			System.out.println("star2 : " + sCnt2);
-			//         g.drawImage(retry, 50, 400, null);
-			//         g.drawImage(goMain, 550, 410, null);
 			thS = false;
 		}else if(gameClear == true && gameOver == false) {
 			g.drawImage(clearImage, 120, 150, null);
@@ -749,11 +716,9 @@ public class Stage04 extends JPanel implements KeyListener, Runnable {
 			add(scoreText2);
 			add(cStar);
 			add(cStar2);
-			//			System.out.println(score);
 			if(score > user.getStage4Score()) {
 				user.setStage4Score(score);	
 			}
-			
 			add(retryB);
 			add(goMain2);
 
