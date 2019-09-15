@@ -131,7 +131,7 @@ public class Stage03 extends JPanel {
 						//media2.soundStop();
 						media.sound("gameover");
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
-						sm.scoreChange(score, user);
+						//sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
 						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n당신의 점수 : " + score + "\n" + str);
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
@@ -141,7 +141,7 @@ public class Stage03 extends JPanel {
 						//media2.soundStop();
 						media.sound("gameover");
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
-						sm.scoreChange(score, user);
+						//sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
 						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다. \n당신의 점수 : " + score + "\n" + str);
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
@@ -152,7 +152,7 @@ public class Stage03 extends JPanel {
 						//media2.soundStop();
 						media.sound("gameover");
 						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
-						sm.scoreChange(score, user);
+						//sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
 						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다. \n당신의 점수 : " + score + "\n" + str);
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
@@ -368,7 +368,7 @@ public class Stage03 extends JPanel {
 		growthRatePercent.setForeground(Color.GREEN);
 		add(growthRatePercent);
 
-		addMouseMotionListener(new MyEvent()); //위치 확인
+		//addMouseMotionListener(new MyEvent()); //위치 확인
 
 		//놀아주기 버튼 눌렀을 때, 지수들(rate)변화하게 만듦
 		playbutton.addActionListener(new ActionListener() {
@@ -379,7 +379,7 @@ public class Stage03 extends JPanel {
 				media.sound("clickFX");
 				System.out.println("놀아주기 버튼 눌림");
 				// 놀아주는 미니게 팝업창 만들기!
-				rate = sm.playingMethod(rate);
+				sm.playingMethod(rate);
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
@@ -402,7 +402,7 @@ public class Stage03 extends JPanel {
 				th4.setDaemon(true);
 				th4.start();
 
-				rate = sm.lovingMethod(rate);
+				sm.lovingMethod(rate);
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");
@@ -425,7 +425,7 @@ public class Stage03 extends JPanel {
 				th5.setDaemon(true);
 				th5.start();
 
-				rate = sm.sleepingMethod(rate);
+				sm.sleepingMethod(rate);
 				fullRatePercent.setText(rate[0] + "%");
 				cleanRatePercent.setText(rate[1] + "%");
 				tiredRatePercent.setText(rate[2] + "%");

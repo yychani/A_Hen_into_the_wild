@@ -100,7 +100,6 @@ public class Stage03Manager {
 	}
 	
 	public int[] playingMethod(int[] rate) {
-		//미니게임에 성공했을 시에 실행하도록 함
 		
 		System.out.println("초록이가 즐거워해요!");
 		//성장도 증가 
@@ -132,8 +131,6 @@ public class Stage03Manager {
 		if(score > user.getStage3Score()) {
 			user.setStage3Score(score);
 		}
-		
-		//return user;
 	}
 	
 	public int scoreCalc(int level, int growthTime, int time) {
@@ -183,7 +180,6 @@ public class Stage03Manager {
 		      });
 		}
 		for(int i=0; i<5; i++) {
-			//System.out.println((i+1) + "등 : " + list.get(i).getName() + ", " + list.get(i).getScore());
 			str += (i+1) + "등 : " + list.get(i).getName() + ", " + list.get(i).getScore() + "\n";
 			}
 		System.out.println(str);
