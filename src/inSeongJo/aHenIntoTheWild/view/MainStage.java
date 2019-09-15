@@ -202,14 +202,13 @@ public class MainStage extends JPanel {
 		stage3Button.setFocusPainted(false);
 		stage3Button.setDisabledIcon(new ImageIcon(lockImage));
 		stage3Button.setBounds(470, 200, 300, 300);
-		stage3Button.setEnabled(false);
 		stage3Button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 //		stage3Button.addActionListener(new ActionListener() {
 //		@Override
 //		public void actionPerformed(ActionEvent e) { // 안뚫림 미확인용
-		stage3Button.addMouseListener(new MouseAdapter() {
+		stage3Button.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void actionPerformed(ActionEvent e) {
 				media.soundStop();
 				if (user.isStage3Video()) {
 					ChangePanel.changePanel(mf, mainstage, new Stage03InfoPage(mf, user, media));
@@ -237,9 +236,9 @@ public class MainStage extends JPanel {
 //		stage4Button.addActionListener(new ActionListener() {
 //			@Override
 //			public void actionPerformed(ActionEvent e) { // 안뚫림 미확인용
-		stage4Button.addMouseListener(new MouseAdapter() {
+		stage4Button.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) { // 뚫림 확인용
+			public void actionPerformed(ActionEvent e) {
 				media.soundStop();
 				if (user.isStage4Video()) {
 					ChangePanel.changePanel(mf, mainstage, new Stage04infoPage(mf, user, media));
@@ -251,6 +250,7 @@ public class MainStage extends JPanel {
 					mt.start();
 					mf.remove(mainstage);
 				}
+				
 			}
 		});
 
