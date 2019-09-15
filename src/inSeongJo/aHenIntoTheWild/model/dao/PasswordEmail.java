@@ -18,7 +18,7 @@ public class PasswordEmail {
 		//보내는 사람 정보
 		String host = "smtp.naver.com";
 		final String user = "ajfodc";
-		final String password = "duswnkyj99~!";
+		final String password = "Duswnkyj99~!!";
 		
 		//이메일 받는 유저 정보
 		String userEmail = email;

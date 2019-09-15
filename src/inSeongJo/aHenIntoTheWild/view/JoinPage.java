@@ -165,7 +165,6 @@ public class JoinPage extends JPanel {
 					passwordConditionText.setText("사용가능한 비밀번호 입니다.");
 					passwordConditionText.setForeground(Color.BLUE);
 				} else {
-					System.out.println(password + "는 비밀번호로 부적절하다!!! 바꿔라");
 					passwordConditionText.setText("사용 불가능한 비밀번호 입니다.");
 					passwordConditionText.setForeground(Color.RED);
 				}
