@@ -133,8 +133,8 @@ public class Stage03Manager {
 		}
 	}
 	
-	public int scoreCalc(int level, int growthTime, int time) {
-		return (level*1000 + growthTime*10 + time);
+	public int scoreCalc(int level, int[] rate, int time) {
+		return (level*1000 + rate[0] + rate[1] - rate[2] + rate[3]*10 + time);
 	}
 	
 	public String rankingMethod(User user, int score) {

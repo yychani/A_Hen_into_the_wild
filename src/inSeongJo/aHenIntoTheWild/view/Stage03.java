@@ -130,7 +130,7 @@ public class Stage03 extends JPanel {
 						goOrStop = false;
 						//media2.soundStop();
 						media.sound("gameover");
-						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
+						int score = sm.scoreCalc(growthLevel, rate, time); // 레벨, 성장도, 시간
 						//sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
 						JOptionPane.showMessageDialog(null, "초록이가 배고파 죽었습니다. \n당신의 점수 : " + score + "\n" + str);
@@ -140,7 +140,7 @@ public class Stage03 extends JPanel {
 						goOrStop = false;
 						//media2.soundStop();
 						media.sound("gameover");
-						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
+						int score = sm.scoreCalc(growthLevel, rate, time); // 레벨, 성장도, 시간
 						//sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
 						JOptionPane.showMessageDialog(null, "초록이가 전염병에 감염되어 죽었습니다. \n당신의 점수 : " + score + "\n" + str);
@@ -151,12 +151,12 @@ public class Stage03 extends JPanel {
 						goOrStop = false;
 						//media2.soundStop();
 						media.sound("gameover");
-						int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
+						int score = sm.scoreCalc(growthLevel, rate, time); // 레벨, 성장도, 시간
 						//sm.scoreChange(score, user);
 						String str = sm.rankingMethod(user, score);
 						JOptionPane.showMessageDialog(null, "초록이가 과로사로 죽었습니다. \n당신의 점수 : " + score + "\n" + str);
 						ChangePanel.changePanel(mf, s03, new MainStage(mf, user, new Media()));
-					} else if (rate[3] >= 100) {
+					} else if (rate[3] >= 90) {
 						goOrStop = false;
 						if (growthLevel < 1) {
 							gameOverImg = null;
@@ -168,7 +168,7 @@ public class Stage03 extends JPanel {
 							//media2.soundStop();
 							media.sound("clear");
 							sm.printResult(rate[3], time);
-							int score = sm.scoreCalc(growthLevel, rate[3], time); // 레벨, 성장도, 시간
+							int score = sm.scoreCalc(growthLevel, rate, time); // 레벨, 성장도, 시간
 							sm.scoreChange(score, user);
 							String str = sm.rankingMethod(user, score);
 							JOptionPane.showMessageDialog(null, "초록이가 드디어 어른이 되었네요! \n당신의 점수 : " + score + "\n" + str);
