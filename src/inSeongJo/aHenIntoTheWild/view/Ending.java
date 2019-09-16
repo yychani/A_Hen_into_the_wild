@@ -74,6 +74,11 @@ public class Ending extends JPanel{
 		Thread changeY = new Thread(new Runnable() {
 			@Override
 			public void run() {
+				try {
+					Thread.sleep(41000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				while (true) {
 					try {
 						Thread.sleep(30);
