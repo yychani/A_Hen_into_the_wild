@@ -89,7 +89,7 @@ public class Stage02 extends JPanel implements KeyListener {
 	private int m_w = ImageWidthValue("images/MSImages/wind4.png");
 	private int m_h = ImageHeightValue("images/MSImages/wind4.png");
 	
-	private int punched = 0; // 펀치 맞은 횟수를 표시할 변수//
+	private int punched = 0; // 펀치 맞은 횟수를 표시할 변수
 	
 	private Image nagne = new ImageIcon("images/MSImages/nagne.png").getImage().getScaledInstance(150, 150, 0);
 	private Image nagnePunch = new ImageIcon("images/MSImages/punch.png").getImage().getScaledInstance(150, 150, 0);
