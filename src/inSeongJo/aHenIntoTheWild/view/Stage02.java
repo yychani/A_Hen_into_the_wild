@@ -35,6 +35,8 @@ public class Stage02 extends JPanel implements KeyListener {
 	
 	//bgm
 	private Media media = new Media(); 
+	private Media media2 = new Media(); 
+	private Media media3 = new Media(); 
 	
 	private MainFrame mf;
 	private Stage02 Stage02 = this;
@@ -42,11 +44,7 @@ public class Stage02 extends JPanel implements KeyListener {
 	
 	// 캐릭터의 좌표 변수
 	private int x = 100;
-	private int y = 100;
-//	private int ax = 500;
-//	private int ay = 500;
-//	private int w;
-//	private int h;
+	private int y = 500;
 	
 	// 키보드 입력 처리를 위한 변수
 	private boolean KeyUp = false;
@@ -58,21 +56,19 @@ public class Stage02 extends JPanel implements KeyListener {
 
 	private int score; //점수
 	private int agguDead;
-	private int time = 50; //시간조정
+	private int time = 99; //시간조정
 
-	private int pattern = (int)(Math.random() * 3 + 1); //패턴 1로 고정  (수정해야됨)
+	private int pattern = (int)(Math.random() * 3 + 1); //패 턴 
 
 	ArrayList Missile_List = new ArrayList();
 	private Missile ms; // 미사일 클래스 접근 키
-	private Image buffImage; Graphics buffg;
+	Graphics buffg;
 	private boolean ds = false;
 	private boolean thS = true;
-	private boolean gameOver = false;
-	private boolean gameClear = false;
 	private Timer t = new Timer();
 	private MainThread mt = new MainThread();
 
-	private int ipsakHpStatus = 50;
+	private int ipsakHpStatus = 100;
 	private int agguHpStatus = 50;
 	private int HpW = 300;
 	private int hpX = 100;
@@ -132,9 +128,7 @@ public class Stage02 extends JPanel implements KeyListener {
 		mf.add(this);
 		start();
 
-		System.out.println("이게 여러번 실행되나요?");
 		if(!thS) {
-			System.out.println("이게 여러번 실행되나요?");
 			media.soundStop();
 		}
 		// -5, -50
@@ -229,7 +223,7 @@ public class Stage02 extends JPanel implements KeyListener {
 		
 		if ( KeySpace == true){ // 스페이스바 키 상태가 true 면
 			if( ( cnt % 50 ) == 0){ //무한 회오리 금지 카운트
-				
+				media2.sound("wind");
 				ms = new Missile(x + 100, y); // 좌표 체크하여 넘기기(나그네 x,y 좌표)
 				Missile_List.add(ms);    // 해당 미사일 추가
 			}
@@ -238,8 +232,9 @@ public class Stage02 extends JPanel implements KeyListener {
 		for ( int i = 0 ; i < Missile_List.size() ; ++i){
 			ms = (Missile) Missile_List.get(i);
 			ms.move();
-			if ( ms.x > ngX + 500 ){ //사거리
+			if ( ms.x > ngX + 300 ){ //사거리
 				Missile_List.remove(i);
+				media2.soundStop();
 			}
 			//편의상 그림그리기 부분에 있던 미사일 이동과
 			//미사일이 화면에서 벗어났을시 명령 처리를
@@ -253,8 +248,8 @@ public class Stage02 extends JPanel implements KeyListener {
 					//판별엔 Crash 메소드에서 계산하는 방식을 씁니다.
 					Missile_List.remove(i);
 					reduceHp(enemyHp);
-//					en.x += 100; // 애꾸 뒤로 밀리기
 					Enemy_List.remove(j);
+					agguDead++;
 					pattern = (int) (Math.random() * 3 + 1); //패턴 변수 추가
 					moveAggu = true;
 					moveing = 1;
@@ -279,6 +274,7 @@ public class Stage02 extends JPanel implements KeyListener {
 				if(punched == 2) {
 				reduceHp(enemyHp);
 					Enemy_List.remove(0);	
+					agguDead++;
 					pattern = (int) (Math.random() * 3 + 1); //패턴 변수 추가
 					punched = 0;
 				}
@@ -310,9 +306,9 @@ public class Stage02 extends JPanel implements KeyListener {
 				  //가장 앞에 있는 index는 지워지므로 계속 0 이 됨
 				if(ipsakHpStatus <= 0 ) {
 					if(Enemy_List.get(0).equals(null)) {
-					Enemy_List.remove(0);
+						Enemy_List.remove(0);
 					}
-					score = time * 10;
+					score = time * 5 + agguDead * 100;
 					if(score > user.getStage2Score() ) {
 						user.setStage2Score(score);
 					}
@@ -321,9 +317,12 @@ public class Stage02 extends JPanel implements KeyListener {
 				} else {
 					if(Enemy_List.get(0).equals(null)) {
 						Enemy_List.remove(0);
-						}
+					} else {
+						Enemy_List.remove(0);
+					}
 					reducenaHp(nagneHp);
 					ip.x -= 30; //맞았을 때 뒤로 밀렸다가 돌아오는 부분
+					media3.sound("chicry2cut");
 					try {
 						Thread.sleep(250);
 					} catch (InterruptedException e) {
@@ -347,7 +346,7 @@ public class Stage02 extends JPanel implements KeyListener {
 		
 		if(agguHpStatus <= 0 ) {
 			
-			score = time * 10;
+			score = time * 5 + agguDead * 100;
 			thS = false;
 			media.soundStop();
 			isClear = true;
@@ -361,8 +360,6 @@ public class Stage02 extends JPanel implements KeyListener {
 			}
 			//메세지창이 어떤 Frame에서 보여지게 될 것인지 지정, 보통null을 사용
 			JOptionPane.showMessageDialog(null, str, "Stage 2랭킹", JOptionPane.PLAIN_MESSAGE);
-		
-		
 		}
 		for (int i = 0 ; i < Enemy_List.size() ; ++i ){ 
 			en = (Enemy)(Enemy_List.get(i)); 
@@ -373,20 +370,17 @@ public class Stage02 extends JPanel implements KeyListener {
 				pattern = (int) (Math.random() * 3 + 1); //패턴 변수 추가
 			} 
 		}
-
-		if ( cnt % 300 == 0 ){ //루프 카운트 300회 마다
-		//특수 패턴 넣을 것인가?? 
-//			if(time == 85) {
-//				System.out.println(time +"time2 " );
-//				en = new Enemy(500, 300);
-//				System.out.println("애꾸없다");
-//				Enemy_List.add(en); 
-//			}
-			cnt = 400;
-			//						//﻿각 좌표로 적을 생성한 후 배열에 추가한다.
-			en = new Enemy(1000,  500);
-			Enemy_List.add(en);
-		}
+		if ( cnt % 350 == 0 ){ //루프 카운트 300회 마다
+			//﻿각 좌표로 적을 생성한 후 배열에 추가한다.
+			if(cnt % 700 == 0) {
+			en = new Enemy(1000,  100);
+				Enemy_List.add(en);
+			pattern = 4;
+			} else {
+				en = new Enemy(1000,  500);
+				Enemy_List.add(en);
+			}
+		} 
 	}
 	public boolean Crash(int x1, int y1, int x2, int y2, int w1, int h1, int w2, int h2){
 		//﻿충돌 판정을 위한 새로운 Crash 메소드를 만들었습니다.
@@ -555,13 +549,7 @@ public class Stage02 extends JPanel implements KeyListener {
 					if(x < 500) {
 						y-= 10;
 						x -= 10*2;
-					} /*else if(x < 400 && y <= 400) {
-						y += 10;
-						x -= 3*2;
-					} *//*else if(x < 500 && y > 400) {
-						y -= 10;
-						x -= 3*2;
-					}*/ else {
+					}  else {
 						x -= 3*2;
 					}
 				} else if(pattern == 3) {
@@ -572,36 +560,9 @@ public class Stage02 extends JPanel implements KeyListener {
 						y += 10;
 						x -= 5;
 					}
-				} /*else if(pattern == 4) { //작동 미완
-				//임시 패턴 1 주석
-					if(x > 600 && moveing == 1) {
-						y-= 10;
-						x -= 10;
-						if(x == 600) {
-							moveing = 2;
-						}
-					} else if(moveing == 2 && y < 300) {
-						y -= 10;
-						x += 5;
-						if(y < 100) {
-							moveing = 3;
-						}
-					} else if(moveing == 3 && y < 150) {
-						y += 10;
-						x += 5;
-						if(y < 200) {
-							moveing = 4;
-						}
-					} else if(moveing == 4) {
-						x -= 5;
-						y += 10;
-						if(x < 100) {
-							moveing = 1;
-						}
-					}
-				}*/ 
-			} else {
-				x -= 10;
+				} else if(pattern == 4) {
+					x -= 10;
+				} 
 			}
 
 		}
@@ -637,7 +598,7 @@ public class Stage02 extends JPanel implements KeyListener {
 	}
 
 	public void reduceHp(JLabel jl) {
-		agguHp -= 30;
+		agguHp -= 30*2;
 		agguHpStatus -= 10;
 		jl.setBounds(600, 70, agguHp, 100);
 	}
@@ -676,15 +637,16 @@ public class Stage02 extends JPanel implements KeyListener {
 			break;
 		case KeyEvent.VK_LEFT:
 			System.out.println("x : " + x + " y : " + y);
-			KeyLeft = true;
+//			KeyLeft = true;
 			break;
 		case KeyEvent.VK_RIGHT:
 			System.out.println("x : " + x + " y : " + y);
-			KeyRight = true;
+//			KeyRight = true;
 			break;
 		case KeyEvent.VK_SPACE : // 스페이스키 입력 처리 추가
 			KeySpace = true;
 //			media.sound("wind");//회오리 공격사운드
+			
 			//회오리 공격 막기 조건
 //			if(time >= 90) {
 //			} else {
@@ -714,6 +676,7 @@ public class Stage02 extends JPanel implements KeyListener {
 			KeyRight = false;
 			break;
 		case KeyEvent.VK_SPACE : // 스페이스키 입력 처리 추가
+			media2.soundStop();
 			KeySpace = false;
 			break;
 		case KeyEvent.VK_R : // R키 입력 처리 추가
@@ -781,7 +744,12 @@ public class Stage02 extends JPanel implements KeyListener {
 					KeyProcess(); // 키보드 입력처리를 하여 x,y 갱신
 					MissileProcess(); //미사일 처리 메소드 실행
 					EnemyProcess();//에너미
-					IpsakProcess();
+					try {
+						IpsakProcess();
+						
+					} catch(Exception e) {
+						
+					}
 					try {
 						Thread.sleep(20);
 					} catch (InterruptedException e) {
@@ -805,8 +773,7 @@ public class Stage02 extends JPanel implements KeyListener {
 			add(Mytimer);
 			while (thS) {
 				time--;
-				if(time == 0) {
-					gameClear = true;
+				if(time == -1) {
 					thS = false;
 					break;
 				}else {
