@@ -74,7 +74,7 @@ public class JoinPage extends JPanel {
 		JLabel idCheckText = new JLabel("아이디 중복확인을 해주세요.");
 		idCheckText.setBounds(350, 240, 500, 100);
 		idCheckText.setFont(new Font("맑은 고딕", Font.BOLD, 12));
-		idCheckText.setForeground(Color.DARK_GRAY);
+		idCheckText.setForeground(Color.WHITE);
 		add(idCheckText);
 
 		// 비밀번호 텍스트
@@ -269,7 +269,7 @@ public class JoinPage extends JPanel {
 
 		//// 이메일 인증 버튼
 		JButton verifyButton = new JButton("인증번호 전송");
-		verifyButton.setBounds(690, 530, 150, 30);
+		verifyButton.setBounds(690, 530, 150, 40);
 		verifyButton.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		verifyButton.setBackground(new Color(210, 208, 170));
 		verifyButton.setBorderPainted(false);
