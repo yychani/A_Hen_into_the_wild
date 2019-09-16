@@ -222,7 +222,7 @@ public class Stage02 extends JPanel implements KeyListener {
 		int ngX = this.x;//나그네 위치 가져오기 위한 변수
 		
 		if ( KeySpace == true){ // 스페이스바 키 상태가 true 면
-			if( ( cnt % 50 ) == 0){ //무한 회오리 금지 카운트
+			if( ( cnt % 30 ) == 0){ //무한 회오리 금지 카운트
 				media2.sound("wind");
 				ms = new Missile(x + 100, y); // 좌표 체크하여 넘기기(나그네 x,y 좌표)
 				Missile_List.add(ms);    // 해당 미사일 추가

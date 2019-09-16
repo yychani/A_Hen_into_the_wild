@@ -523,7 +523,7 @@ public class Stage03 extends JPanel {
 		g.drawImage(growthImage, 934, 330, 40, (int) (-243 * (double) rate[3] / 100.0), null); // 성장도표시
 
 		if (goOrStop == false) {
-			if(rate[0] <= 20 || rate[1] <= 20 || rate[2] >= 80 || rate[3] >= 100) { //게임이 끝나는 조건
+			if(rate[0] <= 20 || rate[1] <= 20 || rate[2] >= 80 || rate[3] >= 90) { //게임이 끝나는 조건
 				g.drawImage(gameOverImg, 80, 80, 850, 190, null);
 			}
 		} 
