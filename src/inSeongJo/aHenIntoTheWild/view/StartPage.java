@@ -71,6 +71,7 @@ public class StartPage extends JPanel {
 							user.setStage2Score(0);
 							user.setStage3Score(0);
 							user.setStage4Score(0);
+							user.setTotalScore(0);
 							
 							user.setStage1Video(false);
 							user.setStage2Video(false);

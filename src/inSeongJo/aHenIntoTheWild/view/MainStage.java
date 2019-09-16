@@ -95,7 +95,8 @@ public class MainStage extends JPanel {
 				for(User u: ulist) {
 					if(user.getId().equals(u.getId())) {
 						if(user.getPassword().equals(u.getPassword())) {
-							user.setTotalScore(user.getStage1Score()+user.getStage2Score()+user.getStage3Score()+user.getStage4Score());
+							user.setTotalScore(user.getStage1Score()+user.getStage2Score()
+							+user.getStage3Score()+user.getStage4Score());
 							ulist.set(i, user);
 							ud.writeUserList(ulist);
 							
